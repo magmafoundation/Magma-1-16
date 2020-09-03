@@ -707,11 +707,11 @@
        }
     }
 +
-+   protected void clearActivePotions(Cause death) {
++   public boolean clearActivePotions(Cause death) {
 +      throw new NotImplementedException("Magma Todo");
 +   }
 +
-+    public void removeEffect(Effect strength, Cause conversion) {
++    public boolean removeEffect(Effect strength, Cause conversion) {
 +      throw new NotImplementedException("Magma Todo");
 +    }
 +

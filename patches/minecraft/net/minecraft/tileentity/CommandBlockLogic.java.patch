@@ -8,13 +8,21 @@
  
  public abstract class CommandBlockLogic implements ICommandSource {
     private static final SimpleDateFormat field_145766_a = new SimpleDateFormat("HH:mm:ss");
-@@ -215,4 +216,9 @@
+@@ -35,6 +36,11 @@
+    private String field_145763_e = "";
+    private ITextComponent field_145761_f = field_226655_c_;
+ 
++   // CraftBukkit start
++   @Override
++   public abstract CommandSender getBukkitSender(CommandSource wrapper);
++   // CraftBukkit end
++
+    public int func_145760_g() {
+       return this.field_145764_b;
+    }
+@@ -215,4 +221,5 @@
     public boolean func_195041_r_() {
        return this.func_195043_d().func_82736_K().func_223586_b(GameRules.field_223605_h);
     }
 +
-+    @Override
-+    public CommandSender getBukkitSender(CommandSource p0) {
-+        return null;
-+    }
  }
