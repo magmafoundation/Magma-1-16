@@ -33,6 +33,8 @@ Please read the [CONTRIBUTING.md](https://github.com/magmafoundation/Magma-1.16.
 
 You are welcome to visit Magma Discord server [here](https://discord.gg/6rkqngA).
 
+You could also go to Magma's subreddit [here](https://www.reddit.com/r/Magma).
+
 ## Partners
 
 <a href="https://aternos.org/en/"><img src="https://company.aternos.org/img/logotype-blue.svg" width="200"></a>
