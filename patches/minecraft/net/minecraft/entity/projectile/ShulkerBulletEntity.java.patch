@@ -1,6 +1,21 @@
 --- a/net/minecraft/entity/projectile/ShulkerBulletEntity.java
 +++ b/net/minecraft/entity/projectile/ShulkerBulletEntity.java
-@@ -70,6 +70,18 @@
+@@ -29,6 +29,7 @@
+ import net.minecraft.world.server.ServerWorld;
+ import net.minecraftforge.api.distmarker.Dist;
+ import net.minecraftforge.api.distmarker.OnlyIn;
++import org.bukkit.event.entity.EntityPotionEffectEvent.Cause;
+ 
+ public class ShulkerBulletEntity extends ProjectileEntity {
+    private Entity field_184571_b;
+@@ -64,12 +65,25 @@
+       this.field_184571_b = p_i46772_3_;
+       this.field_184573_c = Direction.UP;
+       this.func_184569_a(p_i46772_4_);
++      projectileSource = (org.bukkit.entity.LivingEntity) p_i46772_2_.getBukkitEntity(); // CraftBukkit
+    }
+ 
+    public SoundCategory func_184176_by() {
        return SoundCategory.HOSTILE;
     }
  
@@ -19,7 +34,7 @@
     protected void func_213281_b(CompoundNBT p_213281_1_) {
        super.func_213281_b(p_213281_1_);
        if (this.field_184571_b != null) {
-@@ -213,7 +225,7 @@
+@@ -213,7 +227,7 @@
           }
  
           RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
@@ -28,3 +43,12 @@
              this.func_70227_a(raytraceresult);
           }
        }
+@@ -274,7 +288,7 @@
+       if (flag) {
+          this.func_174815_a(livingentity, entity);
+          if (entity instanceof LivingEntity) {
+-            ((LivingEntity)entity).func_195064_c(new EffectInstance(Effects.field_188424_y, 200));
++            ((LivingEntity) entity).addPotionEffect(new EffectInstance(Effects.field_188424_y, 200), Cause.ATTACK); // CraftBukkit
+          }
+       }
+ 

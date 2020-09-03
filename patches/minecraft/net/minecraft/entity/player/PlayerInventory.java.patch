@@ -1,9 +1,10 @@
 --- a/net/minecraft/entity/player/PlayerInventory.java
 +++ b/net/minecraft/entity/player/PlayerInventory.java
-@@ -26,6 +26,10 @@
+@@ -26,6 +26,11 @@
  import net.minecraft.world.World;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
++import org.apache.commons.lang3.NotImplementedException;
 +import org.bukkit.Location;
 +import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 +import org.bukkit.entity.HumanEntity;
@@ -11,7 +12,7 @@
  
  public class PlayerInventory implements IInventory, INameable {
     public final NonNullList<ItemStack> field_70462_a = NonNullList.func_191197_a(36, ItemStack.field_190927_a);
-@@ -187,7 +191,8 @@
+@@ -187,7 +192,8 @@
        int i = p_191973_2_.func_190916_E();
        ItemStack itemstack = this.func_70301_a(p_191973_1_);
        if (itemstack.func_190926_b()) {
@@ -21,7 +22,7 @@
           if (p_191973_2_.func_77942_o()) {
              itemstack.func_77982_d(p_191973_2_.func_77978_p().func_74737_b());
           }
-@@ -238,7 +243,7 @@
+@@ -238,7 +244,7 @@
              }
           }
        }
@@ -30,7 +31,7 @@
     }
  
     public boolean func_70441_a(ItemStack p_70441_1_) {
-@@ -287,6 +292,8 @@
+@@ -287,6 +293,8 @@
           } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.func_85055_a(throwable, "Adding item to inventory");
              CrashReportCategory crashreportcategory = crashreport.func_85058_a("Item being added");
@@ -39,7 +40,7 @@
              crashreportcategory.func_71507_a("Item ID", Item.func_150891_b(p_191971_2_.func_77973_b()));
              crashreportcategory.func_71507_a("Item data", p_191971_2_.func_77952_i());
              crashreportcategory.func_189529_a("Item name", () -> {
-@@ -385,6 +392,11 @@
+@@ -385,6 +393,11 @@
  
     }
  
@@ -51,7 +52,7 @@
     public float func_184438_a(BlockState p_184438_1_) {
        return this.field_70462_a.get(this.field_70461_c).func_150997_a(p_184438_1_);
     }
-@@ -550,6 +562,41 @@
+@@ -550,6 +563,41 @@
        }
     }
  
@@ -93,3 +94,12 @@
     public boolean func_70431_c(ItemStack p_70431_1_) {
        for(List<ItemStack> list : this.field_184440_g) {
           for(ItemStack itemstack : list) {
+@@ -596,4 +644,8 @@
+       }
+ 
+    }
++
++    public int canHold(ItemStack itemStack) {
++      throw new NotImplementedException("Magma todo");
++    }
+ }

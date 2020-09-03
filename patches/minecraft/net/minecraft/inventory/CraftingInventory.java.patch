@@ -1,6 +1,6 @@
 --- a/net/minecraft/inventory/CraftingInventory.java
 +++ b/net/minecraft/inventory/CraftingInventory.java
-@@ -1,10 +1,15 @@
+@@ -1,17 +1,22 @@
  package net.minecraft.inventory;
  
 +import java.util.List;
@@ -16,6 +16,14 @@
  
  public class CraftingInventory implements IInventory, IRecipeHelperPopulator {
     private final NonNullList<ItemStack> field_70466_a;
+    private final int field_70464_b;
+    private final int field_174924_c;
+    private final Container field_70465_c;
+-
++   public IInventory resultInventory;
+    public CraftingInventory(Container p_i1807_1_, int p_i1807_2_, int p_i1807_3_) {
+       this.field_70466_a = NonNullList.func_191197_a(p_i1807_2_ * p_i1807_3_, ItemStack.field_190927_a);
+       this.field_70465_c = p_i1807_1_;
 @@ -55,6 +60,11 @@
        this.field_70465_c.func_75130_a(this);
     }
