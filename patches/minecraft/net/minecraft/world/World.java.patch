@@ -558,5 +558,5 @@
 +
 +   public void addLightningBolt(LightningBoltEntity lightning) {
 +   }
-+   // CraftBukkit - stop
++    // CraftBukkit - stop
  }

@@ -41,7 +41,8 @@
 +   public final IChunkStatusListenerFactory field_213220_d; // private->public CraftBukkit
     private final ServerStatusResponse field_147147_p = new ServerStatusResponse();
     private final Random field_147146_q = new Random();
-    private final DataFixer field_184112_s;
+-   private final DataFixer field_184112_s;
++   public final DataFixer field_184112_s; // private->public CraftBukkit
     private String field_71320_r;
     private int field_71319_s = -1;
 -   protected final DynamicRegistries.Impl field_240767_f_;
