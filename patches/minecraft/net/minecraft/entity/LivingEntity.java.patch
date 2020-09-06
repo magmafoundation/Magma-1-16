@@ -91,7 +91,7 @@
     protected boolean field_70703_bu;
     public float field_70702_br;
     public float field_70701_bs;
-@@ -178,9 +186,9 @@
+@@ -178,10 +186,10 @@
     protected double field_70709_bj;
     protected double field_208001_bq;
     protected int field_208002_br;
@@ -99,10 +99,12 @@
 +   public boolean field_70752_e = true; // private->public CraftBukkit
     @Nullable
 -   private LivingEntity field_70755_b;
+-   private int field_70756_c;
 +   public LivingEntity field_70755_b; // private->public CraftBukkit
-    private int field_70756_c;
++   public int field_70756_c; // private->public CraftBukkit
     private LivingEntity field_110150_bn;
     private int field_142016_bo;
+    private float field_70746_aG;
 @@ -199,6 +207,22 @@
     private float field_205018_bM;
     protected Brain<?> field_213378_br;
