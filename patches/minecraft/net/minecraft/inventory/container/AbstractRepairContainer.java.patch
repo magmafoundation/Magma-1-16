@@ -8,7 +8,15 @@
  
  public abstract class AbstractRepairContainer extends Container {
     protected final CraftResultInventory field_234642_c_ = new CraftResultInventory();
-@@ -86,7 +87,12 @@
+@@ -77,6 +78,7 @@
+    }
+ 
+    public boolean func_75145_c(PlayerEntity p_75145_1_) {
++      if (!this.checkReachable) return true; // CraftBukkit
+       return this.field_234644_e_.func_221485_a((p_234646_2_, p_234646_3_) -> {
+          return !this.func_230302_a_(p_234646_2_.func_180495_p(p_234646_3_)) ? false : p_75145_1_.func_70092_e((double)p_234646_3_.func_177958_n() + 0.5D, (double)p_234646_3_.func_177956_o() + 0.5D, (double)p_234646_3_.func_177952_p() + 0.5D) <= 64.0D;
+       }, true);
+@@ -86,7 +88,12 @@
        return false;
     }
  
