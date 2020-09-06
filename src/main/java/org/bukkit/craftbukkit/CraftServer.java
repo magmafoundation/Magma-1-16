@@ -1038,7 +1038,7 @@ public final class CraftServer implements Server {
         console.initWorld(internal, worlddata, worlddata, worlddata.func_230418_z_());
 
         internal.setAllowedSpawnTypes(true, true);
-        console.worlds.put(internal.getTypeKey(), internal);
+        console.worlds.put(internal.func_234923_W_(), internal);
 
         pluginManager.callEvent(new WorldInitEvent(internal.getWorldCB()));
 
@@ -1065,7 +1065,7 @@ public final class CraftServer implements Server {
             return false;
         }
 
-        if (handle.getTypeKey() == net.minecraft.world.World.field_234918_g_) {
+        if (handle.func_234923_W_() == net.minecraft.world.World.field_234918_g_) {
             return false;
         }
 

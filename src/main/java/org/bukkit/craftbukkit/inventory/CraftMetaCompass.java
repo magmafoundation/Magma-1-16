@@ -73,7 +73,7 @@ public class CraftMetaCompass extends CraftMetaItem implements CompassMeta {
 
             tag.put(LODESTONE_POS.NBT, pos);
 
-            RegistryKey<net.minecraft.world.World> key = ((CraftWorld) lodestone.getWorld()).getHandle().getTypeKey();
+            RegistryKey<net.minecraft.world.World> key = ((CraftWorld) lodestone.getWorld()).getHandle().func_234923_W_();
             DataResult<INBT> dataresult = net.minecraft.world.World.field_234917_f_.encodeStart(NBTDynamicOps.INSTANCE, key);
             tag.put(LODESTONE_DIMENSION.NBT, dataresult.get().orThrow());
         }
