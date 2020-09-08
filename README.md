@@ -38,7 +38,6 @@ You could also go to Magma's subreddit [here](https://www.reddit.com/r/Magma).
 ## Partners
 
 <a href="https://aternos.org/en/"><img src="https://company.aternos.org/img/logotype-blue.svg" width="200"></a>
-<a href="https://songoda.com/"><img src="https://cdn2.songoda.com/branding/logo.png" width="200"></a>
 <a href="https://serverjars.com/"><img src="https://serverjars.com/assets/img/logo_white.svg" width="200"></a>
 
 ![YourKit-Logo](https://www.yourkit.com/images/yklogo.png)
