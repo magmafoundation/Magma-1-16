@@ -13,11 +13,21 @@
     private static final Gson field_223401_a = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger field_199521_c = LogManager.getLogger();
 -   private Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> field_199522_d = ImmutableMap.of();
-+   public Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> field_199522_d = ImmutableMap.of(); // private->public CraftBukkit
++   public Map<IRecipeType<?>, Object2ObjectLinkedOpenHashMap<ResourceLocation, IRecipe<?>>> field_199522_d = ImmutableMap.of(); // private->public CraftBukkit
     private boolean field_199523_e;
  
     public RecipeManager() {
-@@ -51,9 +52,18 @@
+@@ -47,31 +48,61 @@
+ 
+    protected void func_212853_a_(Map<ResourceLocation, JsonElement> p_212853_1_, IResourceManager p_212853_2_, IProfiler p_212853_3_) {
+       this.field_199523_e = false;
+-      Map<IRecipeType<?>, Builder<ResourceLocation, IRecipe<?>>> map = Maps.newHashMap();
++      // CraftBukkit start - SPIGOT-5667 make sure all types are populated and mutable
++      Map<IRecipeType<?>, Object2ObjectLinkedOpenHashMap<ResourceLocation, IRecipe<?>>> map = Maps.newHashMap();
++      for (IRecipeType<?> recipeType : Registry.field_218367_H) {
++         map.put(recipeType, new Object2ObjectLinkedOpenHashMap<>());
++      }
++      // CraftBukkit end
  
        for(Entry<ResourceLocation, JsonElement> entry : p_212853_1_.entrySet()) {
           ResourceLocation resourcelocation = entry.getKey();
@@ -29,14 +39,27 @@
 +               continue;
 +            }
              IRecipe<?> irecipe = func_215377_a(resourcelocation, JSONUtils.func_151210_l(entry.getValue(), "top element"));
+-            map.computeIfAbsent(irecipe.func_222127_g(), (p_223391_0_) -> {
+-               return ImmutableMap.builder();
+-            }).put(resourcelocation, irecipe);
 +            if (irecipe == null) {
 +               field_199521_c.info("Skipping loading recipe {} as it's serializer returned null", resourcelocation);
 +               continue;
 +            }
-             map.computeIfAbsent(irecipe.func_222127_g(), (p_223391_0_) -> {
-                return ImmutableMap.builder();
-             }).put(resourcelocation, irecipe);
-@@ -68,6 +78,16 @@
++            // CraftBukkit start - SPIGOT-4638: last recipe gets priority
++            (map.computeIfAbsent(irecipe.func_222127_g(), (recipes) -> {
++               return new Object2ObjectLinkedOpenHashMap<>();
++            })).putAndMoveToFirst(resourcelocation, irecipe);
++            // CraftBukkit end
+          } catch (IllegalArgumentException | JsonParseException jsonparseexception) {
+             field_199521_c.error("Parsing error loading recipe {}", resourcelocation, jsonparseexception);
+          }
+       }
+ 
+       this.field_199522_d = map.entrySet().stream().collect(ImmutableMap.toImmutableMap(Entry::getKey, (p_223400_0_) -> {
+-         return p_223400_0_.getValue().build();
++         return (p_223400_0_.getValue()); // CraftBukkit
+       }));
        field_199521_c.info("Loaded {} recipes", (int)map.size());
     }
  
@@ -51,9 +74,40 @@
 +   // CraftBukkit end
 +
     public <C extends IInventory, T extends IRecipe<C>> Optional<T> func_215371_a(IRecipeType<T> p_215371_1_, C p_215371_2_, World p_215371_3_) {
-       return this.func_215366_a(p_215371_1_).values().stream().flatMap((p_215372_3_) -> {
+-      return this.func_215366_a(p_215371_1_).values().stream().flatMap((p_215372_3_) -> {
++      // CraftBukkit start
++      Optional<T> recipe = this.func_215366_a(p_215371_1_).values().stream().flatMap((p_215372_3_) -> {
           return Util.func_215081_a(p_215371_1_.func_222148_a(p_215372_3_, p_215371_3_, p_215371_2_));
-@@ -147,4 +167,14 @@
+       }).findFirst();
++      p_215371_2_.setCurrentRecipe(recipe.orElse(null)); // CraftBukkit - Clear recipe when no recipe is found
++      // CraftBukkit end
++      return recipe;
+    }
+ 
+    public <C extends IInventory, T extends IRecipe<C>> List<T> func_241447_a_(IRecipeType<T> p_241447_1_) {
+@@ -89,7 +120,7 @@
+    }
+ 
+    private <C extends IInventory, T extends IRecipe<C>> Map<ResourceLocation, IRecipe<C>> func_215366_a(IRecipeType<T> p_215366_1_) {
+-      return (Map)this.field_199522_d.getOrDefault(p_215366_1_, Collections.emptyMap());
++      return (Map)this.field_199522_d.getOrDefault(p_215366_1_, new Object2ObjectLinkedOpenHashMap<>()); // CraftBukkit
+    }
+ 
+    public <C extends IInventory, T extends IRecipe<C>> NonNullList<ItemStack> func_215369_c(IRecipeType<T> p_215369_1_, C p_215369_2_, World p_215369_3_) {
+@@ -135,10 +166,10 @@
+    @OnlyIn(Dist.CLIENT)
+    public void func_223389_a(Iterable<IRecipe<?>> p_223389_1_) {
+       this.field_199523_e = false;
+-      Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> map = Maps.newHashMap();
++      Map<IRecipeType<?>, Object2ObjectLinkedOpenHashMap<ResourceLocation, IRecipe<?>>> map = Maps.newHashMap(); // CraftBukkit
+       p_223389_1_.forEach((p_223392_1_) -> {
+          Map<ResourceLocation, IRecipe<?>> map1 = map.computeIfAbsent(p_223392_1_.func_222127_g(), (p_223390_0_) -> {
+-            return Maps.newHashMap();
++            return new Object2ObjectLinkedOpenHashMap<>();
+          });
+          IRecipe<?> irecipe = map1.put(p_223392_1_.func_199560_c(), p_223392_1_);
+          if (irecipe != null) {
+@@ -147,4 +178,14 @@
        });
        this.field_199522_d = ImmutableMap.copyOf(map);
     }

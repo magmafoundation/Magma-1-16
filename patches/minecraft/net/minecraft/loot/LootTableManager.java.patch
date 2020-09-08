@@ -19,3 +19,15 @@
              builder.put(p_237403_1_, loottable);
           } catch (Exception exception) {
              field_186525_a.error("Couldn't parse loot table {}", p_237403_1_, exception);
+@@ -54,6 +55,11 @@
+          field_186525_a.warn("Found validation problem in " + p_215303_0_ + ": " + p_215303_1_);
+       });
+       this.field_186527_c = immutablemap;
++      // CraftBukkit start - build a reversed registry map
++      ImmutableMap.Builder<LootTable, ResourceLocation> lootTableToKeyBuilder = ImmutableMap.builder();
++      this.field_186527_c.forEach((lootTable, key) -> lootTableToKeyBuilder.put(key, lootTable)); // PAIL rename keyToLootTable
++      this.lootTableToKey = lootTableToKeyBuilder.build();
++      // CraftBukkit end
+    }
+ 
+    public static void func_227508_a_(ValidationTracker p_227508_0_, ResourceLocation p_227508_1_, LootTable p_227508_2_) {
