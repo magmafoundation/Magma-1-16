@@ -14,7 +14,7 @@ We hope to eliminate all issues with craftbukkit forge servers. In the end, we e
 
 ## Progress
 Patches so far
-- [ ] CraftBukkit
+- [x] CraftBukkit
 - [ ] Spigot
 - [ ] Paper
 
