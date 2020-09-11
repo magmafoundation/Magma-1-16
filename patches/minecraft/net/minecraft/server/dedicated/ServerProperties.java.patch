@@ -8,7 +8,15 @@
  import net.minecraft.util.math.MathHelper;
  import net.minecraft.util.registry.DynamicRegistries;
  import net.minecraft.world.Difficulty;
-@@ -61,8 +62,10 @@
+@@ -10,6 +11,7 @@
+ import net.minecraft.world.gen.settings.DimensionGeneratorSettings;
+ 
+ public class ServerProperties extends PropertyManager<ServerProperties> {
++   public final boolean debug = this.func_218982_a("debug", false); // CraftBukkit
+    public final boolean field_219007_a = this.func_218982_a("online-mode", true);
+    public final boolean field_219008_b = this.func_218982_a("prevent-proxy-connections", false);
+    public final String field_219009_c = this.func_218973_a("server-ip", "");
+@@ -61,8 +63,10 @@
     public final PropertyManager<ServerProperties>.Property<Boolean> field_219006_S;
     public final DimensionGeneratorSettings field_241082_U_;
  
@@ -21,7 +29,7 @@
        if (this.func_218982_a("snooper-enabled", true)) {
        }
  
-@@ -93,11 +96,13 @@
+@@ -93,11 +97,13 @@
        this.field_241082_U_ = DimensionGeneratorSettings.func_242753_a(p_i242099_2_, p_i242099_1_);
     }
  

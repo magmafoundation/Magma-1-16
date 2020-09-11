@@ -81,7 +81,13 @@
     protected int field_184245_j;
     @Nullable
     private Entity field_184239_as;
-@@ -140,6 +183,7 @@
+@@ -135,11 +178,12 @@
+    public float field_70126_B;
+    public float field_70127_C;
+    private AxisAlignedBB field_70121_D = field_174836_a;
+-   protected boolean field_70122_E;
++   public boolean field_70122_E; // protected->public CraftBukkit
+    public boolean field_70123_F;
     public boolean field_70124_G;
     public boolean field_70133_I;
     protected Vector3d field_213328_B = Vector3d.field_186680_a;
@@ -941,7 +947,7 @@
  
 +   // CraftBukkit start
 +   protected Optional<TeleportationRepositioner.Result> func_241830_a(ServerWorld p_241830_1_, BlockPos p_241830_2_, boolean p_241830_3_, int radius) {
-+      return p_241830_1_.func_85176_s().func_242957_a(p_241830_2_, radius);
++      return p_241830_1_.func_85176_s().findPortal(p_241830_2_, radius);
 +      // CraftBukkit end
 +   }
 +

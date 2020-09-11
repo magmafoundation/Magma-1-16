@@ -16,12 +16,9 @@
  
  public class DedicatedPlayerList extends PlayerList {
     private static final Logger field_164439_d = LogManager.getLogger();
-@@ -131,4 +135,8 @@
+@@ -131,4 +135,5 @@
     public boolean func_183023_f(GameProfile p_183023_1_) {
        return this.func_152603_m().func_183026_b(p_183023_1_);
     }
 +
-+    public void moveToWorld(ServerPlayerEntity entity, ServerWorld toWorld, boolean b, Location to, boolean b1) {
-+       throw new NotImplementedException("Magma Todo");
-+    }
  }

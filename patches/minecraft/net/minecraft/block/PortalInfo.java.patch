@@ -1,6 +1,6 @@
 --- a/net/minecraft/block/PortalInfo.java
 +++ b/net/minecraft/block/PortalInfo.java
-@@ -1,17 +1,31 @@
+@@ -1,14 +1,19 @@
  package net.minecraft.block;
  
  import net.minecraft.util.math.vector.Vector3d;
@@ -14,21 +14,10 @@
 +   // CraftBukkit start
 +   public final ServerWorld world;
  
+-   public PortalInfo(Vector3d p_i242042_1_, Vector3d p_i242042_2_, float p_i242042_3_, float p_i242042_4_) {
 +   public PortalInfo(Vector3d p_i242042_1_, Vector3d p_i242042_2_, float p_i242042_3_, float p_i242042_4_, ServerWorld world) {
 +      this.world = world;
 +      // CraftBukkit end
-+      this.field_222505_a = p_i242042_1_;
-+      this.field_222506_b = p_i242042_2_;
-+      this.field_242960_c = p_i242042_3_;
-+      this.field_242961_d = p_i242042_4_;
-+   }
-+
-+   // Magma - todo remove
-    public PortalInfo(Vector3d p_i242042_1_, Vector3d p_i242042_2_, float p_i242042_3_, float p_i242042_4_) {
        this.field_222505_a = p_i242042_1_;
        this.field_222506_b = p_i242042_2_;
        this.field_242960_c = p_i242042_3_;
-       this.field_242961_d = p_i242042_4_;
-+      world = null;
-    }
- }

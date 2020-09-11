@@ -1007,7 +1007,7 @@ public final class CraftServer implements Server {
             net.minecraft.server.Main.func_240761_a_(worldSession, DataFixesManager.getDataFixer(), console.options.has("eraseCache"), () -> {
                 return true;
             }, worlddata.func_230418_z_().func_236224_e_().func_239659_c_().stream().map((entry) -> {
-                return RegistryKey.func_240903_a_(Registry.field_239699_ae_, ((RegistryKey) entry.getKey()).func_240901_a_());
+                return RegistryKey.func_240903_a_(Registry.field_239698_ad_, ((RegistryKey) entry.getKey()).func_240901_a_());
             }).collect(ImmutableSet.toImmutableSet()));
         }
 

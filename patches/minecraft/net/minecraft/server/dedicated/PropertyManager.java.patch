@@ -37,16 +37,33 @@
     public static Properties func_218969_b(Path p_218969_0_) {
        Properties properties = new Properties();
  
-@@ -39,7 +54,7 @@
+@@ -38,8 +53,14 @@
+    }
  
     public void func_218970_c(Path p_218970_1_) {
-       try (OutputStream outputstream = Files.newOutputStream(p_218970_1_)) {
+-      try (OutputStream outputstream = Files.newOutputStream(p_218970_1_)) {
 -         this.field_73672_b.store(outputstream, "Minecraft server properties");
++      try {
++         // CraftBukkit start - Don't attempt writing to file if it's read only
++         if (p_218970_1_.toFile().exists() && !p_218970_1_.toFile().canWrite()) {
++            return;
++         }
++         // CraftBukkit end
++         OutputStream outputstream = Files.newOutputStream(p_218970_1_);
 +         net.minecraftforge.common.util.SortedProperties.store(field_73672_b, outputstream, "Minecraft server properties");
        } catch (IOException ioexception) {
           field_164440_a.error("Failed to store properties to file: " + p_218970_1_);
        }
-@@ -155,7 +170,7 @@
+@@ -68,7 +89,7 @@
+ 
+    @Nullable
+    private String func_218976_c(String p_218976_1_) {
+-      return (String)this.field_73672_b.get(p_218976_1_);
++      return (String) getOverride(p_218976_1_, this.field_73672_b.getProperty(p_218976_1_)); // CraftBukkit
+    }
+ 
+    @Nullable
+@@ -155,7 +176,7 @@
        return properties;
     }
  
@@ -55,7 +72,7 @@
  
     public class Property<V> implements Supplier<V> {
        private final String field_219040_b;
-@@ -175,7 +190,7 @@
+@@ -175,7 +196,7 @@
        public T func_244381_a(DynamicRegistries p_244381_1_, V p_244381_2_) {
           Properties properties = PropertyManager.this.func_218966_a();
           properties.put(this.field_219040_b, this.field_219042_d.apply(p_244381_2_));
