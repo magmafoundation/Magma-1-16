@@ -105,7 +105,7 @@
     private CompoundNBT field_77990_d;
     private boolean field_190928_g;
     private Entity field_234693_k_;
-@@ -109,7 +140,10 @@
+@@ -109,34 +140,65 @@
        p_i231596_3_.ifPresent(this::func_77982_d);
     }
  
@@ -116,8 +116,9 @@
 +      this.capNBT = capNBT;
        this.field_151002_e = p_i48204_1_ == null ? null : p_i48204_1_.func_199767_j();
        this.field_77994_a = p_i48204_2_;
-       if (this.field_151002_e != null && this.field_151002_e.func_77645_m()) {
-@@ -117,26 +151,54 @@
+-      if (this.field_151002_e != null && this.field_151002_e.func_77645_m()) {
++      if (this.field_151002_e != null && this.field_151002_e.isDamageable(this)) {
+          this.func_196085_b(this.func_77952_i());
        }
  
        this.func_190923_F();
@@ -164,7 +165,8 @@
 +         // CraftBukkit end
        }
  
-       if (this.func_77973_b().func_77645_m()) {
+-      if (this.func_77973_b().func_77645_m()) {
++      if (this.func_77973_b().isDamageable(this)) {
           this.func_196085_b(this.func_77952_i());
        }
 +   }
@@ -376,7 +378,7 @@
  
     public boolean func_77984_f() {
 -      if (!this.field_190928_g && this.func_77973_b().func_77612_l() > 0) {
-+      if (!this.field_190928_g && this.func_77973_b().getMaxDamage(this) > 0) {
++      if (!this.field_190928_g && this.func_77973_b().isDamageable(this)) {
           CompoundNBT compoundnbt = this.func_77978_p();
           return compoundnbt == null || !compoundnbt.func_74767_n("Unbreakable");
        } else {
@@ -496,6 +498,15 @@
     public CompoundNBT func_77978_p() {
        return this.field_77990_d;
     }
+@@ -479,7 +713,7 @@
+ 
+    public void func_77982_d(@Nullable CompoundNBT p_77982_1_) {
+       this.field_77990_d = p_77982_1_;
+-      if (this.func_77973_b().func_77645_m()) {
++      if (this.func_77973_b().isDamageable(this)) {
+          this.func_196085_b(this.func_77952_i());
+       }
+ 
 @@ -673,6 +907,7 @@
           }
        }

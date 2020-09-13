@@ -38,11 +38,13 @@
           this.writeBoolean(false);
        } else {
           this.writeBoolean(true);
-@@ -301,7 +311,7 @@
+@@ -300,8 +310,8 @@
+          this.func_150787_b(Item.func_150891_b(item));
           this.writeByte(p_150788_1_.func_190916_E());
           CompoundNBT compoundnbt = null;
-          if (item.func_77645_m() || item.func_77651_p()) {
+-         if (item.func_77645_m() || item.func_77651_p()) {
 -            compoundnbt = p_150788_1_.func_77978_p();
++         if (item.isDamageable(p_150788_1_) || item.func_77651_p()) {
 +            compoundnbt = limitedTag ? p_150788_1_.getShareTag() : p_150788_1_.func_77978_p();
           }
  

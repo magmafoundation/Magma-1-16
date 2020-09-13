@@ -82,3 +82,11 @@
     public void func_195594_a(IParticleData p_195594_1_, double p_195594_2_, double p_195594_4_, double p_195594_6_, double p_195594_8_, double p_195594_10_, double p_195594_12_) {
        this.field_217430_d.func_195461_a(p_195594_1_, p_195594_1_.func_197554_b().func_197575_f(), p_195594_2_, p_195594_4_, p_195594_6_, p_195594_8_, p_195594_10_, p_195594_12_);
     }
+@@ -876,6 +899,7 @@
+       }
+ 
+       public void func_239156_a_(Difficulty p_239156_1_) {
++         net.minecraftforge.common.ForgeHooks.onDifficultyChange(p_239156_1_, this.field_239153_j_);
+          this.field_239153_j_ = p_239156_1_;
+       }
+ 

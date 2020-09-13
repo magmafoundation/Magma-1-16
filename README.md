@@ -1,7 +1,7 @@
 <div align="center">
 <img src="https://i.imgur.com/zTCTCWG.png" alt="Magma logo" align="middle"></img>
 
-![](https://img.shields.io/badge/Minecraft%20Forge-1.16.1%20--%2032.0.0%20--9cf9305-orange.svg?style=for-the-badge) ![](https://img.shields.io/badge/Status-Unstable-red?style=for-the-badge) [![](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.hexeption.dev%2Fjob%2FMagma%2520Foundation%2Fjob%2FMagma-1.16.x%2Fjob%2F1.16.x%2F&style=for-the-badge)](https://ci.hexeption.dev/job/Magma%20Foundation/job/Magma-1.16.x/job/1.16.x/)
+![](https://img.shields.io/badge/Minecraft%20Forge-1.16.3%20--%2034.0.0%20--%20ce6c664-orange.svg?style=for-the-badge) ![](https://img.shields.io/badge/Status-Unstable-red?style=for-the-badge) [![](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.hexeption.dev%2Fjob%2FMagma%2520Foundation%2Fjob%2FMagma-1.16.x%2Fjob%2F1.16.x%2F&style=for-the-badge)](https://ci.hexeption.dev/job/Magma%20Foundation/job/Magma-1.16.x/job/1.16.x/)
 </div>
 
 ## About

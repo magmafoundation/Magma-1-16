@@ -438,7 +438,7 @@
 +      AtomicReference<ServerWorld> serverworld = new AtomicReference<>(this.func_71121_q());
 +      RegistryKey<DimensionType> registrykey = p_241206_1_.getTypeKey(); // CraftBukkit
 +      if (registrykey == DimensionType.field_235999_c_ && p_241206_1_ != null && p_241206_1_.func_234923_W_() == World.field_234918_g_ && p_241206_1_.getTypeKey() == DimensionType.field_236001_e_
-+          && teleporter instanceof net.minecraft.world.Teleporter) { //Forge: Fix non-vanilla teleporters triggering end credits // CraftBukkit
++          && teleporter.isVanilla()) { //Forge: Fix non-vanilla teleporters triggering end credits // CraftBukkit
 +         this.field_184851_cj = true; // CraftBukkit - Moved Down from abpve
           this.func_213319_R();
 -         this.func_71121_q().func_217434_e(this);

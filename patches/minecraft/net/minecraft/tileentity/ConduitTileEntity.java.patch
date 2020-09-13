@@ -10,16 +10,24 @@
  
  public class ConduitTileEntity extends TileEntity implements ITickableTileEntity {
     private static final Block[] field_205042_e = new Block[]{Blocks.field_180397_cI, Blocks.field_196779_gQ, Blocks.field_180398_cJ, Blocks.field_196781_gR};
-@@ -131,7 +134,7 @@
+@@ -130,15 +133,13 @@
+                   BlockPos blockpos1 = this.field_174879_c.func_177982_a(j1, k1, l1);
                    BlockState blockstate = this.field_145850_b.func_180495_p(blockpos1);
  
-                   for(Block block : field_205042_e) {
+-                  for(Block block : field_205042_e) {
 -                     if (blockstate.func_203425_a(block)) {
 +                     if (blockstate.isConduitFrame(this.field_145850_b, blockpos1, func_174877_v())) {
                          this.field_205046_i.add(blockpos1);
                       }
                    }
-@@ -155,7 +158,7 @@
+                }
+             }
+          }
+-      }
+ 
+       this.func_207736_b(this.field_205046_i.size() >= 42);
+       return this.field_205046_i.size() >= 16;
+@@ -155,7 +156,7 @@
        if (!list.isEmpty()) {
           for(PlayerEntity playerentity : list) {
              if (this.field_174879_c.func_218141_a(playerentity.func_233580_cy_(), (double)j) && playerentity.func_70026_G()) {
@@ -28,7 +36,7 @@
              }
           }
  
-@@ -182,8 +185,13 @@
+@@ -182,8 +183,13 @@
        }
  
        if (this.field_205047_j != null) {
