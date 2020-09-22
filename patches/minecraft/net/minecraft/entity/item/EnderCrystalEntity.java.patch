@@ -27,7 +27,7 @@
        } else {
           if (!this.field_70128_L && !this.field_70170_p.field_72995_K) {
 +            // CraftBukkit start - All non-living entities need this
-+            if (CraftEventFactory.handleNonLivingEntityDamageEvent(this, p_70097_1_, p_70097_2_)) {
++            if (CraftEventFactory.handleNonLivingEntityDamageEvent(this, p_70097_1_, p_70097_2_, false)) {
 +               return false;
 +            }
 +            // CraftBukkit end

@@ -326,14 +326,14 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public InventoryView openWorkbench(Location location, boolean force) {
+        if (location == null) {
+            location = getLocation();
+        }
         if (!force) {
             Block block = location.getBlock();
             if (block.getType() != Material.CRAFTING_TABLE) {
                 return null;
             }
-        }
-        if (location == null) {
-            location = getLocation();
         }
         getHandle().openContainer(((CraftingTableBlock) Blocks.CRAFTING_TABLE).getContainer(null, getHandle().world, new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ())));
         if (force) {
@@ -344,14 +344,14 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public InventoryView openEnchanting(Location location, boolean force) {
+        if (location == null) {
+            location = getLocation();
+        }
         if (!force) {
             Block block = location.getBlock();
             if (block.getType() != Material.ENCHANTING_TABLE) {
                 return null;
             }
-        }
-        if (location == null) {
-            location = getLocation();
         }
 
         // If there isn't an enchant table we can force create one, won't be very useful though.
@@ -569,5 +569,10 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         if (entity != null) {
             entity.remove();
         }
+    }
+
+    @Override
+    public boolean dropItem(boolean dropAll) {
+        return getHandle().drop(dropAll);
     }
 }

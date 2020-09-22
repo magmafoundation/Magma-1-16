@@ -17,3 +17,21 @@
  
     public EyeOfEnderEntity(EntityType<? extends EyeOfEnderEntity> p_i50169_1_, World p_i50169_2_) {
        super(p_i50169_1_, p_i50169_2_);
+@@ -45,7 +45,7 @@
+    }
+ 
+    public void func_213863_b(ItemStack p_213863_1_) {
+-      if (p_213863_1_.func_77973_b() != Items.field_151061_bv || p_213863_1_.func_77942_o()) {
++      if (true || p_213863_1_.func_77973_b() != Items.field_151061_bv || p_213863_1_.func_77942_o()) { // CraftBukkit - always allow item changing
+          this.func_184212_Q().func_187227_b(field_213864_b, Util.func_200696_a(p_213863_1_.func_77946_l(), (p_213862_0_) -> {
+             p_213862_0_.func_190920_e(1);
+          }));
+@@ -174,7 +174,7 @@
+ 
+    public void func_70037_a(CompoundNBT p_70037_1_) {
+       ItemStack itemstack = ItemStack.func_199557_a(p_70037_1_.func_74775_l("Item"));
+-      this.func_213863_b(itemstack);
++      if (!itemstack.func_190926_b()) this.func_213863_b(itemstack); // CraftBukkit - SPIGOT-6103 summon, see also SPIGOT-5474
+    }
+ 
+    public float func_70013_c() {

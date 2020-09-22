@@ -393,7 +393,7 @@
           }
        }
  
-@@ -599,28 +783,43 @@
+@@ -599,28 +783,45 @@
     }
  
     private boolean func_175400_cq() {
@@ -406,10 +406,12 @@
     protected PortalInfo func_241829_a(ServerWorld p_241829_1_) {
        PortalInfo portalinfo = super.func_241829_a(p_241829_1_);
 -      if (portalinfo != null && this.field_70170_p.func_234923_W_() == World.field_234918_g_ && p_241829_1_.func_234923_W_() == World.field_234920_i_) {
++      p_241829_1_ = (portalinfo == null) ? p_241829_1_ : portalinfo.world; // CraftBukkit
++
 +      if (portalinfo != null && this.field_70170_p.getTypeKey() == DimensionType.field_235999_c_ && p_241829_1_ != null && p_241829_1_.getTypeKey() == DimensionType.field_236001_e_) { // CraftBukkit
           Vector3d vector3d = portalinfo.field_222505_a.func_72441_c(0.0D, -1.0D, 0.0D);
 -         return new PortalInfo(vector3d, Vector3d.field_186680_a, 90.0F, 0.0F);
-+         return new PortalInfo(vector3d, Vector3d.field_186680_a, 90.0F, 0.0F, p_241829_1_); // CraftBukkit
++         return new PortalInfo(vector3d, Vector3d.field_186680_a, 90.0F, 0.0F, p_241829_1_, portalinfo.portalEventInfo); // CraftBukkit
        } else {
           return portalinfo;
        }
@@ -446,7 +448,7 @@
           if (!this.field_71136_j) {
              this.field_71136_j = true;
              this.field_71135_a.func_147359_a(new SChangeGameStatePacket(SChangeGameStatePacket.field_241768_e_, this.field_192040_cp ? 0.0F : 1.0F));
-@@ -629,36 +828,85 @@
+@@ -629,36 +830,75 @@
  
           return this;
        } else {
@@ -481,33 +483,23 @@
 +               serverworld.set(portalinfo.world); // CraftBukkit
 +               if (serverworld.get() == null) {
 +               } else // CraftBukkit - empty to fall through to null to event
-+                  if (registrykey == DimensionType.field_235999_c_ && serverworld.get().getTypeKey() == DimensionType.field_236000_d_) { // CraftBukkit
++                  if (registrykey == DimensionType.field_235999_c_ && serverworld.get().getTypeKey() == DimensionType.field_236000_d_ && portalinfo.portalEventInfo != null && portalinfo.portalEventInfo.getCanCreatePortal()) { // CraftBukkit
 +                     this.field_193110_cw = this.func_213303_ch();
 +                  } else if (spawnPortal && serverworld.get().getTypeKey() == DimensionType.field_236001_e_) { // CraftBukkit
 +                     this.func_242110_a(p_241206_1_, new BlockPos(portalinfo.field_222505_a));
 +                  }
 +               // CraftBukkit start
++               else {
++                  return null;
++                  }
 +               Location enter = this.getBukkitEntity().getLocation();
-+               Location exit = (serverworld.get() == null) ? null
-+                   : new Location(serverworld.get().getWorldCB(), portalinfo.field_222505_a.field_72450_a, portalinfo.field_222505_a.field_72448_b, portalinfo.field_222505_a.field_72449_c, portalinfo.field_242960_c, portalinfo.field_242961_d);
-+               PlayerPortalEvent event = new PlayerPortalEvent(this.getBukkitEntity(), enter, exit, cause, 128, true, registrykey == DimensionType.field_236001_e_ ? 0 : 16);
-+               Bukkit.getServer().getPluginManager().callEvent(event);
-+               if (event.isCancelled() || event.getTo() == null) {
-+                  return null;
-+               }
-+               exit = event.getTo();
-+               if (exit == null) {
-+                  return null;
-+               }
++               Location exit = (serverworld.get() == null) ? null : new Location(serverworld.get().getWorldCB(), portalinfo.field_222505_a.field_72450_a, portalinfo.field_222505_a.field_72448_b, portalinfo.field_222505_a.field_72449_c, portalinfo.field_242960_c, portalinfo.field_242961_d);
 +               PlayerTeleportEvent tpEvent = new PlayerTeleportEvent(this.getBukkitEntity(), enter, exit, cause);
 +               Bukkit.getServer().getPluginManager().callEvent(tpEvent);
 +               if (tpEvent.isCancelled() || tpEvent.getTo() == null) {
 +                  return null;
 +               }
 +               exit = tpEvent.getTo();
-+               if (exit == null) {
-+                  return null;
-+               }
 +               serverworld.set(((CraftWorld) exit.getWorld()).getHandle());
 +               // CraftBukkit end
 +               serverworld.get().func_217381_Z().func_76319_b();
@@ -553,7 +545,7 @@
                 this.field_71135_a.func_147359_a(new SPlayEntityEffectPacket(this.func_145782_y(), effectinstance));
              }
  
-@@ -666,6 +914,12 @@
+@@ -666,6 +906,12 @@
              this.field_71144_ck = -1;
              this.field_71149_ch = -1.0F;
              this.field_71146_ci = -1;
@@ -566,18 +558,18 @@
           }
  
           return this;
-@@ -686,8 +940,8 @@
+@@ -686,8 +932,8 @@
  
     }
  
 -   protected Optional<TeleportationRepositioner.Result> func_241830_a(ServerWorld p_241830_1_, BlockPos p_241830_2_, boolean p_241830_3_) {
 -      Optional<TeleportationRepositioner.Result> optional = super.func_241830_a(p_241830_1_, p_241830_2_, p_241830_3_);
-+   protected Optional<TeleportationRepositioner.Result> func_241830_a(ServerWorld p_241830_1_, BlockPos p_241830_2_, boolean p_241830_3_, int radius) { // CraftBukkit
-+      Optional<TeleportationRepositioner.Result> optional = super.func_241830_a(p_241830_1_, p_241830_2_, p_241830_3_, radius); // CraftBukkit
++   protected Optional<TeleportationRepositioner.Result> func_241830_a(ServerWorld p_241830_1_, BlockPos p_241830_2_, boolean p_241830_3_, int radius, boolean canCreatePortal, int createRadius) { // CraftBukkit
++      Optional<TeleportationRepositioner.Result> optional = super.func_241830_a(p_241830_1_, p_241830_2_, p_241830_3_, radius, canCreatePortal, createRadius); // CraftBukkit
        if (optional.isPresent()) {
           return optional;
        } else {
-@@ -701,7 +955,7 @@
+@@ -701,7 +947,7 @@
        }
     }
  
@@ -586,7 +578,7 @@
        RegistryKey<World> registrykey = p_213846_1_.func_234923_W_();
        RegistryKey<World> registrykey1 = this.field_70170_p.func_234923_W_();
        CriteriaTriggers.field_193134_u.func_233551_a_(this, registrykey, registrykey1);
-@@ -738,43 +992,81 @@
+@@ -738,43 +984,81 @@
        this.field_71070_bA.func_75142_b();
     }
  
@@ -682,7 +674,7 @@
     }
  
     public void func_213342_e(BlockPos p_213342_1_) {
-@@ -783,6 +1075,7 @@
+@@ -783,6 +1067,7 @@
     }
  
     private boolean func_241147_a_(BlockPos p_241147_1_, Direction p_241147_2_) {
@@ -690,7 +682,7 @@
        return this.func_241158_g_(p_241147_1_) || this.func_241158_g_(p_241147_1_.func_177972_a(p_241147_2_.func_176734_d()));
     }
  
-@@ -797,6 +1090,7 @@
+@@ -797,6 +1082,7 @@
     }
  
     public void func_225652_a_(boolean p_225652_1_, boolean p_225652_2_) {
@@ -698,7 +690,7 @@
        if (this.func_70608_bn()) {
           this.func_71121_q().func_72863_F().func_217216_a(this, new SAnimateHandPacket(this, 2));
        }
-@@ -862,6 +1156,13 @@
+@@ -862,6 +1148,13 @@
        this.field_71139_cq = this.field_71139_cq % 100 + 1;
     }
  
@@ -712,7 +704,7 @@
     public OptionalInt func_213829_a(@Nullable INamedContainerProvider p_213829_1_) {
        if (p_213829_1_ == null) {
           return OptionalInt.empty();
-@@ -872,6 +1173,23 @@
+@@ -872,6 +1165,23 @@
  
           this.func_71117_bO();
           Container container = p_213829_1_.createMenu(this.field_71139_cq, this.field_71071_by, this);
@@ -736,7 +728,7 @@
           if (container == null) {
              if (this.func_175149_v()) {
                 this.func_146105_b((new TranslationTextComponent("container.spectatorCantOpen")).func_240699_a_(TextFormatting.RED), true);
-@@ -879,9 +1197,13 @@
+@@ -879,9 +1189,13 @@
  
              return OptionalInt.empty();
           } else {
@@ -751,7 +743,7 @@
              return OptionalInt.of(this.field_71139_cq);
           }
        }
-@@ -892,14 +1214,26 @@
+@@ -892,14 +1206,26 @@
     }
  
     public void func_184826_a(AbstractHorseEntity p_184826_1_, IInventory p_184826_2_) {
@@ -780,7 +772,7 @@
     }
  
     public void func_184814_a(ItemStack p_184814_1_, Hand p_184814_2_) {
-@@ -938,6 +1272,11 @@
+@@ -938,6 +1264,11 @@
     public void func_71110_a(Container p_71110_1_, NonNullList<ItemStack> p_71110_2_) {
        this.field_71135_a.func_147359_a(new SWindowItemsPacket(p_71110_1_.field_75152_c, p_71110_2_));
        this.field_71135_a.func_147359_a(new SSetSlotPacket(-1, -1, this.field_71071_by.func_70445_o()));
@@ -792,7 +784,7 @@
     }
  
     public void func_71112_a(Container p_71112_1_, int p_71112_2_, int p_71112_3_) {
-@@ -945,6 +1284,7 @@
+@@ -945,6 +1276,7 @@
     }
  
     public void func_71053_j() {
@@ -800,7 +792,7 @@
        this.field_71135_a.func_147359_a(new SCloseWindowPacket(this.field_71070_bA.field_75152_c));
        this.func_71128_l();
     }
-@@ -957,6 +1297,7 @@
+@@ -957,6 +1289,7 @@
  
     public void func_71128_l() {
        this.field_71070_bA.func_75134_a(this);
@@ -808,7 +800,7 @@
        this.field_71070_bA = this.field_71069_bz;
     }
  
-@@ -978,14 +1319,14 @@
+@@ -978,14 +1311,14 @@
  
     public void func_71064_a(Stat<?> p_71064_1_, int p_71064_2_) {
        this.field_147103_bO.func_150871_b(this, p_71064_1_, p_71064_2_);
@@ -825,7 +817,7 @@
     }
  
     public int func_195065_a(Collection<IRecipe<?>> p_195065_1_) {
-@@ -1026,8 +1367,17 @@
+@@ -1026,8 +1359,17 @@
  
     public void func_71118_n() {
        this.field_71149_ch = -1.0E8F;
@@ -843,7 +835,7 @@
     public void func_146105_b(ITextComponent p_146105_1_, boolean p_146105_2_) {
        this.field_71135_a.func_147359_a(new SChatPacket(p_146105_1_, p_146105_2_ ? ChatType.GAME_INFO : ChatType.CHAT, Util.field_240973_b_));
     }
-@@ -1075,12 +1425,19 @@
+@@ -1075,12 +1417,19 @@
        this.field_71144_ck = -1;
        this.field_71149_ch = -1.0F;
        this.field_71146_ci = -1;
@@ -864,7 +856,7 @@
     }
  
     protected void func_70670_a(EffectInstance p_70670_1_) {
-@@ -1139,6 +1496,17 @@
+@@ -1139,6 +1488,17 @@
     }
  
     public void func_71033_a(GameType p_71033_1_) {
@@ -882,7 +874,7 @@
        this.field_71134_c.func_73076_a(p_71033_1_);
        this.field_71135_a.func_147359_a(new SChangeGameStatePacket(SChangeGameStatePacket.field_241767_d_, (float)p_71033_1_.func_77148_a()));
        if (p_71033_1_ == GameType.SPECTATOR) {
-@@ -1183,10 +1551,22 @@
+@@ -1183,10 +1543,22 @@
     }
  
     public void func_147100_a(CClientSettingsPacket p_147100_1_) {
@@ -905,7 +897,7 @@
     }
  
     public ChatVisibility func_147096_v() {
-@@ -1245,7 +1625,7 @@
+@@ -1245,7 +1617,7 @@
        this.field_175401_bS = (Entity)(p_175399_1_ == null ? this : p_175399_1_);
        if (entity != this.field_175401_bS) {
           this.field_71135_a.func_147359_a(new SCameraPacket(this.field_175401_bS));
@@ -914,7 +906,7 @@
        }
  
     }
-@@ -1272,7 +1652,7 @@
+@@ -1272,7 +1644,7 @@
  
     @Nullable
     public ITextComponent func_175396_E() {
@@ -923,7 +915,7 @@
     }
  
     public void func_184609_a(Hand p_184609_1_) {
-@@ -1292,29 +1672,39 @@
+@@ -1292,29 +1664,39 @@
        return this.field_192042_bX;
     }
  
@@ -981,7 +973,7 @@
     }
  
     @Nullable
-@@ -1335,6 +1725,7 @@
+@@ -1335,6 +1717,7 @@
     }
  
     public void func_242111_a(RegistryKey<World> p_242111_1_, @Nullable BlockPos p_242111_2_, float p_242111_3_, boolean p_242111_4_, boolean p_242111_5_) {
@@ -989,7 +981,7 @@
        if (p_242111_2_ != null) {
           boolean flag = p_242111_2_.equals(this.field_241138_cr_) && p_242111_1_.equals(this.field_241137_cq_);
           if (p_242111_5_ && !flag) {
-@@ -1387,6 +1778,8 @@
+@@ -1387,6 +1770,8 @@
        if (itementity == null) {
           return null;
        } else {
@@ -998,7 +990,7 @@
           this.field_70170_p.func_217376_c(itementity);
           ItemStack itemstack = itementity.func_92059_d();
           if (p_146097_3_) {
-@@ -1400,4 +1793,132 @@
+@@ -1400,4 +1785,132 @@
           return itementity;
        }
     }
@@ -1110,7 +1102,7 @@
 +      this.field_71067_cb = this.newTotalExp;
 +      this.field_71106_cc = 0;
 +      this.field_70725_aQ = 0;
-+      this.func_85034_r(0);
++      this.setArrowCountInEntity(0, true);
 +      this.clearActivePotions(org.bukkit.event.entity.EntityPotionEffectEvent.Cause.DEATH);
 +      this.field_70752_e = true;
 +      this.field_71070_bA = this.field_71069_bz;

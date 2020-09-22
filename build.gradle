@@ -406,7 +406,7 @@ project(':forge') {
         installer 'org.yaml:snakeyaml:1.26'
         installer 'net.md-5:bungeecord-chat:1.15'
         installer 'net.md-5:SpecialSource:1.8.5'
-
+        installer 'org.apache.logging.log4j:log4j-iostreams:2.8.1'
     }
 
     // We apply the bin patches we just created to make a jar that is JUST our changes
@@ -457,17 +457,6 @@ project(':forge') {
     }
 
     task checkAll(dependsOn: [checkATs, checkSAS, checkExcs]) {}
-
-    task checkPatchesAndFix(type: CheckPatches) {
-        patchDir = file("$rootDir/patches")
-        autoFix = true
-    }
-
-    task checkPatches(type: CheckPatches) {
-        patchDir = file("$rootDir/patches")
-        autoFix = false
-    }
-    project(':forge').getTasks().getByName('genPatches').finalizedBy(checkPatches)
 
     task launcherJson(dependsOn: ['signUniversalJar', 'signLauncherJar']) {
         inputs.file universalJar.archivePath

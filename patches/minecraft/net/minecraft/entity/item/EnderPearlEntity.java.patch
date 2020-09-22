@@ -55,7 +55,8 @@
 -   public Entity func_241206_a_(ServerWorld p_241206_1_) {
 +   public Entity changeDimension(ServerWorld p_241206_1_, net.minecraftforge.common.util.ITeleporter teleporter) {
        Entity entity = this.func_234616_v_();
-       if (entity != null && entity.field_70170_p.func_234923_W_() != p_241206_1_.func_234923_W_()) {
+-      if (entity != null && entity.field_70170_p.func_234923_W_() != p_241206_1_.func_234923_W_()) {
++      if (entity != null && p_241206_1_ != null && entity.field_70170_p.func_234923_W_() != p_241206_1_.func_234923_W_()) { // CraftBukkit - SPIGOT-6113
           this.func_212361_a((Entity)null);
        }
  

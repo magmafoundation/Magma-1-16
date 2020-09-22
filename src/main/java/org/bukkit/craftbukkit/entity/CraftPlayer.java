@@ -509,7 +509,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public void sendBlockChange(Location loc, Material material, byte data) {
         if (getHandle().connection == null) return;
 
-        SChangeBlockPacket packet = new SChangeBlockPacket(((CraftWorld) loc.getWorld()).getHandle(), new BlockPos(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
+        SChangeBlockPacket packet = new SChangeBlockPacket(new BlockPos(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()), CraftMagicNumbers.getBlock(material, data));
 
         packet.state = CraftMagicNumbers.getBlock(material, data);
         getHandle().connection.sendPacket(packet);
@@ -519,7 +519,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public void sendBlockChange(Location loc, BlockData block) {
         if (getHandle().connection == null) return;
 
-        SChangeBlockPacket packet = new SChangeBlockPacket(((CraftWorld) loc.getWorld()).getHandle(), new BlockPos(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
+        SChangeBlockPacket packet = new SChangeBlockPacket(new BlockPos(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()), ((CraftBlockData) block).getState());
 
         packet.state = ((CraftBlockData) block).getState();
         getHandle().connection.sendPacket(packet);
@@ -743,7 +743,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public void setBedSpawnLocation(Location location, boolean override) {
         if (location == null) {
-            getHandle().func_242111_a(null, null, location.getYaw(),override, false);
+            getHandle().func_242111_a(null, null, 0.0F, override, false);
         } else {
             getHandle().func_242111_a(((CraftWorld) location.getWorld()).getHandle().func_234923_W_(), new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ()), location.getYaw(), override, false);
         }

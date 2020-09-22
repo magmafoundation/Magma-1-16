@@ -25,13 +25,14 @@
     private final NonNullList<ItemStack> field_184800_bx = NonNullList.func_191197_a(4, ItemStack.field_190927_a);
     private boolean field_175436_h;
     public long field_175437_i;
-    private int field_175442_bg;
+-   private int field_175442_bg;
 -   private Rotations field_175443_bh = field_175435_a;
 -   private Rotations field_175444_bi = field_175433_b;
 -   private Rotations field_175438_bj = field_175434_c;
 -   private Rotations field_175439_bk = field_175431_d;
 -   private Rotations field_175440_bl = field_175432_e;
 -   private Rotations field_175441_bm = field_175429_f;
++   public int field_175442_bg; // private->public CraftBukkit
 +   public Rotations field_175443_bh = field_175435_a; // private->public CraftBukkit
 +   public Rotations field_175444_bi = field_175433_b; // private->public CraftBukkit
 +   public Rotations field_175438_bj = field_175434_c; // private->public CraftBukkit

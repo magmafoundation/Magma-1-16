@@ -2,11 +2,14 @@ package org.bukkit.craftbukkit.entity;
 
 import net.minecraft.entity.item.ArmorStandEntity;
 import net.minecraft.util.math.Rotations;
+import org.bukkit.craftbukkit.CraftEquipmentSlot;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
+import org.jetbrains.annotations.NotNull;
 
 public class CraftArmorStand extends CraftLivingEntity implements ArmorStand {
 
@@ -210,5 +213,20 @@ public class CraftArmorStand extends CraftLivingEntity implements ArmorStand {
     @Override
     public void setMarker(boolean marker) {
         getHandle().setMarker(marker);
+    }
+
+    @Override
+    public void addEquipmentLock(EquipmentSlot equipmentSlot, LockType lockType) {
+        getHandle().disabledSlots |= (1 << CraftEquipmentSlot.getNMS(equipmentSlot).getSlotIndex() + lockType.ordinal() * 8); // PAIL c() rename getSlotFlag()
+    }
+
+    @Override
+    public void removeEquipmentLock(EquipmentSlot equipmentSlot, LockType lockType) {
+        getHandle().disabledSlots &= ~(1 << CraftEquipmentSlot.getNMS(equipmentSlot).getSlotIndex() + lockType.ordinal() * 8);
+    }
+
+    @Override
+    public boolean hasEquipmentLock(EquipmentSlot equipmentSlot, LockType lockType) {
+        return (getHandle().disabledSlots & (1 << CraftEquipmentSlot.getNMS(equipmentSlot).getSlotIndex() + lockType.ordinal() * 8)) != 0;
     }
 }

@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.boss.WitherEntity;
@@ -55,6 +56,7 @@ import org.bukkit.entity.DragonFireball;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityCategory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Firework;
@@ -240,6 +242,27 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     @Override
     public void setMaximumAir(int ticks) {
         getHandle().maxAirTicks = ticks;
+    }
+
+    @Override
+    public int getArrowCooldown() {
+        return getHandle().arrowHitTimer; // PAIL rename arrowCooldown
+    }
+
+    @Override
+    public void setArrowCooldown(int ticks) {
+        getHandle().arrowHitTimer = ticks;
+    }
+
+    @Override
+    public int getArrowsInBody() {
+        return getHandle().getArrowCountInEntity();
+    }
+
+    @Override
+    public void setArrowsInBody(int count) {
+        Preconditions.checkArgument(count >= 0, "New arrow amount must be >= 0");
+        getHandle().getDataManager().set(net.minecraft.entity.LivingEntity.ARROW_COUNT_IN_ENTITY, count);
     }
 
     @Override
@@ -631,4 +654,36 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     public <T> void setMemory(MemoryKey<T> memoryKey, T t) {
         getHandle().getBrain().setMemory(CraftMemoryKey.fromMemoryKey(memoryKey), CraftMemoryMapper.toNms(t));
     }
+
+
+    @Override
+    public EntityCategory getCategory() {
+        CreatureAttribute type = getHandle().getCreatureAttribute(); // Not actually an enum?
+
+        if (type == CreatureAttribute.UNDEFINED) {
+            return EntityCategory.NONE;
+        } else if (type == CreatureAttribute.UNDEAD) {
+            return EntityCategory.UNDEAD;
+        } else if (type == CreatureAttribute.ARTHROPOD) {
+            return EntityCategory.ARTHROPOD;
+        } else if (type == CreatureAttribute.ILLAGER) {
+            return EntityCategory.ILLAGER;
+        } else if (type == CreatureAttribute.WATER) {
+            return EntityCategory.WATER;
+        }
+
+        throw new UnsupportedOperationException("Unsupported monster type: " + type + ". This is a bug, report this to Spigot.");
+    }
+
+    @Override
+    public boolean isInvisible() {
+        return getHandle().isInvisible();
+    }
+
+    @Override
+    public void setInvisible(boolean invisible) {
+        getHandle().persistentInvisibility = invisible;
+        getHandle().setFlag(5, invisible);
+    }
+
 }

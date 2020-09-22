@@ -17,7 +17,7 @@
 -   public PropertyManager(Properties p_i50717_1_) {
 -      this.field_73672_b = p_i50717_1_;
 +   // CraftBukkit start
-+   private OptionSet options = null;
++   private OptionSet options;
 +
 +   public PropertyManager(Properties properties, final OptionSet options) {
 +      this.field_73672_b = properties;

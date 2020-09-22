@@ -566,7 +566,7 @@
        serverplayerentity.func_145769_d(p_232644_1_.func_145782_y());
        serverplayerentity.func_184819_a(p_232644_1_.func_184591_cq());
  
-@@ -431,48 +604,108 @@
+@@ -431,48 +604,107 @@
           serverplayerentity.func_184211_a(s);
        }
  
@@ -605,7 +605,6 @@
 +                  Vector3d vec3d1 = Vector3d.func_237492_c_((Vector3i) blockpos).func_178788_d(vec3d).func_72432_b();
 +                  f1 = (float) MathHelper.func_76138_g(MathHelper.func_181159_b(vec3d1.field_72449_c, vec3d1.field_72450_a) * 57.2957763671875D - 90.0D);
 +               }
-+               serverplayerentity.func_70012_b(vec3d.field_72450_a, vec3d.field_72448_b, vec3d.field_72449_c, f1, 0.0F);
 +               serverplayerentity.func_242111_a(worldserver1.func_234923_W_(), blockpos, f, conqueredEnd, false);
 +               flag2 = !flag && flag3;
 +               isBedSpawn = true;
@@ -702,7 +701,7 @@
        return serverplayerentity;
     }
  
-@@ -484,12 +717,36 @@
+@@ -484,12 +716,36 @@
  
     public void func_72374_b() {
        if (++this.field_72408_o > 600) {
@@ -740,7 +739,7 @@
     public void func_148540_a(IPacket<?> p_148540_1_) {
        for(int i = 0; i < this.field_72404_b.size(); ++i) {
           (this.field_72404_b.get(i)).field_71135_a.func_147359_a(p_148540_1_);
-@@ -585,6 +842,7 @@
+@@ -585,6 +841,7 @@
           p_187245_1_.field_71135_a.func_147359_a(new SEntityStatusPacket(p_187245_1_, b0));
        }
  
@@ -748,7 +747,7 @@
        this.field_72400_f.func_195571_aL().func_197051_a(p_187245_1_);
     }
  
-@@ -610,6 +868,13 @@
+@@ -610,6 +867,13 @@
     public void func_148543_a(@Nullable PlayerEntity p_148543_1_, double p_148543_2_, double p_148543_4_, double p_148543_6_, double p_148543_8_, RegistryKey<World> p_148543_10_, IPacket<?> p_148543_11_) {
        for(int i = 0; i < this.field_72404_b.size(); ++i) {
           ServerPlayerEntity serverplayerentity = this.field_72404_b.get(i);
@@ -762,7 +761,7 @@
           if (serverplayerentity != p_148543_1_ && serverplayerentity.field_70170_p.func_234923_W_() == p_148543_10_) {
              double d0 = p_148543_2_ - serverplayerentity.func_226277_ct_();
              double d1 = p_148543_4_ - serverplayerentity.func_226278_cu_();
-@@ -649,22 +914,32 @@
+@@ -649,22 +913,32 @@
     }
  
     public void func_72354_b(ServerPlayerEntity p_72354_1_, ServerWorld p_72354_2_) {
@@ -797,7 +796,7 @@
     }
  
     public int func_72394_k() {
-@@ -719,7 +994,7 @@
+@@ -719,7 +993,7 @@
           p_72381_1_.field_71134_c.func_241820_a(this.field_72410_m, GameType.NOT_SET);
        }
  
@@ -806,7 +805,7 @@
     }
  
     @OnlyIn(Dist.CLIENT)
-@@ -728,32 +1003,46 @@
+@@ -728,32 +1002,46 @@
     }
  
     public void func_72392_r() {
@@ -862,7 +861,7 @@
        }
  
        return serverstatisticsmanager;
-@@ -761,12 +1050,12 @@
+@@ -761,12 +1049,12 @@
  
     public PlayerAdvancements func_192054_h(ServerPlayerEntity p_192054_1_) {
        UUID uuid = p_192054_1_.func_110124_au();
@@ -877,7 +876,7 @@
        }
  
        playeradvancements.func_192739_a(p_192054_1_);
-@@ -786,7 +1075,7 @@
+@@ -786,7 +1074,7 @@
     }
  
     public List<ServerPlayerEntity> func_181057_v() {
@@ -886,7 +885,7 @@
     }
  
     @Nullable
-@@ -799,11 +1088,14 @@
+@@ -799,11 +1087,14 @@
     }
  
     public void func_193244_w() {
@@ -903,7 +902,7 @@
        SUpdateRecipesPacket supdaterecipespacket = new SUpdateRecipesPacket(this.field_72400_f.func_199529_aN().func_199510_b());
  
        for(ServerPlayerEntity serverplayerentity : this.field_72404_b) {
-@@ -816,4 +1108,12 @@
+@@ -816,4 +1107,12 @@
     public boolean func_206257_x() {
        return this.field_72407_n;
     }

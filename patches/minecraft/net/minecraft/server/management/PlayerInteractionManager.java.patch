@@ -176,7 +176,7 @@
                 this.field_73092_a.func_175715_c(this.field_73090_b.func_145782_y(), this.field_180240_f, -1);
                 this.field_73090_b.field_71135_a.func_147359_a(new SPlayerDiggingPacket(this.field_180240_f, this.field_73092_a.func_180495_p(this.field_180240_f), p_225416_2_, true, "aborted mismatched destroying"));
              }
-@@ -211,53 +286,127 @@
+@@ -211,53 +286,128 @@
        if (this.func_180237_b(p_229860_1_)) {
           this.field_73090_b.field_71135_a.func_147359_a(new SPlayerDiggingPacket(p_229860_1_, this.field_73092_a.func_180495_p(p_229860_1_), p_229860_2_, true, p_229860_3_));
        } else {
@@ -212,6 +212,7 @@
 +         if (nmsBlock != null && !event.isCancelled() && !this.func_73083_d() && this.field_73090_b.func_234569_d_(nmsBlock.func_176223_P())) {
 +            event.setExpToDrop(nmsBlock.getExpDrop(nmsData, this.field_73092_a, p_180237_1_, itemstack));
 +         }
++
 +         this.field_73092_a.getServerCB().getPluginManager().callEvent(event);
 +
 +         if (event.isCancelled()) {
@@ -315,13 +316,11 @@
           int i = p_187250_3_.func_190916_E();
           int j = p_187250_3_.func_77952_i();
           ActionResult<ItemStack> actionresult = p_187250_3_.func_77957_a(p_187250_2_, p_187250_1_, p_187250_4_);
-@@ -288,11 +437,39 @@
+@@ -288,11 +438,36 @@
        }
     }
  
 +   // CraftBukkit start - whole method
-+   public boolean interactResult = false;
-+   public boolean firedInteract = false;
     public ActionResultType func_219441_a(ServerPlayerEntity p_219441_1_, World p_219441_2_, ItemStack p_219441_3_, Hand p_219441_4_, BlockRayTraceResult p_219441_5_) {
        BlockPos blockpos = p_219441_5_.func_216350_a();
 +      ActionResultType enuminteractionresult = ActionResultType.PASS;
@@ -338,8 +337,7 @@
 +         cancelledBlock = true;
 +      }
 +      PlayerInteractEvent eventCB = CraftEventFactory.callPlayerInteractEvent(p_219441_1_, Action.RIGHT_CLICK_BLOCK, blockpos, p_219441_5_.func_216354_b(), p_219441_3_, cancelledBlock, p_219441_4_);
-+      firedInteract = true;
-+      interactResult = eventCB.useItemInHand() == Event.Result.DENY;
++      boolean interactResult = eventCB.useItemInHand() == Event.Result.DENY;
 +      if (eventCB.useInteractedBlock() == Event.Result.DENY) {
 +         // If we denied a door from opening, we need to send a correcting update to the client, as it already opened the door.
 +         if (blockstate.func_177230_c() instanceof DoorBlock) {
@@ -355,7 +353,7 @@
           if (inamedcontainerprovider != null) {
              p_219441_1_.func_213829_a(inamedcontainerprovider);
              return ActionResultType.SUCCESS;
-@@ -300,10 +477,16 @@
+@@ -300,10 +475,16 @@
              return ActionResultType.PASS;
           }
        } else {
@@ -374,7 +372,7 @@
              ActionResultType actionresulttype = blockstate.func_227031_a_(p_219441_2_, p_219441_1_, p_219441_4_, p_219441_5_);
              if (actionresulttype.func_226246_a_()) {
                 CriteriaTriggers.field_232607_M_.func_226695_a_(p_219441_1_, blockpos, itemstack);
-@@ -312,7 +495,7 @@
+@@ -312,7 +493,7 @@
           }
  
           if (!p_219441_3_.func_190926_b() && !p_219441_1_.func_184811_cZ().func_185141_a(p_219441_3_.func_77973_b())) {
@@ -383,7 +381,7 @@
              ActionResultType actionresulttype1;
              if (this.func_73083_d()) {
                 int i = p_219441_3_.func_190916_E();
-@@ -327,10 +510,10 @@
+@@ -327,10 +508,10 @@
              }
  
              return actionresulttype1;

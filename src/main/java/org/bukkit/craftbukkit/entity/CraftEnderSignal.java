@@ -2,11 +2,16 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.entity.projectile.EyeOfEnderEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.EnderSignal;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CraftEnderSignal extends CraftEntity implements EnderSignal {
     public CraftEnderSignal(CraftServer server, EyeOfEnderEntity entity) {
@@ -47,6 +52,16 @@ public class CraftEnderSignal extends CraftEntity implements EnderSignal {
     @Override
     public void setDropItem(boolean shouldDropItem) {
         getHandle().shatterOrDrop = shouldDropItem;
+    }
+
+    @Override
+    public @NotNull ItemStack getItem() {
+        return CraftItemStack.asBukkitCopy(getHandle().getItem());
+    }
+
+    @Override
+    public void setItem(@Nullable ItemStack item) {
+        getHandle().func_213863_b(item != null ? CraftItemStack.asNMSCopy(item) : Items.ENDER_EYE.getDefaultInstance());
     }
 
     @Override

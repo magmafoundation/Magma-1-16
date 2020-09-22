@@ -8,11 +8,17 @@ import java.util.stream.Collectors;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.RedstoneWireBlock;
+import net.minecraft.item.BoneMealItem;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
@@ -48,6 +54,7 @@ import org.bukkit.util.BlockVector;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 public class CraftBlock implements Block {
 
@@ -635,6 +642,14 @@ public class CraftBlock implements Block {
         }
 
         return setTypeAndData(Blocks.AIR.getDefaultState(), true) && result;
+    }
+
+    @Override
+    public boolean applyBoneMeal(@NotNull BlockFace face) {
+        Direction direction = blockFaceToNotch(face);
+        ItemUseContext context = new ItemUseContext(getCraftWorld().getHandle(), null, Hand.MAIN_HAND, Items.BONE_MEAL.getDefaultInstance(), new BlockRayTraceResult(Vector3d.ZERO, direction, getPosition(), false)); // PAIL rename createItemStack, ZERO
+
+        return BoneMealItem.applyBonemeal(context) == ActionResultType.SUCCESS;
     }
 
     @Override

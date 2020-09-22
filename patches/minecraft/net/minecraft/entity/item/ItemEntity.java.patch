@@ -157,7 +157,7 @@
  
        if (p_70037_1_.func_186855_b("Owner")) {
           this.field_145802_g = p_70037_1_.func_186857_a("Owner");
-@@ -295,10 +335,45 @@
+@@ -295,10 +335,53 @@
  
     public void func_70100_b_(PlayerEntity p_70100_1_) {
        if (!this.field_70170_p.field_72995_K) {
@@ -186,7 +186,15 @@
 +               itemstack.func_190920_e(i);
 +               return;
 +            }
-+            itemstack.func_190920_e(canHold + remaining);
++
++            // Update the ItemStack if it was changed in the event
++            ItemStack current = this.func_92059_d();
++            if (!itemstack.equals(current)) {
++               itemstack = current;
++            } else {
++               itemstack.func_190920_e(canHold + remaining); // = i
++            }
++
 +            this.field_145804_b = 0;
 +         }
 +         else if (this.field_145804_b == 0) {
@@ -204,7 +212,7 @@
              p_70100_1_.func_71001_a(this, i);
              if (itemstack.func_190926_b()) {
                 this.func_70106_y();
-@@ -322,8 +397,8 @@
+@@ -322,8 +405,8 @@
     }
  
     @Nullable
@@ -215,7 +223,7 @@
        if (!this.field_70170_p.field_72995_K && entity instanceof ItemEntity) {
           ((ItemEntity)entity).func_85054_d();
        }
-@@ -336,7 +411,9 @@
+@@ -336,7 +419,9 @@
     }
  
     public void func_92058_a(ItemStack p_92058_1_) {
@@ -225,7 +233,7 @@
     }
  
     public void func_184206_a(DataParameter<?> p_184206_1_) {
-@@ -396,7 +473,7 @@
+@@ -396,7 +481,7 @@
  
     public void func_174870_v() {
        this.func_174871_r();

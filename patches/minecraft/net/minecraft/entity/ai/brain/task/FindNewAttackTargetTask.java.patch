@@ -16,7 +16,7 @@
     private void func_233987_d_(E p_233987_1_) {
 +      // CraftBukkit start
 +      LivingEntity old = p_233987_1_.func_213375_cj().func_218207_c(MemoryModuleType.field_234103_o_).orElse(null);
-+      EntityTargetEvent event = CraftEventFactory.callEntityTargetLivingEvent(p_233987_1_, old, (old != null && !old.func_70089_S()) ? EntityTargetEvent.TargetReason.TARGET_DIED : EntityTargetEvent.TargetReason.FORGOT_TARGET);
++      EntityTargetEvent event = CraftEventFactory.callEntityTargetLivingEvent(p_233987_1_, null, (old != null && !old.func_70089_S()) ? EntityTargetEvent.TargetReason.TARGET_DIED : EntityTargetEvent.TargetReason.FORGOT_TARGET);
 +      if (event.isCancelled()) {
 +         return;
 +      }
