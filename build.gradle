@@ -404,7 +404,7 @@ project(':forge') {
         installer 'org.jetbrains:annotations:18.0.0'
         installer 'commons-lang:commons-lang:2.6'
         installer 'org.yaml:snakeyaml:1.26'
-        installer 'net.md-5:bungeecord-chat:1.15'
+        installer 'net.md-5:bungeecord-chat:1.16-R0.3'
         installer 'net.md-5:SpecialSource:1.8.5'
         installer 'org.apache.logging.log4j:log4j-iostreams:2.8.1'
     }
