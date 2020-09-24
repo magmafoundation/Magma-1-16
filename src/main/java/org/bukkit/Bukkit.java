@@ -50,6 +50,7 @@ import org.bukkit.util.CachedServerIcon;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.spigotmc.CustomTimingsHandler;
 
 /**
  * Represents the Bukkit core, for version and Server singleton handling
@@ -640,6 +641,7 @@ public final class Bukkit {
      */
     public static void reload() {
         server.reload();
+        CustomTimingsHandler.reload(); // Spigot
     }
 
     /**
