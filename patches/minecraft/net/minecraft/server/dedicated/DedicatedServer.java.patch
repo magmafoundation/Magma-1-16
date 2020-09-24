@@ -142,7 +142,20 @@
        thread.setDaemon(true);
        thread.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler(field_155771_h));
        thread.start();
-@@ -114,7 +175,7 @@
+@@ -107,6 +168,12 @@
+          this.func_71189_e(serverproperties.field_219009_c);
+       }
+ 
++      // Spigot start
++      this.func_184105_a((PlayerList) (new DedicatedPlayerList(this, this.field_240767_f_, this.field_240766_e_)));
++      org.spigotmc.SpigotConfig.init((java.io.File) options.valueOf("spigot-settings"));
++      org.spigotmc.SpigotConfig.registerCommands();
++      // Spigot end
++
+       this.func_71188_g(serverproperties.field_219012_f);
+       this.func_71245_h(serverproperties.field_219013_g);
+       this.func_180507_a_(serverproperties.field_219014_h, this.func_184113_aK());
+@@ -114,7 +181,7 @@
        this.func_104055_i(serverproperties.field_219016_j);
        super.func_143006_e(serverproperties.field_219005_R.get());
        this.func_205741_k(serverproperties.field_219017_k);
@@ -151,12 +164,12 @@
        field_155771_h.info("Default game type: {}", (Object)serverproperties.field_219020_n);
        InetAddress inetaddress = null;
        if (!this.func_71211_k().isEmpty()) {
-@@ -138,6 +199,12 @@
+@@ -138,6 +205,12 @@
           return false;
        }
  
 +      // CraftBukkit start
-+      this.func_184105_a((PlayerList) (new DedicatedPlayerList(this, this.field_240767_f_, this.field_240766_e_)));
++      // this.setPlayerList((PlayerList) (new DedicatedPlayerList(this, this.field_240767_f_, this.field_240766_e_))); // Spigot - moved up
 +      server.loadPlugins();
 +      server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
 +      // CraftBukkit end
@@ -164,7 +177,7 @@
        if (!this.func_71266_T()) {
           field_155771_h.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
           field_155771_h.warn("The server will make no attempt to authenticate usernames. Beware.");
-@@ -152,17 +219,19 @@
+@@ -152,17 +225,19 @@
        if (!PreYggdrasilConverter.func_219587_e(this)) {
           return false;
        } else {
@@ -186,7 +199,7 @@
           if (serverproperties.field_219027_u != null) {
              this.func_200252_aR().func_223585_a(GameRules.field_223620_w).func_223570_a(serverproperties.field_219027_u, this);
           }
-@@ -175,6 +244,7 @@
+@@ -175,6 +250,7 @@
           if (serverproperties.field_219030_x) {
              field_155771_h.info("Starting remote control listener");
              this.field_71339_n = MainThread.func_242130_a(this);
@@ -194,7 +207,7 @@
           }
  
           if (this.func_175593_aQ() > 0L) {
-@@ -186,12 +256,14 @@
+@@ -186,12 +262,14 @@
           }
  
           Items.field_190931_a.func_150895_a(ItemGroup.field_78027_g, NonNullList.func_191196_a());
@@ -210,7 +223,7 @@
     }
  
     public boolean func_230537_U_() {
-@@ -272,7 +344,7 @@
+@@ -272,7 +350,7 @@
        if (this.field_71342_m != null) {
           this.field_71342_m.func_219591_b();
        }
@@ -219,7 +232,7 @@
     }
  
     public void func_71190_q(BooleanSupplier p_71190_1_) {
-@@ -297,7 +369,15 @@
+@@ -297,7 +375,15 @@
     public void func_71333_ah() {
        while(!this.field_71341_l.isEmpty()) {
           PendingCommand pendingcommand = this.field_71341_l.remove(0);
@@ -236,7 +249,7 @@
        }
  
     }
-@@ -402,7 +482,7 @@
+@@ -402,7 +488,7 @@
        return this.func_213221_d_().field_219003_P;
     }
  
@@ -245,7 +258,7 @@
        return this.func_213221_d_().field_219004_Q;
     }
  
-@@ -481,13 +561,39 @@
+@@ -481,13 +567,39 @@
     }
  
     public String func_71258_A() {
@@ -287,7 +300,7 @@
        });
        return this.field_184115_n.func_70008_c();
     }
-@@ -507,6 +613,11 @@
+@@ -507,6 +619,11 @@
        return false;
     }
  
@@ -299,7 +312,7 @@
     public int func_230512_b_(int p_230512_1_) {
        return this.func_213221_d_().field_241081_R_ * p_230512_1_ / 100;
     }
-@@ -518,4 +629,15 @@
+@@ -518,4 +635,15 @@
     public boolean func_230540_aS_() {
        return this.field_71340_o.func_219034_a().field_241078_O_;
     }

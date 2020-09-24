@@ -139,7 +139,7 @@
        RegistryKey<World> registrykey = compoundnbt != null ? DimensionType.func_236025_a_(new Dynamic<>(NBTDynamicOps.field_210820_a, compoundnbt.func_74781_a("Dimension"))).resultOrPartial(field_148546_d::error).orElse(World.field_234918_g_) : World.field_234918_g_;
        ServerWorld serverworld = this.field_72400_f.func_71218_a(registrykey);
        ServerWorld serverworld1;
-@@ -142,20 +184,24 @@
+@@ -142,20 +184,25 @@
           s1 = p_72355_1_.func_74430_c().toString();
        }
  
@@ -153,7 +153,9 @@
        GameRules gamerules = serverworld1.func_82736_K();
        boolean flag = gamerules.func_223586_b(GameRules.field_226683_z_);
        boolean flag1 = gamerules.func_223586_b(GameRules.field_223612_o);
-       serverplaynethandler.func_147359_a(new SJoinGamePacket(p_72355_2_.func_145782_y(), p_72355_2_.field_71134_c.func_73081_b(), p_72355_2_.field_71134_c.func_241815_c_(), BiomeManager.func_235200_a_(serverworld1.func_72905_C()), iworldinfo.func_76093_s(), this.field_72400_f.func_240770_D_(), this.field_232639_s_, serverworld1.func_230315_m_(), serverworld1.func_234923_W_(), this.func_72352_l(), this.field_72402_d, flag1, !flag, serverworld1.func_234925_Z_(), serverworld1.func_241109_A_()));
+-      serverplaynethandler.func_147359_a(new SJoinGamePacket(p_72355_2_.func_145782_y(), p_72355_2_.field_71134_c.func_73081_b(), p_72355_2_.field_71134_c.func_241815_c_(), BiomeManager.func_235200_a_(serverworld1.func_72905_C()), iworldinfo.func_76093_s(), this.field_72400_f.func_240770_D_(), this.field_232639_s_, serverworld1.func_230315_m_(), serverworld1.func_234923_W_(), this.func_72352_l(), this.field_72402_d, flag1, !flag, serverworld1.func_234925_Z_(), serverworld1.func_241109_A_()));
++      // Spigot - view distance
++      serverplaynethandler.func_147359_a(new SJoinGamePacket(p_72355_2_.func_145782_y(), p_72355_2_.field_71134_c.func_73081_b(), p_72355_2_.field_71134_c.func_241815_c_(), BiomeManager.func_235200_a_(serverworld1.func_72905_C()), iworldinfo.func_76093_s(), this.field_72400_f.func_240770_D_(), this.field_232639_s_, serverworld1.func_230315_m_(), serverworld1.func_234923_W_(), this.func_72352_l(), serverworld1.spigotConfig.viewDistance, flag1, !flag, serverworld1.func_234925_Z_(), serverworld1.func_241109_A_()));
 +      p_72355_2_.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
        serverplaynethandler.func_147359_a(new SCustomPayloadPlayPacket(SCustomPayloadPlayPacket.field_209911_b, (new PacketBuffer(Unpooled.buffer())).func_180714_a(this.func_72365_p().getServerModName())));
        serverplaynethandler.func_147359_a(new SServerDifficultyPacket(iworldinfo.func_176130_y(), iworldinfo.func_176123_z()));
@@ -165,7 +167,7 @@
        this.func_187243_f(p_72355_2_);
        p_72355_2_.func_147099_x().func_150877_d();
        p_72355_2_.func_192037_E().func_192826_c(p_72355_2_);
-@@ -167,20 +213,55 @@
+@@ -167,20 +214,55 @@
        } else {
           iformattabletextcomponent = new TranslationTextComponent("multiplayer.player.joined.renamed", p_72355_2_.func_145748_c_(), s);
        }
@@ -227,7 +229,7 @@
        if (!this.field_72400_f.func_147133_T().isEmpty()) {
           p_72355_2_.func_175397_a(this.field_72400_f.func_147133_T(), this.field_72400_f.func_175581_ab());
        }
-@@ -191,8 +272,11 @@
+@@ -191,8 +273,11 @@
  
        if (compoundnbt != null && compoundnbt.func_150297_b("RootVehicle", 10)) {
           CompoundNBT compoundnbt1 = compoundnbt.func_74775_l("RootVehicle");
@@ -241,7 +243,7 @@
           });
           if (entity1 != null) {
              UUID uuid;
-@@ -225,9 +309,12 @@
+@@ -225,9 +310,12 @@
        }
  
        p_72355_2_.func_71116_b();
@@ -255,7 +257,7 @@
        Set<ScoreObjective> set = Sets.newHashSet();
  
        for(ScorePlayerTeam scoreplayerteam : p_96456_1_.func_96525_g()) {
-@@ -248,25 +335,27 @@
+@@ -248,25 +336,27 @@
     }
  
     public void func_212504_a(ServerWorld p_212504_1_) {
@@ -288,7 +290,7 @@
           }
  
           public void func_177696_b(WorldBorder p_177696_1_, double p_177696_2_) {
-@@ -285,6 +374,7 @@
+@@ -285,6 +375,7 @@
           compoundnbt1 = compoundnbt;
           p_72380_1_.func_70020_e(compoundnbt);
           field_148546_d.debug("loading single player");
@@ -296,7 +298,7 @@
        } else {
           compoundnbt1 = this.field_72412_k.func_237336_b_(p_72380_1_);
        }
-@@ -293,28 +383,39 @@
+@@ -293,28 +384,39 @@
     }
  
     protected void func_72391_b(ServerPlayerEntity p_72391_1_) {
@@ -345,7 +347,7 @@
              serverworld.func_217467_h(entity);
              entity.field_70128_L = true;
  
-@@ -323,107 +424,179 @@
+@@ -323,107 +425,179 @@
                 entity1.field_70128_L = true;
              }
  
@@ -566,7 +568,7 @@
        serverplayerentity.func_145769_d(p_232644_1_.func_145782_y());
        serverplayerentity.func_184819_a(p_232644_1_.func_184591_cq());
  
-@@ -431,48 +604,107 @@
+@@ -431,48 +605,108 @@
           serverplayerentity.func_184211_a(s);
        }
  
@@ -643,6 +645,7 @@
 +      // CraftBukkit start
 +      IWorldInfo worlddata = worldserver1.func_72912_H();
 +      serverplayerentity.field_71135_a.func_147359_a(new SRespawnPacket(worldserver1.func_230315_m_(), worldserver1.func_234923_W_(), BiomeManager.func_235200_a_(worldserver1.func_72905_C()), serverplayerentity.field_71134_c.func_73081_b(), serverplayerentity.field_71134_c.func_241815_c_(), worldserver1.func_234925_Z_(), worldserver1.func_241109_A_(), flag));
++      serverplayerentity.field_71135_a.func_147359_a(new SUpdateViewDistancePacket(worldserver1.spigotConfig.viewDistance)); // Spigot
 +      serverplayerentity.func_70029_a(worldserver1);
 +      serverplayerentity.field_70128_L = false;
 +      serverplayerentity.field_71135_a.teleport(new Location(worldserver1.getWorldCB(),  serverplayerentity.func_226277_ct_(), serverplayerentity.func_226278_cu_(), serverplayerentity.func_226281_cx_(), serverplayerentity.field_70177_z, serverplayerentity.field_70125_A));
@@ -701,7 +704,7 @@
        return serverplayerentity;
     }
  
-@@ -484,12 +716,36 @@
+@@ -484,12 +718,36 @@
  
     public void func_72374_b() {
        if (++this.field_72408_o > 600) {
@@ -739,7 +742,7 @@
     public void func_148540_a(IPacket<?> p_148540_1_) {
        for(int i = 0; i < this.field_72404_b.size(); ++i) {
           (this.field_72404_b.get(i)).field_71135_a.func_147359_a(p_148540_1_);
-@@ -585,6 +841,7 @@
+@@ -585,6 +843,7 @@
           p_187245_1_.field_71135_a.func_147359_a(new SEntityStatusPacket(p_187245_1_, b0));
        }
  
@@ -747,7 +750,7 @@
        this.field_72400_f.func_195571_aL().func_197051_a(p_187245_1_);
     }
  
-@@ -610,6 +867,13 @@
+@@ -610,6 +869,13 @@
     public void func_148543_a(@Nullable PlayerEntity p_148543_1_, double p_148543_2_, double p_148543_4_, double p_148543_6_, double p_148543_8_, RegistryKey<World> p_148543_10_, IPacket<?> p_148543_11_) {
        for(int i = 0; i < this.field_72404_b.size(); ++i) {
           ServerPlayerEntity serverplayerentity = this.field_72404_b.get(i);
@@ -761,7 +764,7 @@
           if (serverplayerentity != p_148543_1_ && serverplayerentity.field_70170_p.func_234923_W_() == p_148543_10_) {
              double d0 = p_148543_2_ - serverplayerentity.func_226277_ct_();
              double d1 = p_148543_4_ - serverplayerentity.func_226278_cu_();
-@@ -649,22 +913,32 @@
+@@ -649,22 +915,32 @@
     }
  
     public void func_72354_b(ServerPlayerEntity p_72354_1_, ServerWorld p_72354_2_) {
@@ -796,7 +799,7 @@
     }
  
     public int func_72394_k() {
-@@ -719,7 +993,7 @@
+@@ -719,7 +995,7 @@
           p_72381_1_.field_71134_c.func_241820_a(this.field_72410_m, GameType.NOT_SET);
        }
  
@@ -805,7 +808,7 @@
     }
  
     @OnlyIn(Dist.CLIENT)
-@@ -728,32 +1002,46 @@
+@@ -728,32 +1004,46 @@
     }
  
     public void func_72392_r() {
@@ -861,7 +864,7 @@
        }
  
        return serverstatisticsmanager;
-@@ -761,12 +1049,12 @@
+@@ -761,12 +1051,12 @@
  
     public PlayerAdvancements func_192054_h(ServerPlayerEntity p_192054_1_) {
        UUID uuid = p_192054_1_.func_110124_au();
@@ -876,7 +879,7 @@
        }
  
        playeradvancements.func_192739_a(p_192054_1_);
-@@ -786,7 +1074,7 @@
+@@ -786,7 +1076,7 @@
     }
  
     public List<ServerPlayerEntity> func_181057_v() {
@@ -885,7 +888,7 @@
     }
  
     @Nullable
-@@ -799,11 +1087,14 @@
+@@ -799,11 +1089,14 @@
     }
  
     public void func_193244_w() {
@@ -902,7 +905,7 @@
        SUpdateRecipesPacket supdaterecipespacket = new SUpdateRecipesPacket(this.field_72400_f.func_199529_aN().func_199510_b());
  
        for(ServerPlayerEntity serverplayerentity : this.field_72404_b) {
-@@ -816,4 +1107,12 @@
+@@ -816,4 +1109,12 @@
     public boolean func_206257_x() {
        return this.field_72407_n;
     }

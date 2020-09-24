@@ -99,7 +99,19 @@
              this.func_70106_y();
           }
  
-@@ -202,6 +231,8 @@
+@@ -163,7 +192,10 @@
+ 
+    private void func_85054_d() {
+       if (this.func_213857_z()) {
+-         for(ItemEntity itementity : this.field_70170_p.func_175647_a(ItemEntity.class, this.func_174813_aQ().func_72314_b(0.5D, 0.0D, 0.5D), (p_213859_1_) -> {
++         // Spigot start
++         double radius = field_70170_p.spigotConfig.itemMerge;
++         for(ItemEntity itementity : this.field_70170_p.func_175647_a(ItemEntity.class, this.func_174813_aQ().func_72314_b(radius, radius, radius), (p_213859_1_) -> {
++            // Spigot end
+             return p_213859_1_ != this && p_213859_1_.func_213857_z();
+          })) {
+             if (itementity.func_213857_z()) {
+@@ -202,6 +234,8 @@
           return false;
        } else if (p_226532_1_.func_77942_o() ^ p_226532_0_.func_77942_o()) {
           return false;
@@ -108,7 +120,7 @@
        } else {
           return !p_226532_1_.func_77942_o() || p_226532_1_.func_77978_p().equals(p_226532_0_.func_77978_p());
        }
-@@ -217,10 +248,11 @@
+@@ -217,10 +251,11 @@
  
     private static void func_226531_a_(ItemEntity p_226531_0_, ItemStack p_226531_1_, ItemStack p_226531_2_) {
        ItemStack itemstack = func_226533_a_(p_226531_1_, p_226531_2_, 64);
@@ -121,7 +133,7 @@
        func_226531_a_(p_213858_0_, p_213858_1_, p_213858_3_);
        p_213858_0_.field_145804_b = Math.max(p_213858_0_.field_145804_b, p_213858_2_.field_145804_b);
        p_213858_0_.field_70292_b = Math.min(p_213858_0_.field_70292_b, p_213858_2_.field_70292_b);
-@@ -235,6 +267,7 @@
+@@ -235,6 +270,7 @@
     }
  
     public boolean func_70097_a(DamageSource p_70097_1_, float p_70097_2_) {
@@ -129,7 +141,7 @@
        if (this.func_180431_b(p_70097_1_)) {
           return false;
        } else if (!this.func_92059_d().func_190926_b() && this.func_92059_d().func_77973_b() == Items.field_151156_bN && p_70097_1_.func_94541_c()) {
-@@ -242,6 +275,11 @@
+@@ -242,6 +278,11 @@
        } else if (!this.func_92059_d().func_77973_b().func_234685_a_(p_70097_1_)) {
           return false;
        } else {
@@ -141,7 +153,7 @@
           this.func_70018_K();
           this.field_70291_e = (int)((float)this.field_70291_e - p_70097_2_);
           if (this.field_70291_e <= 0) {
-@@ -256,6 +294,7 @@
+@@ -256,6 +297,7 @@
        p_213281_1_.func_74777_a("Health", (short)this.field_70291_e);
        p_213281_1_.func_74777_a("Age", (short)this.field_70292_b);
        p_213281_1_.func_74777_a("PickupDelay", (short)this.field_145804_b);
@@ -149,7 +161,7 @@
        if (this.func_200214_m() != null) {
           p_213281_1_.func_186854_a("Thrower", this.func_200214_m());
        }
-@@ -276,6 +315,7 @@
+@@ -276,6 +318,7 @@
        if (p_70037_1_.func_74764_b("PickupDelay")) {
           this.field_145804_b = p_70037_1_.func_74765_d("PickupDelay");
        }
@@ -157,7 +169,7 @@
  
        if (p_70037_1_.func_186855_b("Owner")) {
           this.field_145802_g = p_70037_1_.func_186857_a("Owner");
-@@ -295,10 +335,53 @@
+@@ -295,10 +338,53 @@
  
     public void func_70100_b_(PlayerEntity p_70100_1_) {
        if (!this.field_70170_p.field_72995_K) {
@@ -212,7 +224,7 @@
              p_70100_1_.func_71001_a(this, i);
              if (itemstack.func_190926_b()) {
                 this.func_70106_y();
-@@ -322,8 +405,8 @@
+@@ -322,8 +408,8 @@
     }
  
     @Nullable
@@ -223,7 +235,7 @@
        if (!this.field_70170_p.field_72995_K && entity instanceof ItemEntity) {
           ((ItemEntity)entity).func_85054_d();
        }
-@@ -336,7 +419,9 @@
+@@ -336,7 +422,9 @@
     }
  
     public void func_92058_a(ItemStack p_92058_1_) {
@@ -233,7 +245,7 @@
     }
  
     public void func_184206_a(DataParameter<?> p_184206_1_) {
-@@ -396,7 +481,7 @@
+@@ -396,7 +484,7 @@
  
     public void func_174870_v() {
        this.func_174871_r();
