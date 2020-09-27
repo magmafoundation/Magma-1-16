@@ -14,7 +14,25 @@
  
  public class VillagerEntity extends AbstractVillagerEntity implements IReputationTracking, IVillagerDataHolder {
     private static final DataParameter<VillagerData> field_213775_bC = EntityDataManager.func_187226_a(VillagerEntity.class, DataSerializers.field_218813_q);
-@@ -206,7 +213,7 @@
+@@ -190,6 +197,17 @@
+       return this.field_234542_bL_;
+    }
+ 
++   // Spigot Start
++   @Override
++   public void inactiveTick() {
++      // SPIGOT-3874, SPIGOT-3894, SPIGOT-3846, SPIGOT-5286 :(
++      if (field_70170_p.spigotConfig.tickInactiveVillagers && this.func_70613_aW()) {
++         this.func_70619_bc();
++      }
++      super.inactiveTick();
++   }
++   // Spigot End
++
+    protected void func_70619_bc() {
+       this.field_70170_p.func_217381_Z().func_76320_a("villagerBrain");
+       this.func_213375_cj().func_218210_a((ServerWorld)this.field_70170_p, this);
+@@ -206,7 +224,7 @@
                 this.field_213777_bF = false;
              }
  
@@ -23,7 +41,7 @@
           }
        }
  
-@@ -241,7 +248,7 @@
+@@ -241,7 +259,7 @@
  
     public ActionResultType func_230254_b_(PlayerEntity p_230254_1_, Hand p_230254_2_) {
        ItemStack itemstack = p_230254_1_.func_184586_b(p_230254_2_);
@@ -32,7 +50,7 @@
           if (this.func_70631_g_()) {
              this.func_213756_es();
              return ActionResultType.func_233537_a_(this.field_70170_p.field_72995_K);
-@@ -379,7 +386,14 @@
+@@ -379,7 +397,14 @@
        int i = this.func_223107_f(p_213762_1_);
        if (i != 0) {
           for(MerchantOffer merchantoffer : this.func_213706_dY()) {
@@ -48,7 +66,7 @@
           }
        }
  
-@@ -634,7 +648,8 @@
+@@ -634,7 +659,8 @@
     }
  
     protected ITextComponent func_225513_by_() {
@@ -58,7 +76,7 @@
     }
  
     @OnlyIn(Dist.CLIENT)
-@@ -699,7 +714,12 @@
+@@ -699,7 +725,12 @@
           }
  
           witchentity.func_110163_bv();
@@ -72,7 +90,7 @@
           this.func_242369_fq();
           this.func_70106_y();
        } else {
-@@ -820,7 +840,7 @@
+@@ -820,7 +851,7 @@
              IronGolemEntity irongolementity = EntityType.field_200757_aw.func_220349_b(p_213759_1_, (CompoundNBT)null, (ITextComponent)null, (PlayerEntity)null, blockpos1, SpawnReason.MOB_SUMMONED, false, false);
              if (irongolementity != null) {
                 if (irongolementity.func_213380_a(p_213759_1_, SpawnReason.MOB_SUMMONED) && irongolementity.func_205019_a(p_213759_1_)) {

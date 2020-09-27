@@ -144,6 +144,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.server.ServerWorld;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -492,6 +493,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         entity.setPositionAndRotation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
         // SPIGOT-619: Force sync head rotation also
         entity.setRotationYawHead(location.getYaw());
+        ((ServerWorld) entity.world).chunkCheck(entity); // Spigot - register to new chunk
 
         return true;
     }
