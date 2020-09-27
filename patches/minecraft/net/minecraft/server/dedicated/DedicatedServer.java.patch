@@ -29,7 +29,7 @@
  import net.minecraft.util.math.BlockPos;
  import net.minecraft.util.math.MathHelper;
  import net.minecraft.util.registry.DynamicRegistries;
-@@ -53,22 +52,31 @@
+@@ -53,22 +52,32 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraft.world.storage.IServerConfiguration;
  import net.minecraft.world.storage.SaveFormat;
@@ -39,6 +39,7 @@
 +import org.apache.logging.log4j.io.IoBuilder;
 +import org.bukkit.command.CommandSender;
 +import org.bukkit.craftbukkit.Main;
++import org.bukkit.craftbukkit.SpigotTimings;
 +import org.bukkit.event.server.RemoteServerCommandEvent;
 +import org.bukkit.event.server.ServerCommandEvent;
 +import org.bukkit.plugin.Plugin;
@@ -65,7 +66,7 @@
        this.field_71340_o = p_i232601_7_;
        this.field_184115_n = new RConConsoleSource(this);
     }
-@@ -76,12 +84,43 @@
+@@ -76,12 +85,43 @@
     public boolean func_71197_b() throws IOException {
        Thread thread = new Thread("Server console handler") {
           public void run() {
@@ -113,7 +114,7 @@
                 }
              } catch (IOException ioexception1) {
                 DedicatedServer.field_155771_h.error("Exception handling console input", (Throwable)ioexception1);
-@@ -89,6 +128,28 @@
+@@ -89,6 +129,28 @@
  
           }
        };
@@ -142,7 +143,7 @@
        thread.setDaemon(true);
        thread.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler(field_155771_h));
        thread.start();
-@@ -107,6 +168,12 @@
+@@ -107,6 +169,12 @@
           this.func_71189_e(serverproperties.field_219009_c);
        }
  
@@ -155,7 +156,7 @@
        this.func_71188_g(serverproperties.field_219012_f);
        this.func_71245_h(serverproperties.field_219013_g);
        this.func_180507_a_(serverproperties.field_219014_h, this.func_184113_aK());
-@@ -114,7 +181,7 @@
+@@ -114,7 +182,7 @@
        this.func_104055_i(serverproperties.field_219016_j);
        super.func_143006_e(serverproperties.field_219005_R.get());
        this.func_205741_k(serverproperties.field_219017_k);
@@ -164,7 +165,7 @@
        field_155771_h.info("Default game type: {}", (Object)serverproperties.field_219020_n);
        InetAddress inetaddress = null;
        if (!this.func_71211_k().isEmpty()) {
-@@ -138,6 +205,12 @@
+@@ -138,6 +206,12 @@
           return false;
        }
  
@@ -177,7 +178,7 @@
        if (!this.func_71266_T()) {
           field_155771_h.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
           field_155771_h.warn("The server will make no attempt to authenticate usernames. Beware.");
-@@ -152,17 +225,19 @@
+@@ -152,17 +226,19 @@
        if (!PreYggdrasilConverter.func_219587_e(this)) {
           return false;
        } else {
@@ -199,7 +200,7 @@
           if (serverproperties.field_219027_u != null) {
              this.func_200252_aR().func_223585_a(GameRules.field_223620_w).func_223570_a(serverproperties.field_219027_u, this);
           }
-@@ -175,6 +250,7 @@
+@@ -175,6 +251,7 @@
           if (serverproperties.field_219030_x) {
              field_155771_h.info("Starting remote control listener");
              this.field_71339_n = MainThread.func_242130_a(this);
@@ -207,7 +208,7 @@
           }
  
           if (this.func_175593_aQ() > 0L) {
-@@ -186,12 +262,14 @@
+@@ -186,12 +263,14 @@
           }
  
           Items.field_190931_a.func_150895_a(ItemGroup.field_78027_g, NonNullList.func_191196_a());
@@ -223,7 +224,7 @@
     }
  
     public boolean func_230537_U_() {
-@@ -272,7 +350,7 @@
+@@ -272,7 +351,7 @@
        if (this.field_71342_m != null) {
           this.field_71342_m.func_219591_b();
        }
@@ -232,8 +233,11 @@
     }
  
     public void func_71190_q(BooleanSupplier p_71190_1_) {
-@@ -297,7 +375,15 @@
+@@ -295,11 +374,21 @@
+    }
+ 
     public void func_71333_ah() {
++      SpigotTimings.serverCommandTimer.startTiming(); // Spigot
        while(!this.field_71341_l.isEmpty()) {
           PendingCommand pendingcommand = this.field_71341_l.remove(0);
 -         this.func_195571_aL().func_197059_a(pendingcommand.field_73701_b, pendingcommand.field_73702_a);
@@ -248,8 +252,11 @@
 +         // CraftBukkit end
        }
  
++      SpigotTimings.serverCommandTimer.stopTiming(); // Spigot
     }
-@@ -402,7 +488,7 @@
+ 
+    public boolean func_71262_S() {
+@@ -402,7 +491,7 @@
        return this.func_213221_d_().field_219003_P;
     }
  
@@ -258,7 +265,7 @@
        return this.func_213221_d_().field_219004_Q;
     }
  
-@@ -481,13 +567,39 @@
+@@ -481,13 +570,39 @@
     }
  
     public String func_71258_A() {
@@ -300,7 +307,7 @@
        });
        return this.field_184115_n.func_70008_c();
     }
-@@ -507,6 +619,11 @@
+@@ -507,6 +622,11 @@
        return false;
     }
  
@@ -312,7 +319,7 @@
     public int func_230512_b_(int p_230512_1_) {
        return this.func_213221_d_().field_241081_R_ * p_230512_1_ / 100;
     }
-@@ -518,4 +635,15 @@
+@@ -518,4 +638,15 @@
     public boolean func_230540_aS_() {
        return this.field_71340_o.func_219034_a().field_241078_O_;
     }
