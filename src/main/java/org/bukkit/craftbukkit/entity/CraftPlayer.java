@@ -1470,7 +1470,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             throw new IllegalStateException("Cannot set scoreboard yet");
         }
         if (connection.isDisconnected()) {
-            throw new IllegalStateException("Cannot set scoreboard for invalid CraftPlayer");
+            // throw new IllegalStateException("Cannot set scoreboard for invalid CraftPlayer"); // Spigot - remove this as Mojang's semi asynchronous Netty implementation can lead to races
         }
 
         this.server.getScoreboardManager().setPlayerBoard(this, scoreboard);
@@ -1701,6 +1701,42 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     // Spigot start
     private final Player.Spigot spigot = new Player.Spigot()
     {
+
+        @Override
+        public InetSocketAddress getRawAddress()
+        {
+            return (InetSocketAddress) getHandle().connection.netManager.getRawAddress();
+        }
+
+        @Override
+        public boolean getCollidesWithEntities() {
+            return CraftPlayer.this.isCollidable();
+        }
+
+        @Override
+        public void setCollidesWithEntities(boolean collides) {
+            CraftPlayer.this.setCollidable(collides);
+        }
+
+        @Override
+        public void respawn()
+        {
+            if ( getHealth() <= 0 && isOnline() )
+            {
+                server.getServer().getPlayerList().func_232644_a_( getHandle(), false );
+            }
+        }
+
+        @Override
+        public Set<Player> getHiddenPlayers()
+        {
+            Set<Player> ret = new HashSet<Player>();
+            for ( UUID u : hiddenPlayers.keySet() )
+            {
+                ret.add( getServer().getPlayer( u ) );
+            }
+            return java.util.Collections.unmodifiableSet( ret );
+        }
 
     };
 

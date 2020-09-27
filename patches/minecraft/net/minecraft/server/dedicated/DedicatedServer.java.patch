@@ -165,7 +165,7 @@
        field_155771_h.info("Default game type: {}", (Object)serverproperties.field_219020_n);
        InetAddress inetaddress = null;
        if (!this.func_71211_k().isEmpty()) {
-@@ -138,6 +206,12 @@
+@@ -138,10 +206,23 @@
           return false;
        }
  
@@ -178,7 +178,19 @@
        if (!this.func_71266_T()) {
           field_155771_h.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
           field_155771_h.warn("The server will make no attempt to authenticate usernames. Beware.");
-@@ -152,17 +226,19 @@
+-         field_155771_h.warn("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
++         // Spigot start
++         if (org.spigotmc.SpigotConfig.bungee) {
++            DedicatedServer.field_155771_h.warn("Whilst this makes it possible to use BungeeCord, unless access to your server is properly restricted, it also opens up the ability for hackers to connect with any username they choose.");
++            DedicatedServer.field_155771_h.warn("Please see http://www.spigotmc.org/wiki/firewall-guide/ for further information.");
++         } else {
++            DedicatedServer.field_155771_h.warn("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
++         }
++         // Spigot end
+          field_155771_h.warn("To change this, set \"online-mode\" to \"true\" in the server.properties file.");
+       }
+ 
+@@ -152,17 +233,19 @@
        if (!PreYggdrasilConverter.func_219587_e(this)) {
           return false;
        } else {
@@ -200,15 +212,19 @@
           if (serverproperties.field_219027_u != null) {
              this.func_200252_aR().func_223585_a(GameRules.field_223620_w).func_223570_a(serverproperties.field_219027_u, this);
           }
-@@ -175,6 +251,7 @@
+@@ -175,9 +258,10 @@
           if (serverproperties.field_219030_x) {
              field_155771_h.info("Starting remote control listener");
              this.field_71339_n = MainThread.func_242130_a(this);
 +            this.remoteConsole = new org.bukkit.craftbukkit.command.CraftRemoteConsoleCommandSender(this.field_184115_n); // CraftBukkit
           }
  
-          if (this.func_175593_aQ() > 0L) {
-@@ -186,12 +263,14 @@
+-         if (this.func_175593_aQ() > 0L) {
++         if (false && this.func_175593_aQ() > 0L) { // Spigot - disable
+             Thread thread1 = new Thread(new ServerHangWatchdog(this));
+             thread1.setUncaughtExceptionHandler(new DefaultWithNameUncaughtExceptionHandler(field_155771_h));
+             thread1.setName("Server Watchdog");
+@@ -186,12 +270,14 @@
           }
  
           Items.field_190931_a.func_150895_a(ItemGroup.field_78027_g, NonNullList.func_191196_a());
@@ -224,7 +240,7 @@
     }
  
     public boolean func_230537_U_() {
-@@ -272,7 +351,7 @@
+@@ -272,7 +358,7 @@
        if (this.field_71342_m != null) {
           this.field_71342_m.func_219591_b();
        }
@@ -233,7 +249,7 @@
     }
  
     public void func_71190_q(BooleanSupplier p_71190_1_) {
-@@ -295,11 +374,21 @@
+@@ -295,11 +381,21 @@
     }
  
     public void func_71333_ah() {
@@ -256,7 +272,7 @@
     }
  
     public boolean func_71262_S() {
-@@ -402,7 +491,7 @@
+@@ -402,7 +498,7 @@
        return this.func_213221_d_().field_219003_P;
     }
  
@@ -265,7 +281,7 @@
        return this.func_213221_d_().field_219004_Q;
     }
  
-@@ -481,13 +570,39 @@
+@@ -481,13 +577,39 @@
     }
  
     public String func_71258_A() {
@@ -307,7 +323,7 @@
        });
        return this.field_184115_n.func_70008_c();
     }
-@@ -507,6 +622,11 @@
+@@ -507,6 +629,11 @@
        return false;
     }
  
@@ -319,7 +335,7 @@
     public int func_230512_b_(int p_230512_1_) {
        return this.func_213221_d_().field_241081_R_ * p_230512_1_ / 100;
     }
-@@ -518,4 +638,15 @@
+@@ -518,4 +645,15 @@
     public boolean func_230540_aS_() {
        return this.field_71340_o.func_219034_a().field_241078_O_;
     }

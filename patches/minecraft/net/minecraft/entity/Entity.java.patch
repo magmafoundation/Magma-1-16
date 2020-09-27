@@ -502,7 +502,7 @@
           p_189511_1_.func_218657_a("Rotation", this.func_70049_a(this.field_70177_z, this.field_70125_A));
           p_189511_1_.func_74776_a("FallDistance", this.field_70143_R);
           p_189511_1_.func_74777_a("Fire", (short)this.field_190534_ay);
-@@ -1357,6 +1564,18 @@
+@@ -1357,6 +1564,19 @@
           p_189511_1_.func_74757_a("Invulnerable", this.field_83001_bt);
           p_189511_1_.func_74768_a("PortalCooldown", this.field_242273_aw);
           p_189511_1_.func_186854_a("UUID", this.func_110124_au());
@@ -517,11 +517,12 @@
 +         if (this.persistentInvisibility) {
 +            p_189511_1_.func_74757_a("Bukkit.invisible", this.persistentInvisibility);
 +         }
++         p_189511_1_.func_74768_a("Spigot.ticksLived", this.field_70173_aa);
 +         // CraftBukkit end
           ITextComponent itextcomponent = this.func_200201_e();
           if (itextcomponent != null) {
              p_189511_1_.func_74778_a("CustomName", ITextComponent.Serializer.func_150696_a(itextcomponent));
-@@ -1377,6 +1596,7 @@
+@@ -1377,6 +1597,7 @@
           if (this.field_184238_ar) {
              p_189511_1_.func_74757_a("Glowing", this.field_184238_ar);
           }
@@ -529,7 +530,7 @@
  
           if (!this.field_184236_aF.isEmpty()) {
              ListNBT listnbt = new ListNBT();
-@@ -1388,6 +1608,10 @@
+@@ -1388,6 +1609,10 @@
              p_189511_1_.func_218657_a("Tags", listnbt);
           }
  
@@ -540,7 +541,7 @@
           this.func_213281_b(p_189511_1_);
           if (this.func_184207_aI()) {
              ListNBT listnbt1 = new ListNBT();
-@@ -1404,6 +1628,12 @@
+@@ -1404,6 +1629,12 @@
              }
           }
  
@@ -553,7 +554,7 @@
           return p_189511_1_;
        } catch (Throwable throwable) {
           CrashReport crashreport = CrashReport.func_85055_a(throwable, "Saving entity NBT");
-@@ -1458,6 +1688,9 @@
+@@ -1458,6 +1689,9 @@
                 this.func_174810_b(p_70020_1_.func_74767_n("Silent"));
                 this.func_189654_d(p_70020_1_.func_74767_n("NoGravity"));
                 this.func_184195_f(p_70020_1_.func_74767_n("Glowing"));
@@ -563,7 +564,7 @@
                 if (p_70020_1_.func_150297_b("Tags", 9)) {
                    this.field_184236_aF.clear();
                    ListNBT listnbt3 = p_70020_1_.func_150295_c("Tags", 8);
-@@ -1479,6 +1712,43 @@
+@@ -1479,6 +1713,46 @@
           } else {
              throw new IllegalStateException("Entity has invalid position");
           }
@@ -571,6 +572,9 @@
 +         // CraftBukkit start
 +         if (this instanceof LivingEntity) {
 +            LivingEntity entity = (LivingEntity) this;
++
++            this.field_70173_aa = p_70020_1_.func_74762_e("Spigot.ticksLived");
++
 +            // Reset the persistence for tamed animals
 +            if (entity instanceof TameableEntity && !isLevelAtLeast(p_70020_1_, 2) && !p_70020_1_.func_74767_n("PersistenceRequired")) {
 +               MobEntity entityinsentient = (MobEntity) entity;
@@ -607,7 +611,7 @@
        } catch (Throwable throwable) {
           CrashReport crashreport = CrashReport.func_85055_a(throwable, "Loading entity NBT");
           CrashReportCategory crashreportcategory = crashreport.func_85058_a("Entity being loaded");
-@@ -1544,8 +1814,23 @@
+@@ -1544,8 +1818,23 @@
        } else if (this.field_70170_p.field_72995_K) {
           return null;
        } else {
@@ -631,7 +635,7 @@
           this.field_70170_p.func_217376_c(itementity);
           return itementity;
        }
-@@ -1582,6 +1867,7 @@
+@@ -1582,6 +1871,7 @@
  
     public void func_70098_U() {
        this.func_213317_d(Vector3d.field_186680_a);
@@ -639,7 +643,7 @@
        this.func_70071_h_();
        if (this.func_184218_aH()) {
           this.func_184187_bx().func_184232_k(this);
-@@ -1627,6 +1913,7 @@
+@@ -1627,6 +1917,7 @@
           }
        }
  
@@ -647,7 +651,7 @@
        if (p_184205_2_ || this.func_184228_n(p_184205_1_) && p_184205_1_.func_184219_q(this)) {
           if (this.func_184218_aH()) {
              this.func_184210_p();
-@@ -1634,7 +1921,7 @@
+@@ -1634,7 +1925,7 @@
  
           this.func_213301_b(Pose.STANDING);
           this.field_184239_as = p_184205_1_;
@@ -656,7 +660,7 @@
           return true;
        } else {
           return false;
-@@ -1659,8 +1946,9 @@
+@@ -1659,8 +1950,9 @@
     public void func_233575_bb_() {
        if (this.field_184239_as != null) {
           Entity entity = this.field_184239_as;
@@ -667,7 +671,7 @@
        }
  
     }
-@@ -1669,26 +1957,64 @@
+@@ -1669,26 +1961,84 @@
        this.func_233575_bb_();
     }
  
@@ -699,6 +703,16 @@
 +            }
 +         }
 +         // CraftBukkit end
++         // Spigot start
++         org.spigotmc.event.entity.EntityMountEvent event = new org.spigotmc.event.entity.EntityMountEvent(passenger.getBukkitEntity(), this.getBukkitEntity());
++         // Suppress during worldgen
++         if (this.valid) {
++            Bukkit.getPluginManager().callEvent(event);
++         }
++         if (event.isCancelled()) {
++            return false;
++         }
++         // Spigot end
 +         if (!this.field_70170_p.field_72995_K && passenger instanceof PlayerEntity && !(this.func_184179_bs() instanceof PlayerEntity)) {
 +            this.field_184244_h.add(0, passenger);
           } else {
@@ -734,6 +748,16 @@
 +            }
 +         }
 +         // CraftBukkit end
++         // Spigot start
++         org.spigotmc.event.entity.EntityDismountEvent event = new org.spigotmc.event.entity.EntityDismountEvent(passenger.getBukkitEntity(), this.getBukkitEntity());
++         // Suppress during worldgen
++         if (this.valid) {
++            Bukkit.getPluginManager().callEvent(event);
++         }
++         if (event.isCancelled()) {
++            return false;
++         }
++         // Spigot end
 +         this.field_184244_h.remove(passenger);
 +         passenger.field_184245_j = 60;
        }
@@ -741,7 +765,7 @@
     }
  
     protected boolean func_184219_q(Entity p_184219_1_) {
-@@ -1743,11 +2069,17 @@
+@@ -1743,11 +2093,17 @@
              MinecraftServer minecraftserver = serverworld.func_73046_m();
              RegistryKey<World> registrykey = this.field_70170_p.func_234923_W_() == World.field_234919_h_ ? World.field_234918_g_ : World.field_234919_h_;
              ServerWorld serverworld1 = minecraftserver.func_71218_a(registrykey);
@@ -761,7 +785,7 @@
                 this.field_70170_p.func_217381_Z().func_76319_b();
              }
  
-@@ -1816,6 +2148,7 @@
+@@ -1816,6 +2172,7 @@
        return !this.func_184188_bt().isEmpty();
     }
  
@@ -769,7 +793,7 @@
     public boolean func_205710_ba() {
        return true;
     }
-@@ -1870,6 +2203,13 @@
+@@ -1870,6 +2227,13 @@
     }
  
     public void func_204711_a(boolean p_204711_1_) {
@@ -783,7 +807,7 @@
        this.func_70052_a(4, p_204711_1_);
     }
  
-@@ -1912,15 +2252,19 @@
+@@ -1912,15 +2276,19 @@
        return this.func_96124_cp() != null ? this.func_96124_cp().func_142054_a(p_184194_1_) : false;
     }
  
@@ -806,7 +830,7 @@
        byte b0 = this.field_70180_af.func_187225_a(field_184240_ax);
        if (p_70052_2_) {
           this.field_70180_af.func_187227_b(field_184240_ax, (byte)(b0 | 1 << p_70052_1_));
-@@ -1939,16 +2283,53 @@
+@@ -1939,16 +2307,53 @@
     }
  
     public void func_70050_g(int p_70050_1_) {
@@ -863,7 +887,7 @@
     }
  
     public void func_203002_i(boolean p_203002_1_) {
-@@ -2032,7 +2413,7 @@
+@@ -2032,7 +2437,7 @@
     }
  
     protected ITextComponent func_225513_by_() {
@@ -872,7 +896,7 @@
     }
  
     public boolean func_70028_i(Entity p_70028_1_) {
-@@ -2087,32 +2468,69 @@
+@@ -2087,32 +2492,69 @@
  
     @Nullable
     public Entity func_241206_a_(ServerWorld p_241206_1_) {
@@ -949,7 +973,7 @@
           }
        } else {
           return null;
-@@ -2125,8 +2543,13 @@
+@@ -2125,8 +2567,13 @@
  
     @Nullable
     protected PortalInfo func_241829_a(ServerWorld p_241829_1_) {
@@ -963,7 +987,7 @@
        if (!flag && !flag1) {
           boolean flag2 = p_241829_1_.func_234923_W_() == World.field_234919_h_;
           if (this.field_70170_p.func_234923_W_() != World.field_234919_h_ && !flag2) {
-@@ -2139,7 +2562,16 @@
+@@ -2139,7 +2586,16 @@
              double d3 = Math.min(2.9999872E7D, worldborder.func_177733_e() - 16.0D);
              double d4 = DimensionType.func_242715_a(this.field_70170_p.func_230315_m_(), p_241829_1_.func_230315_m_());
              BlockPos blockpos1 = new BlockPos(MathHelper.func_151237_a(this.func_226277_ct_() * d4, d0, d2), this.func_226278_cu_(), MathHelper.func_151237_a(this.func_226281_cx_() * d4, d1, d3));
@@ -981,7 +1005,7 @@
                 BlockState blockstate = this.field_70170_p.func_180495_p(this.field_242271_ac);
                 Direction.Axis direction$axis;
                 Vector3d vector3d;
-@@ -2154,7 +2586,7 @@
+@@ -2154,7 +2610,7 @@
                    vector3d = new Vector3d(0.5D, 0.0D, 0.0D);
                 }
  
@@ -990,7 +1014,7 @@
              }).orElse((PortalInfo)null);
           }
        } else {
-@@ -2165,7 +2597,16 @@
+@@ -2165,7 +2621,16 @@
              blockpos = p_241829_1_.func_205770_a(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, p_241829_1_.func_241135_u_());
           }
  
@@ -1008,7 +1032,7 @@
        }
     }
  
-@@ -2173,6 +2614,25 @@
+@@ -2173,6 +2638,25 @@
        return PortalSize.func_242973_a(p_241839_2_, p_241839_1_, this.func_213303_ch(), this.func_213305_a(this.func_213283_Z()));
     }
  
@@ -1034,7 +1058,7 @@
     protected Optional<TeleportationRepositioner.Result> func_241830_a(ServerWorld p_241830_1_, BlockPos p_241830_2_, boolean p_241830_3_) {
        return p_241830_1_.func_85176_s().func_242957_a(p_241830_2_, p_241830_3_);
     }
-@@ -2320,9 +2780,10 @@
+@@ -2320,9 +2804,10 @@
     public void func_213323_x_() {
        EntitySize entitysize = this.field_213325_aI;
        Pose pose = this.func_213283_Z();
@@ -1047,7 +1071,7 @@
        if (entitysize1.field_220315_a < entitysize.field_220315_a) {
           double d0 = (double)entitysize1.field_220315_a / 2.0D;
           this.func_174826_a(new AxisAlignedBB(this.func_226277_ct_() - d0, this.func_226278_cu_(), this.func_226281_cx_() - d0, this.func_226277_ct_() + d0, this.func_226278_cu_() + (double)entitysize1.field_220316_b, this.func_226281_cx_() + d0));
-@@ -2371,7 +2832,31 @@
+@@ -2371,7 +2856,31 @@
     }
  
     public void func_174826_a(AxisAlignedBB p_174826_1_) {
@@ -1080,7 +1104,7 @@
     }
  
     protected float func_213316_a(Pose p_213316_1_, EntitySize p_213316_2_) {
-@@ -2399,6 +2884,12 @@
+@@ -2399,6 +2908,12 @@
     public void func_145747_a(ITextComponent p_145747_1_, UUID p_145747_2_) {
     }
  
@@ -1093,7 +1117,7 @@
     public World func_130014_f_() {
        return this.field_70170_p;
     }
-@@ -2594,7 +3085,7 @@
+@@ -2594,7 +3109,7 @@
        return SoundCategory.NEUTRAL;
     }
  
@@ -1102,7 +1126,7 @@
        return 1;
     }
  
-@@ -2796,6 +3287,7 @@
+@@ -2796,6 +3311,7 @@
  
           this.field_233555_aA_ = true;
        }
@@ -1110,7 +1134,7 @@
  
     }
  
-@@ -2807,8 +3299,71 @@
+@@ -2807,8 +3323,71 @@
        return this.func_242282_l(p_241843_1_).func_72441_c(0.0D, (double)this.field_213326_aJ * 0.7D, 0.0D);
     }
  

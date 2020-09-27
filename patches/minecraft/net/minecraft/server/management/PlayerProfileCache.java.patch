@@ -1,0 +1,11 @@
+--- a/net/minecraft/server/management/PlayerProfileCache.java
++++ b/net/minecraft/server/management/PlayerProfileCache.java
+@@ -130,7 +130,7 @@
+          playerprofilecache$profileentry.func_242126_a(this.func_242123_d());
+          gameprofile = playerprofilecache$profileentry.func_152668_a();
+       } else {
+-         gameprofile = func_187319_a(this.field_187323_g, s);
++         gameprofile = func_187319_a(this.field_187323_g, p_152655_1_); // Spigot - use correct case for offline players
+          if (gameprofile != null) {
+             this.func_152649_a(gameprofile);
+             flag = false;

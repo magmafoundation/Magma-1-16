@@ -407,8 +407,11 @@ public final class CraftServer implements Server {
         }
 
         if (type == PluginLoadOrder.POSTWORLD) {
+            // Spigot start - Allow vanilla commands to be forced to be the main command
+            setVanillaCommands(true);
             commandMap.setFallbackCommands();
-            setVanillaCommands();
+            setVanillaCommands(false);
+            // Spigot end
             commandMap.registerServerAliases();
             DefaultPermissions.registerCorePermissions();
             CraftDefaultPermissions.registerCorePermissions();
@@ -422,12 +425,21 @@ public final class CraftServer implements Server {
         pluginManager.disablePlugins();
     }
 
-    private void setVanillaCommands() {
+    private void setVanillaCommands(boolean first) { // Spigot
         Commands dispatcher = console.vanillaCommandDispatcher;
 
         // Build a list of all Vanilla commands and create wrappers
         for (CommandNode<CommandSource> cmd : dispatcher.getDispatcher().getRoot().getChildren()) {
-            commandMap.register("minecraft", new VanillaCommandWrapper(dispatcher, cmd));
+            // Spigot start
+            VanillaCommandWrapper wrapper = new VanillaCommandWrapper(dispatcher, cmd);
+            if (org.spigotmc.SpigotConfig.replaceCommands.contains( wrapper.getName() ) ) {
+                if (first) {
+                    commandMap.register("minecraft", wrapper);
+                }
+            } else if (!first) {
+                commandMap.register("minecraft", wrapper);
+            }
+            // Spigot end
         }
     }
 
@@ -655,7 +667,13 @@ public final class CraftServer implements Server {
 
     @Override
     public long getConnectionThrottle() {
-        return this.configuration.getInt("settings.connection-throttle");
+        // Spigot Start - Automatically set connection throttle for bungee configurations
+        if (org.spigotmc.SpigotConfig.bungee) {
+            return -1;
+        } else {
+            return this.configuration.getInt("settings.connection-throttle");
+        }
+        // Spigot End
     }
 
     @Override
@@ -738,11 +756,11 @@ public final class CraftServer implements Server {
             return true;
         }
 
-        if (sender instanceof Player) {
-            sender.sendMessage("Unknown command. Type \"/help\" for help.");
-        } else {
-            sender.sendMessage("Unknown command. Type \"help\" for help.");
+        // Spigot start
+        if (!org.spigotmc.SpigotConfig.unknownCommandMessage.isEmpty()) {
+            sender.sendMessage(org.spigotmc.SpigotConfig.unknownCommandMessage);
         }
+        // Spigot end
 
         return false;
     }
@@ -1684,7 +1702,7 @@ public final class CraftServer implements Server {
 
     @Override
     public boolean isPrimaryThread() {
-        return Thread.currentThread().equals(console.serverThread) || console.hasStopped(); // All bets are off if we have shut down (e.g. due to watchdog)
+        return Thread.currentThread().equals(console.serverThread) || console.hasStopped() || !org.spigotmc.AsyncCatcher.enabled; // All bets are off if we have shut down (e.g. due to watchdog)
     }
 
     @Override
@@ -1717,6 +1735,12 @@ public final class CraftServer implements Server {
     }
 
     public List<String> tabCompleteCommand(Player player, String message, ServerWorld world, Vector3d pos) {
+        // Spigot Start
+        if ( (org.spigotmc.SpigotConfig.tabComplete < 0 || message.length() <= org.spigotmc.SpigotConfig.tabComplete) && !message.contains( " " ) )
+        {
+            return ImmutableList.of();
+        }
+        // Spigot End
         List<String> completions = null;
         try {
             if (message.startsWith("/")) {
@@ -2031,6 +2055,11 @@ public final class CraftServer implements Server {
         public YamlConfiguration getConfig()
         {
             return org.spigotmc.SpigotConfig.config;
+        }
+
+        @Override
+        public void restart() {
+            org.spigotmc.RestartCommand.restart();
         }
     };
 

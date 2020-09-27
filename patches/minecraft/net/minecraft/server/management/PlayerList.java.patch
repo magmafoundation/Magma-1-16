@@ -430,7 +430,7 @@
 +
 +      ServerPlayerEntity entity = new ServerPlayerEntity(this.field_72400_f, this.field_72400_f.func_71218_a(World.field_234918_g_), gameProfile, new PlayerInteractionManager(this.field_72400_f.func_71218_a(World.field_234918_g_)));
 +      Player player = entity.getBukkitEntity();
-+      PlayerLoginEvent event = new PlayerLoginEvent(player, hostName, ((java.net.InetSocketAddress) socketaddress).getAddress());
++      PlayerLoginEvent event = new PlayerLoginEvent(player, hostName, ((java.net.InetSocketAddress) socketaddress).getAddress(), ((java.net.InetSocketAddress) netHandler.field_147333_a.getRawAddress()).getAddress());
 +      if (func_152608_h().func_152702_a(gameProfile) && !func_152608_h().func_152683_b(gameProfile).func_73682_e()) {
 +         ProfileBanEntry profilebanentry = this.field_72401_g.func_152683_b(gameProfile);
 +          iformattabletextcomponent1 = new TranslationTextComponent("multiplayer.disconnect.banned.reason", profilebanentry.func_73686_f());
@@ -447,7 +447,7 @@
 +         event.disallow(PlayerLoginEvent.Result.KICK_BANNED, CraftChatMessage.fromComponent(iformattabletextcomponent1));
 +      } else if (!this.func_152607_e(gameProfile)) {
 +         iformattabletextcomponent1 = new TranslationTextComponent("multiplayer.disconnect.not_whitelisted");
-+         event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, CraftChatMessage.fromComponent(iformattabletextcomponent1));
++         event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, org.spigotmc.SpigotConfig.whitelistMessage); // Spigot
 +      } else if (func_72363_f().func_152708_a(socketaddress) && !func_72363_f().func_152709_b(socketaddress).func_73682_e()) {
 +         IPBanEntry ipbanentry = this.field_72413_h.func_152709_b(socketaddress);
           IFormattableTextComponent iformattabletextcomponent = new TranslationTextComponent("multiplayer.disconnect.banned_ip.reason", ipbanentry.func_73686_f());
@@ -462,7 +462,7 @@
 -         return this.field_72404_b.size() >= this.field_72405_c && !this.func_183023_f(p_206258_2_) ? new TranslationTextComponent("multiplayer.disconnect.server_full") : null;
 +         // return this.players.size() >= this.maxPlayers && !this.bypassesPlayerLimit(gameProfile) ? new TranslationTextComponent("multiplayer.disconnect.server_full") : null;
 +         if (this.field_72404_b.size() >= this.field_72405_c && !this.func_183023_f(gameProfile)) {
-+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, "The server is full");
++            event.disallow(PlayerLoginEvent.Result.KICK_FULL,  org.spigotmc.SpigotConfig.serverFullMessage); // Spigot
 +         }
        }
 +      cserver.getPluginManager().callEvent(event);
@@ -568,7 +568,7 @@
        serverplayerentity.func_145769_d(p_232644_1_.func_145782_y());
        serverplayerentity.func_184819_a(p_232644_1_.func_184591_cq());
  
-@@ -431,48 +605,108 @@
+@@ -431,48 +605,113 @@
           serverplayerentity.func_184211_a(s);
        }
  
@@ -629,6 +629,11 @@
 +         Player respawnPlayer = cserver.getPlayer(serverplayerentity);
 +         PlayerRespawnEvent respawnEvent = new PlayerRespawnEvent(respawnPlayer, location, isBedSpawn && !flag2, flag2);
 +         cserver.getPluginManager().callEvent(respawnEvent);
++         // Spigot Start
++         if (p_232644_1_.field_71135_a.isDisconnected()) {
++            return p_232644_1_;
++         }
++         // Spigot End
 +         location = respawnEvent.getRespawnLocation();
 +         if (!flag) p_232644_1_.reset(); // SPIGOT-4785
 +      } else {
@@ -704,7 +709,7 @@
        return serverplayerentity;
     }
  
-@@ -484,12 +718,36 @@
+@@ -484,12 +723,36 @@
  
     public void func_72374_b() {
        if (++this.field_72408_o > 600) {
@@ -742,7 +747,7 @@
     public void func_148540_a(IPacket<?> p_148540_1_) {
        for(int i = 0; i < this.field_72404_b.size(); ++i) {
           (this.field_72404_b.get(i)).field_71135_a.func_147359_a(p_148540_1_);
-@@ -585,6 +843,7 @@
+@@ -585,6 +848,7 @@
           p_187245_1_.field_71135_a.func_147359_a(new SEntityStatusPacket(p_187245_1_, b0));
        }
  
@@ -750,7 +755,7 @@
        this.field_72400_f.func_195571_aL().func_197051_a(p_187245_1_);
     }
  
-@@ -610,6 +869,13 @@
+@@ -610,6 +874,13 @@
     public void func_148543_a(@Nullable PlayerEntity p_148543_1_, double p_148543_2_, double p_148543_4_, double p_148543_6_, double p_148543_8_, RegistryKey<World> p_148543_10_, IPacket<?> p_148543_11_) {
        for(int i = 0; i < this.field_72404_b.size(); ++i) {
           ServerPlayerEntity serverplayerentity = this.field_72404_b.get(i);
@@ -764,7 +769,7 @@
           if (serverplayerentity != p_148543_1_ && serverplayerentity.field_70170_p.func_234923_W_() == p_148543_10_) {
              double d0 = p_148543_2_ - serverplayerentity.func_226277_ct_();
              double d1 = p_148543_4_ - serverplayerentity.func_226278_cu_();
-@@ -649,22 +915,32 @@
+@@ -649,22 +920,32 @@
     }
  
     public void func_72354_b(ServerPlayerEntity p_72354_1_, ServerWorld p_72354_2_) {
@@ -799,7 +804,7 @@
     }
  
     public int func_72394_k() {
-@@ -719,7 +995,7 @@
+@@ -719,7 +1000,7 @@
           p_72381_1_.field_71134_c.func_241820_a(this.field_72410_m, GameType.NOT_SET);
        }
  
@@ -808,7 +813,7 @@
     }
  
     @OnlyIn(Dist.CLIENT)
-@@ -728,32 +1004,46 @@
+@@ -728,32 +1009,46 @@
     }
  
     public void func_72392_r() {
@@ -864,7 +869,7 @@
        }
  
        return serverstatisticsmanager;
-@@ -761,12 +1051,12 @@
+@@ -761,12 +1056,12 @@
  
     public PlayerAdvancements func_192054_h(ServerPlayerEntity p_192054_1_) {
        UUID uuid = p_192054_1_.func_110124_au();
@@ -879,7 +884,7 @@
        }
  
        playeradvancements.func_192739_a(p_192054_1_);
-@@ -786,7 +1076,7 @@
+@@ -786,7 +1081,7 @@
     }
  
     public List<ServerPlayerEntity> func_181057_v() {
@@ -888,7 +893,7 @@
     }
  
     @Nullable
-@@ -799,11 +1089,14 @@
+@@ -799,11 +1094,14 @@
     }
  
     public void func_193244_w() {
@@ -905,7 +910,7 @@
        SUpdateRecipesPacket supdaterecipespacket = new SUpdateRecipesPacket(this.field_72400_f.func_199529_aN().func_199510_b());
  
        for(ServerPlayerEntity serverplayerentity : this.field_72404_b) {
-@@ -816,4 +1109,12 @@
+@@ -816,4 +1114,12 @@
     public boolean func_206257_x() {
        return this.field_72407_n;
     }

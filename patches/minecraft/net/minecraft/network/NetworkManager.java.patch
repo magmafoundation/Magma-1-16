@@ -1,6 +1,27 @@
 --- a/net/minecraft/network/NetworkManager.java
 +++ b/net/minecraft/network/NetworkManager.java
-@@ -75,6 +75,7 @@
+@@ -34,6 +34,7 @@
+ import net.minecraft.network.login.ServerLoginNetHandler;
+ import net.minecraft.network.play.ServerPlayNetHandler;
+ import net.minecraft.network.play.server.SDisconnectPacket;
++import net.minecraft.server.MinecraftServer;
+ import net.minecraft.util.CryptManager;
+ import net.minecraft.util.LazyValue;
+ import net.minecraft.util.math.MathHelper;
+@@ -64,7 +65,11 @@
+    private final PacketDirection field_179294_g;
+    private final Queue<NetworkManager.QueuedPacket> field_150745_j = Queues.newConcurrentLinkedQueue();
+    private Channel field_150746_k;
+-   private SocketAddress field_150743_l;
++   public SocketAddress field_150743_l; // private->public CraftBukkit
++   // Spigot Start
++   public java.util.UUID spoofedUUID;
++   public com.mojang.authlib.properties.Property[] spoofedProfile;
++   // Spigot End
+    private INetHandler field_150744_m;
+    private ITextComponent field_150742_o;
+    private boolean field_152463_r;
+@@ -75,6 +80,7 @@
     private float field_211397_t;
     private int field_211398_u;
     private boolean field_211399_v;
@@ -8,7 +29,7 @@
  
     public NetworkManager(PacketDirection p_i46004_1_) {
        this.field_179294_g = p_i46004_1_;
-@@ -84,6 +85,7 @@
+@@ -84,6 +90,7 @@
        super.channelActive(p_channelActive_1_);
        this.field_150746_k = p_channelActive_1_.channel();
        this.field_150743_l = this.field_150746_k.remoteAddress();
@@ -16,7 +37,15 @@
  
        try {
           this.func_150723_a(ProtocolType.HANDSHAKING);
-@@ -172,7 +174,7 @@
+@@ -129,6 +136,7 @@
+ 
+          }
+       }
++      if (MinecraftServer.getServer().isDebugging()) p_exceptionCaught_2_.printStackTrace(); // Spigot
+    }
+ 
+    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, IPacket<?> p_channelRead0_2_) throws Exception {
+@@ -172,7 +180,7 @@
        ++this.field_211395_r;
        if (protocoltype1 != protocoltype) {
           field_150735_g.debug("Disabled auto read");
@@ -25,7 +54,7 @@
        }
  
        if (this.field_150746_k.eventLoop().inEventLoop()) {
-@@ -248,7 +250,7 @@
+@@ -248,7 +256,7 @@
  
     public void func_150718_a(ITextComponent p_150718_1_) {
        if (this.field_150746_k.isOpen()) {
@@ -34,7 +63,7 @@
           this.field_150742_o = p_150718_1_;
        }
  
-@@ -260,7 +262,9 @@
+@@ -260,7 +268,9 @@
  
     @OnlyIn(Dist.CLIENT)
     public static NetworkManager func_181124_a(InetAddress p_181124_0_, int p_181124_1_, boolean p_181124_2_) {
@@ -44,7 +73,7 @@
        Class<? extends SocketChannel> oclass;
        LazyValue<? extends EventLoopGroup> lazyvalue;
        if (Epoll.isAvailable() && p_181124_2_) {
-@@ -287,6 +291,7 @@
+@@ -287,6 +297,7 @@
     @OnlyIn(Dist.CLIENT)
     public static NetworkManager func_150722_a(SocketAddress p_150722_0_) {
        final NetworkManager networkmanager = new NetworkManager(PacketDirection.CLIENTBOUND);
@@ -52,7 +81,7 @@
        (new Bootstrap()).group(field_179296_e.func_179281_c()).handler(new ChannelInitializer<Channel>() {
           protected void initChannel(Channel p_initChannel_1_) throws Exception {
              p_initChannel_1_.pipeline().addLast("packet_handler", networkmanager);
-@@ -377,6 +382,14 @@
+@@ -377,6 +388,14 @@
        return this.field_211397_t;
     }
  
@@ -67,3 +96,15 @@
     static class QueuedPacket {
        private final IPacket<?> field_150774_a;
        @Nullable
+@@ -387,4 +406,11 @@
+          this.field_201049_b = p_i48604_2_;
+       }
+    }
++
++   // Spigot Start
++   public SocketAddress getRawAddress()
++   {
++      return this.field_150746_k.remoteAddress();
++   }
++   // Spigot End
+ }

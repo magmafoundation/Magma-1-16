@@ -6,13 +6,20 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -121,4 +128,153 @@ public class SpigotConfig {
     {
         logCommands = getBoolean( "commands.log", true );
     }
+
+    public static int tabComplete;
+    public static boolean sendNamespaced;
+    private static void tabComplete()
+    {
+        if ( version < 6 )
+        {
+            boolean oldValue = getBoolean( "commands.tab-complete", true );
+            if ( oldValue )
+            {
+                set( "commands.tab-complete", 0 );
+            } else
+            {
+                set( "commands.tab-complete", -1 );
+            }
+        }
+        tabComplete = getInt( "commands.tab-complete", 0 );
+        sendNamespaced = getBoolean( "commands.send-namespaced", true );
+    }
+
+    public static String whitelistMessage;
+    public static String unknownCommandMessage;
+    public static String serverFullMessage;
+    public static String outdatedClientMessage = "Outdated client! Please use {0}";
+    public static String outdatedServerMessage = "Outdated server! I\'m still on {0}";
+    private static String transform(String s)
+    {
+        return ChatColor.translateAlternateColorCodes( '&', s ).replaceAll( "\\\\n", "\n" );
+    }
+    private static void messages()
+    {
+        if (version < 8)
+        {
+            set( "messages.outdated-client", outdatedClientMessage );
+            set( "messages.outdated-server", outdatedServerMessage );
+        }
+        whitelistMessage = transform( getString( "messages.whitelist", "You are not whitelisted on this server!" ) );
+        unknownCommandMessage = transform( getString( "messages.unknown-command", "Unknown command. Type \"/help\" for help." ) );
+        serverFullMessage = transform( getString( "messages.server-full", "The server is full!" ) );
+        outdatedClientMessage = transform( getString( "messages.outdated-client", outdatedClientMessage ) );
+        outdatedServerMessage = transform( getString( "messages.outdated-server", outdatedServerMessage ) );
+    }
+
+    public static int timeoutTime = 60;
+    public static boolean restartOnCrash = true;
+    public static String restartScript = "./start.sh";
+    public static String restartMessage;
+    private static void watchdog()
+    {
+        timeoutTime = getInt( "settings.timeout-time", timeoutTime );
+        restartOnCrash = getBoolean( "settings.restart-on-crash", restartOnCrash );
+        restartScript = getString( "settings.restart-script", restartScript );
+        restartMessage = transform( getString( "messages.restart", "Server is restarting" ) );
+        commands.put( "restart", new RestartCommand( "restart" ) );
+        WatchdogThread.doStart( timeoutTime, restartOnCrash );
+    }
+
+    public static boolean bungee;
+    private static void bungee() {
+        if ( version < 4 )
+        {
+            set( "settings.bungeecord", false );
+            System.out.println( "Oudated config, disabling BungeeCord support!" );
+        }
+        bungee = getBoolean( "settings.bungeecord", false );
+    }
+
+    private static void nettyThreads()
+    {
+        int count = getInt( "settings.netty-threads", 4 );
+        System.setProperty( "io.netty.eventLoopThreads", Integer.toString( count ) );
+        Bukkit.getLogger().log( Level.INFO, "Using {0} threads for Netty based IO", count );
+    }
+
+    public static boolean disableStatSaving;
+    public static Map<ResourceLocation, Integer> forcedStats = new HashMap<>();
+    private static void stats()
+    {
+        disableStatSaving = getBoolean( "stats.disable-saving", false );
+        if ( !config.contains( "stats.forced-stats" ) ) {
+            config.createSection( "stats.forced-stats" );
+        }
+        ConfigurationSection section = config.getConfigurationSection( "stats.forced-stats" );
+        for ( String name : section.getKeys( true ) )
+        {
+            if ( section.isInt( name ) )
+            {
+                try
+                {
+                    ResourceLocation key = new ResourceLocation( name );
+                    if ( Registry.CUSTOM_STAT.getKey( key ) == null )
+                    {
+                        Bukkit.getLogger().log(Level.WARNING, "Ignoring non existent stats.forced-stats " + name);
+                        continue;
+                    }
+                    forcedStats.put( key, section.getInt( name ) );
+                } catch (Exception ex)
+                {
+                    Bukkit.getLogger().log(Level.WARNING, "Ignoring invalid stats.forced-stats " + name);
+                }
+            }
+        }
+    }
+
+    private static void tpsCommand()
+    {
+        commands.put( "tps", new TicksPerSecondCommand( "tps" ) );
+    }
+
+    public static int playerSample;
+    private static void playerSample()
+    {
+        playerSample = getInt( "settings.sample-count", 12 );
+        System.out.println( "Server Ping Player Sample Count: " + playerSample );
+    }
+
+    public static int playerShuffle;
+    private static void playerShuffle()
+    {
+        playerShuffle = getInt( "settings.player-shuffle", 0 );
+    }
+
+    public static List<String> spamExclusions;
+    private static void spamExclusions()
+    {
+        spamExclusions = getList( "commands.spam-exclusions", Arrays.asList( new String[]
+            {
+                "/skill"
+            } ) );
+    }
+
+    public static boolean silentCommandBlocks;
+    private static void silentCommandBlocks()
+    {
+        silentCommandBlocks = getBoolean( "commands.silent-commandblock-console", false );
+    }
+
+    public static Set<String> replaceCommands;
+    private static void replaceCommands()
+    {
+        if ( config.contains( "replace-commands" ) )
+        {
+            set( "commands.replace-commands", config.getStringList( "replace-commands" ) );
+            config.set( "replace-commands", null );
+        }
+        replaceCommands = new HashSet<String>( (List<String>) getList( "commands.replace-commands",
+            Arrays.asList( "setblock", "summon", "testforblock", "tellraw" ) ) );
+    }
+
 }

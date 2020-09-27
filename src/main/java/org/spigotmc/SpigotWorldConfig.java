@@ -205,4 +205,50 @@ public class SpigotWorldConfig {
         log( "Hopper Transfer: " + hopperTransfer + " Hopper Check: " + hopperCheck + " Hopper Amount: " + hopperAmount );
     }
 
+    public int arrowDespawnRate;
+    public int tridentDespawnRate;
+    private void arrowDespawnRate()
+    {
+        arrowDespawnRate = getInt( "arrow-despawn-rate", 1200  );
+        tridentDespawnRate = getInt( "trident-despawn-rate", arrowDespawnRate  );
+        log( "Arrow Despawn Rate: " + arrowDespawnRate + " Trident Respawn Rate:" + tridentDespawnRate );
+    }
+
+    public boolean zombieAggressiveTowardsVillager;
+    private void zombieAggressiveTowardsVillager()
+    {
+        zombieAggressiveTowardsVillager = getBoolean( "zombie-aggressive-towards-villager", true );
+        log( "Zombie Aggressive Towards Villager: " + zombieAggressiveTowardsVillager );
+    }
+
+    public boolean nerfSpawnerMobs;
+    private void nerfSpawnerMobs()
+    {
+        nerfSpawnerMobs = getBoolean( "nerf-spawner-mobs", false );
+        log( "Nerfing mobs spawned from spawners: " + nerfSpawnerMobs );
+    }
+
+    public boolean enableZombiePigmenPortalSpawns;
+    private void enableZombiePigmenPortalSpawns()
+    {
+        enableZombiePigmenPortalSpawns = getBoolean( "enable-zombie-pigmen-portal-spawns", true );
+        log( "Allow Zombie Pigmen to spawn from portal blocks: " + enableZombiePigmenPortalSpawns );
+    }
+
+    public int dragonDeathSoundRadius;
+    private void keepDragonDeathPerWorld()
+    {
+        dragonDeathSoundRadius = getInt( "dragon-death-sound-radius", 0 );
+    }
+    public int witherSpawnSoundRadius;
+    private void witherSpawnSoundRadius()
+    {
+        witherSpawnSoundRadius = getInt( "wither-spawn-sound-radius", 0 );
+    }
+    public int endPortalSoundRadius;
+    private void endPortalSoundRadius()
+    {
+        endPortalSoundRadius = getInt( "end-portal-sound-radius", 0 );
+    }
+
 }

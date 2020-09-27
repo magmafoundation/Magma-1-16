@@ -2326,6 +2326,26 @@ public class CraftWorld implements World {
     private final Spigot spigot = new Spigot()
     {
 
+        @Override
+        public LightningStrike strikeLightning(Location loc, boolean isSilent)
+        {
+            LightningBoltEntity lightning = net.minecraft.entity.EntityType.LIGHTNING_BOLT.create( world );
+            lightning.moveForced( loc.getX(), loc.getY(), loc.getZ() );
+            lightning.isSilent = isSilent;
+            world.strikeLightning( lightning );
+            return (LightningStrike) lightning.getBukkitEntity();
+        }
+
+        @Override
+        public LightningStrike strikeLightningEffect(Location loc, boolean isSilent)
+        {
+            LightningBoltEntity lightning = net.minecraft.entity.EntityType.LIGHTNING_BOLT.create( world );
+            lightning.moveForced( loc.getX(), loc.getY(), loc.getZ() );
+            lightning.isEffect = true;
+            lightning.isSilent = isSilent;
+            return (LightningStrike) lightning.getBukkitEntity();
+        }
+
     };
 
     public Spigot spigot()
