@@ -1,6 +1,7 @@
 package org.spigotmc;
 
 import java.util.Collection;
+import java.util.List;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -133,7 +134,7 @@ public class ActivationRange {
      * Checks for the activation state of all entities in this chunk.
      */
     private static void activateChunkEntities(Chunk chunk) {
-        for (ClassInheritanceMultiMap<Entity> slice : chunk.entityLists) {
+        for (List<Entity> slice : chunk.entityLists) {
             for (Entity entity : (Collection<Entity>) slice) {
                 if (MinecraftServer.currentTick > entity.activatedTick) {
                     if (entity.defaultActivationState) {

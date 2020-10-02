@@ -251,4 +251,93 @@ public class SpigotWorldConfig {
         endPortalSoundRadius = getInt( "end-portal-sound-radius", 0 );
     }
 
+    public int villageSeed;
+    public int desertSeed;
+    public int iglooSeed;
+    public int jungleSeed;
+    public int swampSeed;
+    public int monumentSeed;
+    public int oceanSeed;
+    public int outpostSeed;
+    public int shipwreckSeed;
+    public int slimeSeed;
+    public int endCitySeed;
+    public int bastionSeed;
+    public int fortressSeed;
+    public int mansionSeed;
+    public int fossilSeed;
+    public int portalSeed;
+    private void initWorldGenSeeds()
+    {
+        villageSeed = getInt( "seed-village", 10387312 );
+        desertSeed = getInt( "seed-desert", 14357617 );
+        iglooSeed = getInt( "seed-igloo", 14357618 );
+        jungleSeed = getInt( "seed-jungle", 14357619 );
+        swampSeed = getInt( "seed-swamp", 14357620 );
+        monumentSeed = getInt( "seed-monument", 10387313 );
+        shipwreckSeed = getInt( "seed-shipwreck", 165745295 );
+        oceanSeed = getInt( "seed-ocean", 14357621 );
+        outpostSeed = getInt( "seed-outpost", 165745296 );
+        endCitySeed = getInt( "seed-endcity", 10387313 );
+        slimeSeed = getInt( "seed-slime", 987234911 );
+        bastionSeed = getInt( "seed-bastion", 30084232 );
+        fortressSeed = getInt( "seed-fortress", 30084232 );
+        mansionSeed = getInt( "seed-mansion", 10387319 );
+        fossilSeed = getInt( "seed-fossil", 14357921 );
+        portalSeed = getInt( "seed-portal", 34222645 );
+        log( "Custom Map Seeds:  Village: " + villageSeed + " Desert: " + desertSeed + " Igloo: " + iglooSeed + " Jungle: " + jungleSeed + " Swamp: " + swampSeed + " Monument: " + monumentSeed +
+            " Ocean: " + oceanSeed + " Shipwreck: " + shipwreckSeed + " End City: " + endCitySeed + " Slime: " + slimeSeed + " Bastion: " + bastionSeed + " Fortress: " + fortressSeed + " Mansion: " + mansionSeed + " Fossil: " + fossilSeed + " Portal: " + portalSeed );
+    }
+
+    public float jumpWalkExhaustion;
+    public float jumpSprintExhaustion;
+    public float combatExhaustion;
+    public float regenExhaustion;
+    public float swimMultiplier;
+    public float sprintMultiplier;
+    public float otherMultiplier;
+    private void initHunger()
+    {
+        if ( SpigotConfig.version < 10 )
+        {
+            set( "hunger.walk-exhaustion", null );
+            set( "hunger.sprint-exhaustion", null );
+            set( "hunger.combat-exhaustion", 0.1 );
+            set( "hunger.regen-exhaustion", 6.0 );
+        }
+        jumpWalkExhaustion = (float) getDouble( "hunger.jump-walk-exhaustion", 0.05 );
+        jumpSprintExhaustion = (float) getDouble( "hunger.jump-sprint-exhaustion", 0.2 );
+        combatExhaustion = (float) getDouble( "hunger.combat-exhaustion", 0.1 );
+        regenExhaustion = (float) getDouble( "hunger.regen-exhaustion", 6.0 );
+        swimMultiplier =  (float) getDouble( "hunger.swim-multiplier", 0.01 );
+        sprintMultiplier = (float) getDouble( "hunger.sprint-multiplier", 0.1 );
+        otherMultiplier = (float) getDouble( "hunger.other-multiplier", 0.0 );
+    }
+
+    public int currentPrimedTnt = 0;
+    public int maxTntTicksPerTick;
+    private void maxTntPerTick() {
+        if ( SpigotConfig.version < 7 )
+        {
+            set( "max-tnt-per-tick", 100 );
+        }
+        maxTntTicksPerTick = getInt( "max-tnt-per-tick", 100 );
+        log( "Max TNT Explosions: " + maxTntTicksPerTick );
+    }
+
+    public int hangingTickFrequency;
+    private void hangingTickFrequency()
+    {
+        hangingTickFrequency = getInt( "hanging-tick-frequency", 100 );
+    }
+
+    public int tileMaxTickTime;
+    public int entityMaxTickTime;
+    private void maxTickTimes()
+    {
+        tileMaxTickTime = getInt("max-tick-time.tile", 50);
+        entityMaxTickTime = getInt("max-tick-time.entity", 50);
+        log("Tile Max Tick Time: " + tileMaxTickTime + "ms Entity max Tick Time: " + entityMaxTickTime + "ms");
+    }
+
 }

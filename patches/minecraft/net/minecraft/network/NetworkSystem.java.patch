@@ -54,7 +54,18 @@
           Iterator<NetworkManager> iterator = this.field_151272_f.iterator();
  
           while(iterator.hasNext()) {
-@@ -155,4 +164,15 @@
+@@ -143,6 +152,10 @@
+                      networkmanager.func_150721_g();
+                   }
+                } else {
++                  // Spigot Start
++                  // Fix a race condition where a NetworkManager could be unregistered just before connection.
++                  if (networkmanager.preparing) continue;
++                  // Spigot End
+                   iterator.remove();
+                   networkmanager.func_179293_l();
+                }
+@@ -155,4 +168,15 @@
     public MinecraftServer func_151267_d() {
        return this.field_151273_d;
     }

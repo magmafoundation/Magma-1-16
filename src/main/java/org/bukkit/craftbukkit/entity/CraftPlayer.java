@@ -24,6 +24,7 @@ import java.util.WeakHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.entity.Entity;
@@ -1551,7 +1552,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             }
         }
         ModifiableAttributeInstance dummy = new ModifiableAttributeInstance(Attributes.field_233821_d_, (attribute) -> { });
-        dummy.setBaseValue(scaledHealth ? healthScale : getMaxHealth());
+        // Spigot start
+        double healthMod = scaledHealth ? healthScale : getMaxHealth();
+        if ( healthMod >= Float.MAX_VALUE || healthMod <= 0 )
+        {
+            healthMod = 20; // Reset health
+            getServer().getLogger().warning( getName() + " tried to crash the server with a large health attribute" );
+        }
+        dummy.setBaseValue(healthMod);
+        // Spigot end
         collection.add(dummy);
     }
 
@@ -1736,6 +1745,32 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
                 ret.add( getServer().getPlayer( u ) );
             }
             return java.util.Collections.unmodifiableSet( ret );
+        }
+
+        @Override
+        public void sendMessage(BaseComponent component) {
+            sendMessage( new BaseComponent[] { component } );
+        }
+
+        @Override
+        public void sendMessage(BaseComponent... components) {
+            if ( getHandle().connection == null ) return;
+            SChatPacket packet = new SChatPacket(null, ChatType.SYSTEM, Util.field_240973_b_);
+            packet.components = components;
+            getHandle().connection.sendPacket(packet);
+        }
+
+        @Override
+        public void sendMessage(net.md_5.bungee.api.ChatMessageType position, BaseComponent component) {
+            sendMessage( position, new BaseComponent[] { component } );
+        }
+
+        @Override
+        public void sendMessage(net.md_5.bungee.api.ChatMessageType position, BaseComponent... components) {
+            if ( getHandle().connection == null ) return;
+            SChatPacket packet = new SChatPacket(null, ChatType.byId((byte) position.ordinal()), Util.field_240973_b_);
+            packet.components = components;
+            getHandle().connection.sendPacket(packet);
         }
 
     };

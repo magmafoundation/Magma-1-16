@@ -13,3 +13,19 @@
     public boolean func_152690_d() {
        return this.field_152696_d.size() < 1;
     }
+@@ -130,8 +136,14 @@
+                   this.field_152696_d.put(this.func_152681_a(userlistentry.func_152640_f()), (V)userlistentry);
+                }
+             }
++            // Spigot Start
++         } catch ( com.google.gson.JsonParseException ex ) {
++            org.bukkit.Bukkit.getLogger().log(java.util.logging.Level.WARNING, "Unable to read file " + this.field_152695_c + ", backing it up to {0}.backup and creating new copy.", ex);
++            File backup = new File(this.field_152695_c + ".backup");
++            this.field_152695_c.renameTo(backup);
++            this.field_152695_c.delete();
++            // Spigot End
+          }
+-
+       }
+    }
+ }

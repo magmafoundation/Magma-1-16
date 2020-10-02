@@ -9,7 +9,7 @@
  import net.minecraft.world.GameRules;
  import net.minecraft.world.World;
  import net.minecraft.world.WorldSettings;
-@@ -71,41 +73,49 @@
+@@ -71,41 +73,58 @@
        OptionSpec<String> optionspec10 = optionparser.accepts("world").withRequiredArg();
        OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1);
        OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
@@ -28,7 +28,16 @@
 +         Path path1 = Paths.get("eula.txt");
 +         ServerEula servereula = new ServerEula(path1);
  
-+         if (!servereula.func_154346_a()) {
++         // Spigot Start
++         boolean eulaAgreed = Boolean.getBoolean( "com.mojang.eula.agree" );
++         if ( eulaAgreed )
++         {
++            System.err.println( "You have used the Spigot command line EULA agreement flag." );
++            System.err.println( "By using this setting you are indicating your agreement to Mojang's EULA (https://account.mojang.com/documents/minecraft_eula)." );
++            System.err.println( "If you do not agree to the above EULA please stop your server and remove this flag immediately." );
++         }
++         // Spigot End
++         if (!servereula.func_154346_a() && !eulaAgreed) { // Spigot
 +            field_240759_a_.info("You need to agree to the EULA in order to run the server. Go to eula.txt for more info.");
 +            return;
 +         }
@@ -68,7 +77,7 @@
           SaveFormat saveformat = SaveFormat.func_237269_a_(file1.toPath());
           SaveFormat.LevelSave saveformat$levelsave = saveformat.func_237274_c_(s);
           MinecraftServer.func_240777_a_(saveformat$levelsave);
-@@ -146,30 +156,28 @@
+@@ -146,30 +165,28 @@
              iserverconfiguration = new ServerWorldInfo(worldsettings, dimensiongeneratorsettings, Lifecycle.stable());
           }
  
@@ -110,7 +119,7 @@
              }
           };
           thread.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler(field_240759_a_));
-@@ -180,7 +188,7 @@
+@@ -180,7 +197,7 @@
  
     }
  

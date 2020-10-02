@@ -13,9 +13,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -275,6 +280,64 @@ public class SpigotConfig {
         }
         replaceCommands = new HashSet<String>( (List<String>) getList( "commands.replace-commands",
             Arrays.asList( "setblock", "summon", "testforblock", "tellraw" ) ) );
+    }
+
+    public static int userCacheCap;
+    private static void userCacheCap()
+    {
+        userCacheCap = getInt( "settings.user-cache-size", 1000 );
+    }
+
+    public static boolean saveUserCacheOnStopOnly;
+    private static void saveUserCacheOnStopOnly()
+    {
+        saveUserCacheOnStopOnly = getBoolean( "settings.save-user-cache-on-stop-only", false );
+    }
+
+    public static double movedWronglyThreshold;
+    private static void movedWronglyThreshold()
+    {
+        movedWronglyThreshold = getDouble( "settings.moved-wrongly-threshold", 0.0625D );
+    }
+
+    public static double movedTooQuicklyMultiplier;
+    private static void movedTooQuicklyMultiplier()
+    {
+        movedTooQuicklyMultiplier = getDouble( "settings.moved-too-quickly-multiplier", 10.0D );
+    }
+
+    public static double maxHealth = 2048;
+    public static double movementSpeed = 2048;
+    public static double attackDamage = 2048;
+    private static void attributeMaxes()
+    {
+        maxHealth = getDouble( "settings.attribute.maxHealth.max", maxHealth );
+        ( (RangedAttribute) Attributes.field_233818_a_ ).maximumValue = maxHealth;
+        movementSpeed = getDouble( "settings.attribute.movementSpeed.max", movementSpeed );
+        ( (RangedAttribute) Attributes.field_233821_d_ ).maximumValue = movementSpeed;
+        attackDamage = getDouble( "settings.attribute.attackDamage.max", attackDamage );
+        ( (RangedAttribute) Attributes.field_233823_f_ ).maximumValue = attackDamage;
+    }
+
+    public static boolean debug;
+    private static void debug()
+    {
+        debug = getBoolean( "settings.debug", false );
+        if ( debug && !LogManager.getRootLogger().isTraceEnabled() )
+        {
+            // Enable debug logging
+            LoggerContext ctx = (LoggerContext) LogManager.getContext( false );
+            Configuration conf = ctx.getConfiguration();
+            conf.getLoggerConfig( LogManager.ROOT_LOGGER_NAME ).setLevel( org.apache.logging.log4j.Level.ALL );
+            ctx.updateLoggers( conf );
+        }
+        if ( LogManager.getRootLogger().isTraceEnabled() )
+        {
+            Bukkit.getLogger().info( "Debug logging is enabled" );
+        } else
+        {
+            Bukkit.getLogger().info( "Debug logging is disabled" );
+        }
     }
 
 }

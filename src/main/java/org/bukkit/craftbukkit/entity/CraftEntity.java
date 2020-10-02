@@ -1002,6 +1002,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     private final Spigot spigot = new Spigot()
     {
 
+        @Override
+        public void sendMessage(net.md_5.bungee.api.chat.BaseComponent component)
+        {
+        }
+
+        @Override
+        public void sendMessage(net.md_5.bungee.api.chat.BaseComponent... components)
+        {
+        }
+
     };
 
     public Spigot spigot()

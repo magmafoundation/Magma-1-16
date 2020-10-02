@@ -39,7 +39,7 @@
     }
  
     private boolean func_98279_f() {
-@@ -131,16 +132,23 @@
+@@ -131,16 +132,36 @@
                       entity.func_70012_b(entity.func_226277_ct_(), entity.func_226278_cu_(), entity.func_226281_cx_(), world.field_73012_v.nextFloat() * 360.0F, 0.0F);
                       if (entity instanceof MobEntity) {
                          MobEntity mobentity = (MobEntity)entity;
@@ -61,11 +61,24 @@
                       }
  
 -                     if (!serverworld.func_242106_g(entity)) {
++                     // Spigot Start
++                     if (org.bukkit.craftbukkit.event.CraftEventFactory.callSpawnerSpawnEvent(entity, blockpos).isCancelled()) {
++                        Entity vehicle = entity.func_184187_bx();
++                        if (vehicle != null) {
++                           vehicle.field_70128_L = true;
++                        }
++                        for (Entity passenger : entity.func_184182_bu()) {
++                           passenger.field_70128_L = true;
++                        }
++                        continue;
++                     }
++                     // Spigot End
++
 +                     if (!serverworld.addAllEntities(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER)) { // CraftBukkit
                          this.func_98273_j();
                          return;
                       }
-@@ -283,4 +291,9 @@
+@@ -283,4 +304,9 @@
     public double func_177223_e() {
        return this.field_98284_d;
     }

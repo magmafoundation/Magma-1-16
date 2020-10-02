@@ -98,7 +98,7 @@
     public void func_222814_r() {
        if (!this.field_222816_g) {
           this.field_222816_g = true;
-@@ -183,4 +220,17 @@
+@@ -183,4 +220,24 @@
           }, this::func_174877_v);
        }
     }
@@ -108,7 +108,14 @@
 +      if (this.field_145850_b == null) {
 +         return null;
 +      }
-+      org.bukkit.block.BlockState state = field_145850_b.getWorldCB().getBlockAt(field_174879_c.func_177958_n(), field_174879_c.func_177956_o(), field_174879_c.func_177952_p()).getState();
++      // Spigot start
++      org.bukkit.block.Block block = field_145850_b.getWorldCB().getBlockAt(field_174879_c.func_177958_n(), field_174879_c.func_177956_o(), field_174879_c.func_177952_p());
++      if (block == null) {
++         org.bukkit.Bukkit.getLogger().log(java.util.logging.Level.WARNING, "No block for owner at %s %d %d %d", new Object[]{field_145850_b.getWorldCB(), field_174879_c.func_177958_n(), field_174879_c.func_177956_o(), field_174879_c.func_177952_p()});
++         return null;
++      }
++      // Spigot end
++      org.bukkit.block.BlockState state = block.getState();
 +      if (state instanceof InventoryHolder) {
 +         return (InventoryHolder) state;
 +      }
