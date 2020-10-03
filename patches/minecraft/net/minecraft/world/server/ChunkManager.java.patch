@@ -71,7 +71,46 @@
     public ChunkManager(ServerWorld p_i232602_1_, SaveFormat.LevelSave p_i232602_2_, DataFixer p_i232602_3_, TemplateManager p_i232602_4_, Executor p_i232602_5_, ThreadTaskExecutor<Runnable> p_i232602_6_, IChunkLightProvider p_i232602_7_, ChunkGenerator p_i232602_8_, IChunkStatusListener p_i232602_9_, Supplier<DimensionSavedDataManager> p_i232602_10_, int p_i232602_11_, boolean p_i232602_12_) {
        super(new File(p_i232602_2_.func_237291_a_(p_i232602_1_.func_234923_W_()), "region"), p_i232602_3_, p_i232602_12_);
        this.field_219269_w = p_i232602_4_;
-@@ -400,6 +424,7 @@
+@@ -357,6 +381,8 @@
+ 
+    }
+ 
++   private static final double UNLOAD_QUEUE_RESIZE_FACTOR = 0.96; // Spigot
++
+    protected void func_219204_a(BooleanSupplier p_219204_1_) {
+       IProfiler iprofiler = this.field_219255_i.func_217381_Z();
+       iprofiler.func_76320_a("poi");
+@@ -372,16 +398,27 @@
+    private void func_223155_b(BooleanSupplier p_223155_1_) {
+       LongIterator longiterator = this.field_219261_o.iterator();
+ 
+-      for(int i = 0; longiterator.hasNext() && (p_223155_1_.getAsBoolean() || i < 200 || this.field_219261_o.size() > 2000); longiterator.remove()) {
++      // Spigot start
++      org.spigotmc.SlackActivityAccountant activityAccountant = this.field_219255_i.func_73046_m().slackActivityAccountant;
++      activityAccountant.startActivity(0.5);
++      int targetSize = (int) (this.field_219261_o.size() * UNLOAD_QUEUE_RESIZE_FACTOR);
++      // Spigot end
++      while (longiterator.hasNext()) { // Spigot
+          long j = longiterator.nextLong();
++         longiterator.remove(); // Spigot
+          ChunkHolder chunkholder = this.field_219251_e.remove(j);
+          if (chunkholder != null) {
+             this.field_219253_g.put(j, chunkholder);
+             this.field_219262_p = true;
+-            ++i;
++            // Spigot start
++            if (!p_223155_1_.getAsBoolean() && this.field_219261_o.size() <= targetSize && activityAccountant.activityTimeIsExhausted()) {
++               break;
++            }
++            // Spigot end
+             this.func_219212_a(j, chunkholder);
+          }
+       }
++      activityAccountant.endActivity(); // Spigot
+ 
+       Runnable runnable;
+       while((p_223155_1_.getAsBoolean() || this.field_223181_A.size() > 2000) && (runnable = this.field_223181_A.poll()) != null) {
+@@ -400,6 +437,7 @@
              if (this.field_219253_g.remove(p_219212_1_, p_219212_3_) && p_219185_5_ != null) {
                 if (p_219185_5_ instanceof Chunk) {
                    ((Chunk)p_219185_5_).func_177417_c(false);
@@ -79,7 +118,7 @@
                 }
  
                 this.func_219229_a(p_219185_5_);
-@@ -583,12 +608,19 @@
+@@ -583,12 +621,19 @@
                 chunk.func_177417_c(true);
                 this.field_219255_i.func_147448_a(chunk.func_177434_r().values());
                 List<Entity> list = null;
@@ -101,7 +140,7 @@
                          if (list == null) {
                             list = Lists.newArrayList(entity);
                          } else {
-@@ -601,6 +633,7 @@
+@@ -601,6 +646,7 @@
                 if (list != null) {
                    list.forEach(chunk::func_76622_b);
                 }
@@ -109,7 +148,7 @@
              }
  
              return chunk;
-@@ -678,6 +711,7 @@
+@@ -678,6 +724,7 @@
  
              this.field_219255_i.func_217381_Z().func_230035_c_("chunkSave");
              CompoundNBT compoundnbt = ChunkSerializer.func_222645_a(this.field_219255_i, p_219229_1_);
@@ -117,7 +156,7 @@
              this.func_219100_a(chunkpos, compoundnbt);
              this.func_241088_a_(chunkpos, chunkstatus.func_202129_d());
              return true;
-@@ -734,6 +768,7 @@
+@@ -734,6 +781,7 @@
  
     protected void func_219199_a(ServerPlayerEntity p_219199_1_, ChunkPos p_219199_2_, IPacket<?>[] p_219199_3_, boolean p_219199_4_, boolean p_219199_5_) {
        if (p_219199_1_.field_70170_p == this.field_219255_i) {
@@ -125,7 +164,7 @@
           if (p_219199_5_ && !p_219199_4_) {
              ChunkHolder chunkholder = this.func_219219_b(p_219199_2_.func_201841_a());
              if (chunkholder != null) {
-@@ -776,7 +811,7 @@
+@@ -776,7 +824,7 @@
              return p_225407_0_ instanceof Chunk ? Optional.of((Chunk)p_225407_0_) : Optional.empty();
           });
           csvwriter.func_225426_a(chunkpos.field_77276_a, chunkpos.field_77275_b, chunkholder.func_219299_i(), optional.isPresent(), optional.map(IChunk::func_201589_g).orElse((ChunkStatus)null), optional1.map(Chunk::func_217321_u).orElse((ChunkHolder.LocationType)null), func_225402_a(chunkholder.func_223492_c()), func_225402_a(chunkholder.func_219296_a()), func_225402_a(chunkholder.func_219297_b()), this.field_219267_u.func_225413_c(entry.getLongKey()), !this.func_219243_d(chunkpos), optional1.map((p_225401_0_) -> {
@@ -134,7 +173,7 @@
           }).orElse(0), optional1.map((p_225405_0_) -> {
              return p_225405_0_.func_177434_r().size();
           }).orElse(0));
-@@ -802,13 +837,24 @@
+@@ -802,13 +850,24 @@
     @Nullable
     private CompoundNBT func_219178_f(ChunkPos p_219178_1_) throws IOException {
        CompoundNBT compoundnbt = this.func_227078_e_(p_219178_1_);
@@ -162,7 +201,7 @@
        });
     }
  
-@@ -942,9 +988,11 @@
+@@ -942,9 +1001,11 @@
     }
  
     protected void func_219210_a(Entity p_219210_1_) {
@@ -174,7 +213,7 @@
           int j = entitytype.func_220332_l();
           if (this.field_219272_z.containsKey(p_219210_1_.func_145782_y())) {
              throw (IllegalStateException)Util.func_229757_c_(new IllegalStateException("Entity is already tracked!"));
-@@ -968,6 +1016,7 @@
+@@ -968,6 +1029,7 @@
     }
  
     protected void func_219231_b(Entity p_219231_1_) {
@@ -182,7 +221,7 @@
        if (p_219231_1_ instanceof ServerPlayerEntity) {
           ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)p_219231_1_;
           this.func_219234_a(serverplayerentity, false);
-@@ -1077,15 +1126,15 @@
+@@ -1077,15 +1139,15 @@
        });
     }
  
@@ -201,7 +240,7 @@
           this.field_219403_c = p_i50468_2_;
           this.field_219404_d = p_i50468_3_;
           this.field_219405_e = SectionPos.func_218157_a(p_i50468_2_);
-@@ -1126,6 +1175,7 @@
+@@ -1126,6 +1188,7 @@
        }
  
        public void func_219399_a(ServerPlayerEntity p_219399_1_) {
@@ -209,7 +248,7 @@
           if (this.field_219406_f.remove(p_219399_1_)) {
              this.field_219402_b.func_219454_a(p_219399_1_);
           }
-@@ -1133,8 +1183,9 @@
+@@ -1133,8 +1196,9 @@
        }
  
        public void func_219400_b(ServerPlayerEntity p_219400_1_) {
@@ -220,7 +259,7 @@
              int i = Math.min(this.func_229843_b_(), (ChunkManager.this.field_219247_A - 1) * 16);
              boolean flag = vector3d.field_72450_a >= (double)(-i) && vector3d.field_72450_a <= (double)i && vector3d.field_72449_c >= (double)(-i) && vector3d.field_72449_c <= (double)i && this.field_219403_c.func_174827_a(p_219400_1_);
              if (flag) {
-@@ -1147,6 +1198,16 @@
+@@ -1147,6 +1211,16 @@
                    }
                 }
  

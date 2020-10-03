@@ -340,4 +340,9 @@ public class SpigotWorldConfig {
         log("Tile Max Tick Time: " + tileMaxTickTime + "ms Entity max Tick Time: " + entityMaxTickTime + "ms");
     }
 
+    public double squidSpawnRangeMin;
+    private void squidSpawnRange()
+    {
+        squidSpawnRangeMin = getDouble("squid-spawn-range.min", 45.0D);
+    }
 }
