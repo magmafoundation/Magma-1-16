@@ -8618,4 +8618,19 @@ public enum Material implements Keyed {
             // </editor-fold>
         }
     }
+
+    // Magma - start
+    // use a normalize() function to ensure it is accessible after a round-trip
+    public static String normalizeName(String name) {
+        return name.toUpperCase(java.util.Locale.ENGLISH).replaceAll("(:|\\s)", "_").replaceAll("\\W", "");
+    }
+
+    @javax.annotation.Nullable
+    public static Material addMaterial(Material material) {
+        BY_NAME.put(normalizeName(material.name()), material);
+        BY_NAME.put("X" + String.valueOf(material.id), material);
+        return material;
+    }
+    // Magma - end
+
 }

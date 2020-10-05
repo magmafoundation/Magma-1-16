@@ -21,3 +21,11 @@
        this.field_240831_a_ = p_148837_1_.func_179259_c();
     }
  
+@@ -32,7 +37,6 @@
+       p_148833_1_.func_230488_a_(this);
+    }
+ 
+-   @OnlyIn(Dist.CLIENT)
+    public BlockPos func_240832_b_() {
+       return this.field_240831_a_;
+    }

@@ -152,7 +152,7 @@
 +   public CraftAttributeMap craftAttributes;
 +   public boolean collides = true;
 +   public Set<UUID> collidableExemptions = new HashSet<>();
-+   public boolean canPickUpLoot;
++   public boolean canPickUpLootMagma;
 +
 +   @Override
 +   public float getBukkitYaw() {

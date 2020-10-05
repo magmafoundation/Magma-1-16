@@ -18,10 +18,15 @@ public class Main {
     public static boolean useJline = true;
     public static boolean useConsole = true;
 
-    public static void main(String[] args) {
+    public static OptionSet main(String[] args) {
         // Todo: Installation script
         OptionParser parser = new OptionParser() {
             {
+                acceptsAll(asList("gameDir"))
+                    .withRequiredArg()
+                    .ofType(File.class)
+                    .defaultsTo(new File(".")); //Forge: Consume this argument, we use it in the launcher,
+
                 acceptsAll(asList("?", "help"), "Show the help");
 
                 acceptsAll(asList("c", "config"), "Properties file to use")
@@ -153,13 +158,13 @@ public class Main {
             String path = new File(".").getAbsolutePath();
             if (path.contains("!") || path.contains("+")) {
                 System.err.println("Cannot run server in a directory with ! or + in the pathname. Please rename the affected folders and try again.");
-                return;
+                return null;
             }
 
             float javaVersion = Float.parseFloat(System.getProperty("java.class.version"));
             if (javaVersion > 58.0) {
                 System.err.println("Unsupported Java detected (" + javaVersion + "). Only up to Java 14 is supported.");
-                return;
+                return null;
             }
 
             try {
@@ -203,7 +208,9 @@ public class Main {
             } catch (Throwable t) {
                 t.printStackTrace();
             }
+            return options;
         }
+        return null;
     }
 
     private static List<String> asList(String... params) {
