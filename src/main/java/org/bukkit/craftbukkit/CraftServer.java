@@ -79,7 +79,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.datafix.DataFixesManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.util.registry.WorldSettingsImport;
@@ -220,6 +219,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitWorker;
 import org.bukkit.util.StringUtil;
 import org.bukkit.util.permissions.DefaultPermissions;
+import org.magmafoundation.magma.Magma;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
@@ -276,7 +276,7 @@ public final class CraftServer implements Server {
                 return player.getBukkitEntity();
             }
         }));
-        this.serverVersion = CraftServer.class.getPackage().getImplementationVersion();
+        this.serverVersion = "git-Magma-" + Magma.getVersion();
 
         Bukkit.setServer(this);
 
