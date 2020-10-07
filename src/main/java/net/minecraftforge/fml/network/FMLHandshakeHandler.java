@@ -44,6 +44,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
+import org.magmafoundation.magma.api.PlayerAPI;
+import org.magmafoundation.magma.configuration.MagmaConfig;
 
 import static net.minecraftforge.registries.ForgeRegistry.REGISTRIES;
 
@@ -203,11 +205,21 @@ public class FMLHandshakeHandler {
     {
         LOGGER.debug(FMLHSMARKER, "Received client connection with modlist [{}]",  String.join(", ", clientModList.getModList()));
         boolean accepted = NetworkRegistry.validateServerChannels(clientModList.getChannels());
+        if (MagmaConfig.instance.blacklistedModsEnable.getValues()) {
+            if (!MagmaConfig.instance.blacklistedMods.getValues().equals("") && clientModList.getModList().contains(MagmaConfig.instance.blacklistedMods.getValues())) {
+                c.get().getNetworkManager().closeChannel(new StringTextComponent(MagmaConfig.instance.blacklistedModsKickMessage.getValues()));
+                return;
+            }
+        }
         c.get().setPacketHandled(true);
         if (!accepted) {
             LOGGER.error(FMLHSMARKER, "Terminating connection with client, mismatched mod list");
             c.get().getNetworkManager().closeChannel(new StringTextComponent("Connection closed - mismatched mod channel list"));
             return;
+        }
+        if(!clientModList.getModList().isEmpty()) {
+            PlayerAPI.mods.put(c.get().getSender(), clientModList.getModList().size());
+            PlayerAPI.modList.put(c.get().getSender(), String.join(", ", clientModList.getModList()));
         }
         LOGGER.debug(FMLHSMARKER, "Accepted client connection mod list");
     }
