@@ -1,6 +1,5 @@
 package org.bukkit.craftbukkit.inventory;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import org.bukkit.inventory.Recipe;
 
 public class RecipeIterator implements Iterator<Recipe> {
-    private final Iterator<Entry<IRecipeType<?>, Object2ObjectLinkedOpenHashMap<ResourceLocation, IRecipe<?>>>> recipes;
+    private final Iterator<Entry<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>>> recipes;
     private Iterator<IRecipe<?>> current;
 
     public RecipeIterator() {
@@ -20,16 +19,7 @@ public class RecipeIterator implements Iterator<Recipe> {
 
     @Override
     public boolean hasNext() {
-        if (current != null && current.hasNext()) {
-            return true;
-        }
-
-        if (recipes.hasNext()) {
-            current = recipes.next().getValue().values().iterator();
-            return hasNext();
-        }
-
-        return false;
+        return (current != null && current.hasNext()) || recipes.hasNext();
     }
 
     @Override

@@ -1301,7 +1301,9 @@ public class CraftEventFactory {
             return;
         }
         InventoryCloseEvent event = new InventoryCloseEvent(human.openContainer.getBukkitView());
-        human.world.getServerCB().getPluginManager().callEvent(event);
+        if(human.openContainer.getBukkitView() != null){ // Magma - Inventory NPE
+            human.world.getServerCB().getPluginManager().callEvent(event);
+        }
         human.openContainer.transferTo(human.container, human.getBukkitEntity());
     }
 

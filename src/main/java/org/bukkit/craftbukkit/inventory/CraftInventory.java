@@ -17,6 +17,7 @@ import net.minecraft.tileentity.IHopper;
 import net.minecraft.tileentity.LecternTileEntity;
 import net.minecraft.tileentity.ShulkerBoxTileEntity;
 import net.minecraft.tileentity.SmokerTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,6 +28,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantInventory;
+import org.magmafoundation.magma.util.InventoryHelper;
 
 public class CraftInventory implements Inventory {
     protected final IInventory inventory;
@@ -503,7 +505,7 @@ public class CraftInventory implements Inventory {
 
     @Override
     public InventoryHolder getHolder() {
-        return inventory.getOwner();
+        return InventoryHelper.getHolderOwner(inventory); // Magma NPE
     }
 
     @Override

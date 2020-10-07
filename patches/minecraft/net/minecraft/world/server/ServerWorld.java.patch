@@ -595,7 +595,7 @@
        int i = aclassinheritancemultimap.length;
  
        for(int j = 0; j < i; ++j) {
-@@ -874,12 +1056,48 @@
+@@ -874,12 +1056,41 @@
  
     }
  
@@ -628,13 +628,6 @@
 +         } );
 +      }
 +      // Spigot end
-+      // Spigot Start
-+      if (p_217484_1_.getBukkitEntity() instanceof org.bukkit.inventory.InventoryHolder) {
-+         for (org.bukkit.entity.HumanEntity h : Lists.newArrayList(((org.bukkit.inventory.InventoryHolder) p_217484_1_.getBukkitEntity()).getInventory().getViewers())) {
-+            h.closeInventory();
-+         }
-+      }
-+      // Spigot End
        if (p_217484_1_ instanceof EnderDragonEntity) {
           for(EnderDragonPartEntity enderdragonpartentity : ((EnderDragonEntity)p_217484_1_).func_213404_dT()) {
 -            enderdragonpartentity.func_70106_y();
@@ -645,7 +638,7 @@
  
        this.field_175741_N.remove(p_217484_1_.func_110124_au());
        this.func_72863_F().func_217226_b(p_217484_1_);
-@@ -889,13 +1107,23 @@
+@@ -889,13 +1100,23 @@
        }
  
        this.func_96441_U().func_181140_a(p_217484_1_);
@@ -669,7 +662,7 @@
        if (this.field_217492_a) {
           this.field_217499_z.add(p_217465_1_);
        } else {
-@@ -908,20 +1136,31 @@
+@@ -908,20 +1129,31 @@
  
           this.field_175741_N.put(p_217465_1_.func_110124_au(), p_217465_1_);
           this.func_72863_F().func_217230_c(p_217465_1_);
@@ -702,7 +695,7 @@
        }
     }
  
-@@ -934,17 +1173,47 @@
+@@ -934,17 +1166,47 @@
     }
  
     public void func_217434_e(ServerPlayerEntity p_217434_1_) {
@@ -752,7 +745,7 @@
              if (d0 * d0 + d1 * d1 + d2 * d2 < 1024.0D) {
                 serverplayerentity.field_71135_a.func_147359_a(new SAnimateBlockBreakPacket(p_175715_1_, p_175715_2_, p_175715_3_));
              }
-@@ -954,10 +1223,20 @@
+@@ -954,10 +1216,20 @@
     }
  
     public void func_184148_a(@Nullable PlayerEntity p_184148_1_, double p_184148_2_, double p_184148_4_, double p_184148_6_, SoundEvent p_184148_8_, SoundCategory p_184148_9_, float p_184148_10_, float p_184148_11_) {
@@ -773,7 +766,7 @@
        this.field_73061_a.func_184103_al().func_148543_a(p_217384_1_, p_217384_2_.func_226277_ct_(), p_217384_2_.func_226278_cu_(), p_217384_2_.func_226281_cx_(), p_217384_5_ > 1.0F ? (double)(16.0F * p_217384_5_) : 16.0D, this.func_234923_W_(), new SSpawnMovingSoundEffectPacket(p_217384_3_, p_217384_4_, p_217384_2_, p_217384_5_, p_217384_6_));
     }
  
-@@ -992,9 +1271,18 @@
+@@ -992,9 +1264,18 @@
     }
  
     public Explosion func_230546_a_(@Nullable Entity p_230546_1_, @Nullable DamageSource p_230546_2_, @Nullable ExplosionContext p_230546_3_, double p_230546_4_, double p_230546_6_, double p_230546_8_, float p_230546_10_, boolean p_230546_11_, Explosion.Mode p_230546_12_) {
@@ -794,7 +787,7 @@
        if (p_230546_12_ == Explosion.Mode.NONE) {
           explosion.func_180342_d();
        }
-@@ -1049,12 +1337,18 @@
+@@ -1049,12 +1330,18 @@
     }
  
     public <T extends IParticleData> int func_195598_a(T p_195598_1_, double p_195598_2_, double p_195598_4_, double p_195598_6_, int p_195598_8_, double p_195598_9_, double p_195598_11_, double p_195598_13_, double p_195598_15_) {
@@ -815,7 +808,7 @@
              ++i;
           }
        }
-@@ -1093,7 +1387,7 @@
+@@ -1093,7 +1380,7 @@
  
     @Nullable
     public BlockPos func_241117_a_(Structure<?> p_241117_1_, BlockPos p_241117_2_, int p_241117_3_, boolean p_241117_4_) {
@@ -824,7 +817,7 @@
     }
  
     @Nullable
-@@ -1126,7 +1420,13 @@
+@@ -1126,7 +1413,13 @@
     @Nullable
     public MapData func_217406_a(String p_217406_1_) {
        return this.func_73046_m().func_241755_D_().func_217481_x().func_215753_b(() -> {
@@ -839,7 +832,7 @@
        }, p_217406_1_);
     }
  
-@@ -1328,6 +1628,11 @@
+@@ -1328,6 +1621,11 @@
  
     public void func_230547_a_(BlockPos p_230547_1_, Block p_230547_2_) {
        if (!this.func_234925_Z_()) {
@@ -851,7 +844,7 @@
           this.func_195593_d(p_230547_1_, p_230547_2_);
        }
  
-@@ -1347,11 +1652,11 @@
+@@ -1347,11 +1645,11 @@
     }
  
     public boolean func_241109_A_() {
@@ -865,7 +858,7 @@
     }
  
     @Nullable
-@@ -1368,15 +1673,40 @@
+@@ -1368,15 +1666,40 @@
     }
  
     public static void func_241121_a_(ServerWorld p_241121_0_) {
