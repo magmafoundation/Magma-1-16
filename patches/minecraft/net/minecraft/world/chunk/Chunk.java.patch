@@ -134,7 +134,7 @@
              return null;
           }
  
-@@ -247,46 +269,48 @@
+@@ -247,46 +269,47 @@
        }
  
        boolean flag = chunksection.func_76663_a();
@@ -161,19 +161,16 @@
 +            this.field_76637_e.func_72863_F().func_212863_j_().func_215567_a(pos, flag1);
           }
  
--         if (!this.field_76637_e.field_72995_K) {
+          if (!this.field_76637_e.field_72995_K) {
 -            blockstate.func_196947_b(this.field_76637_e, p_177436_1_, p_177436_2_, p_177436_3_);
 -         } else if (block1 != block && block1 instanceof ITileEntityProvider) {
 -            this.field_76637_e.func_175713_t(p_177436_1_);
-+         // CraftBukkit - Don't place while processing the BlockPlaceEvent, unless it's a BlockContainer. Prevents blocks such as TNT from activating when cancelled.
-+         if (!this.field_76637_e.field_72995_K && isMoving && (!this.field_76637_e.captureBlockStates || block.hasTileEntity(state))) {
 +            blockstate.func_196947_b(this.field_76637_e, pos, state, isMoving);
 +         } else if ((block1 != block || !state.hasTileEntity()) && blockstate.hasTileEntity()) {
 +            this.field_76637_e.func_175713_t(pos);
           }
  
--         if (!chunksection.func_177485_a(i, j & 15, k).func_203425_a(block)) {
-+         if (chunksection.func_177485_a(i, j & 15, k).func_177230_c() != block) {
+          if (!chunksection.func_177485_a(i, j & 15, k).func_203425_a(block)) {
              return null;
           } else {
 -            if (block1 instanceof ITileEntityProvider) {
@@ -204,7 +201,7 @@
                 } else {
                    tileentity1.func_145836_u();
                 }
-@@ -321,11 +345,13 @@
+@@ -321,11 +344,13 @@
           k = this.field_76645_j.length - 1;
        }
  
@@ -218,7 +215,7 @@
     }
  
     public void func_201607_a(Heightmap.Type p_201607_1_, long[] p_201607_2_) {
-@@ -346,6 +372,7 @@
+@@ -346,6 +371,7 @@
        }
  
        this.field_76645_j[p_76608_2_].remove(p_76608_1_);
@@ -226,7 +223,7 @@
     }
  
     public int func_201576_a(Heightmap.Type p_201576_1_, int p_201576_2_, int p_201576_3_) {
-@@ -356,7 +383,7 @@
+@@ -356,7 +382,7 @@
     private TileEntity func_177422_i(BlockPos p_177422_1_) {
        BlockState blockstate = this.func_180495_p(p_177422_1_);
        Block block = blockstate.func_177230_c();
@@ -235,7 +232,7 @@
     }
  
     @Nullable
-@@ -366,8 +393,18 @@
+@@ -366,8 +392,18 @@
  
     @Nullable
     public TileEntity func_177424_a(BlockPos p_177424_1_, Chunk.CreateEntityType p_177424_2_) {
@@ -255,7 +252,7 @@
           CompoundNBT compoundnbt = this.field_201618_i.remove(p_177424_1_);
           if (compoundnbt != null) {
              TileEntity tileentity1 = this.func_212815_a(p_177424_1_, compoundnbt);
-@@ -382,9 +419,6 @@
+@@ -382,9 +418,6 @@
              tileentity = this.func_177422_i(p_177424_1_);
              this.field_76637_e.func_175690_a(p_177424_1_, tileentity);
           }
@@ -265,7 +262,7 @@
        }
  
        return tileentity;
-@@ -399,14 +433,19 @@
+@@ -399,14 +432,13 @@
     }
  
     public void func_177426_a(BlockPos p_177426_1_, TileEntity p_177426_2_) {
@@ -278,16 +275,10 @@
              tileentity.func_145843_s();
           }
 -
-+         // CraftBukkit start
-+      } else {
-+         System.out.println("Attempted to place a tile entity (" + p_177426_2_ + ") at " + p_177426_2_.func_174877_v().func_177958_n() + "," + p_177426_2_.func_174877_v().func_177956_o() + "," + p_177426_2_.func_174877_v().func_177952_p() + " (" + func_180495_p(p_177426_1_) + ") where there was no entity tile!");
-+         System.out.println("Chunk coordinates: " + (this.field_212816_F.field_77276_a * 16) + "," + (this.field_212816_F.field_77275_b * 16));
-+         new Exception().printStackTrace();
-+         // CraftBukkit end
        }
     }
  
-@@ -418,9 +457,14 @@
+@@ -418,9 +450,14 @@
     public CompoundNBT func_223134_j(BlockPos p_223134_1_) {
        TileEntity tileentity = this.func_175625_s(p_223134_1_);
        if (tileentity != null && !tileentity.func_145837_r()) {
@@ -302,7 +293,7 @@
        } else {
           CompoundNBT compoundnbt = this.field_201618_i.get(p_223134_1_);
           if (compoundnbt != null) {
-@@ -450,23 +494,61 @@
+@@ -450,23 +487,61 @@
  
     }
  
@@ -372,7 +363,7 @@
              if (entity.func_174813_aQ().func_72326_a(p_177414_2_) && entity != p_177414_1_) {
                 if (p_177414_4_ == null || p_177414_4_.test(entity)) {
                    p_177414_3_.add(entity);
-@@ -482,17 +564,19 @@
+@@ -482,17 +557,19 @@
              }
           }
        }
@@ -395,7 +386,7 @@
              if ((p_217313_1_ == null || entity.func_200600_R() == p_217313_1_) && entity.func_174813_aQ().func_72326_a(p_217313_2_) && p_217313_4_.test((T)entity)) {
                 p_217313_3_.add((T)entity);
              }
-@@ -502,15 +586,16 @@
+@@ -502,15 +579,16 @@
     }
  
     public <T extends Entity> void func_177430_a(Class<? extends T> p_177430_1_, AxisAlignedBB p_177430_2_, List<T> p_177430_3_, @Nullable Predicate<? super T> p_177430_4_) {
@@ -417,7 +408,7 @@
              }
           }
        }
-@@ -535,6 +620,11 @@
+@@ -535,6 +613,11 @@
        };
        Sets.newHashSet(this.field_150816_i.keySet()).stream().filter(predicate).forEach(this.field_76637_e::func_175713_t);
  
@@ -429,7 +420,7 @@
        for(int i = 0; i < this.field_76652_q.length; ++i) {
           ChunkSection chunksection = this.field_76652_q[i];
           if ((p_227073_4_ & 1 << i) == 0) {
-@@ -588,7 +678,7 @@
+@@ -588,7 +671,7 @@
        return this.field_150816_i;
     }
  
@@ -438,7 +429,7 @@
        return this.field_76645_j;
     }
  
-@@ -598,7 +688,7 @@
+@@ -598,7 +681,7 @@
  
     public Stream<BlockPos> func_217304_m() {
        return StreamSupport.stream(BlockPos.func_191531_b(this.field_212816_F.func_180334_c(), 0, this.field_212816_F.func_180333_d(), this.field_212816_F.func_180332_e(), 255, this.field_212816_F.func_180330_f()).spliterator(), false).filter((p_217312_1_) -> {
@@ -447,7 +438,7 @@
        });
     }
  
-@@ -615,7 +705,7 @@
+@@ -615,7 +698,7 @@
     }
  
     public boolean func_201593_f() {
@@ -456,7 +447,7 @@
     }
  
     public void func_177409_g(boolean p_177409_1_) {
-@@ -704,9 +794,8 @@
+@@ -704,9 +787,8 @@
        BlockState blockstate = this.func_180495_p(p_212815_1_);
        TileEntity tileentity;
        if ("DUMMY".equals(p_212815_2_.func_74779_i("id"))) {
@@ -468,7 +459,7 @@
           } else {
              tileentity = null;
              field_150817_t.warn("Tried to load a DUMMY block entity @ {} but found not block entity block {} at location", p_212815_1_, blockstate);
-@@ -795,4 +884,30 @@
+@@ -795,4 +877,30 @@
        QUEUED,
        CHECK;
     }

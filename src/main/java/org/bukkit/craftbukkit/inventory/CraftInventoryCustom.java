@@ -31,6 +31,12 @@ public class CraftInventoryCustom extends CraftInventory {
         super(new MinecraftInventory(owner, size, title));
     }
 
+    // Magma start - add forge inventory support
+    public CraftInventoryCustom(InventoryHolder owner, NonNullList<ItemStack> items) {
+        super(new MinecraftInventory(owner, items));
+    }
+    // Magma end
+
     static class MinecraftInventory implements IInventory {
         private final NonNullList<ItemStack> items;
         private int maxStack = MAX_STACK;
@@ -38,6 +44,16 @@ public class CraftInventoryCustom extends CraftInventory {
         private final String title;
         private InventoryType type;
         private final InventoryHolder owner;
+
+        // Magma start - add forge inventory support
+        public MinecraftInventory(InventoryHolder owner, NonNullList<ItemStack> items) {
+            this.items = items;
+            this.title = "Chest";
+            this.viewers = new ArrayList<>();
+            this.owner = owner;
+            this.type = InventoryType.CHEST;
+        }
+        // Magma end
 
         public MinecraftInventory(InventoryHolder owner, InventoryType type) {
             this(owner, type.getDefaultSize(), type.getDefaultTitle());

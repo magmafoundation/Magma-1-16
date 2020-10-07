@@ -1134,14 +1134,25 @@ public class CraftEventFactory {
 
         CraftServer server = player.world.getServerCB();
         CraftPlayer craftPlayer = player.getBukkitEntity();
-        player.openContainer.transferTo(container, craftPlayer);
+        try {
+            player.openContainer.transferTo(container, craftPlayer);
+        } catch (AbstractMethodError e) {
+            // Magma - modded
+        }
 
         InventoryOpenEvent event = new InventoryOpenEvent(container.getBukkitView());
         event.setCancelled(cancelled);
-        server.getPluginManager().callEvent(event);
+        if (container.getBukkitView() != null) {
+            server.getPluginManager().callEvent(event);
+        }
 
         if (event.isCancelled()) {
             container.transferTo(player.openContainer, craftPlayer);
+            if (!cancelled) { // fire INVENTORY_CLOSE if one already open
+                player.openContainer = container;
+                player.closeScreen();
+                player.openContainer = player.container;
+            }
             return null;
         }
 

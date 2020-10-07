@@ -1,0 +1,14 @@
+--- a/net/minecraft/server/management/OpList.java
++++ b/net/minecraft/server/management/OpList.java
+@@ -30,6 +30,11 @@
+    }
+ 
+    protected String func_152681_a(GameProfile p_152681_1_) {
++      // Magma start - NPE
++      if (p_152681_1_ == null || p_152681_1_.getId() == null) {
++         return "invalid";
++      }
++      // Magma end
+       return p_152681_1_.getId().toString();
+    }
+ }

@@ -230,4 +230,10 @@ public class ItemStackHandler implements IItemHandler, IItemHandlerModifiable, I
     {
 
     }
+
+    // Magma start - add forge inventory support
+    public NonNullList<ItemStack> getStacks() {
+        return this.stacks;
+    }
+    // Magma end
 }

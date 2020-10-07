@@ -250,7 +250,7 @@
     }
  
 -   private static void func_235641_a_(World p_235641_0_, Vector3d p_235641_1_, int p_235641_2_, float p_235641_3_) {
-+   private static void func_235641_a_(World p_235641_0_, Vector3d p_235641_1_, int p_235641_2_, float p_235641_3_, PlayerEntity entityhuman, ItemStack itemstack, int amount) { // CraftBukkit
++   private void func_235641_a_(World p_235641_0_, Vector3d p_235641_1_, int p_235641_2_, float p_235641_3_, PlayerEntity entityhuman, ItemStack itemstack, int amount) { // CraftBukkit
        int i = MathHelper.func_76141_d((float)p_235641_2_ * p_235641_3_);
        float f = MathHelper.func_226164_h_((float)p_235641_2_ * p_235641_3_);
        if (f != 0.0F && Math.random() < (double)f) {

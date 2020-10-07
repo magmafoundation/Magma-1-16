@@ -29,7 +29,7 @@ import org.apache.logging.log4j.Logger;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.entity.EntityType;
-import org.magmafoundation.magma.custom.CraftCustomEntity;
+import org.magmafoundation.magma.craftbukkit.entity.CraftCustomEntity;
 import org.magmafoundation.magma.util.EnumHelper;
 
 /**

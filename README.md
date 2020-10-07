@@ -1,7 +1,7 @@
 <div align="center">
 <img src="https://i.imgur.com/zTCTCWG.png" alt="Magma logo" align="middle"></img>
 
-![](https://img.shields.io/badge/Minecraft%20Forge-1.16.3%20--%2034.0.0%20--%20ce6c664-orange.svg?style=for-the-badge) ![](https://img.shields.io/badge/Bukkit-1.16%20r3-blue?style=for-the-badge) ![](https://img.shields.io/badge/CraftBukkit-Build%20f8d4da0-orange?style=for-the-badge) ![](https://img.shields.io/badge/Status-Unstable-red?style=for-the-badge) [![](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.hexeption.dev%2Fjob%2FMagma%2520Foundation%2Fjob%2FMagma-1.16.x%2Fjob%2F1.16.x%2F&style=for-the-badge)](https://ci.hexeption.dev/job/Magma%20Foundation/job/Magma-1.16.x/job/1.16.x/)
+![](https://img.shields.io/badge/Minecraft%20Forge-1.16.3%20--%2034.0.0%20--%20ce6c664-orange.svg?style=for-the-badge) ![](https://img.shields.io/badge/Bukkit-1.16%20r3-blue?style=for-the-badge) ![](https://img.shields.io/badge/CraftBukkit-Build%20f8d4da0-orange?style=for-the-badge) ![](https://img.shields.io/badge/Spigot-Build%2017d78db-yellow?style=for-the-badge)  ![](https://img.shields.io/badge/Status-Unstable-red?style=for-the-badge) [![](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.hexeption.dev%2Fjob%2FMagma%2520Foundation%2Fjob%2FMagma-1.16.x%2Fjob%2F1.16.x%2F&style=for-the-badge)](https://ci.hexeption.dev/job/Magma%20Foundation/job/Magma-1.16.x/job/1.16.x/)
 </div>
 
 ## About
@@ -15,7 +15,7 @@ We hope to eliminate all issues with craftbukkit forge servers. In the end, we e
 ## Progress
 Patches so far
 - [x] CraftBukkit
-- [ ] Spigot
+- [x] Spigot
 - [ ] Paper
 
 https://github.com/Hexeption/Magma-1.16-Remaining-Patches

@@ -19,6 +19,7 @@
 
 package net.minecraftforge.items.wrapper;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
@@ -250,4 +251,10 @@ public class SidedInvWrapper implements IItemHandlerModifiable
         int slot1 = getSlot(inv, slot, side);
         return slot1 == -1 ? false : inv.isItemValidForSlot(slot1, stack);
     }
+
+    // Magma start - add forge inventory support
+    public IInventory getInventory() {
+        return inv;
+    }
+    // Magma end
 }
