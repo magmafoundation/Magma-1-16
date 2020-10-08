@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import net.minecraft.server.MinecraftServer;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.magmafoundation.magma.commands.MagmaCommand;
 import org.magmafoundation.magma.configuration.value.Value;
 import org.magmafoundation.magma.configuration.value.values.BooleanValue;
 import org.magmafoundation.magma.configuration.value.values.IntValue;
@@ -127,9 +128,8 @@ public class MagmaConfig extends ConfigBase {
 
     @Override
     protected void addCommands() {
-//        commands.put("magma", new MagmaCommand("magma"));
+        commands.put("magma", new MagmaCommand("magma"));
 //        commands.put("tps", new TPSCommand("tps"));
-//        commands.put("version", new VersionCommand("version"));
     }
 
     @Override

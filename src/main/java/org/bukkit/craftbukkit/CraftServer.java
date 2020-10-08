@@ -220,6 +220,7 @@ import org.bukkit.scheduler.BukkitWorker;
 import org.bukkit.util.StringUtil;
 import org.bukkit.util.permissions.DefaultPermissions;
 import org.magmafoundation.magma.Magma;
+import org.magmafoundation.magma.configuration.MagmaConfig;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
@@ -842,6 +843,7 @@ public final class CraftServer implements Server {
         resetRecipes();
         reloadData();
         org.spigotmc.SpigotConfig.registerCommands(); // Spigot
+        MagmaConfig.instance.registerCommands(); // Magma
         overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
         ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
 

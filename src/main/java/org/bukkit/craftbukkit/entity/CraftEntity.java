@@ -143,8 +143,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -158,7 +159,6 @@ import org.bukkit.craftbukkit.persistence.CraftPersistentDataContainer;
 import org.bukkit.craftbukkit.persistence.CraftPersistentDataTypeRegistry;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
 import org.bukkit.craftbukkit.util.CraftVector;
-import org.bukkit.entity.PiglinBrute;
 import org.bukkit.entity.Pose;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -172,6 +172,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
+import org.magmafoundation.magma.craftbukkit.entity.CraftFakePlayer;
 
 public abstract class CraftEntity implements org.bukkit.entity.Entity {
     private static PermissibleBase perm;
@@ -195,8 +196,17 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         if (entity instanceof LivingEntity) {
             // Players
             if (entity instanceof PlayerEntity) {
-                if (entity instanceof ServerPlayerEntity) { return new CraftPlayer(server, (ServerPlayerEntity) entity); }
-                else { return new CraftHumanEntity(server, (PlayerEntity) entity); }
+                if (entity instanceof ServerPlayerEntity) {
+                    // Magma start - Fake player
+                    if(entity instanceof FakePlayer){
+                        return new CraftFakePlayer(server, (FakePlayer) entity);
+                    }else{
+                        return new CraftPlayer(server, (ServerPlayerEntity) entity);
+                    }
+                } else {
+                    return new CraftFakePlayer(server, FakePlayerFactory.get((ServerWorld) entity.world, ((PlayerEntity) entity).getGameProfile()));
+                }
+                // Magma end
             }
             // Water Animals
             else if (entity instanceof WaterMobEntity) {
