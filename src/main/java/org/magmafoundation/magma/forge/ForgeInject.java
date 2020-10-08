@@ -55,7 +55,7 @@ public class ForgeInject {
         ForgeRegistries.ITEMS.getEntries().forEach(registryKeyItemEntry -> {
             RegistryKey<Item> key = registryKeyItemEntry.getKey();
             Item item = registryKeyItemEntry.getValue();
-            if (!key.getRegistryName().getNamespace().equals("minecraft")) {
+            if (!registryKeyItemEntry.getValue().getRegistryName().getNamespace().equals("minecraft")) {
                 String materialName = key.toString().toUpperCase().replaceAll("(:|\\s)", "_").replaceAll("\\W", "");
                 Material material = Material
                     .addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE, Integer.TYPE}, new Object[]{Item.getIdFromItem(item), item.getMaxStackSize()}));
@@ -74,10 +74,10 @@ public class ForgeInject {
         ForgeRegistries.BLOCKS.getEntries().forEach(registryKeyBlockEntry -> {
             RegistryKey<Block> key = registryKeyBlockEntry.getKey();
             Block block = registryKeyBlockEntry.getValue();
-            if (!key.getRegistryName().getNamespace().equals("minecraft")) {
+            if (!registryKeyBlockEntry.getValue().getRegistryName().getNamespace().equals("minecraft")) {
                 String materialName = key.toString().toUpperCase().replaceAll("(:|\\s)", "_").replaceAll("\\W", "");
                 Material material = Material.addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE}, new Object[]{Item.getIdFromItem(block.asItem())}));
-                CraftMagicNumbers.BLOCK_MATERIAL.put(block, material);
+                CraftMagicNumbers.LOCK_MATERIAL.put(block, material);
                 CraftMagicNumbers.MATERIAL_BLOCK.put(material, block);
                 if (material != null) {
                     LOGGER.info(String.format("Injected new Forge block material %s.", material.name()));

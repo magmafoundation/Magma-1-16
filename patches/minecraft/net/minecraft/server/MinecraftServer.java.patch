@@ -360,7 +360,6 @@
 +         WorldSettingsImport<INBT> registryreadops = WorldSettingsImport.func_244335_a((DynamicOps) NBTDynamicOps.field_210820_a, this.field_195576_ac.func_240970_h_(), iregistrycustom_dimension);
 +         worlddata = (ServerWorldInfo) worldSession.func_237284_a_((DynamicOps) registryreadops, datapackconfiguration);
 +         if (worlddata == null) {
-+            ForgeInject.injectForge(); // Magma
 +            WorldSettings worldsettings;
 +            DimensionGeneratorSettings generatorsettings;
 +            if (this.func_71242_L()) {
@@ -400,6 +399,7 @@
 +         }
 +         RegistryKey<World> worldKey = RegistryKey.func_240903_a_(Registry.field_239699_ae_, dimensionKey.func_240901_a_());
 +         if (worldId == 0) {
++            ForgeInject.injectForge(); // Magma
 +            this.field_240768_i_ = worlddata;
 +            this.field_240768_i_.func_230392_a_(((DedicatedServer) this).func_213221_d_().field_219020_n); // From DedicatedServer.init
 +            IChunkStatusListener worldloadlistener = this.field_213220_d.create(11);
