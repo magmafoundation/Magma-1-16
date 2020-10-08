@@ -77,7 +77,7 @@ public class ForgeInject {
             if (!registryKeyBlockEntry.getValue().getRegistryName().getNamespace().equals("minecraft")) {
                 String materialName = key.toString().toUpperCase().replaceAll("(:|\\s)", "_").replaceAll("\\W", "");
                 Material material = Material.addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE}, new Object[]{Item.getIdFromItem(block.asItem())}));
-                CraftMagicNumbers.LOCK_MATERIAL.put(block, material);
+                CraftMagicNumbers.BLOCK_MATERIAL.put(block, material);
                 CraftMagicNumbers.MATERIAL_BLOCK.put(material, block);
                 if (material != null) {
                     LOGGER.info(String.format("Injected new Forge block material %s.", material.name()));
