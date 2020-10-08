@@ -749,7 +749,7 @@ public class CraftWorld implements World {
                 int flag = ((CraftBlockState) blockstate).getFlag();
                 delegate.setBlockData(blockstate.getX(), blockstate.getY(), blockstate.getZ(), blockstate.getBlockData());
                 net.minecraft.block.BlockState newBlock = world.getBlockState(position);
-                world.notifyAndUpdatePhysics(position, null, oldBlock, newBlock, newBlock, flag, 512);
+                world.markAndNotifyBlock(position, null, oldBlock, newBlock, flag, 512);
             }
             world.capturedBlockStates.clear();
             return true;
