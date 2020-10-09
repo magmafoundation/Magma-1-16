@@ -38,7 +38,7 @@
 +      // CraftBukkit start
 +      @Override
 +      public Location getLocation() {
-+         return field_75168_e.getLocation();
++         return field_217006_g.getLocation();
 +      }
 +      // CraftBukkit end
     };

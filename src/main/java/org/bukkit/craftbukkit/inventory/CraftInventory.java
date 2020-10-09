@@ -43,6 +43,7 @@ public class CraftInventory implements Inventory {
 
     @Override
     public int getSize() {
+        if(getInventory() == null) return 0;
         return getInventory().getSizeInventory();
     }
 

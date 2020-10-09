@@ -1,6 +1,6 @@
 --- a/net/minecraft/inventory/Inventory.java
 +++ b/net/minecraft/inventory/Inventory.java
-@@ -10,17 +10,67 @@
+@@ -10,17 +10,69 @@
  import net.minecraft.nbt.CompoundNBT;
  import net.minecraft.nbt.ListNBT;
  import net.minecraft.util.NonNullList;
@@ -49,6 +49,8 @@
 +      maxStack = size;
 +   }
 +
++
++
 +   @Override
 +   public Location getLocation() {
 +      return null;
@@ -70,14 +72,14 @@
     public Inventory(ItemStack... p_i50398_1_) {
        this.field_70481_b = p_i50398_1_.length;
        this.field_70482_c = NonNullList.func_193580_a(ItemStack.field_190927_a, p_i50398_1_);
-@@ -124,6 +174,13 @@
+@@ -124,6 +176,13 @@
        this.func_70296_d();
     }
  
 +   // CraftBukkit start
 +   @Override
 +   public int func_70297_j_() {
-+      return 0;
++      return maxStack;
 +   }
 +   // CraftBukkit end
 +
