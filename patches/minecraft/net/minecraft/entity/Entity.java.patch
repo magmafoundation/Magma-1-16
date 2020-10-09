@@ -656,7 +656,7 @@
           this.func_213301_b(Pose.STANDING);
           this.field_184239_as = p_184205_1_;
 -         this.field_184239_as.func_184200_o(this);
-+         if (!this.field_184239_as.addPassenger(this)) this.field_184239_as = null; // CraftBukkit
++         this.field_184239_as.addPassenger(this);
           return true;
        } else {
           return false;
