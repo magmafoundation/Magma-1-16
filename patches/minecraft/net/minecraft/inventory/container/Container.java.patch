@@ -44,7 +44,7 @@
     private final List<IntReferenceHolder> field_216964_d = Lists.newArrayList();
     @Nullable
     private final ContainerType<?> field_216965_e;
-@@ -40,6 +52,36 @@
+@@ -40,6 +52,46 @@
     private final List<IContainerListener> field_75149_d = Lists.newArrayList();
     private final Set<PlayerEntity> field_75148_f = Sets.newHashSet();
  
@@ -52,7 +52,17 @@
 +   public boolean checkReachable;
 +   private ITextComponent title;
 +
-+   public abstract InventoryView getBukkitView();
++   // Magma start - Forge Inventory View
++   public InventoryView bukkitView = null;
++
++   public InventoryView getBukkitView(){
++      return bukkitView;
++   }
++
++   public void setBukkitView(InventoryView inventoryView) {
++      bukkitView = inventoryView;
++   }
++   // Magma end
 +
 +   public void transferTo(Container other, CraftHumanEntity player) {
 +      InventoryView source = this.getBukkitView();
@@ -81,7 +91,7 @@
     protected Container(@Nullable ContainerType<?> p_i50105_1_, int p_i50105_2_) {
        this.field_216965_e = p_i50105_1_;
        this.field_75152_c = p_i50105_2_;
-@@ -120,9 +162,11 @@
+@@ -120,9 +172,11 @@
           ItemStack itemstack = this.field_75151_b.get(i).func_75211_c();
           ItemStack itemstack1 = this.field_75153_a.get(i);
           if (!ItemStack.func_77989_b(itemstack1, itemstack)) {
@@ -93,7 +103,7 @@
              for(IContainerListener icontainerlistener : this.field_75149_d) {
                 icontainerlistener.func_71111_a(this, i, itemstack2);
              }
-@@ -202,6 +246,7 @@
+@@ -202,6 +256,7 @@
                 ItemStack itemstack10 = playerinventory.func_70445_o().func_77946_l();
                 int k1 = playerinventory.func_70445_o().func_190916_E();
  
@@ -101,7 +111,7 @@
                 for(Slot slot8 : this.field_94537_h) {
                    ItemStack itemstack13 = playerinventory.func_70445_o();
                    if (slot8 != null && func_94527_a(slot8, itemstack13, true) && slot8.func_75214_a(itemstack13) && (this.field_94535_f == 2 || itemstack13.func_190916_E() >= this.field_94537_h.size()) && this.func_94531_b(slot8)) {
-@@ -214,12 +259,45 @@
+@@ -214,12 +269,45 @@
                       }
  
                       k1 -= itemstack14.func_190916_E() - j3;
@@ -150,7 +160,7 @@
              }
  
              this.func_94533_d();
-@@ -232,8 +310,11 @@
+@@ -232,8 +320,11 @@
           if (p_241440_1_ == -999) {
              if (!playerinventory.func_70445_o().func_190926_b()) {
                 if (p_241440_2_ == 0) {
@@ -163,7 +173,7 @@
                 }
  
                 if (p_241440_2_ == 1) {
-@@ -321,9 +402,18 @@
+@@ -321,9 +412,18 @@
                 }
  
                 slot6.func_75218_e();
@@ -183,7 +193,7 @@
           Slot slot = this.field_75151_b.get(p_241440_1_);
           ItemStack itemstack1 = playerinventory.func_70301_a(p_241440_2_);
           ItemStack itemstack2 = slot.func_75211_c();
-@@ -418,8 +508,11 @@
+@@ -418,8 +518,11 @@
     public void func_75134_a(PlayerEntity p_75134_1_) {
        PlayerInventory playerinventory = p_75134_1_.field_71071_by;
        if (!playerinventory.func_70445_o().func_190926_b()) {
@@ -196,7 +206,7 @@
        }
  
     }
-@@ -500,14 +593,15 @@
+@@ -500,14 +603,15 @@
              ItemStack itemstack = slot.func_75211_c();
              if (!itemstack.func_190926_b() && func_195929_a(p_75135_1_, itemstack)) {
                 int j = itemstack.func_190916_E() + p_75135_1_.func_190916_E();
@@ -216,7 +226,7 @@
                    slot.func_75218_e();
                    flag = true;
                 }
-@@ -608,7 +702,7 @@
+@@ -608,7 +712,7 @@
           p_94525_2_.func_190920_e(1);
           break;
        case 2:

@@ -19,6 +19,7 @@
 
 package net.minecraftforge.fml.network;
 
+import io.netty.buffer.Unpooled;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,17 +27,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import net.minecraft.tags.ITagCollection;
-import net.minecraft.tags.ITagCollectionSupplier;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.common.thread.EffectiveSide;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import io.netty.buffer.Unpooled;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -45,11 +38,23 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.handshake.client.CHandshakePacket;
 import net.minecraft.network.login.ServerLoginNetHandler;
+import net.minecraft.tags.ITagCollection;
+import net.minecraft.tags.ITagCollectionSupplier;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
+import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.fml.config.ConfigTracker;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.event.CraftEventFactory;
+import org.bukkit.craftbukkit.inventory.CraftInventory;
+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
+import org.bukkit.event.inventory.InventoryType;
 
 public class NetworkHooks
 {
@@ -203,6 +208,20 @@ public class NetworkHooks
             throw new IllegalArgumentException("Invalid PacketBuffer for openGui, found "+ output.readableBytes()+ " bytes");
         }
         Container c = containerSupplier.createMenu(openContainerId, player.inventory, player);
+        // Magma start - Forge Inventory View
+        if (c.getBukkitView() == null) {
+            TileEntity tileEntity = player.world.getTileEntity(output.readBlockPos());
+            if (tileEntity instanceof IInventory) {
+                c.setBukkitView(new CraftInventoryView(player.getBukkitEntity(), new CraftInventory((IInventory) tileEntity), c));
+            } else {
+                c.setBukkitView(new CraftInventoryView(player.getBukkitEntity(), Bukkit.createInventory(player.getBukkitEntity(), InventoryType.CHEST), c));
+            }
+        }
+        c = CraftEventFactory.callInventoryOpenEvent(player, c, false);
+        if (c == null) {
+            return;
+        }
+        // Magma end
         ContainerType<?> type = c.getType();
         FMLPlayMessages.OpenContainer msg = new FMLPlayMessages.OpenContainer(type, openContainerId, containerSupplier.getDisplayName(), output);
         FMLNetworkConstants.playChannel.sendTo(msg, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
