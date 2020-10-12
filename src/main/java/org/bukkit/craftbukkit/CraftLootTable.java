@@ -13,6 +13,7 @@ import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.LootTable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -114,7 +115,7 @@ public class CraftLootTable implements org.bukkit.loot.LootTable {
     }
 
     public static LootContext convertContext(net.minecraft.loot.LootContext info) {
-        BlockPos position = info.get(LootParameters.POSITION);
+        Vector3d position = info.get(LootParameters.field_237457_g_);
         Location location = new Location(info.getWorld().getWorldCB(), position.getX(), position.getY(), position.getZ());
         LootContext.Builder contextBuilder = new LootContext.Builder(location);
 
