@@ -93,14 +93,16 @@ public class ForgeInject {
         Map<Short, EntityType> ID_MAP = ObfuscationReflectionHelper.getPrivateValue(EntityType.class, null, "ID_MAP");
 
         ForgeRegistries.ENTITIES.getEntries().forEach(entity -> {
-            String entityname = entity.getKey().getRegistryName().getNamespace();
-            String entityType = entityname.replace("-", "_").toUpperCase();
+            if (!entity.getValue().getRegistryName().getNamespace().equals("minecraft")) {
+                String entityname = entity.getKey().getRegistryName().getNamespace();
+                String entityType = entityname.replace("-", "_").toUpperCase();
 
-            EntityType bukkitType = EnumHelper.addEnum(EntityType.class, entityType, new Class[]{String.class, Class.class, Integer.TYPE, Boolean.TYPE},
-                new Object[]{entityname, CraftCustomEntity.class, entity.getKey().getRegistryName().getNamespace().hashCode(), false});
+                EntityType bukkitType = EnumHelper.addEnum(EntityType.class, entityType, new Class[]{String.class, Class.class, Integer.TYPE, Boolean.TYPE},
+                    new Object[]{entityname, CraftCustomEntity.class, entity.getKey().getRegistryName().getNamespace().hashCode(), false});
 
-            NAME_MAP.put(entityname.toLowerCase(), bukkitType);
-            ID_MAP.put((short) entity.getKey().getRegistryName().getNamespace().hashCode(), bukkitType);
+                NAME_MAP.put(entityname.toLowerCase(), bukkitType);
+                ID_MAP.put((short) entity.getKey().getRegistryName().getNamespace().hashCode(), bukkitType);
+            }
         });
 
     }
