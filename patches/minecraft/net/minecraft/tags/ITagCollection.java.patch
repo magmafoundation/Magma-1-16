@@ -1,0 +1,19 @@
+--- a/net/minecraft/tags/ITagCollection.java
++++ b/net/minecraft/tags/ITagCollection.java
+@@ -15,6 +15,8 @@
+ import net.minecraft.util.ResourceLocation;
+ import net.minecraft.util.registry.DefaultedRegistry;
+ import net.minecraft.util.registry.Registry;
++import net.minecraftforge.api.distmarker.Dist;
++import net.minecraftforge.api.distmarker.OnlyIn;
+ 
+ public interface ITagCollection<T> {
+    Map<ResourceLocation, ITag<T>> func_241833_a();
+@@ -42,6 +44,7 @@
+       return this.func_241833_a().keySet();
+    }
+ 
++   @OnlyIn(Dist.CLIENT)
+    default Collection<ResourceLocation> func_199913_a(T p_199913_1_) {
+       List<ResourceLocation> list = Lists.newArrayList();
+ 

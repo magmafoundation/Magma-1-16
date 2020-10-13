@@ -1,6 +1,17 @@
 --- a/net/minecraft/util/math/vector/Vector4f.java
 +++ b/net/minecraft/util/math/vector/Vector4f.java
-@@ -128,4 +128,16 @@
+@@ -1,7 +1,10 @@
+ package net.minecraft.util.math.vector;
+ 
+ import net.minecraft.util.math.MathHelper;
++import net.minecraftforge.api.distmarker.Dist;
++import net.minecraftforge.api.distmarker.OnlyIn;
+ 
++@OnlyIn(Dist.CLIENT)
+ public class Vector4f {
+    private float field_229368_a_;
+    private float field_229369_b_;
+@@ -125,4 +128,16 @@
     public String toString() {
        return "[" + this.field_229368_a_ + ", " + this.field_229369_b_ + ", " + this.field_229370_c_ + ", " + this.field_229371_d_ + "]";
     }

@@ -15,7 +15,7 @@ public final class CraftKelp extends org.bukkit.craftbukkit.block.data.CraftBloc
 
     // org.bukkit.craftbukkit.block.data.CraftAgeable
 
-    private static final net.minecraft.state.IntegerProperty AGE = getInteger(net.minecraft.block.KelpBlock.class, "age");
+    private static final net.minecraft.state.IntegerProperty AGE = getInteger(net.minecraft.block.KelpTopBlock.class, "age");
 
     @Override
     public int getAge() {
