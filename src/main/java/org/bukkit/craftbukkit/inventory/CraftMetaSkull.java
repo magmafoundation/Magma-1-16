@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap.Builder;
 import com.google.common.util.concurrent.Futures;
 import com.mojang.authlib.GameProfile;
 import java.util.Map;
+import java.util.UUID;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.NBTUtil;
@@ -61,7 +62,14 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
         super.deserializeInternal(tag, context);
 
         if (tag.contains(SKULL_PROFILE.NBT, CraftMagicNumbers.NBT.TAG_COMPOUND)) {
-            this.setProfile(NBTUtil.readGameProfile(tag.getCompound(SKULL_PROFILE.NBT)));
+            CompoundNBT skullTag = tag.getCompound(SKULL_PROFILE.NBT);
+            // convert type of stored Id from String to UUID for backwards compatibility
+            if (skullTag.contains("Id", CraftMagicNumbers.NBT.TAG_STRING)) {
+                UUID uuid = UUID.fromString(skullTag.getString("Id"));
+                skullTag.putUniqueId("Id", uuid);
+            }
+
+            this.setProfile(NBTUtil.readGameProfile(skullTag));
         }
     }
 

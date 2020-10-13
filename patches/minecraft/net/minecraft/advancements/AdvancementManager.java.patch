@@ -16,7 +16,7 @@
        Map<ResourceLocation, Advancement.Builder> map = Maps.newHashMap();
        p_212853_1_.forEach((p_240923_2_, p_240923_3_) -> {
 +         // Spigot start
-+         if (org.spigotmc.SpigotConfig.disabledAdvancements != null && (org.spigotmc.SpigotConfig.disabledAdvancements.contains("*") || org.spigotmc.SpigotConfig.disabledAdvancements.contains(p_240923_2_.toString()))) {
++         if (org.spigotmc.SpigotConfig.disabledAdvancements != null && (org.spigotmc.SpigotConfig.disabledAdvancements.contains("*") || org.spigotmc.SpigotConfig.disabledAdvancements.contains(p_240923_2_.toString()) || org.spigotmc.SpigotConfig.disabledAdvancements.contains(p_240923_2_.func_110624_b()))) {
 +            return;
 +         }
 +         // Spigot end

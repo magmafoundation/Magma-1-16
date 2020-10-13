@@ -724,14 +724,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     @Override
     public Location getBedSpawnLocation() {
-        World world = getHandle().server.getWorld(getHandle().func_241141_L_()).getWorldCB();
+        ServerWorld world = getHandle().server.getWorld(getHandle().func_241141_L_());
         BlockPos bed = getHandle().func_241140_K_();
 
         if (world != null && bed != null) {
-            Optional<Vector3d> spawnLoc = PlayerEntity.func_242374_a(((CraftWorld) world).getHandle(), bed, getHandle().func_242109_L(), getHandle().func_241142_M_(), true);
+            Optional<Vector3d> spawnLoc = PlayerEntity.func_242374_a(world, bed, getHandle().func_242109_L(), getHandle().func_241142_M_(), true);
             if (spawnLoc.isPresent()) {
                 Vector3d vec = spawnLoc.get();
-                return new Location(world, vec.x, vec.y, vec.z);
+                return new Location(world.getWorldCB(), vec.x, vec.y, vec.z);
             }
         }
         return null;

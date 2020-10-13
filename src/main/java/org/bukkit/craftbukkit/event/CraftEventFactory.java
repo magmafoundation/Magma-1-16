@@ -1296,10 +1296,6 @@ public class CraftEventFactory {
     }
 
     public static void handleInventoryCloseEvent(PlayerEntity human) {
-        // SPIGOT-5799 - no need to fire for when no inventory open
-        if (human.openContainer == human.container) {
-            return;
-        }
         InventoryCloseEvent event = new InventoryCloseEvent(human.openContainer.getBukkitView());
         if(human.openContainer.getBukkitView() != null){ // Magma - Inventory NPE
             human.world.getServerCB().getPluginManager().callEvent(event);
