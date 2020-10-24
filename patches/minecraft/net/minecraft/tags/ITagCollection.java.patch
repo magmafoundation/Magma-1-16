@@ -9,11 +9,3 @@
  
  public interface ITagCollection<T> {
     Map<ResourceLocation, ITag<T>> func_241833_a();
-@@ -42,6 +44,7 @@
-       return this.func_241833_a().keySet();
-    }
- 
-+   @OnlyIn(Dist.CLIENT)
-    default Collection<ResourceLocation> func_199913_a(T p_199913_1_) {
-       List<ResourceLocation> list = Lists.newArrayList();
- 
