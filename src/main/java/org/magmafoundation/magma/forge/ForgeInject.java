@@ -22,6 +22,7 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
@@ -53,10 +54,10 @@ public class ForgeInject {
     private static void addForgeItems() {
 
         ForgeRegistries.ITEMS.getEntries().forEach(registryKeyItemEntry -> {
-            RegistryKey<Item> key = registryKeyItemEntry.getKey();
+            ResourceLocation resourceLocation = registryKeyItemEntry.getValue().getRegistryName();
             Item item = registryKeyItemEntry.getValue();
-            if (!registryKeyItemEntry.getValue().getRegistryName().getNamespace().equals("minecraft")) {
-                String materialName = key.toString().toUpperCase().replaceAll("(:|\\s)", "_").replaceAll("\\W", "");
+            if(!resourceLocation.getNamespace().equals("minecraft")) {
+                String materialName = Material.normalizeName(registryKeyItemEntry.getKey().toString()).replace("RESOURCEKEYMINECRAFT_ITEM__", "");
                 Material material = Material
                     .addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE, Integer.TYPE}, new Object[]{Item.getIdFromItem(item), item.getMaxStackSize()}));
                 CraftMagicNumbers.ITEM_MATERIAL.put(item, material);
@@ -72,10 +73,10 @@ public class ForgeInject {
 
     private static void addForgeBlocks() {
         ForgeRegistries.BLOCKS.getEntries().forEach(registryKeyBlockEntry -> {
-            RegistryKey<Block> key = registryKeyBlockEntry.getKey();
+            ResourceLocation resourceLocation = registryKeyBlockEntry.getValue().getRegistryName();
             Block block = registryKeyBlockEntry.getValue();
-            if (!registryKeyBlockEntry.getValue().getRegistryName().getNamespace().equals("minecraft")) {
-                String materialName = key.toString().toUpperCase().replaceAll("(:|\\s)", "_").replaceAll("\\W", "");
+            if(!resourceLocation.getNamespace().equals("minecraft")) {
+                String materialName = Material.normalizeName(registryKeyBlockEntry.getKey().toString()).replace("RESOURCEKEYMINECRAFT_BLOCK__", "");
                 Material material = Material.addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE}, new Object[]{Item.getIdFromItem(block.asItem())}));
                 CraftMagicNumbers.BLOCK_MATERIAL.put(block, material);
                 CraftMagicNumbers.MATERIAL_BLOCK.put(material, block);
