@@ -275,7 +275,23 @@
     }
  
     public boolean func_71262_S() {
-@@ -402,7 +501,7 @@
+@@ -335,10 +434,11 @@
+    }
+ 
+    public void func_120011_ar() {
+-      if (this.field_213225_q == null) {
+-         this.field_213225_q = MinecraftServerGui.func_219048_a(this);
+-      }
+-
++      // Magma start - Disable Server Gui
++      // if (this.serverGui == null) {
++      //    this.serverGui = MinecraftServerGui.func_219048_a(this);
++      // }
++      // Magma end
+    }
+ 
+    public boolean func_71279_ae() {
+@@ -402,7 +502,7 @@
        return this.func_213221_d_().field_219003_P;
     }
  
@@ -284,7 +300,7 @@
        return this.func_213221_d_().field_219004_Q;
     }
  
-@@ -481,13 +580,39 @@
+@@ -481,13 +581,39 @@
     }
  
     public String func_71258_A() {
@@ -326,7 +342,7 @@
        });
        return this.field_184115_n.func_70008_c();
     }
-@@ -507,6 +632,11 @@
+@@ -507,6 +633,11 @@
        return false;
     }
  
@@ -338,7 +354,7 @@
     public int func_230512_b_(int p_230512_1_) {
        return this.func_213221_d_().field_241081_R_ * p_230512_1_ / 100;
     }
-@@ -518,4 +648,15 @@
+@@ -518,4 +649,15 @@
     public boolean func_230540_aS_() {
        return this.field_71340_o.func_219034_a().field_241078_O_;
     }
