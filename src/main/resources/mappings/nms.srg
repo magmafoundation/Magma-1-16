@@ -10278,3 +10278,4 @@ MD: net/minecraft/server/WorldSettings/getGameRules ()Lnet/minecraft/server/Game
 MD: net/minecraft/server/WorldSettings/getGameType ()Lnet/minecraft/server/EnumGamemode; net/minecraft/world/WorldSettings/func_234953_b_ ()Lnet/minecraft/world/GameType;
 MD: net/minecraft/server/WorldSettings/getLevelName ()Ljava/lang/String; net/minecraft/world/WorldSettings/func_234947_a_ ()Ljava/lang/String;
 MD: net/minecraft/server/WorldSettings/isHardcore ()Z net/minecraft/world/WorldSettings/func_234954_c_ ()Z
+PK: org/bukkit/craftbukkit org/bukkit/craftbukkit/v1_16_R3
