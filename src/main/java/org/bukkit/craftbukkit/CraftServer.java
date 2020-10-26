@@ -283,11 +283,11 @@ public final class CraftServer implements Server {
 
         // Register all the Enchantments and PotionTypes now so we can stop new registration immediately after
         Enchantments.SHARPNESS.getClass();
-        org.bukkit.enchantments.Enchantment.stopAcceptingRegistrations();
+        //org.bukkit.enchantments.Enchantment.stopAcceptingRegistrations(); // Magma Moved to ForgeInject
 
         Potion.setPotionBrewer(new CraftPotionBrewer());
         Effects.BLINDNESS.getClass();
-        PotionEffectType.stopAcceptingRegistrations();
+        //PotionEffectType.stopAcceptingRegistrations(); // Magma Moved to ForgeInject
         // Ugly hack :(
 
         if (!Main.useConsole) {
