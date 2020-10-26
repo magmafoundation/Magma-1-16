@@ -25,7 +25,7 @@
 +
 +   // CraftBukkit start
 +   @Override
-+   public InventoryView getBukkitView() {
++   public CraftInventoryView getBukkitView() {
 +      if (bukkitEntity != null) {
 +         return bukkitEntity;
 +      }
