@@ -19,17 +19,23 @@
 package org.magmafoundation.magma.forge;
 
 import java.util.Map;
+import java.util.stream.IntStream;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.util.RegistryKey;
+import net.minecraft.tileentity.BannerPattern;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.Material;
+import org.bukkit.block.banner.PatternType;
+import org.bukkit.craftbukkit.enchantments.CraftEnchantment;
+import org.bukkit.craftbukkit.potion.CraftPotionEffectType;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
+import org.bukkit.potion.PotionEffectType;
 import org.magmafoundation.magma.craftbukkit.entity.CraftCustomEntity;
 import org.magmafoundation.magma.util.EnumHelper;
 
@@ -49,6 +55,9 @@ public class ForgeInject {
         addForgeItems();
         addForgeBlocks();
         addForgeEntitys();
+        addForgeEnchantments();
+        addForgePotions();
+        addForgeBannerPatters();
     }
 
     private static void addForgeItems() {
@@ -108,5 +117,23 @@ public class ForgeInject {
 
     }
 
+    private static void addForgeEnchantments() {
+        ForgeRegistries.ENCHANTMENTS.getEntries().forEach(registryKeyEnchantmentEntry -> Enchantment.registerEnchantment(new CraftEnchantment(registryKeyEnchantmentEntry.getValue())));
+        Enchantment.stopAcceptingRegistrations();
+    }
+
+    private static void addForgePotions() {
+        ForgeRegistries.POTIONS.getEntries().forEach(registryKeyEffectEntry -> PotionEffectType.registerPotionEffectType(new CraftPotionEffectType(registryKeyEffectEntry.getValue())));
+        PotionEffectType.stopAcceptingRegistrations();
+    }
+
+    private static void addForgeBannerPatters() {
+        Map<String, PatternType> PATTERN_MAP = ObfuscationReflectionHelper.getPrivateValue(PatternType.class, null, "byString");
+        IntStream.range(0, BannerPattern.values().length).forEach(i -> {
+            PatternType patternType = EnumHelper.addEnum(PatternType.class, BannerPattern.values()[i].name(), new Class[]{String.class}, new Object[]{BannerPattern.values()[i].getHashname()});
+            PATTERN_MAP.put(BannerPattern.values()[i].getHashname(), patternType);
+        });
+
+    }
 
 }
