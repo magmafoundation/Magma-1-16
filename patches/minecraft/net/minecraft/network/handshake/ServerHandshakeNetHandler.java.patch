@@ -78,7 +78,7 @@
              this.field_147386_b.func_150719_a(new ServerLoginNetHandler(this.field_147387_a, this.field_147386_b));
 +            // Spigot Start
 +            if (org.spigotmc.SpigotConfig.bungee) {
-+               String[] split = p_147383_1_.field_149598_b.split("\00");
++               String[] split = p_147383_1_.bungeeIP.split("\00");
 +               if ( split.length == 3 || split.length == 4 ) {
 +                  p_147383_1_.field_149598_b = split[0];
 +                  field_147386_b.field_150743_l = new java.net.InetSocketAddress(split[1], ((java.net.InetSocketAddress) field_147386_b.func_74430_c()).getPort());

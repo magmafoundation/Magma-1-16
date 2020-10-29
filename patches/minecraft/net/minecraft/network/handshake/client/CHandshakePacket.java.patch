@@ -1,6 +1,6 @@
 --- a/net/minecraft/network/handshake/client/CHandshakePacket.java
 +++ b/net/minecraft/network/handshake/client/CHandshakePacket.java
-@@ -11,9 +11,10 @@
+@@ -11,9 +11,11 @@
  
  public class CHandshakePacket implements IPacket<IHandshakeNetHandler> {
     private int field_149600_a;
@@ -10,10 +10,11 @@
 +   public int field_149599_c; // private->public CraftBukkit
     private ProtocolType field_149597_d;
 +   private String fmlVersion = net.minecraftforge.fml.network.FMLNetworkConstants.NETVERSION;
++   public String bungeeIP; // Magma - bungee support
  
     public CHandshakePacket() {
     }
-@@ -28,14 +29,15 @@
+@@ -28,14 +30,17 @@
  
     public void func_148837_a(PacketBuffer p_148837_1_) throws IOException {
        this.field_149600_a = p_148837_1_.func_150792_a();
@@ -22,6 +23,8 @@
        this.field_149599_c = p_148837_1_.readUnsignedShort();
        this.field_149597_d = ProtocolType.func_150760_a(p_148837_1_.func_150792_a());
 +      this.fmlVersion = net.minecraftforge.fml.network.NetworkHooks.getFMLVersion(this.field_149598_b);
++      this.bungeeIP = this.field_149598_b;
++      this.field_149598_b = this.field_149598_b.split("\0")[0];
     }
  
     public void func_148840_b(PacketBuffer p_148840_1_) throws IOException {
@@ -31,7 +34,7 @@
        p_148840_1_.writeShort(this.field_149599_c);
        p_148840_1_.func_150787_b(this.field_149597_d.func_150759_c());
     }
-@@ -51,4 +53,8 @@
+@@ -51,4 +56,8 @@
     public int func_149595_d() {
        return this.field_149600_a;
     }
