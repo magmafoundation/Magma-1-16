@@ -262,7 +262,7 @@ public abstract class PotionEffectType {
         return "PotionEffectType[" + id + ", " + getName() + "]";
     }
 
-    private static final PotionEffectType[] byId = new PotionEffectType[33];
+    private static final PotionEffectType[] byId = new PotionEffectType[1250];
     private static final Map<String, PotionEffectType> byName = new HashMap<String, PotionEffectType>();
     // will break on updates.
     private static boolean acceptingNew = true;
