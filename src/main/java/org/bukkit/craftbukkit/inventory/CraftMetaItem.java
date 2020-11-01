@@ -326,7 +326,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
 
             if (display.contains(NAME.NBT)) {
                 try {
-                    displayName = ITextComponent.Serializer.func_240643_a_(ValidateUtils.limit(display.getString(NAME.NBT), 1024)); // Spigot
+                    displayName = ITextComponent.Serializer.getComponentFromJson(ValidateUtils.limit(display.getString(NAME.NBT), 1024)); // Spigot
                 } catch (JsonParseException ex) {
                     // Ignore (stripped like Vanilla)
                 }
@@ -334,7 +334,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
 
             if (display.contains(LOCNAME.NBT)) {
                 try {
-                    locName = ITextComponent.Serializer.func_240643_a_(ValidateUtils.limit(display.getString(NAME.NBT), 1024)); // Spigot
+                    locName = ITextComponent.Serializer.getComponentFromJson(ValidateUtils.limit(display.getString(LOCNAME.NBT), 1024)); // Spigot
                 } catch (JsonParseException ex) {
                     // Ignore (stripped like Vanilla)
                 }
@@ -347,7 +347,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
                 for (int index = 0; index < list.size(); index++) {
                     String line = ValidateUtils.limit(list.getString(index), 8192); // Spigot
                     try {
-                        lore.add(ITextComponent.Serializer.func_240643_a_(line));
+                        lore.add(ITextComponent.Serializer.getComponentFromJson(line));
                     } catch (JsonParseException ex) {
                         // Ignore (stripped like Vanilla)
                     }
@@ -429,7 +429,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
                 // entry is not an actual CompoundNBT. getCompound returns empty CompoundNBT in that case
                 continue;
             }
-            net.minecraft.entity.ai.attributes.AttributeModifier nmsModifier = net.minecraft.entity.ai.attributes.AttributeModifier.func_233800_a_(entry);
+            net.minecraft.entity.ai.attributes.AttributeModifier nmsModifier = net.minecraft.entity.ai.attributes.AttributeModifier.read(entry);
             if (nmsModifier == null) {
                 continue;
             }
@@ -710,7 +710,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
                 continue;
             }
             net.minecraft.entity.ai.attributes.AttributeModifier nmsModifier = CraftAttributeInstance.convert(entry.getValue());
-            CompoundNBT sub = nmsModifier.func_233801_e_();
+            CompoundNBT sub = nmsModifier.write();
             if (sub.isEmpty()) {
                 continue;
             }

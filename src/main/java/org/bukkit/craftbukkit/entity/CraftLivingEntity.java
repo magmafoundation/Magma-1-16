@@ -140,7 +140,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     public void setMaxHealth(double amount) {
         Validate.isTrue(amount > 0, "Max health must be greater than 0");
 
-        getHandle().getAttribute(Attributes.field_233818_a_).setBaseValue(amount);
+        getHandle().getAttribute(Attributes.MAX_HEALTH).setBaseValue(amount);
 
         if (getHealth() > amount) {
             setHealth(amount);
@@ -149,7 +149,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
 
     @Override
     public void resetMaxHealth() {
-        setMaxHealth(getHandle().getAttribute(Attributes.field_233818_a_).getAttribute().getDefaultValue());
+        setMaxHealth(getHandle().getAttribute(Attributes.MAX_HEALTH).getAttribute().getDefaultValue());
     }
 
     @Override

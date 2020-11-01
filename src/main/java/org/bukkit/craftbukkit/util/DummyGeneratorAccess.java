@@ -28,7 +28,7 @@ import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.chunk.AbstractChunkProvider;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.gen.Heightmap.Type;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.lighting.WorldLightManager;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.IWorldInfo;
@@ -85,42 +85,11 @@ public class DummyGeneratorAccess implements IWorld {
 
     @Override
     public ServerWorld getMinecraftWorld() {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public DynamicRegistries func_241828_r() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public float func_230487_a_(Direction p_230487_1_, boolean p_230487_2_) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public WorldLightManager getLightManager() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public WorldBorder getWorldBorder() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Nullable
-    @Override
-    public TileEntity getTileEntity(BlockPos pos) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public BlockState getBlockState(BlockPos pos) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public FluidState getFluidState(BlockPos pos) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -146,7 +115,7 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public int getHeight(Type heightmapType, int x, int z) {
+    public int getHeight(Heightmap.Type heightmapType, int x, int z) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -176,27 +145,57 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public DimensionType func_230315_m_() {
+    public DimensionType getDimensionType() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean func_241211_a_(BlockPos p_241211_1_, BlockState p_241211_2_, int p_241211_3_, int p_241211_4_) {
+    public TileEntity getTileEntity(BlockPos blockposition) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean removeBlock(BlockPos pos, boolean isMoving) {
+    public BlockState getBlockState(BlockPos pos) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean func_241212_a_(BlockPos p_241212_1_, boolean p_241212_2_, @Nullable Entity p_241212_3_, int p_241212_4_) {
+    public FluidState getFluidState(BlockPos pos) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean hasBlockState(BlockPos p_217375_1_, Predicate<BlockState> p_217375_2_) {
+    public WorldBorder getWorldBorder() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean hasBlockState(BlockPos bp, Predicate<BlockState> prdct) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean setBlockState(BlockPos pos, BlockState state, int flags, int recursionLeft) {
+        return false;
+    }
+
+    @Override
+    public boolean removeBlock(BlockPos blockposition, boolean flag) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public float func_230487_a_(Direction p_230487_1_, boolean p_230487_2_) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public WorldLightManager getLightManager() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean destroyBlock(BlockPos pos, boolean dropBlock, @Nullable Entity entity, int recursionLeft) {
+        return false;
     }
 }

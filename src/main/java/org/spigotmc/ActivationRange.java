@@ -47,8 +47,10 @@ public class ActivationRange {
     static AxisAlignedBB maxBB = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
 
     /**
-     * Initializes an entities type on construction to specify what group this entity is in for activation ranges.
+     * Initializes an entities type on construction to specify what group this
+     * entity is in for activation ranges.
      *
+     * @param entity
      * @return group id
      */
     public static ActivationType initializeEntityActivationType(Entity entity) {
@@ -66,6 +68,8 @@ public class ActivationRange {
     /**
      * These entities are excluded from Activation range checks.
      *
+     * @param entity
+     * @param config
      * @return boolean If it should always tick.
      */
     public static boolean initializeEntityActivationState(Entity entity, SpigotWorldConfig config) {
@@ -91,7 +95,10 @@ public class ActivationRange {
     }
 
     /**
-     * Find what entities are in range of the players in the world and set active if in range.
+     * Find what entities are in range of the players in the world and set
+     * active if in range.
+     *
+     * @param world
      */
     public static void activateEntities(World world) {
         SpigotTimings.entityActivationCheckTimer.startTiming();
@@ -132,6 +139,8 @@ public class ActivationRange {
 
     /**
      * Checks for the activation state of all entities in this chunk.
+     *
+     * @param chunk
      */
     private static void activateChunkEntities(Chunk chunk) {
         for (List<Entity> slice : chunk.entityLists) {
@@ -150,7 +159,11 @@ public class ActivationRange {
     }
 
     /**
-     * If an entity is not in range, do some more checks to see if we should give it a shot.
+     * If an entity is not in range, do some more checks to see if we should
+     * give it a shot.
+     *
+     * @param entity
+     * @return
      */
     public static boolean checkEntityImmunities(Entity entity) {
         // quick checks.
@@ -158,7 +171,8 @@ public class ActivationRange {
             return true;
         }
         if (!(entity instanceof ArrowEntity)) {
-            if (!entity.func_233570_aj_() || !entity.passengers.isEmpty() || entity.isPassenger()) {
+            if ( !entity.isOnGround() || !entity.passengers.isEmpty() || entity.isPassenger() )
+            {
                 return true;
             }
         } else if (!((ArrowEntity) entity).inGround) {
@@ -194,6 +208,9 @@ public class ActivationRange {
 
     /**
      * Checks if the entity is active for this tick.
+     *
+     * @param entity
+     * @return
      */
     public static boolean checkIfActive(Entity entity) {
         SpigotTimings.checkIfActiveTimer.startTiming();

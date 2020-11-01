@@ -11,8 +11,8 @@
 +      this.fishTypeSupplier = () -> p_i49022_1_;
     }
  
-+   public FishBucketItem(java.util.function.Supplier<? extends EntityType<?>> fishTypeIn, java.util.function.Supplier<? extends Fluid> p_i49022_2_, Item.Properties builder) {
-+      super(p_i49022_2_, builder);
++   public FishBucketItem(java.util.function.Supplier<? extends EntityType<?>> fishTypeIn, java.util.function.Supplier<? extends Fluid> fluid, Item.Properties builder) {
++      super(fluid, builder);
 +      this.field_203794_a = null;
 +      this.fishTypeSupplier = fishTypeIn;
 +   }

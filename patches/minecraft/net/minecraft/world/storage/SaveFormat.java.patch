@@ -15,15 +15,21 @@
 +       return getReader(p_237270_0_, p_237270_1_, null);
 +   }
 +
-+   private static BiFunction<File, DataFixer, ServerWorldInfo> getReader(DynamicOps<INBT> p_237270_0_, DatapackCodec p_237270_1_, @Nullable LevelSave levelSave) {
++   private static BiFunction<File, DataFixer, ServerWorldInfo> getReader(DynamicOps<INBT> nbt, DatapackCodec datapackCodec, @Nullable LevelSave levelSave) {
        return (p_242976_2_, p_242976_3_) -> {
           try {
              CompoundNBT compoundnbt = CompressedStreamTools.func_244263_a(p_242976_2_);
-@@ -193,7 +198,10 @@
+@@ -189,11 +194,14 @@
+             CompoundNBT compoundnbt2 = compoundnbt1.func_150297_b("Player", 10) ? compoundnbt1.func_74775_l("Player") : null;
+             compoundnbt1.func_82580_o("Player");
+             int i = compoundnbt1.func_150297_b("DataVersion", 99) ? compoundnbt1.func_74762_e("DataVersion") : -1;
+-            Dynamic<INBT> dynamic = p_242976_3_.update(DefaultTypeReferences.LEVEL.func_219816_a(), new Dynamic<>(p_237270_0_, compoundnbt1), i, SharedConstants.func_215069_a().getWorldVersion());
++            Dynamic<INBT> dynamic = p_242976_3_.update(DefaultTypeReferences.LEVEL.func_219816_a(), new Dynamic<>(nbt, compoundnbt1), i, SharedConstants.func_215069_a().getWorldVersion());
              Pair<DimensionGeneratorSettings, Lifecycle> pair = func_237259_a_(dynamic, p_242976_3_, i);
              VersionData versiondata = VersionData.func_237324_a_(dynamic);
-             WorldSettings worldsettings = WorldSettings.func_234951_a_(dynamic, p_237270_1_);
+-            WorldSettings worldsettings = WorldSettings.func_234951_a_(dynamic, p_237270_1_);
 -            return ServerWorldInfo.func_237369_a_(dynamic, p_242976_3_, i, compoundnbt2, worldsettings, versiondata, pair.getFirst(), pair.getSecond());
++            WorldSettings worldsettings = WorldSettings.func_234951_a_(dynamic, datapackCodec);
 +            ServerWorldInfo info = ServerWorldInfo.func_237369_a_(dynamic, p_242976_3_, i, compoundnbt2, worldsettings, versiondata, pair.getFirst(), pair.getSecond());
 +            if (levelSave != null)
 +                net.minecraftforge.fml.WorldPersistenceHooks.handleWorldDataLoad(levelSave, info, compoundnbt);
@@ -31,7 +37,7 @@
           } catch (Exception exception) {
              field_215785_a.error("Exception reading {}", p_242976_2_, exception);
              return null;
-@@ -255,16 +263,27 @@
+@@ -255,18 +263,29 @@
     }
  
     public SaveFormat.LevelSave func_237274_c_(String p_237274_1_) throws IOException {
@@ -40,8 +46,8 @@
     }
  
 +   // CraftBukkit start
-+   public SaveFormat.LevelSave func_237274_c_(String p_237274_1_, RegistryKey<Dimension> dimensionType) throws IOException {
-+      return new SaveFormat.LevelSave(p_237274_1_, dimensionType);
++   public SaveFormat.LevelSave getLevelSave(String saveName, RegistryKey<Dimension> dimensionType) throws IOException {
++      return new SaveFormat.LevelSave(saveName, dimensionType);
 +      // CraftBukkit end
 +   }
 +
@@ -53,15 +59,19 @@
        private final Map<FolderName, Path> field_237281_e_ = Maps.newHashMap();
  
 -      public LevelSave(String p_i232152_2_) throws IOException {
+-         this.field_237280_d_ = p_i232152_2_;
+-         this.field_237279_c_ = SaveFormat.this.field_215786_c.resolve(p_i232152_2_);
 +      // CraftBukkit start
 +      private final RegistryKey<Dimension> dimensionType;
 +
-+      public LevelSave(String p_i232152_2_, RegistryKey<Dimension> dimensionType) throws IOException {
++      public LevelSave(String saveName, RegistryKey<Dimension> dimensionType) throws IOException {
 +         this.dimensionType = dimensionType;
 +         // CraftBukkit end
-          this.field_237280_d_ = p_i232152_2_;
-          this.field_237279_c_ = SaveFormat.this.field_215786_c.resolve(p_i232152_2_);
++         this.field_237280_d_ = saveName;
++         this.field_237279_c_ = SaveFormat.this.field_215786_c.resolve(saveName);
           this.field_237278_b_ = SessionLockManager.func_232998_a_(this.field_237279_c_);
+       }
+ 
 @@ -281,9 +300,23 @@
        }
  

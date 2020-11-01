@@ -194,7 +194,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         if (getHandle().connection == null) return;
 
         for (ITextComponent component : CraftChatMessage.fromString(message)) {
-            getHandle().connection.sendPacket(new SChatPacket(component, ChatType.CHAT, Util.field_240973_b_));
+            getHandle().connection.sendPacket(new SChatPacket(component, ChatType.CHAT, Util.DUMMY_UUID));
         }
     }
 
@@ -697,12 +697,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     @Override
     public void loadData() {
-        server.getHandle().playerDataManager.func_237336_b_(getHandle());
+        server.getHandle().playerDataManager.loadPlayerData(getHandle());
     }
 
     @Override
     public void saveData() {
-        server.getHandle().playerDataManager.func_237335_a_(getHandle());
+        server.getHandle().playerDataManager.savePlayerData(getHandle());
     }
 
     @Deprecated
@@ -747,7 +747,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         if (location == null) {
             getHandle().func_242111_a(null, null, 0.0F, override, false);
         } else {
-            getHandle().func_242111_a(((CraftWorld) location.getWorld()).getHandle().func_234923_W_(), new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ()), location.getYaw(), override, false);
+            getHandle().func_242111_a(((CraftWorld) location.getWorld()).getHandle().getDimensionKey(), new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ()), location.getYaw(), override, false);
         }
     }
 
@@ -762,7 +762,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public boolean hasDiscoveredRecipe(NamespacedKey recipe) {
         Preconditions.checkArgument(recipe != null, "recipe cannot be null");
-        return getHandle().getRecipeBook().func_226144_b_(CraftNamespacedKey.toMinecraft(recipe));
+        return getHandle().getRecipeBook().isUnlocked(CraftNamespacedKey.toMinecraft(recipe));
     }
 
     @Override
@@ -1071,7 +1071,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         ServerPlayerEntity other = ((CraftPlayer) player).getHandle();
         ChunkManager.EntityTracker entry = tracker.entities.get(other.getEntityId());
         if (entry != null) {
-            entry.func_219399_a(getHandle());
+            entry.removeTracker(getHandle());
         }
 
         // Remove the hidden player from this player user list, if they're on it
@@ -1420,7 +1420,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         ServerPlayerEntity player = getHandle();
         player.abilities.walkSpeed = value / 2f;
         player.sendPlayerAbilities();
-        getHandle().getAttribute(Attributes.field_233821_d_).setBaseValue(player.abilities.walkSpeed); // SPIGOT-5833: combination of the two in 1.16+
+        getHandle().getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(player.abilities.walkSpeed); // SPIGOT-5833: combination of the two in 1.16+
     }
 
     @Override
@@ -1520,8 +1520,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     public void updateScaledHealth(boolean sendHealth) {
-        AttributeModifierManager attributemapserver = getHandle().func_233645_dx_();
-        Collection<ModifiableAttributeInstance> set = attributemapserver.func_233789_b_(); // PAIL: Rename
+        AttributeModifierManager attributemapserver = getHandle().getAttributeManager();
+        Collection<ModifiableAttributeInstance> set = attributemapserver.getWatchedInstances(); // PAIL: Rename
 
         injectScaledMaxHealth(set, true);
 
@@ -1546,12 +1546,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             return;
         }
         for (ModifiableAttributeInstance genericInstance : collection) {
-            if (genericInstance.getAttribute() == Attributes.field_233821_d_) {
+            if (genericInstance.getAttribute() == Attributes.MAX_HEALTH) {
                 collection.remove(genericInstance);
                 break;
             }
         }
-        ModifiableAttributeInstance dummy = new ModifiableAttributeInstance(Attributes.field_233821_d_, (attribute) -> { });
+        ModifiableAttributeInstance dummy = new ModifiableAttributeInstance(Attributes.MAX_HEALTH, (attribute) -> { });
         // Spigot start
         double healthMod = scaledHealth ? healthScale : getMaxHealth();
         if ( healthMod >= Float.MAX_VALUE || healthMod <= 0 )
@@ -1755,7 +1755,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         @Override
         public void sendMessage(BaseComponent... components) {
             if ( getHandle().connection == null ) return;
-            SChatPacket packet = new SChatPacket(null, ChatType.SYSTEM, Util.field_240973_b_);
+            SChatPacket packet = new SChatPacket(null, ChatType.SYSTEM, Util.DUMMY_UUID);
             packet.components = components;
             getHandle().connection.sendPacket(packet);
         }
@@ -1768,7 +1768,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         @Override
         public void sendMessage(net.md_5.bungee.api.ChatMessageType position, BaseComponent... components) {
             if ( getHandle().connection == null ) return;
-            SChatPacket packet = new SChatPacket(null, ChatType.byId((byte) position.ordinal()), Util.field_240973_b_);
+            SChatPacket packet = new SChatPacket(null, ChatType.byId((byte) position.ordinal()), Util.DUMMY_UUID);
             packet.components = components;
             getHandle().connection.sendPacket(packet);
         }

@@ -122,7 +122,7 @@
 +         }
           SaveFormat saveformat = SaveFormat.func_237269_a_(file1.toPath());
 -         SaveFormat.LevelSave saveformat$levelsave = saveformat.func_237274_c_(s);
-+         SaveFormat.LevelSave saveformat$levelsave = saveformat.func_237274_c_(s, Dimension.field_236053_b_);
++         SaveFormat.LevelSave saveformat$levelsave = saveformat.getLevelSave(s, Dimension.field_236053_b_);
           MinecraftServer.func_240777_a_(saveformat$levelsave);
           DatapackCodec datapackcodec = saveformat$levelsave.func_237297_e_();
           boolean flag = optionset.has(optionspec6);
@@ -171,8 +171,8 @@
 -               worldsettings = new WorldSettings(serverproperties.field_219021_o, serverproperties.field_219020_n, serverproperties.field_218990_C, serverproperties.field_219019_m, false, new GameRules(), datapackcodec1);
 -               dimensiongeneratorsettings = optionset.has(optionspec3) ? serverproperties.field_241082_U_.func_236230_k_() : serverproperties.field_241082_U_;
 -            }
-+//         WorldSettingsImport<INBT> worldsettingsimport = WorldSettingsImport.func_244335_a(NBTDynamicOps.INSTANCE, datapackregistries.func_240970_h_(), dynamicregistries$impl);
-+//         IServerConfiguration iserverconfiguration = saveformat$levelsave.func_237284_a_(worldsettingsimport, datapackcodec1);
++//         WorldSettingsImport<INBT> worldsettingsimport = WorldSettingsImport.create(NBTDynamicOps.INSTANCE, datapackregistries.getResourceManager(), dynamicregistries$impl);
++//         IServerConfiguration iserverconfiguration = saveformat$levelsave.readServerConfiguration(worldsettingsimport, datapackcodec1);
 +//         if (iserverconfiguration == null) {
 +//            WorldSettings worldsettings;
 +//            DimensionGeneratorSettings dimensiongeneratorsettings;
@@ -188,7 +188,7 @@
 +//            iserverconfiguration = new ServerWorldInfo(worldsettings, dimensiongeneratorsettings, Lifecycle.stable());
 +//         }
 +//
-+//         saveformat$levelsave.func_237287_a_(dynamicregistries$impl, iserverconfiguration);
++//         saveformat$levelsave.saveLevel(dynamicregistries$impl, iserverconfiguration);
  
 -            iserverconfiguration = new ServerWorldInfo(worldsettings, dimensiongeneratorsettings, Lifecycle.stable());
 -         }
@@ -236,7 +236,8 @@
 +               LogManager.shutdown(); // we're manually managing the logging shutdown on the server. Make sure we do it here at the end.
              }
           };
-          thread.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler(field_240759_a_));
+-         thread.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler(field_240759_a_));
++         thread.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler(LOGGER));
           Runtime.getRuntime().addShutdownHook(thread);
 +
 +          */

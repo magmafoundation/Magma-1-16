@@ -133,7 +133,7 @@ public class CraftMetaCompass extends CraftMetaItem implements CompassMeta {
             return null;
         }
 
-        Optional<RegistryKey<net.minecraft.world.World>> key = net.minecraft.world.World.field_234917_f_.parse(NBTDynamicOps.INSTANCE, lodestoneWorld).result();
+        Optional<RegistryKey<net.minecraft.world.World>> key = net.minecraft.world.World.CODEC.parse(NBTDynamicOps.INSTANCE, lodestoneWorld).result();
         ServerWorld worldServer = key.isPresent() ? MinecraftServer.getServer().getWorld(key.get()) : null;
         World world = worldServer != null ? worldServer.getWorldCB() : null;
         return new Location(world, lodestoneX, lodestoneY, lodestoneZ); // world may be null here, if the referenced world is not loaded
@@ -145,8 +145,8 @@ public class CraftMetaCompass extends CraftMetaItem implements CompassMeta {
         if (lodestone == null) {
             this.lodestoneWorld = null;
         } else {
-            RegistryKey<net.minecraft.world.World> key = ((CraftWorld) lodestone.getWorld()).getHandle().func_234923_W_();
-            DataResult<INBT> dataresult = net.minecraft.world.World.field_234917_f_.encodeStart(NBTDynamicOps.INSTANCE, key);
+            RegistryKey<net.minecraft.world.World> key = ((CraftWorld) lodestone.getWorld()).getHandle().getDimensionKey();
+            DataResult<INBT> dataresult = net.minecraft.world.World.CODEC.encodeStart(NBTDynamicOps.INSTANCE, key);
             this.lodestoneWorld = (StringNBT) dataresult.get().orThrow();
             this.lodestoneX = lodestone.getBlockX();
             this.lodestoneY = lodestone.getBlockY();

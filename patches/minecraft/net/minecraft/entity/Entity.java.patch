@@ -777,7 +777,7 @@
 -               this.func_241206_a_(serverworld1);
 +               // CraftBukkit start
 +               if (this instanceof ServerPlayerEntity) {
-+                  ((ServerPlayerEntity) this).func_241206_a_(serverworld1, serverworld.func_85176_s(), PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
++                  ((ServerPlayerEntity) this).changeDimension(serverworld1, serverworld.func_85176_s(), PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
 +               } else {
 +                  this.func_241206_a_(serverworld1);
 +               }
@@ -905,8 +905,8 @@
 +
 +   // Magma - start
 +   @Nullable
-+   public Entity func_241206_a_(ServerWorld p_241206_1_, BlockPos pos) {
-+      return this.changeDimension(p_241206_1_, p_241206_1_.func_85176_s(), pos);
++   public Entity changeDimension(ServerWorld server, BlockPos pos) {
++      return this.changeDimension(server, server.func_85176_s(), pos);
 +   }
 +
 +   @Nullable
@@ -915,29 +915,29 @@
 +   }
 +
 +   @Nullable
-+   public Entity changeDimension(ServerWorld p_241206_1_, net.minecraftforge.common.util.ITeleporter teleporter, BlockPos location) {
++   public Entity changeDimension(ServerWorld server, net.minecraftforge.common.util.ITeleporter teleporter, BlockPos location) {
 +      // Magma - end
        if (this.field_70170_p instanceof ServerWorld && !this.field_70128_L) {
           this.field_70170_p.func_217381_Z().func_76320_a("changeDimension");
 -         this.func_213319_R();
 +         // CraftBukkit start
-+         if (p_241206_1_ == null){
++         if (server == null){
 +            return null;
 +         }
 +         // CraftBukkit end
           this.field_70170_p.func_217381_Z().func_76320_a("reposition");
 -         PortalInfo portalinfo = this.func_241829_a(p_241206_1_);
-+         PortalInfo portalinfo = (location == null) ? this.func_241829_a(p_241206_1_) : new PortalInfo(new Vector3d(location.func_177958_n(), location.func_177956_o(), location.func_177952_p()), Vector3d.field_186680_a, this.field_70177_z, this.field_70125_A, p_241206_1_, null);
++         PortalInfo portalinfo = (location == null) ? teleporter.getPortalInfo(this, server, this::func_241829_a) : new PortalInfo(new Vector3d(location.func_177958_n(), location.func_177956_o(), location.func_177952_p()), Vector3d.field_186680_a, this.field_70177_z, this.field_70125_A, server, null);
 +
           if (portalinfo == null) {
              return null;
           } else {
 +            // CraftBukkit start
-+            p_241206_1_ = portalinfo.world;
++            server = portalinfo.world;
 +            this.func_213319_R();
 +            // CraftBukkit end
-+            ServerWorld magmaServerWorld = p_241206_1_; // Magma
-+            Entity transportedEntity = teleporter.placeEntity(this, (ServerWorld) this.field_70170_p, p_241206_1_, this.field_70177_z, spawnPortal -> { //Forge: Start vanilla logic
++            ServerWorld magmaServerWorld = server; // Magma
++            Entity transportedEntity = teleporter.placeEntity(this, (ServerWorld) this.field_70170_p, server, this.field_70177_z, spawnPortal -> { //Forge: Start vanilla logic
              this.field_70170_p.func_217381_Z().func_219895_b("reloading");
 -            Entity entity = this.func_200600_R().func_200721_a(p_241206_1_);
 +            Entity entity = this.func_200600_R().func_200721_a(magmaServerWorld);
@@ -966,7 +966,8 @@
              this.func_241204_bJ_();
              this.field_70170_p.func_217381_Z().func_76319_b();
              ((ServerWorld)this.field_70170_p).func_82742_i();
-             p_241206_1_.func_82742_i();
+-            p_241206_1_.func_82742_i();
++            server.func_82742_i();
              this.field_70170_p.func_217381_Z().func_76319_b();
 -            return entity;
 +            return transportedEntity;
@@ -1104,20 +1105,7 @@
     }
  
     protected float func_213316_a(Pose p_213316_1_, EntitySize p_213316_2_) {
-@@ -2399,6 +2908,12 @@
-    public void func_145747_a(ITextComponent p_145747_1_, UUID p_145747_2_) {
-    }
- 
-+   // CraftBukkit - start
-+   public BlockPos getPosition() {
-+      return new BlockPos(this);
-+   }
-+   // CraftBukkit - end
-+
-    public World func_130014_f_() {
-       return this.field_70170_p;
-    }
-@@ -2594,7 +3109,7 @@
+@@ -2594,7 +3103,7 @@
        return SoundCategory.NEUTRAL;
     }
  
@@ -1126,7 +1114,7 @@
        return 1;
     }
  
-@@ -2796,6 +3311,7 @@
+@@ -2796,6 +3305,7 @@
  
           this.field_233555_aA_ = true;
        }
@@ -1134,7 +1122,7 @@
  
     }
  
-@@ -2807,8 +3323,71 @@
+@@ -2807,8 +3317,71 @@
        return this.func_242282_l(p_241843_1_).func_72441_c(0.0D, (double)this.field_213326_aJ * 0.7D, 0.0D);
     }
  
