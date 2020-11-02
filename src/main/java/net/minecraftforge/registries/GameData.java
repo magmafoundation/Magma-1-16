@@ -319,8 +319,7 @@ public class GameData
         // the id mapping has reverted, fire remap events for those that care about id changes
         if (fireEvents) {
         fireRemapEvent(ImmutableMap.of(), true);
-
-        ObjectHolderRegistry.applyObjectHolders();
+            ObjectHolderRegistry.applyObjectHolders();
         }
 
         // the id mapping has reverted, ensure we sync up the object holders
@@ -357,8 +356,8 @@ public class GameData
                     final RegistryEvent.Register<?> event = eventGenerator.apply(null);
                     final ResourceLocation rl = event.getName();
                     ForgeRegistry<?> fr = (ForgeRegistry<?>) event.getRegistry();
-            StartupMessageManager.modLoaderConsumer().ifPresent(s->s.accept("REGISTERING "+rl));
-            fr.unfreeze();
+                    StartupMessageManager.modLoaderConsumer().ifPresent(s -> s.accept("REGISTERING " + rl));
+                    fr.unfreeze();
                 }, executor).thenApply(v->Collections.emptyList());
     }
 
@@ -368,18 +367,19 @@ public class GameData
             final ResourceLocation rl = event.getName();
             ForgeRegistry<?> fr = (ForgeRegistry<?>) event.getRegistry();
             fr.freeze();
-            LOGGER.debug(REGISTRIES,"Applying holder lookups: {}", rl.toString());
+            LOGGER.debug(REGISTRIES, "Applying holder lookups: {}", rl.toString());
             ObjectHolderRegistry.applyObjectHolders(rl::equals);
-            LOGGER.debug(REGISTRIES,"Holder lookups applied: {}", rl.toString());
+            LOGGER.debug(REGISTRIES, "Holder lookups applied: {}", rl.toString());
         }, executor).handle((v, t)->t != null ? Collections.singletonList(t): Collections.emptyList());
     }
 
     public static CompletableFuture<List<Throwable>> checkForRevertToVanilla(final Executor executor, final CompletableFuture<List<Throwable>> listCompletableFuture) {
-        return listCompletableFuture.thenApplyAsync(errors -> {
-            if (!errors.isEmpty()) {
+        return listCompletableFuture.whenCompleteAsync((errors, except) -> {
+            if (except != null) {
+                LOGGER.fatal("Detected errors during registry event dispatch, rolling back to VANILLA state");
                 revertTo(RegistryManager.VANILLA, false);
+                LOGGER.fatal("Detected errors during registry event dispatch, roll back to VANILLA complete");
             }
-            return errors;
         }, executor);
     }
 

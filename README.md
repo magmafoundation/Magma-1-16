@@ -1,7 +1,7 @@
 <div align="center">
 <img src="https://i.imgur.com/zTCTCWG.png" alt="Magma logo" align="middle"></img>
 
-![](https://img.shields.io/badge/Minecraft%20Forge-1.16.3%20--%2034.1.35%20--%2006fe9cc-orange.svg?style=for-the-badge) ![](https://img.shields.io/badge/Bukkit-1.16%20r3-blue?style=for-the-badge) ![](https://img.shields.io/badge/CraftBukkit-Build%2029dd68e-orange?style=for-the-badge) ![](https://img.shields.io/badge/Spigot-Build%20988b411-yellow?style=for-the-badge)  ![](https://img.shields.io/badge/Status-Unstable-red?style=for-the-badge) [![](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.hexeption.dev%2Fjob%2FMagma%2520Foundation%2Fjob%2FMagma-1.16.x%2Fjob%2F1.16.x%2F&style=for-the-badge)](https://ci.hexeption.dev/job/Magma%20Foundation/job/Magma-1.16.x/job/1.16.x/)
+![](https://img.shields.io/badge/Minecraft%20Forge-1.16.3%20--%2034.1.42%20--%207d00d01-orange.svg?style=for-the-badge) ![](https://img.shields.io/badge/Bukkit-1.16%20r3-blue?style=for-the-badge) ![](https://img.shields.io/badge/CraftBukkit-Build%2029dd68e-orange?style=for-the-badge) ![](https://img.shields.io/badge/Spigot-Build%20988b411-yellow?style=for-the-badge)  ![](https://img.shields.io/badge/Status-Unstable-red?style=for-the-badge) [![](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.hexeption.dev%2Fjob%2FMagma%2520Foundation%2Fjob%2FMagma-1.16.x%2Fjob%2F1.16.x%2F&style=for-the-badge)](https://ci.hexeption.dev/job/Magma%20Foundation/job/Magma-1.16.x/job/1.16.x/)
 </div>
 
 ## About
@@ -11,14 +11,6 @@ Magma is the next generation of hybrid minecraft server softwares.
 Magma is based on Forge and Paper, meaning it can run both Craftbukkit/Spigot/Paper plugins and Forge mods.
 
 We hope to eliminate all issues with craftbukkit forge servers. In the end, we envision a seamless, low lag Magma experience with support for newer 1.12+ versions of Minecraft.
-
-## Progress
-Patches so far
-- [x] CraftBukkit
-- [x] Spigot
-- [ ] Paper
-
-https://github.com/Hexeption/Magma-1.16-Remaining-Patches
 
 ## Downloads & Install
 No Downloads at this time.
