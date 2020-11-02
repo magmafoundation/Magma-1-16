@@ -483,7 +483,7 @@
        float f = this.func_110143_aJ();
        if (f > 0.0F) {
 -         this.func_70606_j(f + p_70691_1_);
-+         EntityRegainHealthEvent event = new EntityRegainHealthEvent(this.getBukkitEntity(), f, regainReason);
++         EntityRegainHealthEvent event = new EntityRegainHealthEvent(this.getBukkitEntity(), healAmount, regainReason);
 +         // Suppress during worldgen
 +         if (this.valid) {
 +            this.field_70170_p.getServerCB().getPluginManager().callEvent(event);
@@ -1277,7 +1277,7 @@
 +            // CraftBukkit start - fire PlayerItemConsumeEvent
 +            ItemStack itemstack;
 +            if (this instanceof ServerPlayerEntity) {
-+               org.bukkit.inventory.ItemStack craftItem = CraftItemStack.asBukkitCopy(this.field_184627_bm);
++               org.bukkit.inventory.ItemStack craftItem = CraftItemStack.asBukkitCopy(copy);
 +               PlayerItemConsumeEvent event = new PlayerItemConsumeEvent((Player) this.getBukkitEntity(), craftItem);
 +               field_70170_p.getServerCB().getPluginManager().callEvent(event);
 +               if (event.isCancelled()) {
@@ -1286,7 +1286,7 @@
 +                  ((ServerPlayerEntity) this).getBukkitEntity().updateScaledHealth();
 +                  return;
 +               }
-+               itemstack = (craftItem.equals(event.getItem())) ? this.field_184627_bm.func_77950_b(this.field_70170_p, this) : CraftItemStack.asNMSCopy(event.getItem()).func_77950_b(field_70170_p, this);
++               itemstack = (craftItem.equals(event.getItem())) ? stack : CraftItemStack.asNMSCopy(event.getItem()).func_77950_b(field_70170_p, this);
 +            } else {
 +               itemstack = this.field_184627_bm.func_77950_b(this.field_70170_p, this);
              }
