@@ -1,0 +1,37 @@
+--- a/net/minecraft/loot/functions/SetAttributes.java
++++ b/net/minecraft/loot/functions/SetAttributes.java
+@@ -157,12 +157,30 @@
+       }
+ 
+       private static AttributeModifier.Operation func_216246_a(String p_216246_0_) {
+-         switch(p_216246_0_) {
+-         case "addition":
++         byte b0 = -1;
++         switch(p_216246_0_.hashCode()) {
++         case -1226589444:
++            if (p_216246_0_.equals("addition")) {
++               b0 = 0;
++            }
++            break;
++         case -78229492:
++            if (p_216246_0_.equals("multiply_base")) {
++               b0 = 1;
++            }
++            break;
++         case 1886894441:
++            if (p_216246_0_.equals("multiply_total")) {
++               b0 = 2;
++            }
++         }
++
++         switch(b0) {
++         case 0:
+             return AttributeModifier.Operation.ADDITION;
+-         case "multiply_base":
++         case 1:
+             return AttributeModifier.Operation.MULTIPLY_BASE;
+-         case "multiply_total":
++         case 2:
+             return AttributeModifier.Operation.MULTIPLY_TOTAL;
+          default:
+             throw new JsonSyntaxException("Unknown attribute modifier operation " + p_216246_0_);

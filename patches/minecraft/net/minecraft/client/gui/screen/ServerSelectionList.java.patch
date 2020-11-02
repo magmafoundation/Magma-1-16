@@ -1,6 +1,47 @@
 --- a/net/minecraft/client/gui/screen/ServerSelectionList.java
 +++ b/net/minecraft/client/gui/screen/ServerSelectionList.java
-@@ -310,6 +310,8 @@
+@@ -46,7 +46,8 @@
+    private static final ITextComponent field_243365_r = new TranslationTextComponent("lanServer.scanning");
+    private static final ITextComponent field_243366_s = (new TranslationTextComponent("multiplayer.status.cannot_resolve")).func_240699_a_(TextFormatting.DARK_RED);
+    private static final ITextComponent field_243367_t = (new TranslationTextComponent("multiplayer.status.cannot_connect")).func_240699_a_(TextFormatting.DARK_RED);
+-   private static final ITextComponent field_244607_u = new TranslationTextComponent("multiplayer.status.incompatible");
++   private static final ITextComponent field_243368_u = new TranslationTextComponent("multiplayer.status.client_out_of_date");
++   private static final ITextComponent field_243369_v = new TranslationTextComponent("multiplayer.status.server_out_of_date");
+    private static final ITextComponent field_243370_w = new TranslationTextComponent("multiplayer.status.no_connection");
+    private static final ITextComponent field_243371_x = new TranslationTextComponent("multiplayer.status.pinging");
+    private final MultiplayerScreen field_148200_k;
+@@ -228,7 +229,9 @@
+             });
+          }
+ 
+-         boolean flag = this.field_148301_e.field_82821_f != SharedConstants.func_215069_a().getProtocolVersion();
++         boolean flag = this.field_148301_e.field_82821_f > SharedConstants.func_215069_a().getProtocolVersion();
++         boolean flag1 = this.field_148301_e.field_82821_f < SharedConstants.func_215069_a().getProtocolVersion();
++         boolean flag2 = flag || flag1;
+          this.field_148300_d.field_71466_p.func_238421_b_(p_230432_1_, this.field_148301_e.field_78847_a, (float)(p_230432_4_ + 32 + 3), (float)(p_230432_3_ + 1), 16777215);
+          List<IReorderingProcessor> list = this.field_148300_d.field_71466_p.func_238425_b_(this.field_148301_e.field_78843_d, p_230432_5_ - 32 - 2);
+ 
+@@ -236,16 +239,16 @@
+             this.field_148300_d.field_71466_p.func_238422_b_(p_230432_1_, list.get(i), (float)(p_230432_4_ + 32 + 3), (float)(p_230432_3_ + 12 + 9 * i), 8421504);
+          }
+ 
+-         ITextComponent itextcomponent1 = (ITextComponent)(flag ? this.field_148301_e.field_82822_g.func_230532_e_().func_240699_a_(TextFormatting.RED) : this.field_148301_e.field_78846_c);
++         ITextComponent itextcomponent1 = (ITextComponent)(flag2 ? this.field_148301_e.field_82822_g.func_230532_e_().func_240699_a_(TextFormatting.DARK_RED) : this.field_148301_e.field_78846_c);
+          int j = this.field_148300_d.field_71466_p.func_238414_a_(itextcomponent1);
+          this.field_148300_d.field_71466_p.func_243248_b(p_230432_1_, itextcomponent1, (float)(p_230432_4_ + p_230432_5_ - j - 15 - 2), (float)(p_230432_3_ + 1), 8421504);
+          int k = 0;
+          int l;
+          List<ITextComponent> list1;
+          ITextComponent itextcomponent;
+-         if (flag) {
++         if (flag2) {
+             l = 5;
+-            itextcomponent = ServerSelectionList.field_244607_u;
++            itextcomponent = flag ? ServerSelectionList.field_243368_u : ServerSelectionList.field_243369_v;
+             list1 = this.field_148301_e.field_147412_i;
+          } else if (this.field_148301_e.field_78841_f && this.field_148301_e.field_78844_e != -2L) {
+             if (this.field_148301_e.field_78844_e < 0L) {
+@@ -307,6 +310,8 @@
              this.field_148303_c.func_238854_b_(list1);
           }
  

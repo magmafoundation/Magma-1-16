@@ -9,7 +9,15 @@
           this.field_193018_j.add(new RecipeTabToggleWidget(recipebookcategories));
        }
  
-@@ -433,7 +433,7 @@
+@@ -223,7 +223,6 @@
+             this.field_193966_v = this.field_191888_F.field_71439_g.field_71071_by.func_194015_p();
+          }
+ 
+-         this.field_193962_q.func_146178_a();
+       }
+    }
+ 
+@@ -434,7 +433,7 @@
  
           languagemanager.func_135045_a(language);
           this.field_191888_F.field_71474_y.field_74363_ab = language.getCode();

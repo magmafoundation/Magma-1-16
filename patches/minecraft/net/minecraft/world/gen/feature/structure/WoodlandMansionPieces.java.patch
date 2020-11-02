@@ -1,0 +1,31 @@
+--- a/net/minecraft/world/gen/feature/structure/WoodlandMansionPieces.java
++++ b/net/minecraft/world/gen/feature/structure/WoodlandMansionPieces.java
+@@ -392,12 +392,25 @@
+ 
+             this.func_191080_a(p_186175_3_, p_186175_5_, p_186175_4_, p_186175_2_, LootTables.field_191192_o, blockstate);
+          } else {
++            byte b0 = -1;
++            switch(p_186175_1_.hashCode()) {
++            case -1505748702:
++               if (p_186175_1_.equals("Warrior")) {
++                  b0 = 1;
++               }
++               break;
++            case 2390418:
++               if (p_186175_1_.equals("Mage")) {
++                  b0 = 0;
++               }
++            }
++
+             AbstractIllagerEntity abstractillagerentity;
+-            switch(p_186175_1_) {
+-            case "Mage":
++            switch(b0) {
++            case 0:
+                abstractillagerentity = EntityType.field_200806_t.func_200721_a(p_186175_3_.func_201672_e());
+                break;
+-            case "Warrior":
++            case 1:
+                abstractillagerentity = EntityType.field_200758_ax.func_200721_a(p_186175_3_.func_201672_e());
+                break;
+             default:

@@ -1,5 +1,14 @@
 --- a/net/minecraft/client/gui/screen/PackScreen.java
 +++ b/net/minecraft/client/gui/screen/PackScreen.java
+@@ -46,7 +46,7 @@
+ @OnlyIn(Dist.CLIENT)
+ public class PackScreen extends Screen {
+    private static final Logger field_238883_a_ = LogManager.getLogger();
+-   private static final ITextComponent field_238884_b_ = (new TranslationTextComponent("pack.dropInfo")).func_240699_a_(TextFormatting.GRAY);
++   private static final ITextComponent field_238884_b_ = (new TranslationTextComponent("pack.dropInfo")).func_240699_a_(TextFormatting.DARK_GRAY);
+    private static final ITextComponent field_238885_c_ = new TranslationTextComponent("pack.folderInfo");
+    private static final ResourceLocation field_243391_p = new ResourceLocation("textures/misc/unknown_pack.png");
+    private final PackLoadingManager field_238887_q_;
 @@ -129,7 +129,7 @@
  
     private void func_238899_a_(net.minecraft.client.gui.widget.list.ResourcePackList p_238899_1_, Stream<PackLoadingManager.IPack> p_238899_2_) {

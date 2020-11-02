@@ -1,0 +1,66 @@
+--- a/net/minecraft/realms/RealmsConnect.java
++++ b/net/minecraft/realms/RealmsConnect.java
+@@ -1,6 +1,5 @@
+ package net.minecraft.realms;
+ 
+-import com.mojang.realmsclient.dto.RealmsServer;
+ import java.net.InetAddress;
+ import java.net.UnknownHostException;
+ import net.minecraft.client.Minecraft;
+@@ -29,7 +28,7 @@
+       this.field_230720_b_ = p_i232500_1_;
+    }
+ 
+-   public void func_244798_a(final RealmsServer p_244798_1_, final String p_244798_2_, final int p_244798_3_) {
++   public void func_231397_a_(final String p_231397_1_, final int p_231397_2_) {
+       final Minecraft minecraft = Minecraft.func_71410_x();
+       minecraft.func_181537_a(true);
+       RealmsNarratorHelper.func_239550_a_(I18n.func_135052_a("mco.connect.success"));
+@@ -38,12 +37,12 @@
+             InetAddress inetaddress = null;
+ 
+             try {
+-               inetaddress = InetAddress.getByName(p_244798_2_);
++               inetaddress = InetAddress.getByName(p_231397_1_);
+                if (RealmsConnect.this.field_230721_c_) {
+                   return;
+                }
+ 
+-               RealmsConnect.this.field_230722_d_ = NetworkManager.func_181124_a(inetaddress, p_244798_3_, minecraft.field_71474_y.func_181148_f());
++               RealmsConnect.this.field_230722_d_ = NetworkManager.func_181124_a(inetaddress, p_231397_2_, minecraft.field_71474_y.func_181148_f());
+                if (RealmsConnect.this.field_230721_c_) {
+                   return;
+                }
+@@ -54,13 +53,12 @@
+                   return;
+                }
+ 
+-               RealmsConnect.this.field_230722_d_.func_179290_a(new CHandshakePacket(p_244798_2_, p_244798_3_, ProtocolType.LOGIN));
++               RealmsConnect.this.field_230722_d_.func_179290_a(new CHandshakePacket(p_231397_1_, p_231397_2_, ProtocolType.LOGIN));
+                if (RealmsConnect.this.field_230721_c_) {
+                   return;
+                }
+ 
+                RealmsConnect.this.field_230722_d_.func_179290_a(new CLoginStartPacket(minecraft.func_110432_I().func_148256_e()));
+-               minecraft.func_71351_a(p_244798_1_.func_244783_d(p_244798_2_));
+             } catch (UnknownHostException unknownhostexception) {
+                minecraft.func_195541_I().func_195749_c();
+                if (RealmsConnect.this.field_230721_c_) {
+@@ -68,7 +66,7 @@
+                }
+ 
+                RealmsConnect.field_230719_a_.error("Couldn't connect to world", (Throwable)unknownhostexception);
+-               DisconnectedRealmsScreen disconnectedrealmsscreen = new DisconnectedRealmsScreen(RealmsConnect.this.field_230720_b_, DialogTexts.field_244280_i, new TranslationTextComponent("disconnect.genericReason", "Unknown host '" + p_244798_2_ + "'"));
++               DisconnectedRealmsScreen disconnectedrealmsscreen = new DisconnectedRealmsScreen(RealmsConnect.this.field_230720_b_, DialogTexts.field_244280_i, new TranslationTextComponent("disconnect.genericReason", "Unknown host '" + p_231397_1_ + "'"));
+                minecraft.execute(() -> {
+                   minecraft.func_147108_a(disconnectedrealmsscreen);
+                });
+@@ -81,7 +79,7 @@
+                RealmsConnect.field_230719_a_.error("Couldn't connect to world", (Throwable)exception);
+                String s = exception.toString();
+                if (inetaddress != null) {
+-                  String s1 = inetaddress + ":" + p_244798_3_;
++                  String s1 = inetaddress + ":" + p_231397_2_;
+                   s = s.replaceAll(s1, "");
+                }
+ 

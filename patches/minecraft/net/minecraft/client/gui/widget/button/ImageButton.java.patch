@@ -1,0 +1,39 @@
+--- a/net/minecraft/client/gui/widget/button/ImageButton.java
++++ b/net/minecraft/client/gui/widget/button/ImageButton.java
+@@ -27,19 +27,15 @@
+    }
+ 
+    public ImageButton(int p_i232261_1_, int p_i232261_2_, int p_i232261_3_, int p_i232261_4_, int p_i232261_5_, int p_i232261_6_, int p_i232261_7_, ResourceLocation p_i232261_8_, int p_i232261_9_, int p_i232261_10_, Button.IPressable p_i232261_11_, ITextComponent p_i232261_12_) {
+-      this(p_i232261_1_, p_i232261_2_, p_i232261_3_, p_i232261_4_, p_i232261_5_, p_i232261_6_, p_i232261_7_, p_i232261_8_, p_i232261_9_, p_i232261_10_, p_i232261_11_, field_238486_s_, p_i232261_12_);
++      super(p_i232261_1_, p_i232261_2_, p_i232261_3_, p_i232261_4_, p_i232261_12_, p_i232261_11_);
++      this.field_212935_e = p_i232261_9_;
++      this.field_212936_f = p_i232261_10_;
++      this.field_191747_p = p_i232261_5_;
++      this.field_191748_q = p_i232261_6_;
++      this.field_191749_r = p_i232261_7_;
++      this.field_191750_o = p_i232261_8_;
+    }
+ 
+-   public ImageButton(int p_i244513_1_, int p_i244513_2_, int p_i244513_3_, int p_i244513_4_, int p_i244513_5_, int p_i244513_6_, int p_i244513_7_, ResourceLocation p_i244513_8_, int p_i244513_9_, int p_i244513_10_, Button.IPressable p_i244513_11_, Button.ITooltip p_i244513_12_, ITextComponent p_i244513_13_) {
+-      super(p_i244513_1_, p_i244513_2_, p_i244513_3_, p_i244513_4_, p_i244513_13_, p_i244513_11_, p_i244513_12_);
+-      this.field_212935_e = p_i244513_9_;
+-      this.field_212936_f = p_i244513_10_;
+-      this.field_191747_p = p_i244513_5_;
+-      this.field_191748_q = p_i244513_6_;
+-      this.field_191749_r = p_i244513_7_;
+-      this.field_191750_o = p_i244513_8_;
+-   }
+-
+    public void func_191746_c(int p_191746_1_, int p_191746_2_) {
+       this.field_230690_l_ = p_191746_1_;
+       this.field_230691_m_ = p_191746_2_;
+@@ -55,9 +51,5 @@
+ 
+       RenderSystem.enableDepthTest();
+       func_238463_a_(p_230431_1_, this.field_230690_l_, this.field_230691_m_, (float)this.field_191747_p, (float)i, this.field_230688_j_, this.field_230689_k_, this.field_212935_e, this.field_212936_f);
+-      if (this.func_230449_g_()) {
+-         this.func_230443_a_(p_230431_1_, p_230431_2_, p_230431_3_);
+-      }
+-
+    }
+ }

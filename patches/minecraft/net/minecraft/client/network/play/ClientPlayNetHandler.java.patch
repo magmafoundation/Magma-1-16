@@ -93,7 +93,22 @@
           this.field_199725_m = itagcollectionsupplier;
           if (!this.field_147302_e.func_150731_c()) {
              itagcollectionsupplier.func_242212_e();
-@@ -1883,10 +1899,12 @@
+@@ -1481,14 +1497,12 @@
+ 
+       for(SPlayerListItemPacket.AddPlayerData splayerlistitempacket$addplayerdata : p_147256_1_.func_179767_a()) {
+          if (p_147256_1_.func_179768_b() == SPlayerListItemPacket.Action.REMOVE_PLAYER) {
+-            this.field_147299_f.func_244599_aA().func_244649_d(splayerlistitempacket$addplayerdata.func_179962_a().getId());
+             this.field_147310_i.remove(splayerlistitempacket$addplayerdata.func_179962_a().getId());
+          } else {
+             NetworkPlayerInfo networkplayerinfo = this.field_147310_i.get(splayerlistitempacket$addplayerdata.func_179962_a().getId());
+             if (p_147256_1_.func_179768_b() == SPlayerListItemPacket.Action.ADD_PLAYER) {
+                networkplayerinfo = new NetworkPlayerInfo(splayerlistitempacket$addplayerdata);
+                this.field_147310_i.put(networkplayerinfo.func_178845_a().getId(), networkplayerinfo);
+-               this.field_147299_f.func_244599_aA().func_244645_a(networkplayerinfo);
+             }
+ 
+             if (networkplayerinfo != null) {
+@@ -1885,10 +1899,12 @@
              int l5 = packetbuffer.readInt();
              this.field_147299_f.field_184132_p.field_229018_q_.func_229022_a_(blockpos8, l3, s10, l5);
           } else {
@@ -107,3 +122,14 @@
              packetbuffer.release();
           }
  
+@@ -2122,10 +2138,6 @@
+       return this.field_147310_i.values();
+    }
+ 
+-   public Collection<UUID> func_244695_f() {
+-      return this.field_147310_i.keySet();
+-   }
+-
+    @Nullable
+    public NetworkPlayerInfo func_175102_a(UUID p_175102_1_) {
+       return this.field_147310_i.get(p_175102_1_);

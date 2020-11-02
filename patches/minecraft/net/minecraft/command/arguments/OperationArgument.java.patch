@@ -1,0 +1,97 @@
+--- a/net/minecraft/command/arguments/OperationArgument.java
++++ b/net/minecraft/command/arguments/OperationArgument.java
+@@ -60,24 +60,67 @@
+    }
+ 
+    private static OperationArgument.IIntOperation func_197182_b(String p_197182_0_) throws CommandSyntaxException {
+-      switch(p_197182_0_) {
+-      case "=":
++      byte b0 = -1;
++      switch(p_197182_0_.hashCode()) {
++      case 60:
++         if (p_197182_0_.equals("<")) {
++            b0 = 6;
++         }
++         break;
++      case 61:
++         if (p_197182_0_.equals("=")) {
++            b0 = 0;
++         }
++         break;
++      case 62:
++         if (p_197182_0_.equals(">")) {
++            b0 = 7;
++         }
++         break;
++      case 1208:
++         if (p_197182_0_.equals("%=")) {
++            b0 = 5;
++         }
++         break;
++      case 1363:
++         if (p_197182_0_.equals("*=")) {
++            b0 = 3;
++         }
++         break;
++      case 1394:
++         if (p_197182_0_.equals("+=")) {
++            b0 = 1;
++         }
++         break;
++      case 1456:
++         if (p_197182_0_.equals("-=")) {
++            b0 = 2;
++         }
++         break;
++      case 1518:
++         if (p_197182_0_.equals("/=")) {
++            b0 = 4;
++         }
++      }
++
++      switch(b0) {
++      case 0:
+          return (p_197174_0_, p_197174_1_) -> {
+             return p_197174_1_;
+          };
+-      case "+=":
++      case 1:
+          return (p_197176_0_, p_197176_1_) -> {
+             return p_197176_0_ + p_197176_1_;
+          };
+-      case "-=":
++      case 2:
+          return (p_197183_0_, p_197183_1_) -> {
+             return p_197183_0_ - p_197183_1_;
+          };
+-      case "*=":
++      case 3:
+          return (p_197173_0_, p_197173_1_) -> {
+             return p_197173_0_ * p_197173_1_;
+          };
+-      case "/=":
++      case 4:
+          return (p_197178_0_, p_197178_1_) -> {
+             if (p_197178_1_ == 0) {
+                throw field_197186_b.create();
+@@ -85,7 +128,7 @@
+                return MathHelper.func_76137_a(p_197178_0_, p_197178_1_);
+             }
+          };
+-      case "%=":
++      case 5:
+          return (p_197181_0_, p_197181_1_) -> {
+             if (p_197181_1_ == 0) {
+                throw field_197186_b.create();
+@@ -93,9 +136,9 @@
+                return MathHelper.func_180184_b(p_197181_0_, p_197181_1_);
+             }
+          };
+-      case "<":
++      case 6:
+          return Math::min;
+-      case ">":
++      case 7:
+          return Math::max;
+       default:
+          throw field_197185_a.create();

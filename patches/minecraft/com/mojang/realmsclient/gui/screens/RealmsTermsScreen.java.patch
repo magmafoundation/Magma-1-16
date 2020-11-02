@@ -1,0 +1,32 @@
+--- a/com/mojang/realmsclient/gui/screens/RealmsTermsScreen.java
++++ b/com/mojang/realmsclient/gui/screens/RealmsTermsScreen.java
+@@ -30,7 +30,7 @@
+    private final RealmsMainScreen field_224724_c;
+    private final RealmsServer field_224725_d;
+    private boolean field_224727_f;
+-   private final String field_224728_g = "https://aka.ms/MinecraftRealmsTerms";
++   private final String field_224728_g = "https://minecraft.net/realms/terms";
+ 
+    public RealmsTermsScreen(Screen p_i232225_1_, RealmsMainScreen p_i232225_2_, RealmsServer p_i232225_3_) {
+       this.field_224723_b = p_i232225_1_;
+@@ -76,18 +76,14 @@
+ 
+    public boolean func_231044_a_(double p_231044_1_, double p_231044_3_, int p_231044_5_) {
+       if (this.field_224727_f) {
+-         this.field_230706_i_.field_195559_v.func_197960_a("https://aka.ms/MinecraftRealmsTerms");
+-         Util.func_110647_a().func_195640_a("https://aka.ms/MinecraftRealmsTerms");
++         this.field_230706_i_.field_195559_v.func_197960_a("https://minecraft.net/realms/terms");
++         Util.func_110647_a().func_195640_a("https://minecraft.net/realms/terms");
+          return true;
+       } else {
+          return super.func_231044_a_(p_231044_1_, p_231044_3_, p_231044_5_);
+       }
+    }
+ 
+-   public String func_231167_h_() {
+-      return super.func_231167_h_() + ". " + field_243185_c.getString() + " " + field_243186_p.getString();
+-   }
+-
+    public void func_230430_a_(MatrixStack p_230430_1_, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
+       this.func_230446_a_(p_230430_1_);
+       func_238472_a_(p_230430_1_, this.field_230712_o_, field_243184_b, this.field_230708_k_ / 2, 17, 16777215);

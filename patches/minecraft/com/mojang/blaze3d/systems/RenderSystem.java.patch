@@ -1,0 +1,20 @@
+--- a/com/mojang/blaze3d/systems/RenderSystem.java
++++ b/com/mojang/blaze3d/systems/RenderSystem.java
+@@ -197,17 +197,6 @@
+       GlStateManager.func_227734_k_();
+    }
+ 
+-   public static void enableScissor(int p_enableScissor_0_, int p_enableScissor_1_, int p_enableScissor_2_, int p_enableScissor_3_) {
+-      assertThread(RenderSystem::isOnGameThreadOrInit);
+-      GlStateManager.func_244594_k();
+-      GlStateManager.func_244592_a(p_enableScissor_0_, p_enableScissor_1_, p_enableScissor_2_, p_enableScissor_3_);
+-   }
+-
+-   public static void disableScissor() {
+-      assertThread(RenderSystem::isOnGameThreadOrInit);
+-      GlStateManager.func_244593_j();
+-   }
+-
+    public static void depthFunc(int p_depthFunc_0_) {
+       assertThread(RenderSystem::isOnGameThread);
+       GlStateManager.func_227674_b_(p_depthFunc_0_);

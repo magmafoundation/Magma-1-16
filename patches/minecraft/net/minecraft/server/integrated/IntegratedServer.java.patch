@@ -8,7 +8,15 @@
  import net.minecraft.crash.CrashReport;
  import net.minecraft.entity.player.ServerPlayerEntity;
  import net.minecraft.profiler.IProfiler;
-@@ -32,6 +33,7 @@
+@@ -21,6 +22,7 @@
+ import net.minecraft.resources.ResourcePackList;
+ import net.minecraft.server.MinecraftServer;
+ import net.minecraft.server.management.PlayerProfileCache;
++import net.minecraft.util.CryptManager;
+ import net.minecraft.util.SharedConstants;
+ import net.minecraft.util.registry.DynamicRegistries;
+ import net.minecraft.world.GameType;
+@@ -31,6 +33,7 @@
  import net.minecraftforge.api.distmarker.OnlyIn;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -16,7 +24,7 @@
  
  @OnlyIn(Dist.CLIENT)
  public class IntegratedServer extends MinecraftServer {
-@@ -43,7 +45,7 @@
+@@ -42,7 +45,7 @@
     private UUID field_211528_n;
  
     public IntegratedServer(Thread p_i232494_1_, Minecraft p_i232494_2_, DynamicRegistries.Impl p_i232494_3_, SaveFormat.LevelSave p_i232494_4_, ResourcePackList p_i232494_5_, DataPackRegistries p_i232494_6_, IServerConfiguration p_i232494_7_, MinecraftSessionService p_i232494_8_, GameProfileRepository p_i232494_9_, PlayerProfileCache p_i232494_10_, IChunkStatusListenerFactory p_i232494_11_) {
@@ -25,11 +33,14 @@
        this.func_71224_l(p_i232494_2_.func_110432_I().func_111285_a());
        this.func_71204_b(p_i232494_2_.func_71355_q());
        this.func_71191_d(256);
-@@ -58,9 +60,10 @@
+@@ -55,10 +58,12 @@
+       this.func_71229_d(true);
+       this.func_71188_g(true);
        this.func_71245_h(true);
-       field_147148_h.info("Generating keypair");
-       this.func_71253_a(CryptManager.func_75891_b());
+-      this.func_244801_P();
 -      this.func_240800_l__();
++      field_147148_h.info("Generating keypair");
++      this.setKeyPair(CryptManager.func_75891_b());
 +      if (!net.minecraftforge.fml.server.ServerLifecycleHooks.handleServerAboutToStart(this)) return false;
 +//      this.loadWorld();
        this.func_71205_p(this.func_71214_G() + " - " + this.func_240793_aU_().func_76065_j());
@@ -38,7 +49,7 @@
     }
  
     public void func_71217_p(BooleanSupplier p_71217_1_) {
-@@ -94,7 +97,12 @@
+@@ -92,7 +97,12 @@
        return true;
     }
  
@@ -52,7 +63,7 @@
        return this.field_71349_l.field_71412_D;
     }
  
-@@ -174,10 +182,11 @@
+@@ -172,10 +182,11 @@
     }
  
     public void func_71263_m(boolean p_71263_1_) {

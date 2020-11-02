@@ -1,0 +1,10 @@
+--- a/net/minecraft/util/CryptException.java
++++ /dev/null
+@@ -1,7 +0,0 @@
+-package net.minecraft.util;
+-
+-public class CryptException extends Exception {
+-   public CryptException(Throwable p_i244720_1_) {
+-      super(p_i244720_1_);
+-   }
+-}

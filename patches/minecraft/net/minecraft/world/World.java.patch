@@ -642,7 +642,7 @@
        }
     }
  
-@@ -514,6 +816,7 @@
+@@ -514,33 +816,47 @@
  
     public Explosion func_230546_a_(@Nullable Entity p_230546_1_, @Nullable DamageSource p_230546_2_, @Nullable ExplosionContext p_230546_3_, double p_230546_4_, double p_230546_6_, double p_230546_8_, float p_230546_10_, boolean p_230546_11_, Explosion.Mode p_230546_12_) {
        Explosion explosion = new Explosion(this, p_230546_1_, p_230546_2_, p_230546_3_, p_230546_4_, p_230546_6_, p_230546_8_, p_230546_10_, p_230546_11_, p_230546_12_);
@@ -650,7 +650,12 @@
        explosion.func_77278_a();
        explosion.func_77279_a(true);
        return explosion;
-@@ -526,22 +829,34 @@
+    }
+ 
++   @OnlyIn(Dist.CLIENT)
+    public String func_72827_u() {
+       return this.func_72863_F().func_73148_d();
+    }
  
     @Nullable
     public TileEntity func_175625_s(BlockPos p_175625_1_) {
@@ -689,7 +694,7 @@
           }
  
           return tileentity;
-@@ -562,7 +877,15 @@
+@@ -561,7 +877,15 @@
  
     public void func_175690_a(BlockPos p_175690_1_, @Nullable TileEntity p_175690_2_) {
        if (!func_189509_E(p_175690_1_)) {
@@ -705,7 +710,7 @@
              if (this.field_147481_N) {
                 p_175690_2_.func_226984_a_(this, p_175690_1_);
                 Iterator<TileEntity> iterator = this.field_147484_a.iterator();
-@@ -577,7 +900,8 @@
+@@ -576,7 +900,8 @@
  
                 this.field_147484_a.add(p_175690_2_);
              } else {
@@ -715,7 +720,7 @@
                 this.func_175700_a(p_175690_2_);
              }
           }
-@@ -586,10 +910,12 @@
+@@ -585,10 +910,12 @@
     }
  
     public void func_175713_t(BlockPos p_175713_1_) {
@@ -729,7 +734,7 @@
        } else {
           if (tileentity != null) {
              this.field_147484_a.remove(tileentity);
-@@ -599,7 +925,7 @@
+@@ -598,7 +925,7 @@
  
           this.func_175726_f(p_175713_1_).func_177425_e(p_175713_1_);
        }
@@ -738,7 +743,7 @@
     }
  
     public boolean func_195588_v(BlockPos p_195588_1_) {
-@@ -652,10 +978,10 @@
+@@ -651,10 +978,10 @@
     public List<Entity> func_175674_a(@Nullable Entity p_175674_1_, AxisAlignedBB p_175674_2_, @Nullable Predicate<? super Entity> p_175674_3_) {
        this.func_217381_Z().func_230035_c_("getEntities");
        List<Entity> list = Lists.newArrayList();
@@ -753,7 +758,7 @@
        AbstractChunkProvider abstractchunkprovider = this.func_72863_F();
  
        for(int i1 = i; i1 <= j; ++i1) {
-@@ -672,10 +998,10 @@
+@@ -671,10 +998,10 @@
  
     public <T extends Entity> List<T> func_217394_a(@Nullable EntityType<T> p_217394_1_, AxisAlignedBB p_217394_2_, Predicate<? super T> p_217394_3_) {
        this.func_217381_Z().func_230035_c_("getEntities");
@@ -768,7 +773,7 @@
        List<T> list = Lists.newArrayList();
  
        for(int i1 = i; i1 < j; ++i1) {
-@@ -692,10 +1018,10 @@
+@@ -691,10 +1018,10 @@
  
     public <T extends Entity> List<T> func_175647_a(Class<? extends T> p_175647_1_, AxisAlignedBB p_175647_2_, @Nullable Predicate<? super T> p_175647_3_) {
        this.func_217381_Z().func_230035_c_("getEntities");
@@ -783,7 +788,7 @@
        List<T> list = Lists.newArrayList();
        AbstractChunkProvider abstractchunkprovider = this.func_72863_F();
  
-@@ -713,10 +1039,10 @@
+@@ -712,10 +1039,10 @@
  
     public <T extends Entity> List<T> func_225316_b(Class<? extends T> p_225316_1_, AxisAlignedBB p_225316_2_, @Nullable Predicate<? super T> p_225316_3_) {
        this.func_217381_Z().func_230035_c_("getLoadedEntities");
@@ -798,7 +803,7 @@
        List<T> list = Lists.newArrayList();
        AbstractChunkProvider abstractchunkprovider = this.func_72863_F();
  
-@@ -740,6 +1066,7 @@
+@@ -739,6 +1066,7 @@
           this.func_175726_f(p_175646_1_).func_76630_e();
        }
  
@@ -806,7 +811,7 @@
     }
  
     public int func_181545_F() {
-@@ -784,7 +1111,7 @@
+@@ -783,7 +1111,7 @@
     public int func_175651_c(BlockPos p_175651_1_, Direction p_175651_2_) {
        BlockState blockstate = this.func_180495_p(p_175651_1_);
        int i = blockstate.func_185911_a(this, p_175651_1_, p_175651_2_);
@@ -815,7 +820,7 @@
     }
  
     public boolean func_175640_z(BlockPos p_175640_1_) {
-@@ -939,16 +1266,15 @@
+@@ -938,16 +1266,15 @@
     public abstract Scoreboard func_96441_U();
  
     public void func_175666_e(BlockPos p_175666_1_, Block p_175666_2_) {
@@ -836,7 +841,7 @@
                    blockstate.func_215697_a(this, blockpos, p_175666_2_, p_175666_1_, false);
                 }
              }
-@@ -1025,7 +1351,26 @@
+@@ -1024,7 +1351,26 @@
        return this.field_226689_w_;
     }
  

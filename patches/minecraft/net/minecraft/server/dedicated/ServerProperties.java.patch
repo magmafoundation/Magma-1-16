@@ -16,7 +16,12 @@
     public final boolean field_219007_a = this.func_218982_a("online-mode", true);
     public final boolean field_219008_b = this.func_218982_a("prevent-proxy-connections", false);
     public final String field_219009_c = this.func_218973_a("server-ip", "");
-@@ -61,8 +63,10 @@
+@@ -57,13 +59,14 @@
+    public final boolean field_241079_P_;
+    public final boolean field_241080_Q_;
+    public final int field_241081_R_;
+-   public final String field_244715_T;
+    public final PropertyManager<ServerProperties>.Property<Integer> field_219005_R;
     public final PropertyManager<ServerProperties>.Property<Boolean> field_219006_S;
     public final DimensionGeneratorSettings field_241082_U_;
  
@@ -29,7 +34,13 @@
        if (this.func_218982_a("snooper-enabled", true)) {
        }
  
-@@ -93,11 +97,13 @@
+@@ -89,17 +92,18 @@
+       this.field_241081_R_ = this.func_218962_a("entity-broadcast-range-percentage", (p_241083_0_) -> {
+          return MathHelper.func_76125_a(p_241083_0_, 10, 1000);
+       }, 100);
+-      this.field_244715_T = this.func_218973_a("text-filtering-config", "");
+       this.field_219005_R = this.func_218974_b("player-idle-timeout", 0);
+       this.field_219006_S = this.func_218961_b("white-list", false);
        this.field_241082_U_ = DimensionGeneratorSettings.func_242753_a(p_i242099_2_, p_i242099_1_);
     }
  

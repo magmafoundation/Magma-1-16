@@ -1,0 +1,11 @@
+--- a/com/mojang/realmsclient/gui/screens/RealmsSubscriptionInfoScreen.java
++++ b/com/mojang/realmsclient/gui/screens/RealmsSubscriptionInfoScreen.java
+@@ -145,7 +145,7 @@
+    }
+ 
+    private ITextComponent func_224576_a(int p_224576_1_) {
+-      if (p_224576_1_ < 0 && this.field_224581_c.field_230591_j_) {
++      if (p_224576_1_ == -1 && this.field_224581_c.field_230591_j_) {
+          return field_243177_r;
+       } else if (p_224576_1_ <= 1) {
+          return field_243178_s;

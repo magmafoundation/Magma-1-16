@@ -1,0 +1,12 @@
+--- a/net/minecraft/client/gui/screen/EditBookScreen.java
++++ b/net/minecraft/client/gui/screen/EditBookScreen.java
+@@ -219,8 +219,7 @@
+             this.field_214233_b.func_77983_a("title", StringNBT.func_229705_a_(this.field_214239_h.trim()));
+          }
+ 
+-         int i = this.field_214250_s == Hand.MAIN_HAND ? this.field_214232_a.field_71071_by.field_70461_c : 40;
+-         this.field_230706_i_.func_147114_u().func_147297_a(new CEditBookPacket(this.field_214233_b, p_214198_1_, i));
++         this.field_230706_i_.func_147114_u().func_147297_a(new CEditBookPacket(this.field_214233_b, p_214198_1_, this.field_214250_s));
+       }
+    }
+ 

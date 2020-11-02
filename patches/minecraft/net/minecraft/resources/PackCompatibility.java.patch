@@ -1,0 +1,19 @@
+--- a/net/minecraft/resources/PackCompatibility.java
++++ b/net/minecraft/resources/PackCompatibility.java
+@@ -2,7 +2,6 @@
+ 
+ import net.minecraft.util.SharedConstants;
+ import net.minecraft.util.text.ITextComponent;
+-import net.minecraft.util.text.TextFormatting;
+ import net.minecraft.util.text.TranslationTextComponent;
+ import net.minecraftforge.api.distmarker.Dist;
+ import net.minecraftforge.api.distmarker.OnlyIn;
+@@ -16,7 +15,7 @@
+    private final ITextComponent field_198976_e;
+ 
+    private PackCompatibility(String p_i47910_3_) {
+-      this.field_198975_d = (new TranslationTextComponent("pack.incompatible." + p_i47910_3_)).func_240699_a_(TextFormatting.GRAY);
++      this.field_198975_d = new TranslationTextComponent("pack.incompatible." + p_i47910_3_);
+       this.field_198976_e = new TranslationTextComponent("pack.incompatible.confirm." + p_i47910_3_);
+    }
+ 

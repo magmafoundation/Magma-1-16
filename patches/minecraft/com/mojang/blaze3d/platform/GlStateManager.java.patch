@@ -1,6 +1,36 @@
 --- a/com/mojang/blaze3d/platform/GlStateManager.java
 +++ b/com/mojang/blaze3d/platform/GlStateManager.java
-@@ -556,10 +556,17 @@
+@@ -48,7 +48,6 @@
+    private static final GlStateManager.ColorLogicState field_225666_k_ = new GlStateManager.ColorLogicState();
+    private static final GlStateManager.TexGenState field_225667_l_ = new GlStateManager.TexGenState();
+    private static final GlStateManager.StencilState field_225669_n_ = new GlStateManager.StencilState();
+-   private static final GlStateManager.ScissorState field_244591_n = new GlStateManager.ScissorState();
+    private static final FloatBuffer field_227601_o_ = GLAllocation.func_74529_h(4);
+    private static int field_225670_r_;
+    private static final GlStateManager.TextureState[] field_225671_s_ = IntStream.range(0, 12).mapToObj((p_227616_0_) -> {
+@@ -163,21 +162,6 @@
+       GL11.glNormal3f(p_227636_0_, p_227636_1_, p_227636_2_);
+    }
+ 
+-   public static void func_244593_j() {
+-      RenderSystem.assertThread(RenderSystem::isOnRenderThreadOrInit);
+-      field_244591_n.field_244595_a.func_179198_a();
+-   }
+-
+-   public static void func_244594_k() {
+-      RenderSystem.assertThread(RenderSystem::isOnRenderThreadOrInit);
+-      field_244591_n.field_244595_a.func_179200_b();
+-   }
+-
+-   public static void func_244592_a(int p_244592_0_, int p_244592_1_, int p_244592_2_, int p_244592_3_) {
+-      RenderSystem.assertThread(RenderSystem::isOnRenderThreadOrInit);
+-      GL20.glScissor(p_244592_0_, p_244592_1_, p_244592_2_, p_244592_3_);
+-   }
+-
+    public static void func_227731_j_() {
+       RenderSystem.assertThread(RenderSystem::isOnRenderThreadOrInit);
+       field_225662_g_.field_179052_a.func_179198_a();
+@@ -572,10 +556,17 @@
        GL13.glClientActiveTexture(p_227747_0_);
     }
  
@@ -18,3 +48,18 @@
     }
  
     public static void func_227706_d_(int p_227706_0_, int p_227706_1_, int p_227706_2_, int p_227706_3_) {
+@@ -1522,14 +1513,6 @@
+    }
+ 
+    @OnlyIn(Dist.CLIENT)
+-   static class ScissorState {
+-      public final GlStateManager.BooleanState field_244595_a = new GlStateManager.BooleanState(3089);
+-
+-      private ScissorState() {
+-      }
+-   }
+-
+-   @OnlyIn(Dist.CLIENT)
+    public static enum SourceFactor {
+       CONSTANT_ALPHA(32771),
+       CONSTANT_COLOR(32769),

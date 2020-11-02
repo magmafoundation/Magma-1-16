@@ -1,0 +1,51 @@
+--- a/net/minecraft/world/gen/settings/DimensionGeneratorSettings.java
++++ b/net/minecraft/world/gen/settings/DimensionGeneratorSettings.java
+@@ -210,20 +210,43 @@
+       Registry<Biome> registry = p_242753_0_.func_243612_b(Registry.field_239720_u_);
+       Registry<DimensionSettings> registry1 = p_242753_0_.func_243612_b(Registry.field_243549_ar);
+       SimpleRegistry<Dimension> simpleregistry = DimensionType.func_242718_a(registry2, registry, registry1, i);
+-      switch(s4) {
+-      case "flat":
++      byte b0 = -1;
++      switch(s4.hashCode()) {
++      case -1100099890:
++         if (s4.equals("largebiomes")) {
++            b0 = 3;
++         }
++         break;
++      case 3145593:
++         if (s4.equals("flat")) {
++            b0 = 0;
++         }
++         break;
++      case 1045526590:
++         if (s4.equals("debug_all_block_states")) {
++            b0 = 1;
++         }
++         break;
++      case 1271599715:
++         if (s4.equals("amplified")) {
++            b0 = 2;
++         }
++      }
++
++      switch(b0) {
++      case 0:
+          JsonObject jsonobject = !s.isEmpty() ? JSONUtils.func_212745_a(s) : new JsonObject();
+          Dynamic<JsonElement> dynamic = new Dynamic<>(JsonOps.INSTANCE, jsonobject);
+          return new DimensionGeneratorSettings(i, flag, false, func_242749_a(registry2, simpleregistry, new FlatChunkGenerator(FlatGenerationSettings.field_236932_a_.parse(dynamic).resultOrPartial(field_236203_c_::error).orElseGet(() -> {
+             return FlatGenerationSettings.func_242869_a(registry);
+          }))));
+-      case "debug_all_block_states":
++      case 1:
+          return new DimensionGeneratorSettings(i, flag, false, func_242749_a(registry2, simpleregistry, new DebugChunkGenerator(registry)));
+-      case "amplified":
++      case 2:
+          return new DimensionGeneratorSettings(i, flag, false, func_242749_a(registry2, simpleregistry, new NoiseChunkGenerator(new OverworldBiomeProvider(i, false, false, registry), i, () -> {
+             return registry1.func_243576_d(DimensionSettings.field_242735_d);
+          })));
+-      case "largebiomes":
++      case 3:
+          return new DimensionGeneratorSettings(i, flag, false, func_242749_a(registry2, simpleregistry, new NoiseChunkGenerator(new OverworldBiomeProvider(i, false, true, registry), i, () -> {
+             return registry1.func_243576_d(DimensionSettings.field_242734_c);
+          })));

@@ -24,7 +24,7 @@
     private static final ITextComponent field_241169_a_ = new StringTextComponent("Ignoring status request");
     private final MinecraftServer field_147387_a;
     private final NetworkManager field_147386_b;
-@@ -23,19 +34,74 @@
+@@ -23,21 +34,74 @@
     }
  
     public void func_147383_a(CHandshakePacket p_147383_1_) {
@@ -32,6 +32,12 @@
        switch(p_147383_1_.func_149594_c()) {
        case LOGIN:
           this.field_147386_b.func_150723_a(ProtocolType.LOGIN);
+-         if (p_147383_1_.func_149595_d() != SharedConstants.func_215069_a().getProtocolVersion()) {
+-            ITextComponent itextcomponent;
+-            if (p_147383_1_.func_149595_d() < 754) {
+-               itextcomponent = new TranslationTextComponent("multiplayer.disconnect.outdated_client", SharedConstants.func_215069_a().getName());
+-            } else {
+-               itextcomponent = new TranslationTextComponent("multiplayer.disconnect.incompatible", SharedConstants.func_215069_a().getName());
 +         // CraftBukkit start - Connection throttle
 +         try {
 +            long currentTime = System.currentTimeMillis();
@@ -57,23 +63,21 @@
 +                     }
 +                  }
 +               }
-+            }
+             }
 +         }
 +         catch (Throwable t) {
 +            org.apache.logging.log4j.LogManager.getLogger().debug("Failed to check connection throttle", t);
 +         }
 +         // CraftBukkit
-+
-          if (p_147383_1_.func_149595_d() > SharedConstants.func_215069_a().getProtocolVersion()) {
--            ITextComponent itextcomponent = new TranslationTextComponent("multiplayer.disconnect.outdated_server", SharedConstants.func_215069_a().getName());
+ 
++         if (p_147383_1_.func_149595_d() > SharedConstants.func_215069_a().getProtocolVersion()) {
 +            ITextComponent itextcomponent = new TranslationTextComponent(java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), SharedConstants.func_215069_a().getName() ) ); // Spigot
              this.field_147386_b.func_179290_a(new SDisconnectLoginPacket(itextcomponent));
              this.field_147386_b.func_150718_a(itextcomponent);
-          } else if (p_147383_1_.func_149595_d() < SharedConstants.func_215069_a().getProtocolVersion()) {
--            ITextComponent itextcomponent1 = new TranslationTextComponent("multiplayer.disconnect.outdated_client", SharedConstants.func_215069_a().getName());
++         } else if (p_147383_1_.func_149595_d() < SharedConstants.func_215069_a().getProtocolVersion()) {
 +            ITextComponent itextcomponent1 = new TranslationTextComponent(java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), SharedConstants.func_215069_a().getName() ) ); // Spigot
-             this.field_147386_b.func_179290_a(new SDisconnectLoginPacket(itextcomponent1));
-             this.field_147386_b.func_150718_a(itextcomponent1);
++            this.field_147386_b.func_179290_a(new SDisconnectLoginPacket(itextcomponent1));
++            this.field_147386_b.func_150718_a(itextcomponent1);
           } else {
              this.field_147386_b.func_150719_a(new ServerLoginNetHandler(this.field_147387_a, this.field_147386_b));
 +            // Spigot Start

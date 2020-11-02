@@ -1,0 +1,21 @@
+--- a/net/minecraft/client/gui/chat/NormalChatListener.java
++++ b/net/minecraft/client/gui/chat/NormalChatListener.java
+@@ -16,11 +16,13 @@
+    }
+ 
+    public void func_192576_a(ChatType p_192576_1_, ITextComponent p_192576_2_, UUID p_192576_3_) {
+-      if (p_192576_1_ != ChatType.CHAT) {
+-         this.field_192581_a.field_71456_v.func_146158_b().func_146227_a(p_192576_2_);
+-      } else {
+-         this.field_192581_a.field_71456_v.func_146158_b().func_238495_b_(p_192576_2_);
+-      }
++      if (!this.field_192581_a.func_238198_a_(p_192576_3_)) {
++         if (p_192576_1_ != ChatType.CHAT) {
++            this.field_192581_a.field_71456_v.func_146158_b().func_146227_a(p_192576_2_);
++         } else {
++            this.field_192581_a.field_71456_v.func_146158_b().func_238495_b_(p_192576_2_);
++         }
+ 
++      }
+    }
+ }

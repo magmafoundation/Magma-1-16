@@ -1,0 +1,53 @@
+--- a/net/minecraft/command/impl/MeCommand.java
++++ b/net/minecraft/command/impl/MeCommand.java
+@@ -2,47 +2,25 @@
+ 
+ import com.mojang.brigadier.CommandDispatcher;
+ import com.mojang.brigadier.arguments.StringArgumentType;
+-import com.mojang.brigadier.context.CommandContext;
+ import net.minecraft.command.CommandSource;
+ import net.minecraft.command.Commands;
+ import net.minecraft.entity.Entity;
+-import net.minecraft.entity.player.ServerPlayerEntity;
+-import net.minecraft.server.MinecraftServer;
+ import net.minecraft.util.Util;
+ import net.minecraft.util.text.ChatType;
+-import net.minecraft.util.text.ITextComponent;
+ import net.minecraft.util.text.TranslationTextComponent;
+-import net.minecraft.util.text.filter.IChatFilter;
+ 
+ public class MeCommand {
+    public static void func_198364_a(CommandDispatcher<CommandSource> p_198364_0_) {
+       p_198364_0_.register(Commands.func_197057_a("me").then(Commands.func_197056_a("action", StringArgumentType.greedyString()).executes((p_198365_0_) -> {
+-         String s = StringArgumentType.getString(p_198365_0_, "action");
++         TranslationTextComponent translationtextcomponent = new TranslationTextComponent("chat.type.emote", p_198365_0_.getSource().func_197019_b(), StringArgumentType.getString(p_198365_0_, "action"));
+          Entity entity = p_198365_0_.getSource().func_197022_f();
+-         MinecraftServer minecraftserver = p_198365_0_.getSource().func_197028_i();
+          if (entity != null) {
+-            if (entity instanceof ServerPlayerEntity) {
+-               IChatFilter ichatfilter = ((ServerPlayerEntity)entity).func_244529_Q();
+-               if (ichatfilter != null) {
+-                  ichatfilter.func_244432_a(s).thenAcceptAsync((p_244713_3_) -> {
+-                     p_244713_3_.ifPresent((p_244712_3_) -> {
+-                        minecraftserver.func_184103_al().func_232641_a_(func_244711_a(p_198365_0_, p_244712_3_), ChatType.CHAT, entity.func_110124_au());
+-                     });
+-                  }, minecraftserver);
+-                  return 1;
+-               }
+-            }
+-
+-            minecraftserver.func_184103_al().func_232641_a_(func_244711_a(p_198365_0_, s), ChatType.CHAT, entity.func_110124_au());
++            p_198365_0_.getSource().func_197028_i().func_184103_al().func_232641_a_(translationtextcomponent, ChatType.CHAT, entity.func_110124_au());
+          } else {
+-            minecraftserver.func_184103_al().func_232641_a_(func_244711_a(p_198365_0_, s), ChatType.SYSTEM, Util.field_240973_b_);
++            p_198365_0_.getSource().func_197028_i().func_184103_al().func_232641_a_(translationtextcomponent, ChatType.SYSTEM, Util.field_240973_b_);
+          }
+ 
+          return 1;
+       })));
+    }
+-
+-   private static ITextComponent func_244711_a(CommandContext<CommandSource> p_244711_0_, String p_244711_1_) {
+-      return new TranslationTextComponent("chat.type.emote", p_244711_0_.getSource().func_197019_b(), p_244711_1_);
+-   }
+ }

@@ -1,0 +1,17 @@
+--- a/com/mojang/realmsclient/exception/RetryCallException.java
++++ b/com/mojang/realmsclient/exception/RetryCallException.java
+@@ -7,10 +7,10 @@
+ public class RetryCallException extends RealmsServiceException {
+    public final int field_224985_e;
+ 
+-   public RetryCallException(int p_i244512_1_, int p_i244512_2_) {
+-      super(p_i244512_2_, "Retry operation", -1, "");
+-      if (p_i244512_1_ >= 0 && p_i244512_1_ <= 120) {
+-         this.field_224985_e = p_i244512_1_;
++   public RetryCallException(int p_i51783_1_) {
++      super(503, "Retry operation", -1, "");
++      if (p_i51783_1_ >= 0 && p_i51783_1_ <= 120) {
++         this.field_224985_e = p_i51783_1_;
+       } else {
+          this.field_224985_e = 5;
+       }

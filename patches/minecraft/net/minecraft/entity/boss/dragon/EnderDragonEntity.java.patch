@@ -87,6 +87,15 @@
           }
        }
  
+@@ -367,7 +389,7 @@
+          if (entity instanceof LivingEntity) {
+             double d2 = entity.func_226277_ct_() - d0;
+             double d3 = entity.func_226281_cx_() - d1;
+-            double d4 = Math.max(d2 * d2 + d3 * d3, 0.1D);
++            double d4 = d2 * d2 + d3 * d3;
+             entity.func_70024_g(d2 / d4 * 4.0D, (double)0.2F, d3 / d4 * 4.0D);
+             if (!this.field_184677_bJ.func_188756_a().func_188654_a() && ((LivingEntity)entity).func_142015_aE() < entity.field_70173_aa - 2) {
+                entity.func_70097_a(DamageSource.func_76358_a(this), 5.0F);
 @@ -402,15 +424,22 @@
        boolean flag = false;
        boolean flag1 = false;

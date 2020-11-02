@@ -1,6 +1,166 @@
 --- a/net/minecraft/client/gui/widget/list/AbstractList.java
 +++ b/net/minecraft/client/gui/widget/list/AbstractList.java
-@@ -471,6 +471,13 @@
+@@ -39,8 +39,6 @@
+    protected int field_230677_n_;
+    private boolean field_230681_r_;
+    private E field_230682_s_;
+-   private boolean field_244603_t = true;
+-   private boolean field_244604_u = true;
+ 
+    public AbstractList(Minecraft p_i51146_1_, int p_i51146_2_, int p_i51146_3_, int p_i51146_4_, int p_i51146_5_, int p_i51146_6_) {
+       this.field_230668_b_ = p_i51146_1_;
+@@ -79,14 +77,6 @@
+       this.field_230682_s_ = p_241215_1_;
+    }
+ 
+-   public void func_244605_b(boolean p_244605_1_) {
+-      this.field_244603_t = p_244605_1_;
+-   }
+-
+-   public void func_244606_c(boolean p_244606_1_) {
+-      this.field_244604_u = p_244606_1_;
+-   }
+-
+    @Nullable
+    public E func_241217_q_() {
+       return (E)(super.func_241217_q_());
+@@ -169,64 +159,57 @@
+       int j = i + 6;
+       Tessellator tessellator = Tessellator.func_178181_a();
+       BufferBuilder bufferbuilder = tessellator.func_178180_c();
+-      if (this.field_244603_t) {
+-         this.field_230668_b_.func_110434_K().func_110577_a(AbstractGui.field_230663_f_);
+-         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+-         float f = 32.0F;
+-         bufferbuilder.func_181668_a(7, DefaultVertexFormats.field_181709_i);
+-         bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230673_j_, 0.0D).func_225583_a_((float)this.field_230675_l_ / 32.0F, (float)(this.field_230673_j_ + (int)this.func_230966_l_()) / 32.0F).func_225586_a_(32, 32, 32, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)this.field_230673_j_, 0.0D).func_225583_a_((float)this.field_230674_k_ / 32.0F, (float)(this.field_230673_j_ + (int)this.func_230966_l_()) / 32.0F).func_225586_a_(32, 32, 32, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)this.field_230672_i_, 0.0D).func_225583_a_((float)this.field_230674_k_ / 32.0F, (float)(this.field_230672_i_ + (int)this.func_230966_l_()) / 32.0F).func_225586_a_(32, 32, 32, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230672_i_, 0.0D).func_225583_a_((float)this.field_230675_l_ / 32.0F, (float)(this.field_230672_i_ + (int)this.func_230966_l_()) / 32.0F).func_225586_a_(32, 32, 32, 255).func_181675_d();
+-         tessellator.func_78381_a();
+-      }
+-
+-      int j1 = this.func_230968_n_();
+-      int k = this.field_230672_i_ + 4 - (int)this.func_230966_l_();
++      this.field_230668_b_.func_110434_K().func_110577_a(AbstractGui.field_230663_f_);
++      RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
++      float f = 32.0F;
++      bufferbuilder.func_181668_a(7, DefaultVertexFormats.field_181709_i);
++      bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230673_j_, 0.0D).func_225583_a_((float)this.field_230675_l_ / 32.0F, (float)(this.field_230673_j_ + (int)this.func_230966_l_()) / 32.0F).func_225586_a_(32, 32, 32, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)this.field_230673_j_, 0.0D).func_225583_a_((float)this.field_230674_k_ / 32.0F, (float)(this.field_230673_j_ + (int)this.func_230966_l_()) / 32.0F).func_225586_a_(32, 32, 32, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)this.field_230672_i_, 0.0D).func_225583_a_((float)this.field_230674_k_ / 32.0F, (float)(this.field_230672_i_ + (int)this.func_230966_l_()) / 32.0F).func_225586_a_(32, 32, 32, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230672_i_, 0.0D).func_225583_a_((float)this.field_230675_l_ / 32.0F, (float)(this.field_230672_i_ + (int)this.func_230966_l_()) / 32.0F).func_225586_a_(32, 32, 32, 255).func_181675_d();
++      tessellator.func_78381_a();
++      int k = this.func_230968_n_();
++      int l = this.field_230672_i_ + 4 - (int)this.func_230966_l_();
+       if (this.field_230680_q_) {
+-         this.func_230448_a_(p_230430_1_, j1, k, tessellator);
++         this.func_230448_a_(p_230430_1_, k, l, tessellator);
+       }
+ 
+-      this.func_238478_a_(p_230430_1_, j1, k, p_230430_2_, p_230430_3_, p_230430_4_);
+-      if (this.field_244604_u) {
+-         this.field_230668_b_.func_110434_K().func_110577_a(AbstractGui.field_230663_f_);
+-         RenderSystem.enableDepthTest();
+-         RenderSystem.depthFunc(519);
+-         float f1 = 32.0F;
+-         int l = -100;
+-         bufferbuilder.func_181668_a(7, DefaultVertexFormats.field_181709_i);
+-         bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230672_i_, -100.0D).func_225583_a_(0.0F, (float)this.field_230672_i_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)(this.field_230675_l_ + this.field_230670_d_), (double)this.field_230672_i_, -100.0D).func_225583_a_((float)this.field_230670_d_ / 32.0F, (float)this.field_230672_i_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)(this.field_230675_l_ + this.field_230670_d_), 0.0D, -100.0D).func_225583_a_((float)this.field_230670_d_ / 32.0F, 0.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230675_l_, 0.0D, -100.0D).func_225583_a_(0.0F, 0.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230671_e_, -100.0D).func_225583_a_(0.0F, (float)this.field_230671_e_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)(this.field_230675_l_ + this.field_230670_d_), (double)this.field_230671_e_, -100.0D).func_225583_a_((float)this.field_230670_d_ / 32.0F, (float)this.field_230671_e_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)(this.field_230675_l_ + this.field_230670_d_), (double)this.field_230673_j_, -100.0D).func_225583_a_((float)this.field_230670_d_ / 32.0F, (float)this.field_230673_j_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230673_j_, -100.0D).func_225583_a_(0.0F, (float)this.field_230673_j_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
+-         tessellator.func_78381_a();
+-         RenderSystem.depthFunc(515);
+-         RenderSystem.disableDepthTest();
+-         RenderSystem.enableBlend();
+-         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE);
+-         RenderSystem.disableAlphaTest();
+-         RenderSystem.shadeModel(7425);
+-         RenderSystem.disableTexture();
+-         int i1 = 4;
+-         bufferbuilder.func_181668_a(7, DefaultVertexFormats.field_181709_i);
+-         bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)(this.field_230672_i_ + 4), 0.0D).func_225583_a_(0.0F, 1.0F).func_225586_a_(0, 0, 0, 0).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)(this.field_230672_i_ + 4), 0.0D).func_225583_a_(1.0F, 1.0F).func_225586_a_(0, 0, 0, 0).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)this.field_230672_i_, 0.0D).func_225583_a_(1.0F, 0.0F).func_225586_a_(0, 0, 0, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230672_i_, 0.0D).func_225583_a_(0.0F, 0.0F).func_225586_a_(0, 0, 0, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230673_j_, 0.0D).func_225583_a_(0.0F, 1.0F).func_225586_a_(0, 0, 0, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)this.field_230673_j_, 0.0D).func_225583_a_(1.0F, 1.0F).func_225586_a_(0, 0, 0, 255).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)(this.field_230673_j_ - 4), 0.0D).func_225583_a_(1.0F, 0.0F).func_225586_a_(0, 0, 0, 0).func_181675_d();
+-         bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)(this.field_230673_j_ - 4), 0.0D).func_225583_a_(0.0F, 0.0F).func_225586_a_(0, 0, 0, 0).func_181675_d();
+-         tessellator.func_78381_a();
+-      }
+-
++      this.func_238478_a_(p_230430_1_, k, l, p_230430_2_, p_230430_3_, p_230430_4_);
++      this.field_230668_b_.func_110434_K().func_110577_a(AbstractGui.field_230663_f_);
++      RenderSystem.enableDepthTest();
++      RenderSystem.depthFunc(519);
++      float f1 = 32.0F;
++      int i1 = -100;
++      bufferbuilder.func_181668_a(7, DefaultVertexFormats.field_181709_i);
++      bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230672_i_, -100.0D).func_225583_a_(0.0F, (float)this.field_230672_i_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)(this.field_230675_l_ + this.field_230670_d_), (double)this.field_230672_i_, -100.0D).func_225583_a_((float)this.field_230670_d_ / 32.0F, (float)this.field_230672_i_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)(this.field_230675_l_ + this.field_230670_d_), 0.0D, -100.0D).func_225583_a_((float)this.field_230670_d_ / 32.0F, 0.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230675_l_, 0.0D, -100.0D).func_225583_a_(0.0F, 0.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230671_e_, -100.0D).func_225583_a_(0.0F, (float)this.field_230671_e_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)(this.field_230675_l_ + this.field_230670_d_), (double)this.field_230671_e_, -100.0D).func_225583_a_((float)this.field_230670_d_ / 32.0F, (float)this.field_230671_e_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)(this.field_230675_l_ + this.field_230670_d_), (double)this.field_230673_j_, -100.0D).func_225583_a_((float)this.field_230670_d_ / 32.0F, (float)this.field_230673_j_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230673_j_, -100.0D).func_225583_a_(0.0F, (float)this.field_230673_j_ / 32.0F).func_225586_a_(64, 64, 64, 255).func_181675_d();
++      tessellator.func_78381_a();
++      RenderSystem.depthFunc(515);
++      RenderSystem.disableDepthTest();
++      RenderSystem.enableBlend();
++      RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE);
++      RenderSystem.disableAlphaTest();
++      RenderSystem.shadeModel(7425);
++      RenderSystem.disableTexture();
++      int j1 = 4;
++      bufferbuilder.func_181668_a(7, DefaultVertexFormats.field_181709_i);
++      bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)(this.field_230672_i_ + 4), 0.0D).func_225583_a_(0.0F, 1.0F).func_225586_a_(0, 0, 0, 0).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)(this.field_230672_i_ + 4), 0.0D).func_225583_a_(1.0F, 1.0F).func_225586_a_(0, 0, 0, 0).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)this.field_230672_i_, 0.0D).func_225583_a_(1.0F, 0.0F).func_225586_a_(0, 0, 0, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230672_i_, 0.0D).func_225583_a_(0.0F, 0.0F).func_225586_a_(0, 0, 0, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)this.field_230673_j_, 0.0D).func_225583_a_(0.0F, 1.0F).func_225586_a_(0, 0, 0, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)this.field_230673_j_, 0.0D).func_225583_a_(1.0F, 1.0F).func_225586_a_(0, 0, 0, 255).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230674_k_, (double)(this.field_230673_j_ - 4), 0.0D).func_225583_a_(1.0F, 0.0F).func_225586_a_(0, 0, 0, 0).func_181675_d();
++      bufferbuilder.func_225582_a_((double)this.field_230675_l_, (double)(this.field_230673_j_ - 4), 0.0D).func_225583_a_(0.0F, 0.0F).func_225586_a_(0, 0, 0, 0).func_181675_d();
++      tessellator.func_78381_a();
+       int k1 = this.func_230955_e_();
+       if (k1 > 0) {
+-         RenderSystem.disableTexture();
+          int l1 = (int)((float)((this.field_230673_j_ - this.field_230672_i_) * (this.field_230673_j_ - this.field_230672_i_)) / (float)this.func_230945_b_());
+          l1 = MathHelper.func_76125_a(l1, 32, this.field_230673_j_ - this.field_230672_i_ - 8);
+          int i2 = (int)this.func_230966_l_() * (this.field_230673_j_ - this.field_230672_i_ - l1) / k1 + this.field_230672_i_;
+@@ -287,7 +270,7 @@
+       this.field_230678_o_ = MathHelper.func_151237_a(p_230932_1_, 0.0D, (double)this.func_230955_e_());
+    }
+ 
+-   public int func_230955_e_() {
++   private int func_230955_e_() {
+       return Math.max(0, this.func_230945_b_() - (this.field_230673_j_ - this.field_230672_i_ - 4));
+    }
+ 
+@@ -454,14 +437,10 @@
+ 
+    }
+ 
+-   public int func_230968_n_() {
++   protected int func_230968_n_() {
+       return this.field_230675_l_ + this.field_230670_d_ / 2 - this.func_230949_c_() / 2 + 2;
+    }
+ 
+-   public int func_244736_r() {
+-      return this.func_230968_n_() + this.func_230949_c_();
+-   }
+-
+    protected int func_230962_i_(int p_230962_1_) {
+       return this.field_230672_i_ + 4 - (int)this.func_230966_l_() + p_230962_1_ * this.field_230669_c_ + this.field_230677_n_;
+    }
+@@ -492,6 +471,13 @@
        p_238480_1_.field_230666_a_ = this;
     }
  

@@ -1,6 +1,22 @@
 --- a/net/minecraft/client/gui/screen/LanguageScreen.java
 +++ b/net/minecraft/client/gui/screen/LanguageScreen.java
-@@ -45,7 +45,7 @@
+@@ -14,14 +14,13 @@
+ import net.minecraft.client.resources.LanguageManager;
+ import net.minecraft.util.text.ITextComponent;
+ import net.minecraft.util.text.StringTextComponent;
+-import net.minecraft.util.text.TextFormatting;
+ import net.minecraft.util.text.TranslationTextComponent;
+ import net.minecraftforge.api.distmarker.Dist;
+ import net.minecraftforge.api.distmarker.OnlyIn;
+ 
+ @OnlyIn(Dist.CLIENT)
+ public class LanguageScreen extends SettingsScreen {
+-   private static final ITextComponent field_243292_c = (new StringTextComponent("(")).func_230529_a_(new TranslationTextComponent("options.languageWarning")).func_240702_b_(")").func_240699_a_(TextFormatting.GRAY);
++   private static final ITextComponent field_243292_c = (new StringTextComponent("(")).func_230529_a_(new TranslationTextComponent("options.languageWarning")).func_240702_b_(")");
+    private LanguageScreen.List field_146450_f;
+    private final LanguageManager field_146454_h;
+    private OptionButton field_211832_i;
+@@ -46,7 +45,7 @@
           if (languagescreen$list$languageentry != null && !languagescreen$list$languageentry.field_214398_b.getCode().equals(this.field_146454_h.func_135041_c().getCode())) {
              this.field_146454_h.func_135045_a(languagescreen$list$languageentry.field_214398_b);
              this.field_228183_b_.field_74363_ab = languagescreen$list$languageentry.field_214398_b.getCode();

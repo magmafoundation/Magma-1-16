@@ -1,0 +1,15 @@
+--- a/com/mojang/realmsclient/gui/screens/RealmsParentalConsentScreen.java
++++ b/com/mojang/realmsclient/gui/screens/RealmsParentalConsentScreen.java
+@@ -31,10 +31,10 @@
+       ITextComponent itextcomponent2 = new TranslationTextComponent("mco.account.privacy.info");
+       int j = (int)((double)this.field_230712_o_.func_238414_a_(itextcomponent2) * 1.2D);
+       this.func_230480_a_(new Button(this.field_230708_k_ / 2 - j / 2, func_239562_k_(11), j, 20, itextcomponent2, (p_237862_0_) -> {
+-         Util.func_110647_a().func_195640_a("https://aka.ms/MinecraftGDPR");
++         Util.func_110647_a().func_195640_a("https://minecraft.net/privacy/gdpr/");
+       }));
+       this.func_230480_a_(new Button(this.field_230708_k_ / 2 - (i + 5), func_239562_k_(13), i, 20, itextcomponent, (p_237861_0_) -> {
+-         Util.func_110647_a().func_195640_a("https://aka.ms/UpdateMojangAccount");
++         Util.func_110647_a().func_195640_a("https://minecraft.net/update-account");
+       }));
+       this.func_230480_a_(new Button(this.field_230708_k_ / 2 + 5, func_239562_k_(13), i, 20, itextcomponent1, (p_237860_1_) -> {
+          this.field_230706_i_.func_147108_a(this.field_224260_a);

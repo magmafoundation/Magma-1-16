@@ -1,0 +1,48 @@
+--- a/net/minecraft/client/settings/BooleanOption.java
++++ b/net/minecraft/client/settings/BooleanOption.java
+@@ -2,10 +2,8 @@
+ 
+ import java.util.function.BiConsumer;
+ import java.util.function.Predicate;
+-import javax.annotation.Nullable;
+ import net.minecraft.client.AbstractOption;
+ import net.minecraft.client.GameSettings;
+-import net.minecraft.client.Minecraft;
+ import net.minecraft.client.gui.DialogTexts;
+ import net.minecraft.client.gui.widget.Widget;
+ import net.minecraft.client.gui.widget.button.OptionButton;
+@@ -17,20 +15,13 @@
+ public class BooleanOption extends AbstractOption {
+    private final Predicate<GameSettings> field_216746_Q;
+    private final BiConsumer<GameSettings, Boolean> field_216747_R;
+-   @Nullable
+-   private final ITextComponent field_244785_aa;
+ 
+    public BooleanOption(String p_i51167_1_, Predicate<GameSettings> p_i51167_2_, BiConsumer<GameSettings, Boolean> p_i51167_3_) {
+-      this(p_i51167_1_, (ITextComponent)null, p_i51167_2_, p_i51167_3_);
++      super(p_i51167_1_);
++      this.field_216746_Q = p_i51167_2_;
++      this.field_216747_R = p_i51167_3_;
+    }
+ 
+-   public BooleanOption(String p_i244779_1_, @Nullable ITextComponent p_i244779_2_, Predicate<GameSettings> p_i244779_3_, BiConsumer<GameSettings, Boolean> p_i244779_4_) {
+-      super(p_i244779_1_);
+-      this.field_216746_Q = p_i244779_3_;
+-      this.field_216747_R = p_i244779_4_;
+-      this.field_244785_aa = p_i244779_2_;
+-   }
+-
+    public void func_216742_a(GameSettings p_216742_1_, String p_216742_2_) {
+       this.func_216744_a(p_216742_1_, "true".equals(p_216742_2_));
+    }
+@@ -49,10 +40,6 @@
+    }
+ 
+    public Widget func_216586_a(GameSettings p_216586_1_, int p_216586_2_, int p_216586_3_, int p_216586_4_) {
+-      if (this.field_244785_aa != null) {
+-         this.func_241567_a_(Minecraft.func_71410_x().field_71466_p.func_238425_b_(this.field_244785_aa, 200));
+-      }
+-
+       return new OptionButton(p_216586_2_, p_216586_3_, p_216586_4_, 20, this, this.func_238152_c_(p_216586_1_), (p_216745_2_) -> {
+          this.func_216740_a(p_216586_1_);
+          p_216745_2_.func_238482_a_(this.func_238152_c_(p_216586_1_));

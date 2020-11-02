@@ -1,0 +1,20 @@
+--- a/com/mojang/realmsclient/gui/screens/RealmsSelectWorldTemplateScreen.java
++++ b/com/mojang/realmsclient/gui/screens/RealmsSelectWorldTemplateScreen.java
+@@ -94,7 +94,7 @@
+ 
+    public boolean func_231044_a_(double p_231044_1_, double p_231044_3_, int p_231044_5_) {
+       if (this.field_224530_p && this.field_224528_n != null) {
+-         Util.func_110647_a().func_195640_a("https://www.minecraft.net/realms/adventure-maps-in-1-9");
++         Util.func_110647_a().func_195640_a("https://beta.minecraft.net/realms/adventure-maps-in-1-9");
+          return true;
+       } else {
+          return super.func_231044_a_(p_231044_1_, p_231044_3_, p_231044_5_);
+@@ -233,7 +233,7 @@
+                   if (worldtemplatepaginatedlist1.field_230657_a_.isEmpty()) {
+                      if (RealmsSelectWorldTemplateScreen.this.field_224517_c.func_223878_a()) {
+                         String s = I18n.func_135052_a("mco.template.select.none", "%link");
+-                        TextRenderingUtils.LineSegment textrenderingutils$linesegment = TextRenderingUtils.LineSegment.func_225214_a(I18n.func_135052_a("mco.template.select.none.linkTitle"), "https://aka.ms/MinecraftRealmsContentCreator");
++                        TextRenderingUtils.LineSegment textrenderingutils$linesegment = TextRenderingUtils.LineSegment.func_225214_a(I18n.func_135052_a("mco.template.select.none.linkTitle"), "https://minecraft.net/realms/content-creator/");
+                         RealmsSelectWorldTemplateScreen.this.field_224531_q = TextRenderingUtils.func_225224_a(s, textrenderingutils$linesegment);
+                      }
+ 

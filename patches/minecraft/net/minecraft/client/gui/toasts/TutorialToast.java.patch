@@ -1,0 +1,12 @@
+--- a/net/minecraft/client/gui/toasts/TutorialToast.java
++++ b/net/minecraft/client/gui/toasts/TutorialToast.java
+@@ -71,8 +71,7 @@
+       MOUSE(1, 0),
+       TREE(2, 0),
+       RECIPE_BOOK(0, 1),
+-      WOODEN_PLANKS(1, 1),
+-      SOCIAL_INTERACTIONS(2, 1);
++      WOODEN_PLANKS(1, 1);
+ 
+       private final int field_193703_f;
+       private final int field_193704_g;

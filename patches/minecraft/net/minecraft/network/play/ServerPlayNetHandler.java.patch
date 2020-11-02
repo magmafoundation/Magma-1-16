@@ -1,9 +1,23 @@
 --- a/net/minecraft/network/play/ServerPlayNetHandler.java
 +++ b/net/minecraft/network/play/ServerPlayNetHandler.java
-@@ -11,11 +11,12 @@
+@@ -1,6 +1,5 @@
+ package net.minecraft.network.play;
+ 
+-import com.google.common.collect.Lists;
+ import com.google.common.primitives.Doubles;
+ import com.google.common.primitives.Floats;
+ import com.mojang.brigadier.ParseResults;
+@@ -10,18 +9,14 @@
+ import it.unimi.dsi.fastutil.ints.Int2ShortMap;
+ import it.unimi.dsi.fastutil.ints.Int2ShortOpenHashMap;
  import java.util.Collections;
+-import java.util.List;
  import java.util.Optional;
  import java.util.Set;
+-import java.util.concurrent.CompletableFuture;
+-import java.util.function.BiFunction;
+-import java.util.function.Consumer;
+-import java.util.stream.Collectors;
 +import java.util.concurrent.ExecutionException;
 +import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
  import java.util.stream.Stream;
@@ -14,7 +28,7 @@
  import net.minecraft.block.BlockState;
  import net.minecraft.block.Blocks;
  import net.minecraft.block.CommandBlockBlock;
-@@ -25,20 +26,24 @@
+@@ -31,20 +26,24 @@
  import net.minecraft.crash.ReportedException;
  import net.minecraft.entity.Entity;
  import net.minecraft.entity.IJumpingMount;
@@ -39,7 +53,15 @@
  import net.minecraft.item.BlockItem;
  import net.minecraft.item.BucketItem;
  import net.minecraft.item.Item;
-@@ -101,13 +106,17 @@
+@@ -52,6 +51,7 @@
+ import net.minecraft.item.Items;
+ import net.minecraft.item.WritableBookItem;
+ import net.minecraft.nbt.CompoundNBT;
++import net.minecraft.nbt.INBT;
+ import net.minecraft.nbt.ListNBT;
+ import net.minecraft.nbt.StringNBT;
+ import net.minecraft.network.IPacket;
+@@ -106,13 +106,17 @@
  import net.minecraft.network.play.server.SChatPacket;
  import net.minecraft.network.play.server.SConfirmTransactionPacket;
  import net.minecraft.network.play.server.SDisconnectPacket;
@@ -57,7 +79,11 @@
  import net.minecraft.potion.Effects;
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.tileentity.CommandBlockLogic;
-@@ -127,6 +136,12 @@
+@@ -129,10 +133,15 @@
+ import net.minecraft.util.SharedConstants;
+ import net.minecraft.util.StringUtils;
+ import net.minecraft.util.Util;
+-import net.minecraft.util.concurrent.ThreadTaskExecutor;
  import net.minecraft.util.math.AxisAlignedBB;
  import net.minecraft.util.math.BlockPos;
  import net.minecraft.util.math.BlockRayTraceResult;
@@ -70,7 +96,15 @@
  import net.minecraft.util.math.shapes.IBooleanFunction;
  import net.minecraft.util.math.shapes.VoxelShape;
  import net.minecraft.util.math.shapes.VoxelShapes;
-@@ -143,6 +158,45 @@
+@@ -142,7 +151,6 @@
+ import net.minecraft.util.text.StringTextComponent;
+ import net.minecraft.util.text.TextFormatting;
+ import net.minecraft.util.text.TranslationTextComponent;
+-import net.minecraft.util.text.filter.IChatFilter;
+ import net.minecraft.world.GameRules;
+ import net.minecraft.world.GameType;
+ import net.minecraft.world.IWorldReader;
+@@ -150,6 +158,45 @@
  import net.minecraft.world.server.ServerWorld;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -116,7 +150,7 @@
  
  public class ServerPlayNetHandler implements IServerPlayNetHandler {
     private static final Logger field_147370_c = LogManager.getLogger();
-@@ -153,7 +207,10 @@
+@@ -160,7 +207,10 @@
     private long field_194402_f;
     private boolean field_194403_g;
     private long field_194404_h;
@@ -128,13 +162,17 @@
     private int field_147375_m;
     private final Int2ShortMap field_147372_n = new Int2ShortOpenHashMap();
     private double field_184349_l;
-@@ -185,9 +242,36 @@
+@@ -192,14 +242,36 @@
        p_i1530_2_.func_150719_a(this);
        this.field_147369_b = p_i1530_3_;
        p_i1530_3_.field_71135_a = this;
+-      IChatFilter ichatfilter = p_i1530_3_.func_244529_Q();
+-      if (ichatfilter != null) {
+-         ichatfilter.func_244800_a();
+-      }
 +      // CraftBukkit start - add fields and methods
 +      this.craftServer = p_i1530_1_.server;
-    }
++   }
  
 +   private final org.bukkit.craftbukkit.CraftServer craftServer;
 +   public boolean processedDisconnect;
@@ -157,15 +195,15 @@
 +
 +   public CraftPlayer getPlayer() {
 +      return (this.field_147369_b == null) ? null : (CraftPlayer) this.field_147369_b.getBukkitEntity();
-+   }
+    }
 +   // CraftBukkit end
-+
+ 
     public void func_73660_a() {
 +      org.bukkit.craftbukkit.SpigotTimings.playerConnectionTimer.startTiming(); // Spigot
        this.func_184342_d();
        this.field_147369_b.field_70169_q = this.field_147369_b.func_226277_ct_();
        this.field_147369_b.field_70167_r = this.field_147369_b.func_226278_cu_();
-@@ -233,7 +317,7 @@
+@@ -245,7 +317,7 @@
  
        this.field_147367_d.func_213185_aS().func_76320_a("keepAlive");
        long i = Util.func_211177_b();
@@ -174,7 +212,7 @@
           if (this.field_194403_g) {
              this.func_194028_b(new TranslationTextComponent("disconnect.timeout"));
           } else {
-@@ -245,17 +329,23 @@
+@@ -257,17 +329,23 @@
        }
  
        this.field_147367_d.func_213185_aS().func_76319_b();
@@ -201,7 +239,7 @@
  
     }
  
-@@ -276,13 +366,44 @@
+@@ -288,45 +366,45 @@
        return this.field_147367_d.func_213199_b(this.field_147369_b.func_146103_bH());
     }
  
@@ -210,15 +248,37 @@
     public void func_194028_b(ITextComponent p_194028_1_) {
 -      this.field_147371_a.func_201058_a(new SDisconnectPacket(p_194028_1_), (p_210161_2_) -> {
 -         this.field_147371_a.func_150718_a(p_194028_1_);
+-      });
+-      this.field_147371_a.func_150721_g();
+-      this.field_147367_d.func_213167_f(this.field_147371_a::func_179293_l);
 +     disconnect(CraftChatMessage.fromComponent(p_194028_1_));
-+   }
+    }
 +   // CraftBukkit end
-+
+ 
+-   private <T> void func_244533_a(T p_244533_1_, Consumer<T> p_244533_2_, BiFunction<IChatFilter, T, CompletableFuture<Optional<T>>> p_244533_3_) {
+-      ThreadTaskExecutor<?> threadtaskexecutor = this.field_147369_b.func_71121_q().func_73046_m();
+-      Consumer<T> consumer = (p_244545_2_) -> {
+-         if (this.func_147298_b().func_150724_d()) {
+-            p_244533_2_.accept(p_244545_2_);
+-         } else {
+-            field_147370_c.debug("Ignoring packet due to disconnection");
+-         }
+-
+-      };
+-      IChatFilter ichatfilter = this.field_147369_b.func_244529_Q();
+-      if (ichatfilter != null) {
+-         p_244533_3_.apply(ichatfilter, p_244533_1_).thenAcceptAsync((p_244539_1_) -> {
+-            p_244539_1_.ifPresent(consumer);
+-         }, threadtaskexecutor);
+-      } else {
+-         threadtaskexecutor.execute(() -> {
+-            consumer.accept(p_244533_1_);
+-         });
 +   public void disconnect(String message) {
 +      // CraftBukkit start - fire PlayerKickEvent
 +      if (this.processedDisconnect) {
 +         return;
-+      }
+       }
 +      String leaveMessage = TextFormatting.YELLOW + this.field_147369_b.func_195047_I_() + " left the game.";
 +      PlayerKickEvent event = new PlayerKickEvent(this.craftServer.getPlayer(this.field_147369_b), message, leaveMessage);
 +      if (this.craftServer.getServer().func_71278_l()) {
@@ -232,13 +292,12 @@
 +      message = event.getReason();
 +      // CraftBukkit end
 +      final ITextComponent textComponent = new StringTextComponent(message);
-+
+ 
 +      this.field_147371_a.func_201058_a(new SDisconnectPacket(textComponent), (p_210161_2_) -> {
 +         this.field_147371_a.func_150718_a(textComponent);
-       });
++      });
 +      this.func_147231_a(textComponent); // CraftBukkit - fire quit instantly
-       this.field_147371_a.func_150721_g();
--      this.field_147367_d.func_213167_f(this.field_147371_a::func_179293_l);
++      this.field_147371_a.func_150721_g();
 +      // CraftBukkit - Don't wait
 +      MinecraftServer minecraftserver = this.field_147367_d;
 +      NetworkManager networkmanager = this.field_147371_a;
@@ -247,9 +306,18 @@
     }
 +   // CraftBukkit end
  
+-   private void func_244535_a(String p_244535_1_, Consumer<String> p_244535_2_) {
+-      this.func_244533_a(p_244535_1_, p_244535_2_, IChatFilter::func_244432_a);
+-   }
+-
+-   private void func_244537_a(List<String> p_244537_1_, Consumer<List<String>> p_244537_2_) {
+-      this.func_244533_a(p_244537_1_, p_244537_2_, IChatFilter::func_244433_a);
+-   }
+-
     public void func_147358_a(CInputPacket p_147358_1_) {
        PacketThreadUtil.func_218796_a(p_147358_1_, this, this.field_147369_b.func_71121_q());
-@@ -322,7 +443,30 @@
+       this.field_147369_b.func_110430_a(p_147358_1_.func_149620_c(), p_147358_1_.func_192620_b(), p_147358_1_.func_149618_e(), p_147358_1_.func_229755_e_());
+@@ -365,7 +443,30 @@
              double d8 = d5 - this.field_184358_u;
              double d9 = entity.func_213322_ci().func_189985_c();
              double d10 = d6 * d6 + d7 * d7 + d8 * d8;
@@ -281,7 +349,7 @@
                 field_147370_c.warn("{} (vehicle of {}) moved too quickly! {},{},{}", entity.func_200200_C_().getString(), this.field_147369_b.func_200200_C_().getString(), d6, d7, d8);
                 this.field_147371_a.func_179290_a(new SMoveVehiclePacket(entity));
                 return;
-@@ -342,19 +486,80 @@
+@@ -385,19 +486,80 @@
              d8 = d5 - entity.func_226281_cx_();
              d10 = d6 * d6 + d7 * d7 + d8 * d8;
              boolean flag1 = false;
@@ -363,7 +431,7 @@
              this.field_147369_b.func_71121_q().func_72863_F().func_217221_a(this.field_147369_b);
              this.field_147369_b.func_71000_j(this.field_147369_b.func_226277_ct_() - d0, this.field_147369_b.func_226278_cu_() - d1, this.field_147369_b.func_226281_cx_() - d2);
              this.field_184345_D = d7 >= -0.03125D && !this.field_147367_d.func_71231_X() && this.func_241162_a_(entity);
-@@ -367,12 +572,12 @@
+@@ -410,12 +572,12 @@
     }
  
     private boolean func_241162_a_(Entity p_241162_1_) {
@@ -378,7 +446,7 @@
           this.field_147369_b.func_70080_a(this.field_184362_y.field_72450_a, this.field_184362_y.field_72448_b, this.field_184362_y.field_72449_c, this.field_147369_b.field_70177_z, this.field_147369_b.field_70125_A);
           this.field_184352_o = this.field_184362_y.field_72450_a;
           this.field_184353_p = this.field_184362_y.field_72448_b;
-@@ -382,6 +587,7 @@
+@@ -425,6 +587,7 @@
           }
  
           this.field_184362_y = null;
@@ -386,7 +454,7 @@
        }
  
     }
-@@ -410,6 +616,12 @@
+@@ -453,6 +616,12 @@
  
     public void func_195518_a(CTabCompletePacket p_195518_1_) {
        PacketThreadUtil.func_218796_a(p_195518_1_, this, this.field_147369_b.func_71121_q());
@@ -399,7 +467,7 @@
        StringReader stringreader = new StringReader(p_195518_1_.func_197707_b());
        if (stringreader.canRead() && stringreader.peek() == '/') {
           stringreader.skip();
-@@ -417,6 +629,7 @@
+@@ -460,6 +629,7 @@
  
        ParseResults<CommandSource> parseresults = this.field_147367_d.func_195571_aL().func_197054_a().parse(stringreader, this.field_147369_b.func_195051_bN());
        this.field_147367_d.func_195571_aL().func_197054_a().getCompletionSuggestions(parseresults).thenAccept((p_195519_2_) -> {
@@ -407,7 +475,7 @@
           this.field_147371_a.func_179290_a(new STabCompletePacket(p_195518_1_.func_197709_a(), p_195519_2_));
        });
     }
-@@ -622,6 +835,7 @@
+@@ -665,6 +835,7 @@
        Container container = this.field_147369_b.field_71070_bA;
        if (container instanceof MerchantContainer) {
           MerchantContainer merchantcontainer = (MerchantContainer)container;
@@ -415,35 +483,107 @@
           merchantcontainer.func_75175_c(i);
           merchantcontainer.func_217046_g(i);
        }
-@@ -630,6 +844,14 @@
+@@ -672,64 +843,48 @@
+    }
  
     public void func_210156_a(CEditBookPacket p_210156_1_) {
-       PacketThreadUtil.func_218796_a(p_210156_1_, this, this.field_147369_b.func_71121_q());
++      PacketThreadUtil.func_218796_a(p_210156_1_, this, this.field_147369_b.func_71121_q());
 +      // CraftBukkit start
 +      if (this.lastBookTick + 20 > MinecraftServer.currentTick) {
 +         this.disconnect("Book edited too quickly!");
 +         return;
 +      }
 +      this.lastBookTick = MinecraftServer.currentTick;
-+      EquipmentSlotType enumitemslot = p_210156_1_.func_212644_d() == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND;
++      EquipmentSlotType enumitemslot = p_210156_1_.getHand() == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND;
 +      // CraftBukkit end
        ItemStack itemstack = p_210156_1_.func_210346_a();
-       if (!itemstack.func_190926_b()) {
-          if (WritableBookItem.func_150930_a(itemstack.func_77978_p())) {
-@@ -654,9 +876,11 @@
-                   }
+-      if (itemstack.func_77973_b() == Items.field_151099_bA) {
+-         CompoundNBT compoundnbt = itemstack.func_77978_p();
+-         if (WritableBookItem.func_150930_a(compoundnbt)) {
+-            List<String> list = Lists.newArrayList();
+-            boolean flag = p_210156_1_.func_210345_b();
+-            if (flag) {
+-               list.add(compoundnbt.func_74779_i("title"));
+-            }
++      if (!itemstack.func_190926_b()) {
++         if (WritableBookItem.func_150930_a(itemstack.func_77978_p())) {
++            ItemStack itemstack1 = this.field_147369_b.func_184586_b(p_210156_1_.getHand());
++            if (itemstack.func_77973_b() == Items.field_151099_bA && itemstack1.func_77973_b() == Items.field_151099_bA) {
++               if (p_210156_1_.func_210345_b()) {
++                  ItemStack itemstack2 = new ItemStack(Items.field_151164_bB);
++                  CompoundNBT compoundnbt = itemstack1.func_77978_p();
++                  if (compoundnbt != null) {
++                     itemstack2.func_77982_d(compoundnbt.func_74737_b());
++                  }
  
-                   itemstack2.func_77983_a("pages", listnbt);
--                  this.field_147369_b.func_184611_a(p_210156_1_.func_212644_d(), itemstack2);
-+                  this.field_147369_b.func_184611_a(p_210156_1_.func_212644_d(), CraftEventFactory.handleEditBookEvent(field_147369_b, enumitemslot, itemstack1, itemstack2)); // CraftBukkit
-                } else {
+-            ListNBT listnbt = compoundnbt.func_150295_c("pages", 8);
++                  itemstack2.func_77983_a("author", StringNBT.func_229705_a_(this.field_147369_b.func_200200_C_().getString()));
++                  itemstack2.func_77983_a("title", StringNBT.func_229705_a_(itemstack.func_77978_p().func_74779_i("title")));
++                  ListNBT listnbt = itemstack.func_77978_p().func_150295_c("pages", 8);
+ 
+-            for(int i = 0; i < listnbt.size(); ++i) {
+-               list.add(listnbt.func_150307_f(i));
+-            }
++                  for(int i = 0; i < listnbt.size(); ++i) {
++                     String s = listnbt.func_150307_f(i);
++                     ITextComponent itextcomponent = new StringTextComponent(s);
++                     s = ITextComponent.Serializer.func_150696_a(itextcomponent);
++                     listnbt.set(i, (INBT)StringNBT.func_229705_a_(s));
++                  }
+ 
+-            int j = p_210156_1_.func_244708_d();
+-            if (PlayerInventory.func_184435_e(j) || j == 40) {
+-               this.func_244537_a(list, flag ? (p_244543_2_) -> {
+-                  this.func_244534_a(p_244543_2_.get(0), p_244543_2_.subList(1, p_244543_2_.size()), j);
+-               } : (p_244531_2_) -> {
+-                  this.func_244536_a(p_244531_2_, j);
+-               });
++                  itemstack2.func_77983_a("pages", listnbt);
++                  this.field_147369_b.func_184611_a(p_210156_1_.getHand(), CraftEventFactory.handleEditBookEvent(field_147369_b, enumitemslot, itemstack1, itemstack2)); // CraftBukkit
++               } else {
 +                  ItemStack old = itemstack1.func_77946_l(); // CraftBukkit
-                   itemstack1.func_77983_a("pages", itemstack.func_77978_p().func_150295_c("pages", 8));
++                  itemstack1.func_77983_a("pages", itemstack.func_77978_p().func_150295_c("pages", 8));
 +                  CraftEventFactory.handleEditBookEvent(field_147369_b, enumitemslot, old, itemstack1); // CraftBukkit
-                }
++               }
              }
+-         }
+-      }
+-   }
  
-@@ -691,7 +915,7 @@
+-   private void func_244536_a(List<String> p_244536_1_, int p_244536_2_) {
+-      ItemStack itemstack = this.field_147369_b.field_71071_by.func_70301_a(p_244536_2_);
+-      if (itemstack.func_77973_b() == Items.field_151099_bA) {
+-         ListNBT listnbt = new ListNBT();
+-         p_244536_1_.stream().map(StringNBT::func_229705_a_).forEach(listnbt::add);
+-         itemstack.func_77983_a("pages", listnbt);
+-      }
+-   }
+-
+-   private void func_244534_a(String p_244534_1_, List<String> p_244534_2_, int p_244534_3_) {
+-      ItemStack itemstack = this.field_147369_b.field_71071_by.func_70301_a(p_244534_3_);
+-      if (itemstack.func_77973_b() == Items.field_151099_bA) {
+-         ItemStack itemstack1 = new ItemStack(Items.field_151164_bB);
+-         CompoundNBT compoundnbt = itemstack.func_77978_p();
+-         if (compoundnbt != null) {
+-            itemstack1.func_77982_d(compoundnbt.func_74737_b());
+          }
+-
+-         itemstack1.func_77983_a("author", StringNBT.func_229705_a_(this.field_147369_b.func_200200_C_().getString()));
+-         itemstack1.func_77983_a("title", StringNBT.func_229705_a_(p_244534_1_));
+-         ListNBT listnbt = new ListNBT();
+-
+-         for(String s : p_244534_2_) {
+-            ITextComponent itextcomponent = new StringTextComponent(s);
+-            String s1 = ITextComponent.Serializer.func_150696_a(itextcomponent);
+-            listnbt.add(StringNBT.func_229705_a_(s1));
+-         }
+-
+-         itemstack1.func_77983_a("pages", listnbt);
+-         this.field_147369_b.field_71071_by.func_70299_a(p_244534_3_, itemstack1);
+       }
+    }
+ 
+@@ -760,7 +915,7 @@
           this.func_194028_b(new TranslationTextComponent("multiplayer.disconnect.invalid_player_movement"));
        } else {
           ServerWorld serverworld = this.field_147369_b.func_71121_q();
@@ -452,7 +592,7 @@
              if (this.field_147368_e == 0) {
                 this.func_184342_d();
              }
-@@ -702,12 +926,21 @@
+@@ -771,12 +926,21 @@
                    this.func_147364_a(this.field_184362_y.field_72450_a, this.field_184362_y.field_72448_b, this.field_184362_y.field_72449_c, this.field_147369_b.field_70177_z, this.field_147369_b.field_70125_A);
                 }
  
@@ -474,7 +614,7 @@
                    double d0 = this.field_147369_b.func_226277_ct_();
                    double d1 = this.field_147369_b.func_226278_cu_();
                    double d2 = this.field_147369_b.func_226281_cx_();
-@@ -730,14 +963,31 @@
+@@ -799,14 +963,31 @@
                    } else {
                       ++this.field_184347_F;
                       int i = this.field_184347_F - this.field_184348_G;
@@ -508,7 +648,7 @@
                             field_147370_c.warn("{} moved too quickly! {},{},{}", this.field_147369_b.func_200200_C_().getString(), d7, d8, d9);
                             this.func_147364_a(this.field_147369_b.func_226277_ct_(), this.field_147369_b.func_226278_cu_(), this.field_147369_b.func_226281_cx_(), this.field_147369_b.field_70177_z, this.field_147369_b.field_70125_A);
                             return;
-@@ -754,6 +1004,7 @@
+@@ -823,6 +1004,7 @@
                       }
  
                       this.field_147369_b.func_213315_a(MoverType.PLAYER, new Vector3d(d7, d8, d9));
@@ -516,7 +656,7 @@
                       d7 = d4 - this.field_147369_b.func_226277_ct_();
                       d8 = d5 - this.field_147369_b.func_226278_cu_();
                       if (d8 > -0.5D || d8 < 0.5D) {
-@@ -763,17 +1014,72 @@
+@@ -832,17 +1014,72 @@
                       d9 = d6 - this.field_147369_b.func_226281_cx_();
                       d11 = d7 * d7 + d8 * d8 + d9 * d9;
                       boolean flag1 = false;
@@ -592,7 +732,7 @@
                          if (flag) {
                             this.field_147369_b.field_70143_R = 0.0F;
                          }
-@@ -806,24 +1112,83 @@
+@@ -875,24 +1112,83 @@
        this.func_175089_a(p_147364_1_, p_147364_3_, p_147364_5_, p_147364_7_, p_147364_8_, Collections.emptySet());
     }
  
@@ -684,7 +824,7 @@
        BlockPos blockpos = p_147345_1_.func_179715_a();
        this.field_147369_b.func_143004_u();
        CPlayerDiggingPacket.Action cplayerdiggingpacket$action = p_147345_1_.func_180762_c();
-@@ -831,14 +1196,45 @@
+@@ -900,14 +1196,45 @@
        case SWAP_ITEM_WITH_OFFHAND:
           if (!this.field_147369_b.func_175149_v()) {
              ItemStack itemstack = this.field_147369_b.func_184586_b(Hand.OFF_HAND);
@@ -731,7 +871,7 @@
              this.field_147369_b.func_225609_n_(false);
           }
  
-@@ -862,6 +1258,22 @@
+@@ -931,6 +1258,22 @@
        }
     }
  
@@ -754,7 +894,7 @@
     private static boolean func_241166_a_(ServerPlayerEntity p_241166_0_, ItemStack p_241166_1_) {
        if (p_241166_1_.func_190926_b()) {
           return false;
-@@ -873,6 +1285,8 @@
+@@ -942,6 +1285,8 @@
  
     public void func_184337_a(CPlayerTryUseItemOnBlockPacket p_184337_1_) {
        PacketThreadUtil.func_218796_a(p_184337_1_, this, this.field_147369_b.func_71121_q());
@@ -763,7 +903,7 @@
        ServerWorld serverworld = this.field_147369_b.func_71121_q();
        Hand hand = p_184337_1_.func_187022_c();
        ItemStack itemstack = this.field_147369_b.func_184586_b(hand);
-@@ -881,7 +1295,17 @@
+@@ -950,7 +1295,17 @@
        Direction direction = blockraytraceresult.func_216354_b();
        this.field_147369_b.func_143004_u();
        if (blockpos.func_177956_o() < this.field_147367_d.func_71207_Z()) {
@@ -782,7 +922,7 @@
              ActionResultType actionresulttype = this.field_147369_b.field_71134_c.func_219441_a(this.field_147369_b, serverworld, itemstack, hand, blockraytraceresult);
              if (direction == Direction.UP && !actionresulttype.func_226246_a_() && blockpos.func_177956_o() >= this.field_147367_d.func_71207_Z() - 1 && func_241166_a_(this.field_147369_b, itemstack)) {
                 ITextComponent itextcomponent = (new TranslationTextComponent("build.tooHigh", this.field_147367_d.func_71207_Z())).func_240699_a_(TextFormatting.RED);
-@@ -901,11 +1325,43 @@
+@@ -970,11 +1325,43 @@
  
     public void func_147346_a(CPlayerTryUseItemPacket p_147346_1_) {
        PacketThreadUtil.func_218796_a(p_147346_1_, this, this.field_147369_b.func_71121_q());
@@ -826,7 +966,7 @@
           ActionResultType actionresulttype = this.field_147369_b.field_71134_c.func_187250_a(this.field_147369_b, serverworld, itemstack, hand);
           if (actionresulttype.func_226247_b_()) {
              this.field_147369_b.func_226292_a_(hand, true);
-@@ -920,7 +1376,7 @@
+@@ -989,7 +1376,7 @@
           for(ServerWorld serverworld : this.field_147367_d.func_212370_w()) {
              Entity entity = p_175088_1_.func_179727_a(serverworld);
              if (entity != null) {
@@ -835,7 +975,7 @@
                 return;
              }
           }
-@@ -928,8 +1384,12 @@
+@@ -997,8 +1384,12 @@
  
     }
  
@@ -848,7 +988,7 @@
  
     public void func_184340_a(CSteerBoatPacket p_184340_1_) {
        PacketThreadUtil.func_218796_a(p_184340_1_, this, this.field_147369_b.func_71121_q());
-@@ -941,11 +1401,26 @@
+@@ -1010,16 +1401,26 @@
     }
  
     public void func_147231_a(ITextComponent p_147231_1_) {
@@ -864,6 +1004,9 @@
 -      this.field_147367_d.func_184103_al().func_232641_a_((new TranslationTextComponent("multiplayer.player.left", this.field_147369_b.func_145748_c_())).func_240699_a_(TextFormatting.YELLOW), ChatType.SYSTEM, Util.field_240973_b_);
 -      this.field_147369_b.func_71123_m();
 -      this.field_147367_d.func_184103_al().func_72367_e(this.field_147369_b);
+-      IChatFilter ichatfilter = this.field_147369_b.func_244529_Q();
+-      if (ichatfilter != null) {
+-         ichatfilter.func_244434_b();
 +      // CraftBukkit start - Replace vanilla quit message handling with our own.
 +       /*
 +      this.server.refreshStatusNextTick();
@@ -874,12 +1017,13 @@
 +      String quitMessage = this.field_147367_d.func_184103_al().playerLoggedOut(this.field_147369_b);
 +      if ((quitMessage != null) && (quitMessage.length() > 0)) {
 +         this.field_147367_d.func_184103_al().sendMessage(CraftChatMessage.fromString(quitMessage));
-+      }
+       }
+-
 +      // CraftBukkit end
        if (this.func_217264_d()) {
           field_147370_c.info("Stopping singleplayer server as player logged out");
           this.field_147367_d.func_71263_m(false);
-@@ -970,6 +1445,15 @@
+@@ -1044,6 +1445,15 @@
           }
        }
  
@@ -895,7 +1039,7 @@
        try {
           this.field_147371_a.func_201058_a(p_211148_1_, p_211148_2_);
        } catch (Throwable throwable) {
-@@ -984,7 +1468,16 @@
+@@ -1058,7 +1468,16 @@
  
     public void func_147355_a(CHeldItemChangePacket p_147355_1_) {
        PacketThreadUtil.func_218796_a(p_147355_1_, this, this.field_147369_b.func_71121_q());
@@ -912,7 +1056,7 @@
           if (this.field_147369_b.field_71071_by.field_70461_c != p_147355_1_.func_149614_c() && this.field_147369_b.func_184600_cs() == Hand.MAIN_HAND) {
              this.field_147369_b.func_184602_cy();
           }
-@@ -993,12 +1486,24 @@
+@@ -1067,60 +1486,283 @@
           this.field_147369_b.func_143004_u();
        } else {
           field_147370_c.warn("{} tried to set an invalid carried item", (Object)this.field_147369_b.func_200200_C_().getString());
@@ -921,8 +1065,8 @@
     }
  
     public void func_147354_a(CChatMessagePacket p_147354_1_) {
--      PacketThreadUtil.func_218796_a(p_147354_1_, this, this.field_147369_b.func_71121_q());
--      if (this.field_147369_b.func_147096_v() == ChatVisibility.HIDDEN) {
+-      String s = org.apache.commons.lang3.StringUtils.normalizeSpace(p_147354_1_.func_149439_c());
+-      if (s.startsWith("/")) {
 +//      PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.player.getServerWorld());
 +//      if (this.player.getChatVisibility() == ChatVisibility.HIDDEN) {
 +      // CraftBukkit start - async chat
@@ -932,18 +1076,28 @@
 +      }
 +      boolean isSync = p_147354_1_.func_149439_c().startsWith("/");
 +      if (p_147354_1_.func_149439_c().startsWith("/")) {
-+         PacketThreadUtil.func_218796_a(p_147354_1_, this, this.field_147369_b.func_71121_q());
-+      }
+          PacketThreadUtil.func_218796_a(p_147354_1_, this, this.field_147369_b.func_71121_q());
+-         this.func_244548_c(s);
+-      } else {
+-         this.func_244535_a(s, this::func_244548_c);
+       }
+-
+-   }
+-
+-   private void func_244548_c(String p_244548_1_) {
+-      if (this.field_147369_b.func_147096_v() == ChatVisibility.HIDDEN) {
 +         // CraftBukkit end
 +         if (this.field_147369_b.field_70128_L || this.field_147369_b.func_147096_v() == ChatVisibility.HIDDEN) { // CraftBukkit - dead men tell no tales
           this.func_147359_a(new SChatPacket((new TranslationTextComponent("chat.cannotSend")).func_240699_a_(TextFormatting.RED), ChatType.SYSTEM, Util.field_240973_b_));
        } else {
           this.field_147369_b.func_143004_u();
-@@ -1006,38 +1511,258 @@
++         String s = org.apache.commons.lang3.StringUtils.normalizeSpace(p_147354_1_.func_149439_c());
  
-          for(int i = 0; i < s.length(); ++i) {
-             if (!SharedConstants.func_71566_a(s.charAt(i))) {
+-         for(int i = 0; i < p_244548_1_.length(); ++i) {
+-            if (!SharedConstants.func_71566_a(p_244548_1_.charAt(i))) {
 -               this.func_194028_b(new TranslationTextComponent("multiplayer.disconnect.illegal_characters"));
++         for(int i = 0; i < s.length(); ++i) {
++            if (!SharedConstants.func_71566_a(s.charAt(i))) {
 +               // CraftBukkit start - threadsafety
 +               if (!isSync) {
 +                  Waitable waitable = new Waitable() {
@@ -971,14 +1125,15 @@
              }
           }
  
--         if (s.startsWith("/")) {
+-         if (p_244548_1_.startsWith("/")) {
+-            this.func_147361_d(p_244548_1_);
 +//         if (s.startsWith("/")) {
 +//            this.handleSlashCommand(s);
 +         // CraftBukkit start
 +         if (isSync) {
 +            try {
 +               this.field_147367_d.server.playerCommandState = true;
-             this.func_147361_d(s);
++            this.func_147361_d(s);
 +            } finally {
 +               this.field_147367_d.server.playerCommandState = false;
 +            }
@@ -1000,7 +1155,7 @@
 +            this.chat(s, true);
 +            // CraftBukkit end - the below is for reference. :)
           } else {
--            ITextComponent itextcomponent = new TranslationTextComponent("chat.type.text", this.field_147369_b.func_145748_c_(), s);
+-            ITextComponent itextcomponent = new TranslationTextComponent("chat.type.text", this.field_147369_b.func_145748_c_(), p_244548_1_);
 +            ITextComponent itextcomponent = new TranslationTextComponent("chat.type.text", this.field_147369_b.func_145748_c_(), net.minecraftforge.common.ForgeHooks.newChatWithLinks(s));
 +            itextcomponent = net.minecraftforge.common.ForgeHooks.onServerChatEvent(this, s, itextcomponent);
 +            if (itextcomponent == null) return;
@@ -1205,7 +1360,7 @@
        this.field_147369_b.func_143004_u();
        switch(p_147357_1_.func_180764_b()) {
        case PRESS_SHIFT_KEY:
-@@ -1091,8 +1816,17 @@
+@@ -1174,8 +1816,17 @@
  
     public void func_147340_a(CUseEntityPacket p_147340_1_) {
        PacketThreadUtil.func_218796_a(p_147340_1_, this, this.field_147369_b.func_71121_q());
@@ -1223,7 +1378,7 @@
        this.field_147369_b.func_143004_u();
        this.field_147369_b.func_226284_e_(p_147340_1_.func_241792_e_());
        if (entity != null) {
-@@ -1101,18 +1835,71 @@
+@@ -1184,18 +1835,71 @@
              Hand hand = p_147340_1_.func_186994_b();
              ItemStack itemstack = hand != null ? this.field_147369_b.func_184586_b(hand).func_77946_l() : ItemStack.field_190927_a;
              Optional<ActionResultType> optional = Optional.empty();
@@ -1297,7 +1452,7 @@
              }
  
              if (optional.isPresent() && optional.get().func_226246_a_()) {
-@@ -1123,7 +1910,6 @@
+@@ -1206,7 +1910,6 @@
              }
           }
        }
@@ -1305,7 +1460,7 @@
     }
  
     public void func_147342_a(CClientStatusPacket p_147342_1_) {
-@@ -1156,14 +1942,20 @@
+@@ -1239,14 +1942,20 @@
  
     public void func_147356_a(CCloseWindowPacket p_147356_1_) {
        PacketThreadUtil.func_218796_a(p_147356_1_, this, this.field_147369_b.func_71121_q());
@@ -1328,7 +1483,7 @@
              NonNullList<ItemStack> nonnulllist = NonNullList.func_191196_a();
  
              for(int i = 0; i < this.field_147369_b.field_71070_bA.field_75151_b.size(); ++i) {
-@@ -1172,8 +1964,277 @@
+@@ -1255,8 +1964,277 @@
  
              this.field_147369_b.func_71110_a(this.field_147369_b.field_71070_bA, nonnulllist);
           } else {
@@ -1608,7 +1763,7 @@
                 this.field_147369_b.field_71135_a.func_147359_a(new SConfirmTransactionPacket(p_147351_1_.func_149548_c(), p_147351_1_.func_149547_f(), true));
                 this.field_147369_b.field_71137_h = true;
                 this.field_147369_b.field_71070_bA.func_75142_b();
-@@ -1186,8 +2247,8 @@
+@@ -1269,8 +2247,8 @@
                 NonNullList<ItemStack> nonnulllist1 = NonNullList.func_191196_a();
  
                 for(int j = 0; j < this.field_147369_b.field_71070_bA.field_75151_b.size(); ++j) {
@@ -1619,7 +1774,7 @@
                 }
  
                 this.field_147369_b.func_71110_a(this.field_147369_b.field_71070_bA, nonnulllist1);
-@@ -1209,6 +2270,7 @@
+@@ -1292,6 +2270,7 @@
  
     public void func_147338_a(CEnchantItemPacket p_147338_1_) {
        PacketThreadUtil.func_218796_a(p_147338_1_, this, this.field_147369_b.func_71121_q());
@@ -1627,7 +1782,7 @@
        this.field_147369_b.func_143004_u();
        if (this.field_147369_b.field_71070_bA.field_75152_c == p_147338_1_.func_149539_c() && this.field_147369_b.field_71070_bA.func_75129_b(this.field_147369_b) && !this.field_147369_b.func_175149_v()) {
           this.field_147369_b.field_71070_bA.func_75140_a(this.field_147369_b, p_147338_1_.func_149537_d());
-@@ -1223,7 +2285,7 @@
+@@ -1306,7 +2285,7 @@
           boolean flag = p_147344_1_.func_149627_c() < 0;
           ItemStack itemstack = p_147344_1_.func_149625_d();
           CompoundNBT compoundnbt = itemstack.func_179543_a("BlockEntityTag");
@@ -1636,7 +1791,7 @@
              BlockPos blockpos = new BlockPos(compoundnbt.func_74762_e("x"), compoundnbt.func_74762_e("y"), compoundnbt.func_74762_e("z"));
              TileEntity tileentity = this.field_147369_b.field_70170_p.func_175625_s(blockpos);
              if (tileentity != null) {
-@@ -1237,6 +2299,42 @@
+@@ -1320,6 +2299,42 @@
  
           boolean flag1 = p_147344_1_.func_149627_c() >= 1 && p_147344_1_.func_149627_c() <= 45;
           boolean flag2 = itemstack.func_190926_b() || itemstack.func_77952_i() >= 0 && itemstack.func_190916_E() <= 64 && !itemstack.func_190926_b();
@@ -1679,7 +1834,7 @@
           if (flag1 && flag2) {
              if (itemstack.func_190926_b()) {
                 this.field_147369_b.field_71069_bz.func_75141_a(p_147344_1_.func_149627_c(), ItemStack.field_190927_a);
-@@ -1256,6 +2354,7 @@
+@@ -1339,6 +2354,7 @@
  
     public void func_147339_a(CConfirmTransactionPacket p_147339_1_) {
        PacketThreadUtil.func_218796_a(p_147339_1_, this, this.field_147369_b.func_71121_q());
@@ -1687,15 +1842,27 @@
        int i = this.field_147369_b.field_71070_bA.field_75152_c;
        if (i == p_147339_1_.func_149532_c() && this.field_147372_n.getOrDefault(i, (short)(p_147339_1_.func_149533_d() + 1)) == p_147339_1_.func_149533_d() && !this.field_147369_b.field_71070_bA.func_75129_b(this.field_147369_b) && !this.field_147369_b.func_175149_v()) {
           this.field_147369_b.field_71070_bA.func_75128_a(this.field_147369_b, true);
-@@ -1265,6 +2364,7 @@
+@@ -1347,16 +2363,11 @@
+    }
  
     public void func_147343_a(CUpdateSignPacket p_147343_1_) {
-       PacketThreadUtil.func_218796_a(p_147343_1_, this, this.field_147369_b.func_71121_q());
+-      List<String> list = Stream.of(p_147343_1_.func_187017_b()).map(TextFormatting::func_110646_a).collect(Collectors.toList());
+-      this.func_244537_a(list, (p_244547_2_) -> {
+-         this.func_244542_a(p_147343_1_, p_244547_2_);
+-      });
+-   }
+-
+-   private void func_244542_a(CUpdateSignPacket p_244542_1_, List<String> p_244542_2_) {
++      PacketThreadUtil.func_218796_a(p_147343_1_, this, this.field_147369_b.func_71121_q());
 +      if (this.field_147369_b.func_70610_aX()) return; // CraftBukkit
        this.field_147369_b.func_143004_u();
        ServerWorld serverworld = this.field_147369_b.func_71121_q();
-       BlockPos blockpos = p_147343_1_.func_179722_a();
-@@ -1278,15 +2378,31 @@
+-      BlockPos blockpos = p_244542_1_.func_179722_a();
++      BlockPos blockpos = p_147343_1_.func_179722_a();
+       if (serverworld.func_175667_e(blockpos)) {
+          BlockState blockstate = serverworld.func_180495_p(blockpos);
+          TileEntity tileentity = serverworld.func_175625_s(blockpos);
+@@ -1367,13 +2378,31 @@
           SignTileEntity signtileentity = (SignTileEntity)tileentity;
           if (!signtileentity.func_145914_a() || signtileentity.func_145911_b() != this.field_147369_b) {
              field_147370_c.warn("Player {} just tried to change non-editable sign", (Object)this.field_147369_b.func_200200_C_().getString());
@@ -1703,8 +1870,10 @@
              return;
           }
  
-          String[] astring = p_147343_1_.func_187017_b();
- 
+-         for(int i = 0; i < p_244542_2_.size(); ++i) {
+-            signtileentity.func_212365_a(i, new StringTextComponent(p_244542_2_.get(i)));
++         String[] astring = p_147343_1_.func_187017_b();
++
 +         // CraftBukkit start
 +         Player player = this.craftServer.getPlayer(this.field_147369_b);
 +         int x = p_147343_1_.func_179722_a().func_177958_n();
@@ -1712,8 +1881,7 @@
 +         int z = p_147343_1_.func_179722_a().func_177952_p();
 +         String[] lines = new String[4];
 +
-          for(int i = 0; i < astring.length; ++i) {
--            signtileentity.func_212365_a(i, new StringTextComponent(TextFormatting.func_110646_a(astring[i])));
++         for(int i = 0; i < astring.length; ++i) {
 +            lines[i] = TextFormatting.func_110646_a(new StringTextComponent(TextFormatting.func_110646_a(astring[i])).getString());
           }
  
@@ -1728,7 +1896,7 @@
           signtileentity.func_70296_d();
           serverworld.func_184138_a(blockpos, blockstate, blockstate, 3);
        }
-@@ -1294,6 +2410,7 @@
+@@ -1381,6 +2410,7 @@
     }
  
     public void func_147353_a(CKeepAlivePacket p_147353_1_) {
@@ -1736,7 +1904,7 @@
        if (this.field_194403_g && p_147353_1_.func_149460_c() == this.field_194404_h) {
           int i = (int)(Util.func_211177_b() - this.field_194402_f);
           this.field_147369_b.field_71138_i = (this.field_147369_b.field_71138_i * 3 + i) / 4;
-@@ -1306,7 +2423,17 @@
+@@ -1393,7 +2423,17 @@
  
     public void func_147348_a(CPlayerAbilitiesPacket p_147348_1_) {
        PacketThreadUtil.func_218796_a(p_147348_1_, this, this.field_147369_b.func_71121_q());
@@ -1755,7 +1923,7 @@
     }
  
     public void func_147352_a(CClientSettingsPacket p_147352_1_) {
-@@ -1314,9 +2441,6 @@
+@@ -1401,9 +2441,6 @@
        this.field_147369_b.func_147100_a(p_147352_1_);
     }
  
@@ -1765,7 +1933,7 @@
     public void func_217263_a(CSetDifficultyPacket p_217263_1_) {
        PacketThreadUtil.func_218796_a(p_217263_1_, this, this.field_147369_b.func_71121_q());
        if (this.field_147369_b.func_211513_k(2) || this.func_217264_d()) {
-@@ -1330,4 +2454,52 @@
+@@ -1417,4 +2454,52 @@
           this.field_147367_d.func_213209_d(p_217261_1_.func_218776_b());
        }
     }
