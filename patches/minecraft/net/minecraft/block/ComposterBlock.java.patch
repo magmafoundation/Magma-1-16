@@ -96,7 +96,7 @@
 -      if ((i != 0 || !(f > 0.0F)) && !(p_235487_1_.func_201674_k().nextDouble() < (double)f)) {
 -         return p_235487_0_;
 +      // CraftBukkit start
-+      return func_235487_b_(p_235487_0_, p_235487_1_, p_235487_2_, p_235487_3_);
++      return attemptCompost(p_235487_0_, p_235487_1_, p_235487_2_, p_235487_3_, p_235487_1_.func_201674_k().nextDouble());
 +   }
 +
 +   private static BlockState attemptCompost(BlockState state, IWorld world, BlockPos pos, ItemStack stack, double rand) {
