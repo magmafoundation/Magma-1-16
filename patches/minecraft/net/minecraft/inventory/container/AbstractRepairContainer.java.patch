@@ -1,23 +1,82 @@
 --- a/net/minecraft/inventory/container/AbstractRepairContainer.java
 +++ b/net/minecraft/inventory/container/AbstractRepairContainer.java
-@@ -9,6 +9,8 @@
+@@ -9,10 +9,11 @@
  import net.minecraft.inventory.Inventory;
  import net.minecraft.item.ItemStack;
  import net.minecraft.util.IWorldPosCallable;
 +import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.inventory.InventoryView;
  
  public abstract class AbstractRepairContainer extends Container {
     protected final CraftResultInventory field_234642_c_ = new CraftResultInventory();
-@@ -77,6 +79,7 @@
+-   protected final IInventory field_234643_d_ = new Inventory(2) {
++   protected final IInventory inventory = new Inventory(2) {
+       public void func_70296_d() {
+          super.func_70296_d();
+          AbstractRepairContainer.this.func_75130_a(this);
+@@ -21,29 +22,29 @@
+    protected final IWorldPosCallable field_234644_e_;
+    protected final PlayerEntity field_234645_f_;
+ 
+-   protected abstract boolean func_230303_b_(PlayerEntity p_230303_1_, boolean p_230303_2_);
++   protected abstract boolean canRepair(PlayerEntity p_230303_1_, boolean p_230303_2_);
+ 
+-   protected abstract ItemStack func_230301_a_(PlayerEntity p_230301_1_, ItemStack p_230301_2_);
++   protected abstract ItemStack handleRepair(PlayerEntity p_230301_1_, ItemStack p_230301_2_);
+ 
+-   protected abstract boolean func_230302_a_(BlockState p_230302_1_);
++   protected abstract boolean isDamaged(BlockState p_230302_1_);
+ 
+    public AbstractRepairContainer(@Nullable ContainerType<?> p_i231587_1_, int p_i231587_2_, PlayerInventory p_i231587_3_, IWorldPosCallable p_i231587_4_) {
+       super(p_i231587_1_, p_i231587_2_);
+       this.field_234644_e_ = p_i231587_4_;
+       this.field_234645_f_ = p_i231587_3_.field_70458_d;
+-      this.func_75146_a(new Slot(this.field_234643_d_, 0, 27, 47));
+-      this.func_75146_a(new Slot(this.field_234643_d_, 1, 76, 47));
++      this.func_75146_a(new Slot(this.inventory, 0, 27, 47));
++      this.func_75146_a(new Slot(this.inventory, 1, 76, 47));
+       this.func_75146_a(new Slot(this.field_234642_c_, 2, 134, 47) {
+          public boolean func_75214_a(ItemStack p_75214_1_) {
+             return false;
+          }
+ 
+          public boolean func_82869_a(PlayerEntity p_82869_1_) {
+-            return AbstractRepairContainer.this.func_230303_b_(p_82869_1_, this.func_75216_d());
++            return AbstractRepairContainer.this.canRepair(p_82869_1_, this.func_75216_d());
+          }
+ 
+          public ItemStack func_190901_a(PlayerEntity p_190901_1_, ItemStack p_190901_2_) {
+-            return AbstractRepairContainer.this.func_230301_a_(p_190901_1_, p_190901_2_);
++            return AbstractRepairContainer.this.handleRepair(p_190901_1_, p_190901_2_);
+          }
+       });
+ 
+@@ -63,7 +64,7 @@
+ 
+    public void func_75130_a(IInventory p_75130_1_) {
+       super.func_75130_a(p_75130_1_);
+-      if (p_75130_1_ == this.field_234643_d_) {
++      if (p_75130_1_ == this.inventory) {
+          this.func_82848_d();
+       }
+ 
+@@ -72,13 +73,14 @@
+    public void func_75134_a(PlayerEntity p_75134_1_) {
+       super.func_75134_a(p_75134_1_);
+       this.field_234644_e_.func_221486_a((p_234647_2_, p_234647_3_) -> {
+-         this.func_193327_a(p_75134_1_, p_234647_2_, this.field_234643_d_);
++         this.func_193327_a(p_75134_1_, p_234647_2_, this.inventory);
+       });
     }
  
     public boolean func_75145_c(PlayerEntity p_75145_1_) {
 +      if (!this.checkReachable) return true; // CraftBukkit
        return this.field_234644_e_.func_221485_a((p_234646_2_, p_234646_3_) -> {
-          return !this.func_230302_a_(p_234646_2_.func_180495_p(p_234646_3_)) ? false : p_75145_1_.func_70092_e((double)p_234646_3_.func_177958_n() + 0.5D, (double)p_234646_3_.func_177956_o() + 0.5D, (double)p_234646_3_.func_177952_p() + 0.5D) <= 64.0D;
+-         return !this.func_230302_a_(p_234646_2_.func_180495_p(p_234646_3_)) ? false : p_75145_1_.func_70092_e((double)p_234646_3_.func_177958_n() + 0.5D, (double)p_234646_3_.func_177956_o() + 0.5D, (double)p_234646_3_.func_177952_p() + 0.5D) <= 64.0D;
++         return !this.isDamaged(p_234646_2_.func_180495_p(p_234646_3_)) ? false : p_75145_1_.func_70092_e((double)p_234646_3_.func_177958_n() + 0.5D, (double)p_234646_3_.func_177956_o() + 0.5D, (double)p_234646_3_.func_177952_p() + 0.5D) <= 64.0D;
        }, true);
-@@ -86,7 +89,12 @@
+    }
+ 
+@@ -86,7 +88,12 @@
        return false;
     }
  

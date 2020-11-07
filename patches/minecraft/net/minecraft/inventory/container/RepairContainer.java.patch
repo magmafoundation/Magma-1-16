@@ -7,7 +7,7 @@
 +import org.bukkit.craftbukkit.inventory.CraftInventory;
 +import org.bukkit.craftbukkit.inventory.CraftInventoryAnvil;
 +import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.inventory.InventoryView;
++import org.bukkit.entity.HumanEntity;
  
  public class RepairContainer extends AbstractRepairContainer {
     private static final Logger field_148326_f = LogManager.getLogger();
@@ -25,25 +25,86 @@
     public RepairContainer(int p_i50101_1_, PlayerInventory p_i50101_2_) {
        this(p_i50101_1_, p_i50101_2_, IWorldPosCallable.field_221489_a);
     }
-@@ -48,6 +57,8 @@
-          p_230301_1_.func_82242_a(-this.field_82854_e.func_221495_b());
+@@ -35,73 +44,79 @@
+       this.func_216958_a(this.field_82854_e);
+    }
+ 
+-   protected boolean func_230302_a_(BlockState p_230302_1_) {
+-      return p_230302_1_.func_235714_a_(BlockTags.field_200572_k);
++   protected boolean isDamaged(BlockState state) {
++      return state.func_235714_a_(BlockTags.field_200572_k);
+    }
+ 
+-   protected boolean func_230303_b_(PlayerEntity p_230303_1_, boolean p_230303_2_) {
++   protected boolean canRepair(PlayerEntity p_230303_1_, boolean p_230303_2_) {
+       return (p_230303_1_.field_71075_bZ.field_75098_d || p_230303_1_.field_71068_ca >= this.field_82854_e.func_221495_b()) && this.field_82854_e.func_221495_b() > 0;
+    }
+ 
+-   protected ItemStack func_230301_a_(PlayerEntity p_230301_1_, ItemStack p_230301_2_) {
+-      if (!p_230301_1_.field_71075_bZ.field_75098_d) {
+-         p_230301_1_.func_82242_a(-this.field_82854_e.func_221495_b());
++   protected ItemStack handleRepair(PlayerEntity player, ItemStack item) {
++      if (!player.field_71075_bZ.field_75098_d) {
++         player.func_82242_a(-this.field_82854_e.func_221495_b());
        }
  
-+      float breakChance = net.minecraftforge.common.ForgeHooks.onAnvilRepair(p_230301_1_, p_230301_2_, RepairContainer.this.field_234643_d_.func_70301_a(0), RepairContainer.this.field_234643_d_.func_70301_a(1));
+-      this.field_234643_d_.func_70299_a(0, ItemStack.field_190927_a);
++      float breakChance = net.minecraftforge.common.ForgeHooks.onAnvilRepair(player, item, RepairContainer.this.inventory.func_70301_a(0), RepairContainer.this.inventory.func_70301_a(1));
 +
-       this.field_234643_d_.func_70299_a(0, ItemStack.field_190927_a);
++      this.inventory.func_70299_a(0, ItemStack.field_190927_a);
        if (this.field_82856_l > 0) {
-          ItemStack itemstack = this.field_234643_d_.func_70301_a(1);
-@@ -64,7 +75,7 @@
+-         ItemStack itemstack = this.field_234643_d_.func_70301_a(1);
++         ItemStack itemstack = this.inventory.func_70301_a(1);
+          if (!itemstack.func_190926_b() && itemstack.func_190916_E() > this.field_82856_l) {
+             itemstack.func_190918_g(this.field_82856_l);
+-            this.field_234643_d_.func_70299_a(1, itemstack);
++            this.inventory.func_70299_a(1, itemstack);
+          } else {
+-            this.field_234643_d_.func_70299_a(1, ItemStack.field_190927_a);
++            this.inventory.func_70299_a(1, ItemStack.field_190927_a);
+          }
+       } else {
+-         this.field_234643_d_.func_70299_a(1, ItemStack.field_190927_a);
++         this.inventory.func_70299_a(1, ItemStack.field_190927_a);
+       }
+ 
        this.field_82854_e.func_221494_a(0);
-       this.field_234644_e_.func_221486_a((p_234633_1_, p_234633_2_) -> {
-          BlockState blockstate = p_234633_1_.func_180495_p(p_234633_2_);
+-      this.field_234644_e_.func_221486_a((p_234633_1_, p_234633_2_) -> {
+-         BlockState blockstate = p_234633_1_.func_180495_p(p_234633_2_);
 -         if (!p_230301_1_.field_71075_bZ.field_75098_d && blockstate.func_235714_a_(BlockTags.field_200572_k) && p_230301_1_.func_70681_au().nextFloat() < 0.12F) {
-+         if (!p_230301_1_.field_71075_bZ.field_75098_d && blockstate.func_235714_a_(BlockTags.field_200572_k) && p_230301_1_.func_70681_au().nextFloat() < breakChance) {
-             BlockState blockstate1 = AnvilBlock.func_196433_f(blockstate);
-             if (blockstate1 == null) {
-                p_234633_1_.func_217377_a(p_234633_2_, false);
-@@ -88,7 +99,7 @@
+-            BlockState blockstate1 = AnvilBlock.func_196433_f(blockstate);
+-            if (blockstate1 == null) {
+-               p_234633_1_.func_217377_a(p_234633_2_, false);
+-               p_234633_1_.func_217379_c(1029, p_234633_2_, 0);
++      this.field_234644_e_.func_221486_a((world, position) -> {
++         BlockState blockstate = world.func_180495_p(position);
++         if (!player.field_71075_bZ.field_75098_d && blockstate.func_235714_a_(BlockTags.field_200572_k) && player.func_70681_au().nextFloat() < breakChance) {
++            BlockState damageState = AnvilBlock.func_196433_f(blockstate);
++            if (damageState == null) {
++               getBukkitView().close();
++               world.func_217377_a(position, false);
++               world.func_217379_c(1029, position, 0);
+             } else {
+-               p_234633_1_.func_180501_a(p_234633_2_, blockstate1, 2);
+-               p_234633_1_.func_217379_c(1030, p_234633_2_, 0);
++               world.func_180501_a(position, damageState, 2);
++               world.func_217379_c(1030, position, 0);
+             }
+          } else {
+-            p_234633_1_.func_217379_c(1030, p_234633_2_, 0);
++            world.func_217379_c(1030, position, 0);
+          }
+ 
+       });
+-      return p_230301_2_;
++      return item;
+    }
+ 
+    public void func_82848_d() {
+-      ItemStack itemstack = this.field_234643_d_.func_70301_a(0);
++      ItemStack itemstack = this.inventory.func_70301_a(0);
+       this.field_82854_e.func_221494_a(1);
+       int i = 0;
        int j = 0;
        int k = 0;
        if (itemstack.func_190926_b()) {
@@ -52,7 +113,8 @@
           this.field_82854_e.func_221494_a(0);
        } else {
           ItemStack itemstack1 = itemstack.func_77946_l();
-@@ -96,12 +107,15 @@
+-         ItemStack itemstack2 = this.field_234643_d_.func_70301_a(1);
++         ItemStack itemstack2 = this.inventory.func_70301_a(1);
           Map<Enchantment, Integer> map = EnchantmentHelper.func_82781_a(itemstack1);
           j = j + itemstack.func_82838_A() + (itemstack2.func_190926_b() ? 0 : itemstack2.func_82838_A());
           this.field_82856_l = 0;
@@ -70,7 +132,7 @@
                    this.field_82854_e.func_221494_a(0);
                    return;
                 }
-@@ -117,7 +131,7 @@
+@@ -117,7 +132,7 @@
                 this.field_82856_l = i3;
              } else {
                 if (!flag && (itemstack1.func_77973_b() != itemstack2.func_77973_b() || !itemstack1.func_77984_f())) {
@@ -79,7 +141,7 @@
                    this.field_82854_e.func_221494_a(0);
                    return;
                 }
-@@ -196,7 +210,7 @@
+@@ -196,7 +211,7 @@
                 }
  
                 if (flag3 && !flag2) {
@@ -88,7 +150,7 @@
                    this.field_82854_e.func_221494_a(0);
                    return;
                 }
-@@ -214,17 +228,18 @@
+@@ -214,17 +229,18 @@
              i += k;
              itemstack1.func_200302_a(new StringTextComponent(this.field_82857_m));
           }
@@ -110,7 +172,7 @@
              itemstack1 = ItemStack.field_190927_a;
           }
  
-@@ -269,4 +284,20 @@
+@@ -269,4 +285,20 @@
     public int func_216976_f() {
        return this.field_82854_e.func_221495_b();
     }
@@ -125,7 +187,7 @@
 +      if (bukkitEntity != null) {
 +         return bukkitEntity;
 +      }
-+      CraftInventory inventory = new CraftInventoryAnvil(field_234644_e_.getLocation(), this.field_234643_d_, this.field_234642_c_, this);
++      CraftInventory inventory = new CraftInventoryAnvil(field_234644_e_.getLocation(), this.inventory, this.field_234642_c_, this);
 +      bukkitEntity = new CraftInventoryView(this.field_234645_f_.getBukkitEntity(), inventory, this);
 +      return bukkitEntity;
 +   }

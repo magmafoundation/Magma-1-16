@@ -1,9 +1,11 @@
 --- a/net/minecraft/server/management/PlayerInteractionManager.java
 +++ b/net/minecraft/server/management/PlayerInteractionManager.java
-@@ -1,19 +1,29 @@
+@@ -1,19 +1,31 @@
  package net.minecraft.server.management;
  
 +import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.List;
  import java.util.Objects;
  import net.minecraft.advancements.CriteriaTriggers;
  import net.minecraft.block.Block;
@@ -30,10 +32,11 @@
  import net.minecraft.tileentity.TileEntity;
  import net.minecraft.util.ActionResult;
  import net.minecraft.util.ActionResultType;
-@@ -26,6 +36,13 @@
+@@ -26,6 +38,14 @@
  import net.minecraft.world.server.ServerWorld;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
++import org.bukkit.Material;
 +import org.bukkit.craftbukkit.block.CraftBlock;
 +import org.bukkit.craftbukkit.event.CraftEventFactory;
 +import org.bukkit.entity.Player;
@@ -44,7 +47,7 @@
  
  public class PlayerInteractionManager {
     private static final Logger field_225418_c = LogManager.getLogger();
-@@ -55,7 +72,7 @@
+@@ -55,7 +75,7 @@
        this.field_73091_c = p_241820_1_;
        p_241820_1_.func_77147_a(this.field_73090_b.field_71075_bZ);
        this.field_73090_b.func_71016_p();
@@ -53,7 +56,7 @@
        this.field_73092_a.func_72854_c();
     }
  
-@@ -84,10 +101,10 @@
+@@ -84,10 +104,10 @@
     }
  
     public void func_73075_a() {
@@ -66,7 +69,7 @@
              this.field_73097_j = false;
           } else {
              float f = this.func_229859_a_(blockstate, this.field_180241_i, this.field_73093_n);
-@@ -98,7 +115,7 @@
+@@ -98,7 +118,7 @@
           }
        } else if (this.field_73088_d) {
           BlockState blockstate1 = this.field_73092_a.func_180495_p(this.field_180240_f);
@@ -75,7 +78,7 @@
              this.field_73092_a.func_175715_c(this.field_73090_b.func_145782_y(), this.field_180240_f, -1);
              this.field_73094_o = -1;
              this.field_73088_d = false;
-@@ -126,17 +143,45 @@
+@@ -126,17 +146,45 @@
        double d1 = this.field_73090_b.func_226278_cu_() - ((double)p_225416_1_.func_177956_o() + 0.5D) + 1.5D;
        double d2 = this.field_73090_b.func_226281_cx_() - ((double)p_225416_1_.func_177952_p() + 0.5D);
        double d3 = d0 * d0 + d1 * d1 + d2 * d2;
@@ -122,7 +125,7 @@
              if (this.func_73083_d()) {
                 this.func_229860_a_(p_225416_1_, p_225416_2_, "creative destroy");
                 return;
-@@ -150,12 +195,43 @@
+@@ -150,12 +198,43 @@
              this.field_73089_e = this.field_73100_i;
              float f = 1.0F;
              BlockState blockstate = this.field_73092_a.func_180495_p(p_225416_1_);
@@ -168,7 +171,7 @@
                 this.func_229860_a_(p_225416_1_, p_225416_2_, "insta mine");
              } else {
                 if (this.field_73088_d) {
-@@ -195,7 +271,7 @@
+@@ -195,7 +274,7 @@
           } else if (p_225416_2_ == CPlayerDiggingPacket.Action.ABORT_DESTROY_BLOCK) {
              this.field_73088_d = false;
              if (!Objects.equals(this.field_180240_f, p_225416_1_)) {
@@ -177,7 +180,7 @@
                 this.field_73092_a.func_175715_c(this.field_73090_b.func_145782_y(), this.field_180240_f, -1);
                 this.field_73090_b.field_71135_a.func_147359_a(new SPlayerDiggingPacket(this.field_180240_f, this.field_73092_a.func_180495_p(this.field_180240_f), p_225416_2_, true, "aborted mismatched destroying"));
              }
-@@ -211,53 +287,129 @@
+@@ -211,53 +290,130 @@
        if (this.func_180237_b(p_229860_1_)) {
           this.field_73090_b.field_71135_a.func_147359_a(new SPlayerDiggingPacket(p_229860_1_, this.field_73092_a.func_180495_p(p_229860_1_), p_229860_2_, true, p_229860_3_));
        } else {
@@ -201,7 +204,8 @@
 +         event = new BlockBreakEvent(bblock, this.field_73090_b.getBukkitEntity());
 +
 +         //Magma start
-+         if(this.field_73090_b.func_184812_l_() && ((Player) this.field_73090_b.getBukkitEntity()).getInventory().getItemInMainHand().getType().toString().contains("SWORD")){
++         List noBreakTypes = Arrays.asList(Material.DIAMOND_SWORD, Material.NETHERITE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.STONE_SWORD, Material.WOODEN_SWORD, Material.TRIDENT);
++         if(this.field_73090_b.func_184812_l_() && noBreakTypes.contains(((Player) this.field_73090_b.getBukkitEntity()).getInventory().getItemInMainHand().getType())){
 +            event.setCancelled(true);
 +            isSwordNoBreak = true;
 +         }
@@ -318,7 +322,7 @@
           int i = p_187250_3_.func_190916_E();
           int j = p_187250_3_.func_77952_i();
           ActionResult<ItemStack> actionresult = p_187250_3_.func_77957_a(p_187250_2_, p_187250_1_, p_187250_4_);
-@@ -288,11 +440,36 @@
+@@ -288,11 +444,36 @@
        }
     }
  
@@ -355,7 +359,7 @@
           if (inamedcontainerprovider != null) {
              p_219441_1_.func_213829_a(inamedcontainerprovider);
              return ActionResultType.SUCCESS;
-@@ -300,10 +477,16 @@
+@@ -300,10 +481,16 @@
              return ActionResultType.PASS;
           }
        } else {
@@ -374,7 +378,7 @@
              ActionResultType actionresulttype = blockstate.func_227031_a_(p_219441_2_, p_219441_1_, p_219441_4_, p_219441_5_);
              if (actionresulttype.func_226246_a_()) {
                 CriteriaTriggers.field_232607_M_.func_226695_a_(p_219441_1_, blockpos, itemstack);
-@@ -312,7 +495,7 @@
+@@ -312,7 +499,7 @@
           }
  
           if (!p_219441_3_.func_190926_b() && !p_219441_1_.func_184811_cZ().func_185141_a(p_219441_3_.func_77973_b())) {
@@ -383,7 +387,7 @@
              ActionResultType actionresulttype1;
              if (this.func_73083_d()) {
                 int i = p_219441_3_.func_190916_E();
-@@ -327,10 +510,10 @@
+@@ -327,10 +514,10 @@
              }
  
              return actionresulttype1;

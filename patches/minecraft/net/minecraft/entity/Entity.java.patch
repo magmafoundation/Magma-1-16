@@ -131,7 +131,7 @@
     private float field_213326_aJ;
  
 +   // CraftBukkit start
-+   public boolean persist = true;
++   public boolean persist = false;
 +   public boolean valid;
 +   public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
 +   public boolean forceExplosionKnockback; // SPIGOT-949

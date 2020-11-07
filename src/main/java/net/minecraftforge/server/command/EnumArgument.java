@@ -41,6 +41,10 @@ public class EnumArgument<T extends Enum<T>> implements ArgumentType<T> {
         this.enumClass = enumClass;
     }
 
+    public EnumArgument(){
+        this.enumClass = null;
+    }
+
     @Override
     public T parse(final StringReader reader) throws CommandSyntaxException {
         return Enum.valueOf(enumClass, reader.readUnquotedString());

@@ -19,15 +19,47 @@
     public SmithingTableContainer(int p_i231590_1_, PlayerInventory p_i231590_2_) {
        this(p_i231590_1_, p_i231590_2_, IWorldPosCallable.field_221489_a);
     }
-@@ -56,12 +61,12 @@
+@@ -28,15 +33,15 @@
+       this.field_241443_i_ = this.field_234651_g_.func_199532_z().func_241447_a_(IRecipeType.field_234827_g_);
+    }
+ 
+-   protected boolean func_230302_a_(BlockState p_230302_1_) {
++   protected boolean isDamaged(BlockState p_230302_1_) {
+       return p_230302_1_.func_203425_a(Blocks.field_222429_lR);
+    }
+ 
+-   protected boolean func_230303_b_(PlayerEntity p_230303_1_, boolean p_230303_2_) {
+-      return this.field_234652_h_ != null && this.field_234652_h_.func_77569_a(this.field_234643_d_, this.field_234651_g_);
++   protected boolean canRepair(PlayerEntity p_230303_1_, boolean p_230303_2_) {
++      return this.field_234652_h_ != null && this.field_234652_h_.func_77569_a(this.inventory, this.field_234651_g_);
+    }
+ 
+-   protected ItemStack func_230301_a_(PlayerEntity p_230301_1_, ItemStack p_230301_2_) {
++   protected ItemStack handleRepair(PlayerEntity p_230301_1_, ItemStack p_230301_2_) {
+       p_230301_2_.func_77980_a(p_230301_1_.field_70170_p, p_230301_1_, p_230301_2_.func_190916_E());
+       this.field_234642_c_.func_201560_d(p_230301_1_);
+       this.func_234654_d_(0);
+@@ -48,20 +53,20 @@
+    }
+ 
+    private void func_234654_d_(int p_234654_1_) {
+-      ItemStack itemstack = this.field_234643_d_.func_70301_a(p_234654_1_);
++      ItemStack itemstack = this.inventory.func_70301_a(p_234654_1_);
+       itemstack.func_190918_g(1);
+-      this.field_234643_d_.func_70299_a(p_234654_1_, itemstack);
++      this.inventory.func_70299_a(p_234654_1_, itemstack);
+    }
+ 
     public void func_82848_d() {
-       List<SmithingRecipe> list = this.field_234651_g_.func_199532_z().func_215370_b(IRecipeType.field_234827_g_, this.field_234643_d_, this.field_234651_g_);
+-      List<SmithingRecipe> list = this.field_234651_g_.func_199532_z().func_215370_b(IRecipeType.field_234827_g_, this.field_234643_d_, this.field_234651_g_);
++      List<SmithingRecipe> list = this.field_234651_g_.func_199532_z().func_215370_b(IRecipeType.field_234827_g_, this.inventory, this.field_234651_g_);
        if (list.isEmpty()) {
 -         this.field_234642_c_.func_70299_a(0, ItemStack.field_190927_a);
 +         org.bukkit.craftbukkit.event.CraftEventFactory.callPrepareSmithingEvent(getBukkitView(), ItemStack.field_190927_a); // CraftBukkit
        } else {
           this.field_234652_h_ = list.get(0);
-          ItemStack itemstack = this.field_234652_h_.func_77572_b(this.field_234643_d_);
+-         ItemStack itemstack = this.field_234652_h_.func_77572_b(this.field_234643_d_);
++         ItemStack itemstack = this.field_234652_h_.func_77572_b(this.inventory);
           this.field_234642_c_.func_193056_a(this.field_234652_h_);
 -         this.field_234642_c_.func_70299_a(0, itemstack);
 +         org.bukkit.craftbukkit.event.CraftEventFactory.callPrepareSmithingEvent(getBukkitView(), itemstack); // CraftBukkit
@@ -49,7 +81,7 @@
 +      if (bukkitEntity != null) {
 +         return bukkitEntity;
 +      }
-+      org.bukkit.craftbukkit.inventory.CraftInventory inventory = new org.bukkit.craftbukkit.inventory.CraftInventorySmithing(field_234644_e_.getLocation(), this.field_234643_d_, this.field_234642_c_);
++      org.bukkit.craftbukkit.inventory.CraftInventory inventory = new org.bukkit.craftbukkit.inventory.CraftInventorySmithing(field_234644_e_.getLocation(), this.inventory, this.field_234642_c_);
 +      bukkitEntity = new CraftInventoryView(this.field_234645_f_.getBukkitEntity(), inventory, this);
 +      return bukkitEntity;
 +   }

@@ -6,7 +6,8 @@
  import com.mojang.datafixers.DataFixer;
 -import com.mojang.serialization.Lifecycle;
  import java.awt.GraphicsEnvironment;
- import java.io.File;
+-import java.io.File;
++import java.io.*;
  import java.net.Proxy;
  import java.nio.file.Path;
  import java.nio.file.Paths;
@@ -55,7 +56,7 @@
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
  
-@@ -70,43 +62,63 @@
+@@ -70,43 +62,96 @@
        OptionSpec<String> optionspec10 = optionparser.accepts("world").withRequiredArg();
        OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1);
        OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
@@ -89,9 +90,42 @@
 +            System.err.println( "If you do not agree to the above EULA please stop your server and remove this flag immediately." );
 +         }
 +         // Spigot End
-+         if (!servereula.func_154346_a() && !eulaAgreed) { // Spigot
-+            field_240759_a_.info("You need to agree to the EULA in order to run the server. Go to eula.txt for more info.");
-+            return;
++         if (!servereula.func_154346_a()) { // Spigot
++            try {
++               System.out.println("You need to agree to the EULA in order to run the server.");
++               System.out.println("By Typing yes you are indicating your agreement to mojangs EULA (https://account.mojang.com/documents/minecraft_eula).");
++               System.out.println("Would you like to accept the EULA? (Type `yes` or `no`):");
++               boolean startServer = false;
++               int wrongCounter = 0;
++               while(!startServer) {
++                  BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
++                  String answer = input.readLine();
++                  switch (answer.toLowerCase()) {
++                     case "yes":
++                        new File("eula.txt").delete();
++                        new File("eula.txt").createNewFile();
++                        OutputStream os = new FileOutputStream(new File("eula.txt"));
++                        os.write("eula=true".getBytes(), 0, "eula=true".length());
++                        System.out.println("Accepted the EULA! starting Magma....");
++                        startServer = true;
++                        continue;
++                     case "no":
++                        System.out.println("EULA NOT ACCEPTED!\nStoping Server...");
++                        return;
++                     default:
++                        if (wrongCounter >= 2) {
++                           System.out.println("You need to agree to the EULA. Go to eula.txt and accept it.");
++                           return;
++                        }
++                        wrongCounter++;
++                        System.out.println("Invalid response! (" + wrongCounter + "/3) Input 'yes' or 'no'");
++                        System.out.println("Would you like to accept the EULA? (Type `yes` or `no`):");
++                        break;
++                  }
++               }
++            } catch (Exception exception){
++               exception.printStackTrace();
++            }
 +         }
 +
           CrashReport.func_230188_h_();
@@ -134,7 +168,7 @@
           MinecraftServer.func_240777_a_(saveformat$levelsave);
           DatapackCodec datapackcodec = saveformat$levelsave.func_237297_e_();
           boolean flag = optionset.has(optionspec6);
-@@ -115,7 +127,26 @@
+@@ -115,7 +160,26 @@
           }
  
           ResourcePackList resourcepacklist = new ResourcePackList(new ServerPackFinder(), new FolderPackFinder(saveformat$levelsave.func_237285_a_(FolderName.field_237251_g_).toFile(), IPackNameDecorator.field_232627_c_));
@@ -162,7 +196,7 @@
           CompletableFuture<DataPackRegistries> completablefuture = DataPackRegistries.func_240961_a_(resourcepacklist.func_232623_f_(), Commands.EnvironmentType.DEDICATED, serverpropertiesprovider.func_219034_a().field_225395_K, Util.func_215072_e(), Runnable::run);
  
           DataPackRegistries datapackregistries;
-@@ -128,58 +159,64 @@
+@@ -128,58 +192,64 @@
           }
  
           datapackregistries.func_240971_i_();
