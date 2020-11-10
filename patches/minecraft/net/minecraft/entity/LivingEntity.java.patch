@@ -524,7 +524,7 @@
        this.field_70180_af.func_187227_b(field_184632_c, MathHelper.func_76131_a(p_70606_1_, 0.0F, this.func_110138_aP()));
     }
  
-@@ -915,6 +1145,7 @@
+@@ -915,11 +1145,12 @@
     }
  
     public boolean func_70097_a(DamageSource p_70097_1_, float p_70097_2_) {
@@ -532,6 +532,12 @@
        if (this.func_180431_b(p_70097_1_)) {
           return false;
        } else if (this.field_70170_p.field_72995_K) {
+          return false;
+-      } else if (this.func_233643_dh_()) {
++      } else if (this.field_70128_L || this.field_70729_aU || this.func_233643_dh_()) { // CraftBukkit - Don't allow entities that got set to dead/killed elsewhere to get damaged and die
+          return false;
+       } else if (p_70097_1_.func_76347_k() && this.func_70644_a(Effects.field_76426_n)) {
+          return false;
 @@ -930,16 +1161,18 @@
  
           this.field_70708_bq = 0;
@@ -608,7 +614,7 @@
                 if (wolfentity.func_70909_n()) {
                    this.field_70718_bc = 100;
                    LivingEntity livingentity = wolfentity.func_70902_q();
-@@ -1081,18 +1332,27 @@
+@@ -1081,32 +1332,43 @@
           return false;
        } else {
           ItemStack itemstack = null;
@@ -640,10 +646,10 @@
                 ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)this;
                 serverplayerentity.func_71029_a(Stats.field_75929_E.func_199076_b(Items.field_190929_cY));
                 CriteriaTriggers.field_193130_A.func_193187_a(serverplayerentity, itemstack);
-@@ -1100,9 +1360,11 @@
+             }
  
              this.func_70606_j(1.0F);
-             this.func_195061_cb();
+-            this.func_195061_cb();
 -            this.func_195064_c(new EffectInstance(Effects.field_76428_l, 900, 1));
 -            this.func_195064_c(new EffectInstance(Effects.field_76444_x, 100, 1));
 -            this.func_195064_c(new EffectInstance(Effects.field_76426_n, 800, 0));
@@ -651,9 +657,15 @@
 +            this.clearActivePotions(Cause.TOTEM);
 +            this.addPotionEffect(new EffectInstance(Effects.field_76428_l, 900, 1), Cause.TOTEM);
 +            this.addPotionEffect(new EffectInstance(Effects.field_76444_x, 100, 1), Cause.TOTEM);
++            this.addPotionEffect(new EffectInstance(Effects.field_76426_n, 800, 0), Cause.TOTEM);
 +            // CraftBukkit end
              this.field_70170_p.func_72960_a(this, (byte)35);
           }
+ 
+-         return itemstack != null;
++         return !event.isCancelled();
+       }
+    }
  
 @@ -1165,6 +1427,7 @@
     }
@@ -1316,7 +1328,7 @@
 -               flag = true;
 +            // CraftBukkit start - Teleport event
 +            // this.enderTeleportTo(d0, d6, d2);
-+            EntityTeleportEvent teleport = new EntityTeleportEvent(this.getBukkitEntity(), new Location(this.field_70170_p.getWorldCB(), d0, d1, d2), new Location(this.field_70170_p.getWorldCB(), p_213373_1_, p_213373_3_, p_213373_5_));
++            EntityTeleportEvent teleport = new EntityTeleportEvent(this.getBukkitEntity(), new Location(this.field_70170_p.getWorldCB(), d0, d1, d2), new Location(this.field_70170_p.getWorldCB(), p_213373_1_, d3, p_213373_5_));
 +            this.field_70170_p.getServerCB().getPluginManager().callEvent(teleport);
 +            if (!teleport.isCancelled()) {
 +               Location to = teleport.getTo();

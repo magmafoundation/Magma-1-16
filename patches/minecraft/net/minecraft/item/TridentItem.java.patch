@@ -18,60 +18,252 @@
  import net.minecraft.entity.projectile.AbstractArrowEntity;
  import net.minecraft.entity.projectile.TridentEntity;
  import net.minecraft.inventory.EquipmentSlotType;
-@@ -57,9 +58,12 @@
-             int j = EnchantmentHelper.func_203190_g(p_77615_1_);
-             if (j <= 0 || playerentity.func_70026_G()) {
-                if (!p_77615_2_.field_72995_K) {
+@@ -27,124 +28,145 @@
+ import net.minecraft.world.World;
+ 
+ public class TridentItem extends Item implements IVanishable {
+-   private final Multimap<Attribute, AttributeModifier> field_234812_a_;
+ 
+-   public TridentItem(Item.Properties p_i48788_1_) {
+-      super(p_i48788_1_);
+-      Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+-      builder.put(Attributes.field_233823_f_, new AttributeModifier(field_111210_e, "Tool modifier", 8.0D, AttributeModifier.Operation.ADDITION));
+-      builder.put(Attributes.field_233825_h_, new AttributeModifier(field_185050_h, "Tool modifier", (double)-2.9F, AttributeModifier.Operation.ADDITION));
+-      this.field_234812_a_ = builder.build();
+-   }
++    private final Multimap<Attribute, AttributeModifier> field_234812_a_;
+ 
+-   public boolean func_195938_a(BlockState p_195938_1_, World p_195938_2_, BlockPos p_195938_3_, PlayerEntity p_195938_4_) {
+-      return !p_195938_4_.func_184812_l_();
+-   }
++    public TridentItem(Item.Properties p_i48788_1_) {
++        super(p_i48788_1_);
++        Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
++        builder.put(Attributes.field_233823_f_, new AttributeModifier(field_111210_e, "Tool modifier", 8.0D, AttributeModifier.Operation.ADDITION));
++        builder.put(Attributes.field_233825_h_, new AttributeModifier(field_185050_h, "Tool modifier", (double) -2.9F, AttributeModifier.Operation.ADDITION));
++        this.field_234812_a_ = builder.build();
++    }
+ 
+-   public UseAction func_77661_b(ItemStack p_77661_1_) {
+-      return UseAction.SPEAR;
+-   }
++    public boolean func_195938_a(BlockState p_195938_1_, World p_195938_2_, BlockPos p_195938_3_, PlayerEntity p_195938_4_) {
++        return !p_195938_4_.func_184812_l_();
++    }
+ 
+-   public int func_77626_a(ItemStack p_77626_1_) {
+-      return 72000;
+-   }
++    public UseAction func_77661_b(ItemStack p_77661_1_) {
++        return UseAction.SPEAR;
++    }
+ 
+-   public void func_77615_a(ItemStack p_77615_1_, World p_77615_2_, LivingEntity p_77615_3_, int p_77615_4_) {
+-      if (p_77615_3_ instanceof PlayerEntity) {
+-         PlayerEntity playerentity = (PlayerEntity)p_77615_3_;
+-         int i = this.func_77626_a(p_77615_1_) - p_77615_4_;
+-         if (i >= 10) {
+-            int j = EnchantmentHelper.func_203190_g(p_77615_1_);
+-            if (j <= 0 || playerentity.func_70026_G()) {
+-               if (!p_77615_2_.field_72995_K) {
 -                  p_77615_1_.func_222118_a(1, playerentity, (p_220047_1_) -> {
 -                     p_220047_1_.func_213334_d(p_77615_3_.func_184600_cs());
-+                  // CraftBukkit - moved down
-+                  /*
-+                  stack.damageItem(1, playerentity, (p_220047_1_) -> {
-+                     p_220047_1_.sendBreakAnimation(entityLiving.getActiveHand());
-                   });
-+                  */
-                   if (j == 0) {
-                      TridentEntity tridententity = new TridentEntity(p_77615_2_, playerentity, p_77615_1_);
-                      tridententity.func_234612_a_(playerentity, playerentity.field_70125_A, playerentity.field_70177_z, 0.0F, 2.5F + (float)j * 0.5F, 1.0F);
-@@ -68,15 +72,41 @@
-                      }
+-                  });
+-                  if (j == 0) {
+-                     TridentEntity tridententity = new TridentEntity(p_77615_2_, playerentity, p_77615_1_);
+-                     tridententity.func_234612_a_(playerentity, playerentity.field_70125_A, playerentity.field_70177_z, 0.0F, 2.5F + (float)j * 0.5F, 1.0F);
+-                     if (playerentity.field_71075_bZ.field_75098_d) {
+-                        tridententity.field_70251_a = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+-                     }
++    public int func_77626_a(ItemStack p_77626_1_) {
++        return 72000;
++    }
  
-                      p_77615_2_.func_217376_c(tridententity);
+-                     p_77615_2_.func_217376_c(tridententity);
+-                     p_77615_2_.func_217384_a((PlayerEntity)null, tridententity, SoundEvents.field_203274_ip, SoundCategory.PLAYERS, 1.0F, 1.0F);
+-                     if (!playerentity.field_71075_bZ.field_75098_d) {
+-                        playerentity.field_71071_by.func_184437_d(p_77615_1_);
+-                     }
+-                  }
+-               }
++    public void func_77615_a(ItemStack p_77615_1_, World p_77615_2_, LivingEntity p_77615_3_, int p_77615_4_) {
++        if (p_77615_3_ instanceof PlayerEntity) {
++            PlayerEntity playerentity = (PlayerEntity) p_77615_3_;
++            int i = this.func_77626_a(p_77615_1_) - p_77615_4_;
++            if (i >= 10) {
++                int j = EnchantmentHelper.func_203190_g(p_77615_1_);
++                if (j <= 0 || playerentity.func_70026_G()) {
++                    if (!p_77615_2_.field_72995_K) {
++                        p_77615_1_.func_222118_a(1, playerentity, (p_220047_1_) -> {
++                            p_220047_1_.func_213334_d(p_77615_3_.func_184600_cs());
++                        });
++                        if (j == 0) {
++                            TridentEntity tridententity = new TridentEntity(p_77615_2_, playerentity, p_77615_1_);
++                            tridententity.func_234612_a_(playerentity, playerentity.field_70125_A, playerentity.field_70177_z, 0.0F, 2.5F + (float) j * 0.5F, 1.0F);
++                            if (playerentity.field_71075_bZ.field_75098_d) {
++                                tridententity.field_70251_a = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
++                            }
+ 
+-               playerentity.func_71029_a(Stats.field_75929_E.func_199076_b(this));
+-               if (j > 0) {
+-                  float f7 = playerentity.field_70177_z;
+-                  float f = playerentity.field_70125_A;
+-                  float f1 = -MathHelper.func_76126_a(f7 * ((float)Math.PI / 180F)) * MathHelper.func_76134_b(f * ((float)Math.PI / 180F));
+-                  float f2 = -MathHelper.func_76126_a(f * ((float)Math.PI / 180F));
+-                  float f3 = MathHelper.func_76134_b(f7 * ((float)Math.PI / 180F)) * MathHelper.func_76134_b(f * ((float)Math.PI / 180F));
+-                  float f4 = MathHelper.func_76129_c(f1 * f1 + f2 * f2 + f3 * f3);
+-                  float f5 = 3.0F * ((1.0F + (float)j) / 4.0F);
+-                  f1 = f1 * (f5 / f4);
+-                  f2 = f2 * (f5 / f4);
+-                  f3 = f3 * (f5 / f4);
+-                  playerentity.func_70024_g((double)f1, (double)f2, (double)f3);
+-                  playerentity.func_204803_n(20);
+-                  if (playerentity.func_233570_aj_()) {
+-                     float f6 = 1.1999999F;
+-                     playerentity.func_213315_a(MoverType.SELF, new Vector3d(0.0D, (double)1.1999999F, 0.0D));
+-                  }
++                            p_77615_2_.func_217376_c(tridententity);
+ 
+-                  SoundEvent soundevent;
+-                  if (j >= 3) {
+-                     soundevent = SoundEvents.field_203273_io;
+-                  } else if (j == 2) {
+-                     soundevent = SoundEvents.field_203272_in;
+-                  } else {
+-                     soundevent = SoundEvents.field_203271_im;
+-                  }
++                            // CraftBukkit start
++                            if (!p_77615_2_.func_217376_c(tridententity)) {
++                                if (playerentity instanceof ServerPlayerEntity) {
++                                    ((ServerPlayerEntity) playerentity).getBukkitEntity().updateInventory();
++                                }
++                                return;
++                            }
+ 
+-                  p_77615_2_.func_217384_a((PlayerEntity)null, playerentity, soundevent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+-               }
++                            p_77615_1_.func_222118_a(1, playerentity, (p_220047_1_) -> {
++                                p_220047_1_.func_213334_d(p_77615_3_.func_184600_cs());
++                            });
++                            tridententity.field_203054_h = p_77615_1_.func_77946_l(); // SPIGOT-4511 update since damage call moved
++                            // CraftBukkit end
+ 
++                            p_77615_2_.func_217384_a((PlayerEntity) null, tridententity, SoundEvents.field_203274_ip, SoundCategory.PLAYERS, 1.0F, 1.0F);
++                            if (!playerentity.field_71075_bZ.field_75098_d) {
++                                playerentity.field_71071_by.func_184437_d(p_77615_1_);
++                            }
++                        }
++                    }
 +
-+                     // CraftBukkit start
-+                     if (!p_77615_2_.func_217376_c(tridententity)) {
-+                        if (playerentity instanceof ServerPlayerEntity) {
-+                           ((ServerPlayerEntity) playerentity).getBukkitEntity().updateInventory();
-+                           return;
++                    playerentity.func_71029_a(Stats.field_75929_E.func_199076_b(this));
++                    if (j > 0) {
++                        // CraftBukkit start
++                        org.bukkit.event.player.PlayerRiptideEvent event = new org.bukkit.event.player.PlayerRiptideEvent((org.bukkit.entity.Player) playerentity.getBukkitEntity(),
++                            org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(p_77615_1_));
++                        event.getPlayer().getServer().getPluginManager().callEvent(event);
++                        // CraftBukkit end
++                        float f7 = playerentity.field_70177_z;
++                        float f = playerentity.field_70125_A;
++                        float f1 = -MathHelper.func_76126_a(f7 * ((float) Math.PI / 180F)) * MathHelper.func_76134_b(f * ((float) Math.PI / 180F));
++                        float f2 = -MathHelper.func_76126_a(f * ((float) Math.PI / 180F));
++                        float f3 = MathHelper.func_76134_b(f7 * ((float) Math.PI / 180F)) * MathHelper.func_76134_b(f * ((float) Math.PI / 180F));
++                        float f4 = MathHelper.func_76129_c(f1 * f1 + f2 * f2 + f3 * f3);
++                        float f5 = 3.0F * ((1.0F + (float) j) / 4.0F);
++                        f1 = f1 * (f5 / f4);
++                        f2 = f2 * (f5 / f4);
++                        f3 = f3 * (f5 / f4);
++                        playerentity.func_70024_g((double) f1, (double) f2, (double) f3);
++                        playerentity.func_204803_n(20);
++                        if (playerentity.func_233570_aj_()) {
++                            float f6 = 1.1999999F;
++                            playerentity.func_213315_a(MoverType.SELF, new Vector3d(0.0D, (double) 1.1999999F, 0.0D));
 +                        }
 +
-+                        p_77615_1_.func_222118_a(1, playerentity, (p_220047_1_) -> {
-+                           p_220047_1_.func_213334_d(p_77615_3_.func_184600_cs());
-+                        });
-+                        tridententity.field_203054_h = p_77615_1_.func_77946_l(); // SPIGOT-4511 update since damage call moved
-+                        // CraftBukkit end
-+                     }
++                        SoundEvent soundevent;
++                        if (j >= 3) {
++                            soundevent = SoundEvents.field_203273_io;
++                        } else if (j == 2) {
++                            soundevent = SoundEvents.field_203272_in;
++                        } else {
++                            soundevent = SoundEvents.field_203271_im;
++                        }
 +
-                      p_77615_2_.func_217384_a((PlayerEntity)null, tridententity, SoundEvents.field_203274_ip, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                      if (!playerentity.field_71075_bZ.field_75098_d) {
-                         playerentity.field_71071_by.func_184437_d(p_77615_1_);
-                      }
-                   }
-+                  // CraftBukkit start - SPIGOT-5458 also need in this branch :(
-+                  else {
-+                     p_77615_1_.func_222118_a(1, playerentity, (entityhuman1) -> {
-+                        entityhuman1.func_213334_d(p_77615_3_.func_184600_cs());
-+                     });
-+                  }
-+                  // CraftBukkit end
-                }
++                        p_77615_2_.func_217384_a((PlayerEntity) null, playerentity, soundevent, SoundCategory.PLAYERS, 1.0F, 1.0F);
++                    }
++
++                }
+             }
+-         }
+-      }
+-   }
++        }
++    }
  
-                playerentity.func_71029_a(Stats.field_75929_E.func_199076_b(this));
-                if (j > 0) {
-+                  // CraftBukkit start
-+                  org.bukkit.event.player.PlayerRiptideEvent event = new org.bukkit.event.player.PlayerRiptideEvent((org.bukkit.entity.Player) playerentity.getBukkitEntity(), org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(p_77615_1_));
-+                  event.getPlayer().getServer().getPluginManager().callEvent(event);
-+                  // CraftBukkit end
-                   float f7 = playerentity.field_70177_z;
-                   float f = playerentity.field_70125_A;
-                   float f1 = -MathHelper.func_76126_a(f7 * ((float)Math.PI / 180F)) * MathHelper.func_76134_b(f * ((float)Math.PI / 180F));
+-   public ActionResult<ItemStack> func_77659_a(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_) {
+-      ItemStack itemstack = p_77659_2_.func_184586_b(p_77659_3_);
+-      if (itemstack.func_77952_i() >= itemstack.func_77958_k() - 1) {
+-         return ActionResult.func_226251_d_(itemstack);
+-      } else if (EnchantmentHelper.func_203190_g(itemstack) > 0 && !p_77659_2_.func_70026_G()) {
+-         return ActionResult.func_226251_d_(itemstack);
+-      } else {
+-         p_77659_2_.func_184598_c(p_77659_3_);
+-         return ActionResult.func_226249_b_(itemstack);
+-      }
+-   }
++    public ActionResult<ItemStack> func_77659_a(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_) {
++        ItemStack itemstack = p_77659_2_.func_184586_b(p_77659_3_);
++        if (itemstack.func_77952_i() >= itemstack.func_77958_k() - 1) {
++            return ActionResult.func_226251_d_(itemstack);
++        } else if (EnchantmentHelper.func_203190_g(itemstack) > 0 && !p_77659_2_.func_70026_G()) {
++            return ActionResult.func_226251_d_(itemstack);
++        } else {
++            p_77659_2_.func_184598_c(p_77659_3_);
++            return ActionResult.func_226249_b_(itemstack);
++        }
++    }
+ 
+-   public boolean func_77644_a(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
+-      p_77644_1_.func_222118_a(1, p_77644_3_, (p_220048_0_) -> {
+-         p_220048_0_.func_213361_c(EquipmentSlotType.MAINHAND);
+-      });
+-      return true;
+-   }
++    public boolean func_77644_a(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
++        p_77644_1_.func_222118_a(1, p_77644_3_, (p_220048_0_) -> {
++            p_220048_0_.func_213361_c(EquipmentSlotType.MAINHAND);
++        });
++        return true;
++    }
+ 
+-   public boolean func_179218_a(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
+-      if ((double)p_179218_3_.func_185887_b(p_179218_2_, p_179218_4_) != 0.0D) {
+-         p_179218_1_.func_222118_a(2, p_179218_5_, (p_220046_0_) -> {
+-            p_220046_0_.func_213361_c(EquipmentSlotType.MAINHAND);
+-         });
+-      }
++    public boolean func_179218_a(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
++        if ((double) p_179218_3_.func_185887_b(p_179218_2_, p_179218_4_) != 0.0D) {
++            p_179218_1_.func_222118_a(2, p_179218_5_, (p_220046_0_) -> {
++                p_220046_0_.func_213361_c(EquipmentSlotType.MAINHAND);
++            });
++        }
+ 
+-      return true;
+-   }
++        return true;
++    }
+ 
+-   public Multimap<Attribute, AttributeModifier> func_111205_h(EquipmentSlotType p_111205_1_) {
+-      return p_111205_1_ == EquipmentSlotType.MAINHAND ? this.field_234812_a_ : super.func_111205_h(p_111205_1_);
+-   }
++    public Multimap<Attribute, AttributeModifier> func_111205_h(EquipmentSlotType p_111205_1_) {
++        return p_111205_1_ == EquipmentSlotType.MAINHAND ? this.field_234812_a_ : super.func_111205_h(p_111205_1_);
++    }
+ 
+-   public int func_77619_b() {
+-      return 1;
+-   }
++    public int func_77619_b() {
++        return 1;
++    }
+ }

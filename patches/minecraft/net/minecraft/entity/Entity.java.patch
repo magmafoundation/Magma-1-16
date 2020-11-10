@@ -458,7 +458,7 @@
        this.field_70167_r = p_242281_3_;
        this.field_70166_s = d1;
        this.func_70107_b(d0, p_242281_3_, d1);
-+      field_70170_p.getWorldCB().getChunkAt((int) Math.floor(this.func_226277_ct_()) >> 4, (int) Math.floor(this.func_226281_cx_()) >> 4); // CraftBukkit
++      field_70170_p.func_212866_a_((int) Math.floor(this.func_226277_ct_()) >> 4, (int) Math.floor(this.func_226281_cx_()) >> 4); // CraftBukkit
     }
  
     public void func_233576_c_(Vector3d p_233576_1_) {
