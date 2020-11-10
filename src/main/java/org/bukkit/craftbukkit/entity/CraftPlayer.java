@@ -199,6 +199,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
+    public void sendRawMessage(UUID sender, String message) {
+        if (getHandle().connection == null) return;
+
+        for (ITextComponent component : CraftChatMessage.fromString(message)) {
+            getHandle().connection.sendPacket(new SChatPacket(component, ChatType.CHAT, (sender == null) ? Util.DUMMY_UUID : sender));
+        }
+    }
+    @Override
     public void sendMessage(String message) {
         if (!conversationTracker.isConversingModaly()) {
             this.sendRawMessage(message);
@@ -212,6 +220,19 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
     }
 
+    @Override
+    public void sendMessage(UUID sender, String message) {
+        if (!conversationTracker.isConversingModaly()) {
+            this.sendRawMessage(sender, message);
+        }
+    }
+
+    @Override
+    public void sendMessage(UUID sender, String[] messages) {
+        for (String message : messages) {
+            sendMessage(sender, message);
+        }
+    }
     @Override
     public String getDisplayName() {
         return getHandle().displayName;
@@ -314,7 +335,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         if (getHandle().connection == null) return;
 
         // Do not directly assign here, from the packethandler we'll assign it.
-        getHandle().connection.sendPacket(new SWorldSpawnChangedPacket(new BlockPos(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())));
+        getHandle().connection.sendPacket(new SWorldSpawnChangedPacket(new BlockPos(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()), loc.getYaw()));
     }
 
     @Override
@@ -1761,6 +1782,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         @Override
+        public void sendMessage(UUID sender, BaseComponent component) {
+            this.sendMessage(net.md_5.bungee.api.ChatMessageType.CHAT, sender, component);
+        }
+
+        @Override
+        public void sendMessage(UUID sender, BaseComponent... components) {
+            this.sendMessage(net.md_5.bungee.api.ChatMessageType.CHAT, sender, components);
+        }
+        @Override
         public void sendMessage(net.md_5.bungee.api.ChatMessageType position, BaseComponent component) {
             sendMessage( position, new BaseComponent[] { component } );
         }
@@ -1773,6 +1803,19 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             getHandle().connection.sendPacket(packet);
         }
 
+        @Override
+        public void sendMessage(net.md_5.bungee.api.ChatMessageType position, UUID sender, BaseComponent component) {
+            sendMessage( position, sender, new BaseComponent[] { component } );
+        }
+
+        @Override
+        public void sendMessage(net.md_5.bungee.api.ChatMessageType position, UUID sender, BaseComponent... components) {
+            if ( getHandle().connection == null ) return;
+
+            SChatPacket packet = new SChatPacket(null, ChatType.byId((byte) position.ordinal()), sender == null ? Util.DUMMY_UUID : sender);
+            packet.components = components;
+            getHandle().connection.sendPacket(packet);
+        }
     };
 
     public Player.Spigot spigot()

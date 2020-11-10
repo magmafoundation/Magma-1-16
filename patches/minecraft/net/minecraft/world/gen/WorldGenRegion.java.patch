@@ -8,31 +8,7 @@
  import net.minecraft.world.WorldGenTickList;
  import net.minecraft.world.biome.Biome;
  import net.minecraft.world.biome.BiomeManager;
-@@ -40,7 +41,6 @@
- import net.minecraft.world.chunk.ChunkStatus;
- import net.minecraft.world.chunk.IChunk;
- import net.minecraft.world.gen.feature.structure.Structure;
--import net.minecraft.world.gen.feature.structure.StructureManager;
- import net.minecraft.world.gen.feature.structure.StructureStart;
- import net.minecraft.world.lighting.WorldLightManager;
- import net.minecraft.world.server.ServerWorld;
-@@ -70,7 +70,6 @@
-    private final BiomeManager field_229862_o_;
-    private final ChunkPos field_241160_n_;
-    private final ChunkPos field_241161_o_;
--   private final StructureManager field_244530_p;
- 
-    public WorldGenRegion(ServerWorld p_i50698_1_, List<IChunk> p_i50698_2_) {
-       int i = MathHelper.func_76128_c(Math.sqrt((double)p_i50698_2_.size()));
-@@ -90,7 +89,6 @@
-          this.field_229862_o_ = new BiomeManager(this, BiomeManager.func_235200_a_(this.field_201690_g), p_i50698_1_.func_230315_m_().func_227176_e_());
-          this.field_241160_n_ = p_i50698_2_.get(0).func_76632_l();
-          this.field_241161_o_ = p_i50698_2_.get(p_i50698_2_.size() - 1).func_76632_l();
--         this.field_244530_p = p_i50698_1_.func_241112_a_().func_241464_a_(this);
-       }
-    }
- 
-@@ -173,11 +171,11 @@
+@@ -173,11 +174,11 @@
  
     public boolean func_241212_a_(BlockPos p_241212_1_, boolean p_241212_2_, @Nullable Entity p_241212_3_, int p_241212_4_) {
        BlockState blockstate = this.func_180495_p(p_241212_1_);
@@ -46,7 +22,7 @@
              Block.func_220054_a(blockstate, this.field_201689_f, p_241212_1_, tileentity, p_241212_3_, ItemStack.field_190927_a);
           }
  
-@@ -197,11 +195,11 @@
+@@ -197,11 +198,11 @@
           if (compoundnbt != null) {
              if ("DUMMY".equals(compoundnbt.func_74779_i("id"))) {
                 Block block = blockstate.func_177230_c();
@@ -60,16 +36,18 @@
              } else {
                 tileentity = TileEntity.func_235657_b_(blockstate, compoundnbt);
              }
-@@ -212,7 +210,7 @@
+@@ -212,8 +213,8 @@
              }
           }
  
 -         if (blockstate.func_177230_c() instanceof ITileEntityProvider) {
+-            field_208303_a.warn("Tried to access a block entity before it was created. {}", (Object)p_175625_1_);
 +         if (blockstate.hasTileEntity()) {
-             field_208303_a.warn("Tried to access a block entity before it was created. {}", (Object)p_175625_1_);
++            field_208303_a.warn("Tried to access a block entity before it was created. {} {}", (Object)p_175625_1_, blockstate.func_177230_c().toString());
           }
  
-@@ -228,9 +226,9 @@
+          return null;
+@@ -228,9 +229,9 @@
        }
  
        Block block = p_241211_2_.func_177230_c();
@@ -81,7 +59,7 @@
           } else {
              CompoundNBT compoundnbt = new CompoundNBT();
              compoundnbt.func_74768_a("x", p_241211_1_.func_177958_n());
-@@ -239,7 +237,7 @@
+@@ -239,7 +240,7 @@
              compoundnbt.func_74778_a("id", "DUMMY");
              ichunk.func_201591_a(compoundnbt);
           }
@@ -90,7 +68,7 @@
           ichunk.func_177425_e(p_241211_1_);
        }
  
-@@ -255,9 +253,16 @@
+@@ -255,9 +256,16 @@
     }
  
     public boolean func_217376_c(Entity p_217376_1_) {
@@ -110,23 +88,15 @@
        return true;
     }
  
-@@ -331,6 +336,11 @@
+@@ -331,6 +339,11 @@
     public void func_217378_a(@Nullable PlayerEntity p_217378_1_, int p_217378_2_, BlockPos p_217378_3_, int p_217378_4_) {
     }
  
 +   @Override
 +   public ServerWorld getMinecraftWorld() {
-+      return null;
++      return field_201689_f;
 +   }
 +
     public DimensionType func_230315_m_() {
        return this.field_241159_j_;
     }
-@@ -352,6 +362,6 @@
-    }
- 
-    public Stream<? extends StructureStart<?>> func_241827_a(SectionPos p_241827_1_, Structure<?> p_241827_2_) {
--      return this.field_244530_p.func_235011_a_(p_241827_1_, p_241827_2_);
-+      return this.field_201689_f.func_241827_a(p_241827_1_, p_241827_2_);
-    }
- }

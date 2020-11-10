@@ -1,75 +1,6 @@
 --- a/net/minecraft/client/network/login/ClientLoginNetHandler.java
 +++ b/net/minecraft/client/network/login/ClientLoginNetHandler.java
-@@ -3,14 +3,12 @@
- import com.mojang.authlib.GameProfile;
- import com.mojang.authlib.exceptions.AuthenticationException;
- import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
--import com.mojang.authlib.exceptions.InsufficientPrivilegesException;
- import com.mojang.authlib.exceptions.InvalidCredentialsException;
- import com.mojang.authlib.minecraft.MinecraftSessionService;
- import java.math.BigInteger;
- import java.security.PublicKey;
- import java.util.function.Consumer;
- import javax.annotation.Nullable;
--import javax.crypto.Cipher;
- import javax.crypto.SecretKey;
- import net.minecraft.client.Minecraft;
- import net.minecraft.client.gui.DialogTexts;
-@@ -29,7 +27,6 @@
- import net.minecraft.network.login.server.SLoginSuccessPacket;
- import net.minecraft.realms.DisconnectedRealmsScreen;
- import net.minecraft.realms.RealmsScreen;
--import net.minecraft.util.CryptException;
- import net.minecraft.util.CryptManager;
- import net.minecraft.util.HTTPUtil;
- import net.minecraft.util.text.ITextComponent;
-@@ -57,21 +54,10 @@
-    }
- 
-    public void func_147389_a(SEncryptionRequestPacket p_147389_1_) {
--      Cipher cipher;
--      Cipher cipher1;
--      String s;
--      CEncryptionResponsePacket cencryptionresponsepacket;
--      try {
--         SecretKey secretkey = CryptManager.func_75890_a();
--         PublicKey publickey = p_147389_1_.func_149608_d();
--         s = (new BigInteger(CryptManager.func_75895_a(p_147389_1_.func_149609_c(), publickey, secretkey))).toString(16);
--         cipher = CryptManager.func_151229_a(2, secretkey);
--         cipher1 = CryptManager.func_151229_a(1, secretkey);
--         cencryptionresponsepacket = new CEncryptionResponsePacket(secretkey, publickey, p_147389_1_.func_149607_e());
--      } catch (CryptException cryptexception) {
--         throw new IllegalStateException("Protocol error", cryptexception);
--      }
--
-+      SecretKey secretkey = CryptManager.func_75890_a();
-+      PublicKey publickey = p_147389_1_.func_149608_d();
-+      String s = (new BigInteger(CryptManager.func_75895_a(p_147389_1_.func_149609_c(), publickey, secretkey))).toString(16);
-+      CEncryptionResponsePacket cencryptionresponsepacket = new CEncryptionResponsePacket(secretkey, publickey, p_147389_1_.func_149607_e());
-       this.field_209525_d.accept(new TranslationTextComponent("connect.authorizing"));
-       HTTPUtil.field_180193_a.submit(() -> {
-          ITextComponent itextcomponent = this.func_209522_a(s);
-@@ -85,8 +71,8 @@
-          }
- 
-          this.field_209525_d.accept(new TranslationTextComponent("connect.encrypting"));
--         this.field_147393_d.func_201058_a(cencryptionresponsepacket, (p_244776_3_) -> {
--            this.field_147393_d.func_244777_a(cipher, cipher1);
-+         this.field_147393_d.func_201058_a(cencryptionresponsepacket, (p_209523_2_) -> {
-+            this.field_147393_d.enableEncryption(secretkey);
-          });
-       });
-    }
-@@ -100,8 +86,6 @@
-          return new TranslationTextComponent("disconnect.loginFailedInfo", new TranslationTextComponent("disconnect.loginFailedInfo.serversUnavailable"));
-       } catch (InvalidCredentialsException invalidcredentialsexception) {
-          return new TranslationTextComponent("disconnect.loginFailedInfo", new TranslationTextComponent("disconnect.loginFailedInfo.invalidSession"));
--      } catch (InsufficientPrivilegesException insufficientprivilegesexception) {
--         return new TranslationTextComponent("disconnect.loginFailedInfo", new TranslationTextComponent("disconnect.loginFailedInfo.insufficientPrivileges"));
-       } catch (AuthenticationException authenticationexception) {
-          return new TranslationTextComponent("disconnect.loginFailedInfo", authenticationexception.getMessage());
-       }
-@@ -115,6 +99,7 @@
+@@ -115,6 +115,7 @@
        this.field_209525_d.accept(new TranslationTextComponent("connect.joining"));
        this.field_175091_e = p_147390_1_.func_179730_a();
        this.field_147393_d.func_150723_a(ProtocolType.PLAY);
@@ -77,7 +8,7 @@
        this.field_147393_d.func_150719_a(new ClientPlayNetHandler(this.field_147394_b, this.field_147395_c, this.field_147393_d, this.field_175091_e));
     }
  
-@@ -143,6 +128,7 @@
+@@ -143,6 +144,7 @@
     }
  
     public void func_209521_a(SCustomPayloadLoginPacket p_209521_1_) {

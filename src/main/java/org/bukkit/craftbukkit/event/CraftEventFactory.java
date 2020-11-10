@@ -1303,10 +1303,8 @@ public class CraftEventFactory {
         human.openContainer.transferTo(human.container, human.getBukkitEntity());
     }
 
-    public static ItemStack handleEditBookEvent(ServerPlayerEntity player, EquipmentSlotType slot, ItemStack itemInHand, ItemStack newBookItem) {
-        int currentItem = (slot == EquipmentSlotType.MAINHAND) ? player.inventory.currentItem : -1;
-
-        PlayerEditBookEvent editBookEvent = new PlayerEditBookEvent(player.getBukkitEntity(), currentItem, (BookMeta) CraftItemStack.getItemMeta(itemInHand), (BookMeta) CraftItemStack.getItemMeta(newBookItem), newBookItem.getItem() == Items.WRITTEN_BOOK);
+    public static ItemStack handleEditBookEvent(ServerPlayerEntity player, int itemInHandIndex, ItemStack itemInHand, ItemStack newBookItem) {
+        PlayerEditBookEvent editBookEvent = new PlayerEditBookEvent(player.getBukkitEntity(), itemInHandIndex, (BookMeta) CraftItemStack.getItemMeta(itemInHand), (BookMeta) CraftItemStack.getItemMeta(newBookItem), newBookItem.getItem() == Items.WRITTEN_BOOK);
         player.world.getServerCB().getPluginManager().callEvent(editBookEvent);
 
         // If they've got the same item in their hand, it'll need to be updated.

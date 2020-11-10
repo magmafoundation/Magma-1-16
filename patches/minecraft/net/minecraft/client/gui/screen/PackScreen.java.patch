@@ -1,14 +1,5 @@
 --- a/net/minecraft/client/gui/screen/PackScreen.java
 +++ b/net/minecraft/client/gui/screen/PackScreen.java
-@@ -46,7 +46,7 @@
- @OnlyIn(Dist.CLIENT)
- public class PackScreen extends Screen {
-    private static final Logger field_238883_a_ = LogManager.getLogger();
--   private static final ITextComponent field_238884_b_ = (new TranslationTextComponent("pack.dropInfo")).func_240699_a_(TextFormatting.GRAY);
-+   private static final ITextComponent field_238884_b_ = (new TranslationTextComponent("pack.dropInfo")).func_240699_a_(TextFormatting.DARK_GRAY);
-    private static final ITextComponent field_238885_c_ = new TranslationTextComponent("pack.folderInfo");
-    private static final ResourceLocation field_243391_p = new ResourceLocation("textures/misc/unknown_pack.png");
-    private final PackLoadingManager field_238887_q_;
 @@ -129,7 +129,7 @@
  
     private void func_238899_a_(net.minecraft.client.gui.widget.list.ResourcePackList p_238899_1_, Stream<PackLoadingManager.IPack> p_238899_2_) {
@@ -18,3 +9,14 @@
           p_238899_1_.func_231039_at__().add(new net.minecraft.client.gui.widget.list.ResourcePackList.ResourcePackEntry(this.field_230706_i_, p_238899_1_, this, p_238898_2_));
        });
     }
+@@ -189,8 +189,8 @@
+ 
+    private ResourceLocation func_243397_a(TextureManager p_243397_1_, ResourcePackInfo p_243397_2_) {
+       try (
+-         IResourcePack iresourcepack = p_243397_2_.func_195796_e();
+-         InputStream inputstream = iresourcepack.func_195763_b("pack.png");
++          IResourcePack iresourcepack = p_243397_2_.func_195796_e();
++          InputStream inputstream = iresourcepack.func_195763_b("pack.png");
+       ) {
+          String s = p_243397_2_.func_195790_f();
+          ResourceLocation resourcelocation = new ResourceLocation("minecraft", "pack/" + Util.func_244361_a(s, ResourceLocation::func_240909_b_) + "/" + Hashing.sha1().hashUnencodedChars(s) + "/icon");

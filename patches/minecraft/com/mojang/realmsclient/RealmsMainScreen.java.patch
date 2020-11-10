@@ -1,65 +1,55 @@
 --- a/com/mojang/realmsclient/RealmsMainScreen.java
 +++ b/com/mojang/realmsclient/RealmsMainScreen.java
-@@ -237,9 +237,6 @@
-    }
+@@ -1116,7 +1116,7 @@
  
-    public void func_223901_c() {
--      this.field_224026_o = this.func_230480_a_(new Button(this.field_230708_k_ / 2 - 202, this.field_230709_l_ - 32, 90, 20, new TranslationTextComponent("mco.selectServer.leave"), (p_237624_1_) -> {
--         this.func_223906_g(this.func_223967_a(this.field_224021_j));
--      }));
-       this.field_224025_n = this.func_230480_a_(new Button(this.field_230708_k_ / 2 - 190, this.field_230709_l_ - 32, 90, 20, new TranslationTextComponent("mco.selectServer.configure"), (p_237637_1_) -> {
-          this.func_223966_f(this.func_223967_a(this.field_224021_j));
-       }));
-@@ -258,6 +255,9 @@
-       this.field_224024_m = this.func_230480_a_(new Button(this.field_230708_k_ / 2 + 100, this.field_230709_l_ - 32, 90, 20, new TranslationTextComponent("mco.selectServer.expiredRenew"), (p_237629_1_) -> {
-          this.func_223930_q();
-       }));
-+      this.field_224026_o = this.func_230480_a_(new Button(this.field_230708_k_ / 2 - 202, this.field_230709_l_ - 32, 90, 20, new TranslationTextComponent("mco.selectServer.leave"), (p_237624_1_) -> {
-+         this.func_223906_g(this.func_223967_a(this.field_224021_j));
-+      }));
-       this.field_224007_O = this.func_230480_a_(new RealmsMainScreen.PendingInvitesButton());
-       this.field_224008_P = this.func_230480_a_(new RealmsMainScreen.NewsButton());
-       this.field_224006_N = this.func_230480_a_(new RealmsMainScreen.InfoButton());
-@@ -1375,6 +1375,7 @@
-             RealmsServer realmsserver;
-             if (this.field_241824_o_) {
-                if (p_231400_1_ == 0) {
-+                  RealmsNarratorHelper.func_239551_a_(I18n.func_135052_a("mco.trial.message.line1"), I18n.func_135052_a("mco.trial.message.line2"));
-                   realmsserver = null;
-                } else {
-                   if (p_231400_1_ - 1 >= RealmsMainScreen.this.field_224028_q.size()) {
-@@ -1397,6 +1398,7 @@
-             if (realmsserver == null) {
-                RealmsMainScreen.this.field_224021_j = -1L;
-             } else if (realmsserver.field_230586_e_ == RealmsServer.Status.UNINITIALIZED) {
-+               RealmsNarratorHelper.func_239550_a_(I18n.func_135052_a("mco.selectServer.uninitialized") + I18n.func_135052_a("mco.gui.button"));
-                RealmsMainScreen.this.field_224021_j = -1L;
-             } else {
-                RealmsMainScreen.this.field_224021_j = realmsserver.field_230582_a_;
-@@ -1404,6 +1406,7 @@
-                   RealmsMainScreen.this.func_223911_a(RealmsMainScreen.this.func_223967_a(RealmsMainScreen.this.field_224021_j), RealmsMainScreen.this);
-                }
+       @Override
+       public void func_230930_b_() {
+-            RealmsMainScreen.this.func_223955_A();
++         RealmsMainScreen.this.func_223955_A();
+       }
  
-+               RealmsNarratorHelper.func_239550_a_(I18n.func_135052_a("narrator.select", realmsserver.field_230584_c_));
+       public void func_230431_b_(MatrixStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
+@@ -1138,7 +1138,7 @@
+       }
+       @Override
+       public void func_230930_b_() {
+-            RealmsMainScreen.this.field_224035_x = !RealmsMainScreen.this.field_224035_x;
++         RealmsMainScreen.this.field_224035_x = !RealmsMainScreen.this.field_224035_x;
+       }
+ 
+       public void func_230431_b_(MatrixStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
+@@ -1160,16 +1160,16 @@
+       }
+       @Override
+       public void func_230930_b_() {
+-            if (RealmsMainScreen.this.field_223996_D != null) {
+-               Util.func_110647_a().func_195640_a(RealmsMainScreen.this.field_223996_D);
+-               if (RealmsMainScreen.this.field_223995_C) {
+-                  RealmsPersistence.RealmsPersistenceData realmspersistence$realmspersistencedata = RealmsPersistence.func_225188_a();
+-                  realmspersistence$realmspersistencedata.field_225186_b = false;
+-                  RealmsMainScreen.this.field_223995_C = false;
+-                  RealmsPersistence.func_225187_a(realmspersistence$realmspersistencedata);
+-               }
+-
++         if (RealmsMainScreen.this.field_223996_D != null) {
++            Util.func_110647_a().func_195640_a(RealmsMainScreen.this.field_223996_D);
++            if (RealmsMainScreen.this.field_223995_C) {
++               RealmsPersistence.RealmsPersistenceData realmspersistence$realmspersistencedata = RealmsPersistence.func_225188_a();
++               realmspersistence$realmspersistencedata.field_225186_b = false;
++               RealmsMainScreen.this.field_223995_C = false;
++               RealmsPersistence.func_225187_a(realmspersistence$realmspersistencedata);
              }
-          }
++
++         }
        }
-@@ -1411,17 +1414,10 @@
-       public void func_241215_a_(@Nullable RealmsMainScreen.ListEntry p_241215_1_) {
-          super.func_241215_a_(p_241215_1_);
-          int i = this.func_231039_at__().indexOf(p_241215_1_);
--         if (this.field_241824_o_ && i == 0) {
--            RealmsNarratorHelper.func_239551_a_(I18n.func_135052_a("mco.trial.message.line1"), I18n.func_135052_a("mco.trial.message.line2"));
--         } else if (!this.field_241824_o_ || i > 0) {
-+         if (!this.field_241824_o_ || i > 0) {
-             RealmsServer realmsserver = RealmsMainScreen.this.field_224028_q.get(i - (this.field_241824_o_ ? 1 : 0));
-             RealmsMainScreen.this.field_224021_j = realmsserver.field_230582_a_;
-             RealmsMainScreen.this.func_223915_a(realmsserver);
--            if (realmsserver.field_230586_e_ == RealmsServer.Status.UNINITIALIZED) {
--               RealmsNarratorHelper.func_239550_a_(I18n.func_135052_a("mco.selectServer.uninitialized") + I18n.func_135052_a("mco.gui.button"));
--            } else {
--               RealmsNarratorHelper.func_239550_a_(I18n.func_135052_a("narrator.select", realmsserver.field_230584_c_));
--            }
-          }
  
+       public void func_230431_b_(MatrixStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
+@@ -1185,7 +1185,7 @@
+ 
+       @Override
+       public void func_230930_b_() {
+-            RealmsMainScreen.this.func_237598_a_(this);
++         RealmsMainScreen.this.func_237598_a_(this);
        }
+ 
+       public void func_231023_e_() {

@@ -33,14 +33,11 @@
        this.func_71224_l(p_i232494_2_.func_110432_I().func_111285_a());
        this.func_71204_b(p_i232494_2_.func_71355_q());
        this.func_71191_d(256);
-@@ -55,10 +58,12 @@
-       this.func_71229_d(true);
+@@ -56,9 +59,10 @@
        this.func_71188_g(true);
        this.func_71245_h(true);
--      this.func_244801_P();
+       this.func_244801_P();
 -      this.func_240800_l__();
-+      field_147148_h.info("Generating keypair");
-+      this.setKeyPair(CryptManager.func_75891_b());
 +      if (!net.minecraftforge.fml.server.ServerLifecycleHooks.handleServerAboutToStart(this)) return false;
 +//      this.loadWorld();
        this.func_71205_p(this.func_71214_G() + " - " + this.func_240793_aU_().func_76065_j());
@@ -49,7 +46,7 @@
     }
  
     public void func_71217_p(BooleanSupplier p_71217_1_) {
-@@ -92,7 +97,12 @@
+@@ -92,7 +96,12 @@
        return true;
     }
  
@@ -63,7 +60,7 @@
        return this.field_71349_l.field_71412_D;
     }
  
-@@ -172,10 +182,11 @@
+@@ -172,10 +181,11 @@
     }
  
     public void func_71263_m(boolean p_71263_1_) {

@@ -1,6 +1,8 @@
 package org.bukkit.craftbukkit.command;
 
 import java.util.Set;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -89,6 +91,15 @@ public abstract class ServerCommandSender implements CommandSender {
         return Bukkit.getServer();
     }
 
+    @Override
+    public void sendMessage(UUID uuid, String message) {
+        this.sendMessage(message); // ServerCommandSenders have no use for senders
+    }
+
+    @Override
+    public void sendMessage(UUID uuid, String[] messages) {
+        this.sendMessage(messages); // ServerCommandSenders have no use for senders
+    }
     // Spigot start
     private final Spigot spigot = new Spigot()
     {
@@ -105,6 +116,17 @@ public abstract class ServerCommandSender implements CommandSender {
             ServerCommandSender.this.sendMessage(net.md_5.bungee.api.chat.TextComponent.toLegacyText(components));
         }
 
+        @Override
+        public void sendMessage(UUID sender, net.md_5.bungee.api.chat.BaseComponent... components)
+        {
+            this.sendMessage(components);
+        }
+
+        @Override
+        public void sendMessage(UUID sender, net.md_5.bungee.api.chat.BaseComponent component)
+        {
+            this.sendMessage(component);
+        }
     };
 
     @Override

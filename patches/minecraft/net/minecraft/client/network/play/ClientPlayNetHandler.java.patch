@@ -68,6 +68,56 @@
     }
  
     public void func_200232_a(SPlayerLookPacket p_200232_1_) {
+@@ -1339,28 +1352,28 @@
+       clientrecipebook.func_242140_a(p_191980_1_.func_244302_d());
+       SRecipeBookPacket.State srecipebookpacket$state = p_191980_1_.func_194151_e();
+       switch(srecipebookpacket$state) {
+-      case REMOVE:
+-         for(ResourceLocation resourcelocation3 : p_191980_1_.func_192595_a()) {
+-            this.field_199528_o.func_215367_a(resourcelocation3).ifPresent(clientrecipebook::func_193831_b);
+-         }
+-         break;
+-      case INIT:
+-         for(ResourceLocation resourcelocation1 : p_191980_1_.func_192595_a()) {
+-            this.field_199528_o.func_215367_a(resourcelocation1).ifPresent(clientrecipebook::func_194073_a);
+-         }
++         case REMOVE:
++            for(ResourceLocation resourcelocation3 : p_191980_1_.func_192595_a()) {
++               this.field_199528_o.func_215367_a(resourcelocation3).ifPresent(clientrecipebook::func_193831_b);
++            }
++            break;
++         case INIT:
++            for(ResourceLocation resourcelocation1 : p_191980_1_.func_192595_a()) {
++               this.field_199528_o.func_215367_a(resourcelocation1).ifPresent(clientrecipebook::func_194073_a);
++            }
+ 
+-         for(ResourceLocation resourcelocation2 : p_191980_1_.func_193644_b()) {
+-            this.field_199528_o.func_215367_a(resourcelocation2).ifPresent(clientrecipebook::func_193825_e);
+-         }
+-         break;
+-      case ADD:
+-         for(ResourceLocation resourcelocation : p_191980_1_.func_192595_a()) {
+-            this.field_199528_o.func_215367_a(resourcelocation).ifPresent((p_217278_2_) -> {
+-               clientrecipebook.func_194073_a(p_217278_2_);
+-               clientrecipebook.func_193825_e(p_217278_2_);
+-               RecipeToast.func_193665_a(this.field_147299_f.func_193033_an(), p_217278_2_);
+-            });
+-         }
++            for(ResourceLocation resourcelocation2 : p_191980_1_.func_193644_b()) {
++               this.field_199528_o.func_215367_a(resourcelocation2).ifPresent(clientrecipebook::func_193825_e);
++            }
++            break;
++         case ADD:
++            for(ResourceLocation resourcelocation : p_191980_1_.func_192595_a()) {
++               this.field_199528_o.func_215367_a(resourcelocation).ifPresent((p_217278_2_) -> {
++                  clientrecipebook.func_194073_a(p_217278_2_);
++                  clientrecipebook.func_193825_e(p_217278_2_);
++                  RecipeToast.func_193665_a(this.field_147299_f.func_193033_an(), p_217278_2_);
++               });
++            }
+       }
+ 
+       clientrecipebook.func_199642_d().forEach((p_199527_1_) -> {
 @@ -1376,7 +1389,7 @@
        PacketThreadUtil.func_218797_a(p_147260_1_, this, this.field_147299_f);
        Entity entity = this.field_147300_g.func_73045_a(p_147260_1_.func_149426_d());
@@ -93,43 +143,106 @@
           this.field_199725_m = itagcollectionsupplier;
           if (!this.field_147302_e.func_150731_c()) {
              itagcollectionsupplier.func_242212_e();
-@@ -1481,14 +1497,12 @@
+@@ -1444,19 +1460,19 @@
+       ITextComponent itextcomponent1 = null;
+       ITextComponent itextcomponent2 = p_175099_1_.func_179805_b() != null ? p_175099_1_.func_179805_b() : StringTextComponent.field_240750_d_;
+       switch(stitlepacket$type) {
+-      case TITLE:
+-         itextcomponent = itextcomponent2;
+-         break;
+-      case SUBTITLE:
+-         itextcomponent1 = itextcomponent2;
+-         break;
+-      case ACTIONBAR:
+-         this.field_147299_f.field_71456_v.func_175188_a(itextcomponent2, false);
+-         return;
+-      case RESET:
+-         this.field_147299_f.field_71456_v.func_238452_a_((ITextComponent)null, (ITextComponent)null, -1, -1, -1);
+-         this.field_147299_f.field_71456_v.func_175177_a();
+-         return;
++         case TITLE:
++            itextcomponent = itextcomponent2;
++            break;
++         case SUBTITLE:
++            itextcomponent1 = itextcomponent2;
++            break;
++         case ACTIONBAR:
++            this.field_147299_f.field_71456_v.func_175188_a(itextcomponent2, false);
++            return;
++         case RESET:
++            this.field_147299_f.field_71456_v.func_238452_a_((ITextComponent)null, (ITextComponent)null, -1, -1, -1);
++            this.field_147299_f.field_71456_v.func_175177_a();
++            return;
+       }
  
-       for(SPlayerListItemPacket.AddPlayerData splayerlistitempacket$addplayerdata : p_147256_1_.func_179767_a()) {
-          if (p_147256_1_.func_179768_b() == SPlayerListItemPacket.Action.REMOVE_PLAYER) {
--            this.field_147299_f.func_244599_aA().func_244649_d(splayerlistitempacket$addplayerdata.func_179962_a().getId());
-             this.field_147310_i.remove(splayerlistitempacket$addplayerdata.func_179962_a().getId());
-          } else {
-             NetworkPlayerInfo networkplayerinfo = this.field_147310_i.get(splayerlistitempacket$addplayerdata.func_179962_a().getId());
-             if (p_147256_1_.func_179768_b() == SPlayerListItemPacket.Action.ADD_PLAYER) {
-                networkplayerinfo = new NetworkPlayerInfo(splayerlistitempacket$addplayerdata);
-                this.field_147310_i.put(networkplayerinfo.func_178845_a().getId(), networkplayerinfo);
--               this.field_147299_f.func_244599_aA().func_244645_a(networkplayerinfo);
-             }
+       this.field_147299_f.field_71456_v.func_238452_a_(itextcomponent, itextcomponent1, p_175099_1_.func_179806_c(), p_175099_1_.func_179804_d(), p_175099_1_.func_179803_e());
+@@ -1493,19 +1509,19 @@
  
              if (networkplayerinfo != null) {
-@@ -1885,10 +1899,12 @@
+                switch(p_147256_1_.func_179768_b()) {
+-               case ADD_PLAYER:
+-                  networkplayerinfo.func_178839_a(splayerlistitempacket$addplayerdata.func_179960_c());
+-                  networkplayerinfo.func_178838_a(splayerlistitempacket$addplayerdata.func_179963_b());
+-                  networkplayerinfo.func_178859_a(splayerlistitempacket$addplayerdata.func_179961_d());
+-                  break;
+-               case UPDATE_GAME_MODE:
+-                  networkplayerinfo.func_178839_a(splayerlistitempacket$addplayerdata.func_179960_c());
+-                  break;
+-               case UPDATE_LATENCY:
+-                  networkplayerinfo.func_178838_a(splayerlistitempacket$addplayerdata.func_179963_b());
+-                  break;
+-               case UPDATE_DISPLAY_NAME:
+-                  networkplayerinfo.func_178859_a(splayerlistitempacket$addplayerdata.func_179961_d());
++                  case ADD_PLAYER:
++                     networkplayerinfo.func_178839_a(splayerlistitempacket$addplayerdata.func_179960_c());
++                     networkplayerinfo.func_178838_a(splayerlistitempacket$addplayerdata.func_179963_b());
++                     networkplayerinfo.func_178859_a(splayerlistitempacket$addplayerdata.func_179961_d());
++                     break;
++                  case UPDATE_GAME_MODE:
++                     networkplayerinfo.func_178839_a(splayerlistitempacket$addplayerdata.func_179960_c());
++                     break;
++                  case UPDATE_LATENCY:
++                     networkplayerinfo.func_178838_a(splayerlistitempacket$addplayerdata.func_179963_b());
++                     break;
++                  case UPDATE_DISPLAY_NAME:
++                     networkplayerinfo.func_178859_a(splayerlistitempacket$addplayerdata.func_179961_d());
+                }
+             }
+          }
+@@ -1885,11 +1901,13 @@
              int l5 = packetbuffer.readInt();
              this.field_147299_f.field_184132_p.field_229018_q_.func_229022_a_(blockpos8, l3, s10, l5);
           } else {
 -            field_147301_d.warn("Unknown custom packed identifier: {}", (Object)resourcelocation);
 +            if (!net.minecraftforge.fml.network.NetworkHooks.onCustomPayload(p_147240_1_, this.field_147302_e))
-+            field_147301_d.warn("Unknown custom packet identifier: {}", (Object)resourcelocation);
++               field_147301_d.warn("Unknown custom packet identifier: {}", (Object)resourcelocation);
           }
        } finally {
           if (packetbuffer != null) {
+-            packetbuffer.release();
 +            if (false) // Forge: let packet handle releasing buffer
-             packetbuffer.release();
++               packetbuffer.release();
           }
  
-@@ -2122,10 +2138,6 @@
-       return this.field_147310_i.values();
-    }
+       }
+@@ -1919,13 +1937,13 @@
+       Scoreboard scoreboard = this.field_147300_g.func_96441_U();
+       String s = p_147250_1_.func_149321_d();
+       switch(p_147250_1_.func_197701_d()) {
+-      case CHANGE:
+-         ScoreObjective scoreobjective = scoreboard.func_197899_c(s);
+-         Score score = scoreboard.func_96529_a(p_147250_1_.func_149324_c(), scoreobjective);
+-         score.func_96647_c(p_147250_1_.func_149323_e());
+-         break;
+-      case REMOVE:
+-         scoreboard.func_178822_d(p_147250_1_.func_149324_c(), scoreboard.func_96518_b(s));
++         case CHANGE:
++            ScoreObjective scoreobjective = scoreboard.func_197899_c(s);
++            Score score = scoreboard.func_96529_a(p_147250_1_.func_149324_c(), scoreobjective);
++            score.func_96647_c(p_147250_1_.func_149323_e());
++            break;
++         case REMOVE:
++            scoreboard.func_178822_d(p_147250_1_.func_149324_c(), scoreboard.func_96518_b(s));
+       }
  
--   public Collection<UUID> func_244695_f() {
--      return this.field_147310_i.keySet();
--   }
--
-    @Nullable
-    public NetworkPlayerInfo func_175102_a(UUID p_175102_1_) {
-       return this.field_147310_i.get(p_175102_1_);
+    }

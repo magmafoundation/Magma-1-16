@@ -1,14 +1,6 @@
 --- a/net/minecraft/client/gui/IngameGui.java
 +++ b/net/minecraft/client/gui/IngameGui.java
-@@ -66,7 +66,6 @@
- import net.minecraft.util.text.ITextComponent;
- import net.minecraft.util.text.StringTextComponent;
- import net.minecraft.util.text.TextFormatting;
--import net.minecraft.util.text.TextProcessing;
- import net.minecraft.util.text.TranslationTextComponent;
- import net.minecraft.world.GameType;
- import net.minecraft.world.World;
-@@ -79,7 +78,7 @@
+@@ -79,7 +79,7 @@
     protected static final ResourceLocation field_110329_b = new ResourceLocation("textures/misc/vignette.png");
     protected static final ResourceLocation field_110330_c = new ResourceLocation("textures/gui/widgets.png");
     protected static final ResourceLocation field_110328_d = new ResourceLocation("textures/misc/pumpkinblur.png");
@@ -17,7 +9,7 @@
     protected final Random field_73842_c = new Random();
     protected final Minecraft field_73839_d;
     protected final ItemRenderer field_73841_b;
-@@ -415,6 +414,9 @@
+@@ -415,6 +415,9 @@
  
           for(EffectInstance effectinstance : Ordering.natural().reverse().sortedCopy(collection)) {
              Effect effect = effectinstance.func_188419_a();
@@ -27,7 +19,7 @@
              if (effectinstance.func_205348_f()) {
                 int k = this.field_194811_H;
                 int l = 1;
-@@ -452,6 +454,7 @@
+@@ -452,6 +455,7 @@
                    RenderSystem.color4f(1.0F, 1.0F, 1.0F, f1);
                    func_238470_a_(p_238444_1_, j1 + 3, k1 + 3, this.func_230927_p_(), 18, 18, textureatlassprite);
                 });
@@ -35,7 +27,7 @@
              }
           }
  
-@@ -576,7 +579,8 @@
+@@ -576,7 +580,8 @@
              iformattabletextcomponent.func_240699_a_(TextFormatting.ITALIC);
           }
  
@@ -45,7 +37,7 @@
           int j = (this.field_194811_H - i) / 2;
           int k = this.field_194812_I - 59;
           if (!this.field_73839_d.field_71442_b.func_78755_b()) {
-@@ -593,7 +597,13 @@
+@@ -593,7 +598,13 @@
              RenderSystem.enableBlend();
              RenderSystem.defaultBlendFunc();
              func_238467_a_(p_238453_1_, j - 2, k - 2, j + i + 2, k + 9 + 2, this.field_73839_d.field_71474_y.func_216839_a(0));
@@ -60,26 +52,7 @@
              RenderSystem.disableBlend();
              RenderSystem.popMatrix();
           }
-@@ -860,13 +870,13 @@
-          }
- 
-          this.field_73839_d.func_213239_aq().func_219895_b("air");
--         int l6 = playerentity.func_205010_bg();
--         int j7 = Math.min(playerentity.func_70086_ai(), l6);
--         if (playerentity.func_208600_a(FluidTags.field_206959_a) || j7 < l6) {
-+         int l6 = playerentity.func_70086_ai();
-+         int j7 = playerentity.func_205010_bg();
-+         if (playerentity.func_208600_a(FluidTags.field_206959_a) || l6 < j7) {
-             int l7 = this.func_212302_c(j6) - 1;
-             l2 = l2 - l7 * 10;
--            int j8 = MathHelper.func_76143_f((double)(j7 - 2) * 10.0D / (double)l6);
--            int l8 = MathHelper.func_76143_f((double)j7 * 10.0D / (double)l6) - j8;
-+            int j8 = MathHelper.func_76143_f((double)(l6 - 2) * 10.0D / (double)j7);
-+            int l8 = MathHelper.func_76143_f((double)l6 * 10.0D / (double)j7) - j8;
- 
-             for(int k5 = 0; k5 < j8 + l8; ++k5) {
-                if (k5 < j8) {
-@@ -1056,7 +1066,7 @@
+@@ -1056,7 +1067,7 @@
           ItemStack itemstack = this.field_73839_d.field_71439_g.field_71071_by.func_70448_g();
           if (itemstack.func_190926_b()) {
              this.field_92017_k = 0;
@@ -88,28 +61,3 @@
              if (this.field_92017_k > 0) {
                 --this.field_92017_k;
              }
-@@ -1109,21 +1119,11 @@
-       }
-    }
- 
--   public UUID func_244795_b(ITextComponent p_244795_1_) {
--      String s = TextProcessing.func_244782_a(p_244795_1_);
--      String s1 = org.apache.commons.lang3.StringUtils.substringBetween(s, "<", ">");
--      return s1 == null ? Util.field_240973_b_ : this.field_73839_d.func_244599_aA().func_244797_a(s1);
--   }
--
-    public void func_238450_a_(ChatType p_238450_1_, ITextComponent p_238450_2_, UUID p_238450_3_) {
--      if (!this.field_73839_d.func_238198_a_(p_238450_3_)) {
--         if (!this.field_73839_d.field_71474_y.field_244794_ae || !this.field_73839_d.func_238198_a_(this.func_244795_b(p_238450_2_))) {
--            for(IChatListener ichatlistener : this.field_191743_I.get(p_238450_1_)) {
--               ichatlistener.func_192576_a(p_238450_1_, p_238450_2_, p_238450_3_);
--            }
--
--         }
-+      for(IChatListener ichatlistener : this.field_191743_I.get(p_238450_1_)) {
-+         ichatlistener.func_192576_a(p_238450_1_, p_238450_2_, p_238450_3_);
-       }
-+
-    }
- 
-    public NewChatGui func_146158_b() {

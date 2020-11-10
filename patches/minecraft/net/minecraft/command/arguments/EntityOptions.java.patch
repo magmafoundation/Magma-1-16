@@ -1,49 +1,39 @@
 --- a/net/minecraft/command/arguments/EntityOptions.java
 +++ b/net/minecraft/command/arguments/EntityOptions.java
-@@ -187,18 +187,41 @@
-             p_197455_0_.func_201978_a((p_202056_0_, p_202056_1_) -> {
-                return ISuggestionProvider.func_197005_b(Arrays.asList("nearest", "furthest", "random", "arbitrary"), p_202056_0_);
+@@ -189,21 +189,21 @@
              });
-+            byte b0 = -1;
-+            switch(s.hashCode()) {
-+            case -938285885:
-+               if (s.equals("random")) {
-+                  b0 = 2;
-+               }
-+               break;
-+            case 1510793967:
-+               if (s.equals("furthest")) {
-+                  b0 = 1;
-+               }
-+               break;
-+            case 1780188658:
-+               if (s.equals("arbitrary")) {
-+                  b0 = 3;
-+               }
-+               break;
-+            case 1825779806:
-+               if (s.equals("nearest")) {
-+                  b0 = 0;
-+               }
-+            }
-+
              BiConsumer<Vector3d, List<? extends Entity>> biconsumer;
--            switch(s) {
+             switch(s) {
 -            case "nearest":
-+            switch(b0) {
-+            case 0:
-                biconsumer = EntitySelectorParser.field_197414_g;
-                break;
+-               biconsumer = EntitySelectorParser.field_197414_g;
+-               break;
 -            case "furthest":
-+            case 1:
-                biconsumer = EntitySelectorParser.field_197415_h;
-                break;
+-               biconsumer = EntitySelectorParser.field_197415_h;
+-               break;
 -            case "random":
-+            case 2:
-                biconsumer = EntitySelectorParser.field_197416_i;
-                break;
+-               biconsumer = EntitySelectorParser.field_197416_i;
+-               break;
 -            case "arbitrary":
-+            case 3:
-                biconsumer = EntitySelectorParser.field_197413_f;
-                break;
-             default:
+-               biconsumer = EntitySelectorParser.field_197413_f;
+-               break;
+-            default:
+-               p_197455_0_.func_197398_f().setCursor(i);
+-               throw field_197475_h.createWithContext(p_197455_0_.func_197398_f(), s);
++               case "nearest":
++                  biconsumer = EntitySelectorParser.field_197414_g;
++                  break;
++               case "furthest":
++                  biconsumer = EntitySelectorParser.field_197415_h;
++                  break;
++               case "random":
++                  biconsumer = EntitySelectorParser.field_197416_i;
++                  break;
++               case "arbitrary":
++                  biconsumer = EntitySelectorParser.field_197413_f;
++                  break;
++               default:
++                  p_197455_0_.func_197398_f().setCursor(i);
++                  throw field_197475_h.createWithContext(p_197455_0_.func_197398_f(), s);
+             }
+ 
+             p_197455_0_.func_197376_a(biconsumer);

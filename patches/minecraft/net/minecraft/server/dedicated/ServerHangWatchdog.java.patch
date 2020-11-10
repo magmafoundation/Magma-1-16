@@ -1,26 +1,6 @@
 --- a/net/minecraft/server/dedicated/ServerHangWatchdog.java
 +++ b/net/minecraft/server/dedicated/ServerHangWatchdog.java
-@@ -1,6 +1,5 @@
- package net.minecraft.server.dedicated;
- 
--import com.google.common.collect.Streams;
- import java.io.File;
- import java.lang.management.ManagementFactory;
- import java.lang.management.ThreadInfo;
-@@ -10,12 +9,9 @@
- import java.util.Locale;
- import java.util.Timer;
- import java.util.TimerTask;
--import java.util.stream.Collectors;
- import net.minecraft.crash.CrashReport;
- import net.minecraft.crash.CrashReportCategory;
- import net.minecraft.util.Util;
--import net.minecraft.util.registry.Bootstrap;
--import net.minecraft.world.GameRules;
- import org.apache.logging.log4j.LogManager;
- import org.apache.logging.log4j.Logger;
- 
-@@ -40,7 +36,7 @@
+@@ -40,7 +40,7 @@
              ThreadMXBean threadmxbean = ManagementFactory.getThreadMXBean();
              ThreadInfo[] athreadinfo = threadmxbean.dumpAllThreads(true, true);
              StringBuilder stringbuilder = new StringBuilder();
@@ -29,20 +9,3 @@
  
              for(ThreadInfo threadinfo : athreadinfo) {
                 if (threadinfo.getThreadId() == this.field_180249_b.func_213170_ax().getId()) {
-@@ -55,16 +51,6 @@
-             this.field_180249_b.func_71230_b(crashreport);
-             CrashReportCategory crashreportcategory = crashreport.func_85058_a("Thread Dump");
-             crashreportcategory.func_71507_a("Threads", stringbuilder);
--            CrashReportCategory crashreportcategory1 = crashreport.func_85058_a("Performance stats");
--            crashreportcategory1.func_189529_a("Random tick rate", () -> {
--               return this.field_180249_b.func_240793_aU_().func_82574_x().func_223585_a(GameRules.field_223610_m).toString();
--            });
--            crashreportcategory1.func_189529_a("Level stats", () -> {
--               return Streams.stream(this.field_180249_b.func_212370_w()).map((p_244716_0_) -> {
--                  return p_244716_0_.func_234923_W_() + ": " + p_244716_0_.func_244521_F();
--               }).collect(Collectors.joining(",\n"));
--            });
--            Bootstrap.func_179870_a("Crash report:\n" + crashreport.func_71502_e());
-             File file1 = new File(new File(this.field_180249_b.func_71238_n(), "crash-reports"), "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-server.txt");
-             if (crashreport.func_147149_a(file1)) {
-                field_180251_a.error("This crash report has been saved to: {}", (Object)file1.getAbsolutePath());

@@ -1,22 +1,25 @@
 --- a/net/minecraft/client/AbstractOption.java
 +++ b/net/minecraft/client/AbstractOption.java
-@@ -308,7 +308,6 @@
-    }, (p_216639_0_, p_216639_1_) -> {
-       return p_216639_1_.func_243222_a(new TranslationTextComponent(p_216639_0_.field_216844_T ? "options.accessibility.text_background.chat" : "options.accessibility.text_background.everywhere"));
-    });
--   private static final ITextComponent field_244787_ad = new TranslationTextComponent("options.hideMatchedNames.tooltip");
-    public static final BooleanOption field_216719_z = new BooleanOption("options.autoJump", (p_216619_0_) -> {
-       return p_216619_0_.field_189989_R;
-    }, (p_216621_0_, p_216621_1_) -> {
-@@ -319,11 +318,6 @@
-    }, (p_216656_0_, p_216656_1_) -> {
-       p_216656_0_.field_198018_T = p_216656_1_;
-    });
--   public static final BooleanOption field_244786_G = new BooleanOption("options.hideMatchedNames", field_244787_ad, (p_244790_0_) -> {
--      return p_244790_0_.field_244794_ae;
--   }, (p_244791_0_, p_244791_1_) -> {
--      p_244791_0_.field_244794_ae = p_244791_1_;
--   });
-    public static final BooleanOption field_216678_B = new BooleanOption("options.chat.color", (p_216669_0_) -> {
-       return p_216669_0_.field_74344_o;
-    }, (p_216659_0_, p_216659_1_) -> {
+@@ -252,14 +252,14 @@
+       }
+    }, (p_216633_0_, p_216633_1_) -> {
+       switch(p_216633_0_.field_238330_f_) {
+-      case FAST:
+-         p_216633_1_.func_241567_a_(Minecraft.func_71410_x().field_71466_p.func_238425_b_(field_241564_V_, 200));
+-         break;
+-      case FANCY:
+-         p_216633_1_.func_241567_a_(Minecraft.func_71410_x().field_71466_p.func_238425_b_(field_241566_X_, 200));
+-         break;
+-      case FABULOUS:
+-         p_216633_1_.func_241567_a_(Minecraft.func_71410_x().field_71466_p.func_238425_b_(field_241565_W_, 200));
++         case FAST:
++            p_216633_1_.func_241567_a_(Minecraft.func_71410_x().field_71466_p.func_238425_b_(field_241564_V_, 200));
++            break;
++         case FANCY:
++            p_216633_1_.func_241567_a_(Minecraft.func_71410_x().field_71466_p.func_238425_b_(field_241566_X_, 200));
++            break;
++         case FABULOUS:
++            p_216633_1_.func_241567_a_(Minecraft.func_71410_x().field_71466_p.func_238425_b_(field_241565_W_, 200));
+       }
+ 
+       IFormattableTextComponent iformattabletextcomponent = new TranslationTextComponent(p_216633_0_.field_238330_f_.func_238164_b_());

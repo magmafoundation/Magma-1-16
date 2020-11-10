@@ -1,20 +1,59 @@
 --- a/com/mojang/realmsclient/gui/screens/RealmsSelectWorldTemplateScreen.java
 +++ b/com/mojang/realmsclient/gui/screens/RealmsSelectWorldTemplateScreen.java
-@@ -94,7 +94,7 @@
- 
-    public boolean func_231044_a_(double p_231044_1_, double p_231044_3_, int p_231044_5_) {
-       if (this.field_224530_p && this.field_224528_n != null) {
--         Util.func_110647_a().func_195640_a("https://www.minecraft.net/realms/adventure-maps-in-1-9");
-+         Util.func_110647_a().func_195640_a("https://beta.minecraft.net/realms/adventure-maps-in-1-9");
-          return true;
-       } else {
-          return super.func_231044_a_(p_231044_1_, p_231044_3_, p_231044_5_);
-@@ -233,7 +233,7 @@
-                   if (worldtemplatepaginatedlist1.field_230657_a_.isEmpty()) {
+@@ -215,34 +215,34 @@
+             RealmsClient realmsclient = RealmsClient.func_224911_a();
+             while (worldtemplatepaginatedlist != null) {
+                Either<WorldTemplatePaginatedList, String> either = RealmsSelectWorldTemplateScreen.this.func_224509_a(worldtemplatepaginatedlist, realmsclient);
+-            worldtemplatepaginatedlist = RealmsSelectWorldTemplateScreen.this.field_230706_i_.func_213169_a(() -> {
+-               if (either.right().isPresent()) {
+-                  RealmsSelectWorldTemplateScreen.field_224515_a.error("Couldn't fetch templates: {}", either.right().get());
+-                  if (RealmsSelectWorldTemplateScreen.this.field_224517_c.func_223878_a()) {
+-                     RealmsSelectWorldTemplateScreen.this.field_224531_q = TextRenderingUtils.func_225224_a(I18n.func_135052_a("mco.template.select.failure"));
+-                  }
+-
+-                  return null;
+-               } else {
+-                  WorldTemplatePaginatedList worldtemplatepaginatedlist1 = either.left().get();
+-
+-                  for(WorldTemplate worldtemplate : worldtemplatepaginatedlist1.field_230657_a_) {
+-                     RealmsSelectWorldTemplateScreen.this.field_224517_c.func_223876_a(worldtemplate);
+-                  }
+-
+-                  if (worldtemplatepaginatedlist1.field_230657_a_.isEmpty()) {
++               worldtemplatepaginatedlist = RealmsSelectWorldTemplateScreen.this.field_230706_i_.func_213169_a(() -> {
++                  if (either.right().isPresent()) {
++                     RealmsSelectWorldTemplateScreen.field_224515_a.error("Couldn't fetch templates: {}", either.right().get());
                       if (RealmsSelectWorldTemplateScreen.this.field_224517_c.func_223878_a()) {
-                         String s = I18n.func_135052_a("mco.template.select.none", "%link");
+-                        String s = I18n.func_135052_a("mco.template.select.none", "%link");
 -                        TextRenderingUtils.LineSegment textrenderingutils$linesegment = TextRenderingUtils.LineSegment.func_225214_a(I18n.func_135052_a("mco.template.select.none.linkTitle"), "https://aka.ms/MinecraftRealmsContentCreator");
-+                        TextRenderingUtils.LineSegment textrenderingutils$linesegment = TextRenderingUtils.LineSegment.func_225214_a(I18n.func_135052_a("mco.template.select.none.linkTitle"), "https://minecraft.net/realms/content-creator/");
-                         RealmsSelectWorldTemplateScreen.this.field_224531_q = TextRenderingUtils.func_225224_a(s, textrenderingutils$linesegment);
+-                        RealmsSelectWorldTemplateScreen.this.field_224531_q = TextRenderingUtils.func_225224_a(s, textrenderingutils$linesegment);
++                        RealmsSelectWorldTemplateScreen.this.field_224531_q = TextRenderingUtils.func_225224_a(I18n.func_135052_a("mco.template.select.failure"));
                       }
  
+                      return null;
+                   } else {
+-                     return worldtemplatepaginatedlist1;
++                     WorldTemplatePaginatedList worldtemplatepaginatedlist1 = either.left().get();
++
++                     for(WorldTemplate worldtemplate : worldtemplatepaginatedlist1.field_230657_a_) {
++                        RealmsSelectWorldTemplateScreen.this.field_224517_c.func_223876_a(worldtemplate);
++                     }
++
++                     if (worldtemplatepaginatedlist1.field_230657_a_.isEmpty()) {
++                        if (RealmsSelectWorldTemplateScreen.this.field_224517_c.func_223878_a()) {
++                           String s = I18n.func_135052_a("mco.template.select.none", "%link");
++                           TextRenderingUtils.LineSegment textrenderingutils$linesegment = TextRenderingUtils.LineSegment.func_225214_a(I18n.func_135052_a("mco.template.select.none.linkTitle"), "https://aka.ms/MinecraftRealmsContentCreator");
++                           RealmsSelectWorldTemplateScreen.this.field_224531_q = TextRenderingUtils.func_225224_a(s, textrenderingutils$linesegment);
++                        }
++
++                        return null;
++                     } else {
++                        return worldtemplatepaginatedlist1;
++                     }
+                   }
+-               }
+-            }).join();
++               }).join();
+             }
+          }
+       }).start();

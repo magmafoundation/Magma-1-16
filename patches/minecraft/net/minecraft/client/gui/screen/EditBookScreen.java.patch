@@ -1,12 +1,117 @@
 --- a/net/minecraft/client/gui/screen/EditBookScreen.java
 +++ b/net/minecraft/client/gui/screen/EditBookScreen.java
-@@ -219,8 +219,7 @@
-             this.field_214233_b.func_77983_a("title", StringNBT.func_229705_a_(this.field_214239_h.trim()));
+@@ -283,42 +283,42 @@
+          return true;
+       } else {
+          switch(p_214230_1_) {
+-         case 257:
+-         case 335:
+-            this.field_238748_u_.func_216892_a("\n");
+-            return true;
+-         case 259:
+-            this.field_238748_u_.func_238586_d_(-1);
+-            return true;
+-         case 261:
+-            this.field_238748_u_.func_238586_d_(1);
+-            return true;
+-         case 262:
+-            this.field_238748_u_.func_238569_a_(1, Screen.func_231173_s_());
+-            return true;
+-         case 263:
+-            this.field_238748_u_.func_238569_a_(-1, Screen.func_231173_s_());
+-            return true;
+-         case 264:
+-            this.func_238776_x_();
+-            return true;
+-         case 265:
+-            this.func_238775_w_();
+-            return true;
+-         case 266:
+-            this.field_214245_n.func_230930_b_();
+-            return true;
+-         case 267:
+-            this.field_214244_m.func_230930_b_();
+-            return true;
+-         case 268:
+-            this.func_238777_y_();
+-            return true;
+-         case 269:
+-            this.func_238778_z_();
+-            return true;
+-         default:
+-            return false;
++            case 257:
++            case 335:
++               this.field_238748_u_.func_216892_a("\n");
++               return true;
++            case 259:
++               this.field_238748_u_.func_238586_d_(-1);
++               return true;
++            case 261:
++               this.field_238748_u_.func_238586_d_(1);
++               return true;
++            case 262:
++               this.field_238748_u_.func_238569_a_(1, Screen.func_231173_s_());
++               return true;
++            case 263:
++               this.field_238748_u_.func_238569_a_(-1, Screen.func_231173_s_());
++               return true;
++            case 264:
++               this.func_238776_x_();
++               return true;
++            case 265:
++               this.func_238775_w_();
++               return true;
++            case 266:
++               this.field_214245_n.func_230930_b_();
++               return true;
++            case 267:
++               this.field_214244_m.func_230930_b_();
++               return true;
++            case 268:
++               this.func_238777_y_();
++               return true;
++            case 269:
++               this.func_238778_z_();
++               return true;
++            default:
++               return false;
           }
+       }
+    }
+@@ -352,21 +352,21 @@
  
--         int i = this.field_214250_s == Hand.MAIN_HAND ? this.field_214232_a.field_71071_by.field_70461_c : 40;
--         this.field_230706_i_.func_147114_u().func_147297_a(new CEditBookPacket(this.field_214233_b, p_214198_1_, i));
-+         this.field_230706_i_.func_147114_u().func_147297_a(new CEditBookPacket(this.field_214233_b, p_214198_1_, this.field_214250_s));
+    private boolean func_214196_c(int p_214196_1_, int p_214196_2_, int p_214196_3_) {
+       switch(p_214196_1_) {
+-      case 257:
+-      case 335:
+-         if (!this.field_214239_h.isEmpty()) {
+-            this.func_214198_a(true);
+-            this.field_230706_i_.func_147108_a((Screen)null);
+-         }
++         case 257:
++         case 335:
++            if (!this.field_214239_h.isEmpty()) {
++               this.func_214198_a(true);
++               this.field_230706_i_.func_147108_a((Screen)null);
++            }
+ 
+-         return true;
+-      case 259:
+-         this.field_238749_v_.func_238586_d_(-1);
+-         this.func_214229_d();
+-         this.field_214234_c = true;
+-         return true;
+-      default:
+-         return false;
++            return true;
++         case 259:
++            this.field_238749_v_.func_238586_d_(-1);
++            this.func_214229_d();
++            this.field_214234_c = true;
++            return true;
++         default:
++            return false;
        }
     }
  

@@ -1,13 +1,8 @@
 --- a/net/minecraft/util/SharedConstants.java
 +++ b/net/minecraft/util/SharedConstants.java
-@@ -39,11 +39,8 @@
-       return field_215071_d;
+@@ -44,6 +44,7 @@
     }
  
--   public static int func_244709_b() {
--      return 754;
--   }
--
     static {
 +      if (System.getProperty("io.netty.leakDetection.level") == null) // Forge: allow level to be manually specified
        ResourceLeakDetector.setLevel(field_184877_a);

@@ -492,6 +492,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
         // If this entity is riding another entity, we must dismount before teleporting.
         entity.stopRiding();
+        entity.world = ((CraftWorld) location.getWorld()).getHandle();
 
         // Let the server handle cross world teleports
         if (!location.getWorld().equals(getWorld())) {
@@ -806,6 +807,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     @Override
     public void sendMessage(String[] messages) {
 
+    }
+
+    @Override
+    public void sendMessage(UUID sender, String message) {
+        this.sendMessage(message); // Most entities don't know about senders
+    }
+
+    @Override
+    public void sendMessage(UUID sender, String[] messages) {
+        this.sendMessage(messages); // Most entities don't know about senders
     }
 
     @Override
