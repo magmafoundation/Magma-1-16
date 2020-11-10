@@ -47,6 +47,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.*;
+import net.minecraft.item.Items;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTableManager;
@@ -580,6 +581,7 @@ public class ForgeHooks
         return event.isCanceled() ? -1 : event.getExpToDrop();
     }
 
+    // Magma // TODO: Add Bukkit StructureGrowEvent
     public static ActionResultType onPlaceItemIntoWorld(@Nonnull ItemUseContext context)
     {
         ItemStack itemstack = context.getItem();

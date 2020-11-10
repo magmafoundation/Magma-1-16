@@ -1,11 +1,8 @@
 --- a/net/minecraft/util/MinecraftVersion.java
 +++ b/net/minecraft/util/MinecraftVersion.java
-@@ -26,13 +26,13 @@
- 
-    private MinecraftVersion() {
+@@ -28,8 +28,8 @@
        this.field_214959_b = UUID.randomUUID().toString().replaceAll("-", "");
--      this.field_214960_c = "1.16.4";
-+      this.field_214960_c = "1.16.3";
+       this.field_214960_c = "1.16.4";
        this.field_214961_d = true;
 -      this.field_214962_e = 2584;
 -      this.field_214963_f = SharedConstants.func_244709_b();
@@ -13,8 +10,4 @@
 +      this.field_214963_f = 753;
        this.field_214964_g = 6;
        this.field_214965_h = new Date();
--      this.field_214966_i = "1.16.4";
-+      this.field_214966_i = "1.16.3";
-    }
- 
-    private MinecraftVersion(JsonObject p_i51407_1_) {
+       this.field_214966_i = "1.16.4";
