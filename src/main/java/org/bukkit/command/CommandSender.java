@@ -37,6 +37,7 @@ public interface CommandSender extends Permissible {
      * @param sender The sender of this message
      */
     public void sendMessage(@Nullable UUID sender, @NotNull String[] messages);
+
     /**
      * Returns the server instance that this command is running on
      *
@@ -73,6 +74,7 @@ public interface CommandSender extends Permissible {
         public void sendMessage(@NotNull net.md_5.bungee.api.chat.BaseComponent... components) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
+
         /**
          * Sends this sender a chat component.
          *
@@ -90,7 +92,7 @@ public interface CommandSender extends Permissible {
          * @param sender the sender of the message
          */
         public void sendMessage(@Nullable UUID sender, @NotNull net.md_5.bungee.api.chat.BaseComponent... components) {
-                        throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 
