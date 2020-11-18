@@ -30,30 +30,20 @@
     private static <T extends Entity> EntityType<T> func_200712_a(String p_200712_0_, EntityType.Builder<T> p_200712_1_) {
        return Registry.func_218325_a(Registry.field_212629_r, p_200712_0_, p_200712_1_.func_206830_a(p_200712_0_));
     }
-@@ -283,16 +291,23 @@
+@@ -283,6 +291,9 @@
     }
  
     public EntityType(EntityType.IFactory<T> p_i231489_1_, EntityClassification p_i231489_2_, boolean p_i231489_3_, boolean p_i231489_4_, boolean p_i231489_5_, boolean p_i231489_6_, ImmutableSet<Block> p_i231489_7_, EntitySize p_i231489_8_, int p_i231489_9_, int p_i231489_10_) {
--      this.field_200732_aK = p_i231489_1_;
--      this.field_220355_ba = p_i231489_2_;
 +       this(p_i231489_1_, p_i231489_2_, p_i231489_3_, p_i231489_4_, p_i231489_5_, p_i231489_6_, p_i231489_7_, p_i231489_8_, p_i231489_9_, p_i231489_10_, EntityType::defaultVelocitySupplier, EntityType::defaultTrackingRangeSupplier, EntityType::defaultUpdateIntervalSupplier, null);
 +   }
-+   public EntityType(EntityType.IFactory<T> factory, EntityClassification classification, boolean p_i231489_3_, boolean summonable, boolean immuneToFire, boolean p_i231489_6_, ImmutableSet<Block> p_i231489_7_, EntitySize size, int trackingRange, int updateInterval, final java.util.function.Predicate<EntityType<?>> velocityUpdateSupplier, final java.util.function.ToIntFunction<EntityType<?>> trackingRangeSupplier, final java.util.function.ToIntFunction<EntityType<?>> updateIntervalSupplier, final java.util.function.BiFunction<net.minecraftforge.fml.network.FMLPlayMessages.SpawnEntity, World, T> customClientFactory) {
-+      this.field_200732_aK = factory;
-+      this.field_220355_ba = classification;
++   public EntityType(EntityType.IFactory<T> p_i231489_1_, EntityClassification p_i231489_2_, boolean p_i231489_3_, boolean p_i231489_4_, boolean p_i231489_5_, boolean p_i231489_6_, ImmutableSet<Block> p_i231489_7_, EntitySize p_i231489_8_, int p_i231489_9_, int p_i231489_10_, final java.util.function.Predicate<EntityType<?>> velocityUpdateSupplier, final java.util.function.ToIntFunction<EntityType<?>> trackingRangeSupplier, final java.util.function.ToIntFunction<EntityType<?>> updateIntervalSupplier, final java.util.function.BiFunction<net.minecraftforge.fml.network.FMLPlayMessages.SpawnEntity, World, T> customClientFactory) {
+       this.field_200732_aK = p_i231489_1_;
+       this.field_220355_ba = p_i231489_2_;
        this.field_225438_be = p_i231489_6_;
-       this.field_200733_aL = p_i231489_3_;
--      this.field_200734_aM = p_i231489_4_;
--      this.field_220357_bd = p_i231489_5_;
-+      this.field_200734_aM = summonable;
-+      this.field_220357_bd = immuneToFire;
-       this.field_233593_bg_ = p_i231489_7_;
--      this.field_220359_bi = p_i231489_8_;
--      this.field_233594_bl_ = p_i231489_9_;
--      this.field_233595_bm_ = p_i231489_10_;
-+      this.field_220359_bi = size;
-+      this.field_233594_bl_ = trackingRange;
-+      this.field_233595_bm_ = updateInterval;
+@@ -293,6 +304,10 @@
+       this.field_220359_bi = p_i231489_8_;
+       this.field_233594_bl_ = p_i231489_9_;
+       this.field_233595_bm_ = p_i231489_10_;
 +      this.velocityUpdateSupplier = velocityUpdateSupplier;
 +      this.trackingRangeSupplier = trackingRangeSupplier;
 +      this.updateIntervalSupplier = updateIntervalSupplier;

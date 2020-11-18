@@ -1,24 +1,19 @@
 --- a/net/minecraft/util/math/shapes/EntitySelectionContext.java
 +++ b/net/minecraft/util/math/shapes/EntitySelectionContext.java
-@@ -25,15 +25,20 @@
+@@ -25,6 +25,11 @@
     private final Predicate<Fluid> field_237493_e_;
  
     protected EntitySelectionContext(boolean p_i232177_1_, double p_i232177_2_, Item p_i232177_4_, Predicate<Fluid> p_i232177_5_) {
--      this.field_227579_b_ = p_i232177_1_;
--      this.field_216381_c = p_i232177_2_;
--      this.field_216382_d = p_i232177_4_;
--      this.field_237493_e_ = p_i232177_5_;
 +       this(null, p_i232177_1_, p_i232177_2_, p_i232177_4_, p_i232177_5_);
-    }
- 
-+   protected EntitySelectionContext(@javax.annotation.Nullable Entity entity, boolean sneaking, double posY, Item item, Predicate<Fluid> fluidPredicate) {
-+      this.entity = entity;
-+      this.field_227579_b_ = sneaking;
-+      this.field_216381_c = posY;
-+      this.field_216382_d = item;
-+      this.field_237493_e_ = fluidPredicate;
 +   }
 +
++   protected EntitySelectionContext(@javax.annotation.Nullable Entity entity, boolean p_i232177_1_, double p_i232177_2_, Item p_i232177_4_, Predicate<Fluid> p_i232177_5_) {
++      this.entity = entity;
+       this.field_227579_b_ = p_i232177_1_;
+       this.field_216381_c = p_i232177_2_;
+       this.field_216382_d = p_i232177_4_;
+@@ -33,7 +38,7 @@
+ 
     @Deprecated
     protected EntitySelectionContext(Entity p_i51182_1_) {
 -      this(p_i51182_1_.func_226274_bn_(), p_i51182_1_.func_226278_cu_(), p_i51182_1_ instanceof LivingEntity ? ((LivingEntity)p_i51182_1_).func_184614_ca().func_77973_b() : Items.field_190931_a, p_i51182_1_ instanceof LivingEntity ? ((LivingEntity)p_i51182_1_)::func_230285_a_ : (p_237494_0_) -> {

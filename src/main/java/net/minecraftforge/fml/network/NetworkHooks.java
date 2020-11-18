@@ -19,7 +19,6 @@
 
 package net.minecraftforge.fml.network;
 
-import io.netty.buffer.Unpooled;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,9 +26,21 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.tags.ITagCollection;
+import net.minecraft.tags.ITagCollectionSupplier;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.fml.common.thread.EffectiveSide;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import io.netty.buffer.Unpooled;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -38,18 +49,11 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.handshake.client.CHandshakePacket;
 import net.minecraft.network.login.ServerLoginNetHandler;
-import net.minecraft.tags.ITagCollection;
-import net.minecraft.tags.ITagCollectionSupplier;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
-import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.fml.config.ConfigTracker;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.craftbukkit.inventory.CraftInventory;
@@ -67,7 +71,17 @@ public class NetworkHooks
 
     public static ConnectionType getConnectionType(final Supplier<NetworkManager> connection)
     {
-        return ConnectionType.forVersionFlag(connection.get().channel().attr(FMLNetworkConstants.FML_NETVERSION).get());
+        return getConnectionType(connection.get().channel());
+    }
+
+    public static ConnectionType getConnectionType(ChannelHandlerContext context)
+    {
+        return getConnectionType(context.channel());
+    }
+
+    private static ConnectionType getConnectionType(Channel channel)
+    {
+        return ConnectionType.forVersionFlag(channel.attr(FMLNetworkConstants.FML_NETVERSION).get());
     }
 
     public static IPacket<?> getEntitySpawningPacket(Entity entity)

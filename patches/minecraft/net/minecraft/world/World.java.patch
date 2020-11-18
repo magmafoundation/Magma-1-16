@@ -255,7 +255,7 @@
        if (func_189509_E(p_241211_1_)) {
           return false;
        } else if (!this.field_72995_K && this.func_234925_Z_()) {
-@@ -180,49 +333,117 @@
+@@ -180,17 +333,74 @@
        } else {
           Chunk chunk = this.func_175726_f(p_241211_1_);
           Block block = p_241211_2_.func_177230_c();
@@ -297,7 +297,6 @@
                 this.func_217381_Z().func_76319_b();
              }
  
--            if (blockstate1 == p_241211_2_) {
 +            // CraftBukkit start
 +            if (blockSnapshot == null || !this.captureBlockStates) {// Don't notify clients or update physics while capturing blockstates
 +               // Modularize client and physic updates
@@ -323,48 +322,24 @@
 +   // CraftBukkit end
 +
 +   // Split off from original setBlockState(BlockPos, BlockState, int, int) method in order to directly send client and physic updates
-+   public void markAndNotifyBlock(BlockPos pos, @Nullable Chunk chunk, BlockState blockstate, BlockState state, int flags, int recursionLeft)
++   public void markAndNotifyBlock(BlockPos p_241211_1_, @Nullable Chunk chunk, BlockState blockstate, BlockState p_241211_2_, int p_241211_3_, int p_241211_4_)
 +   {
-+       Block block = state.func_177230_c();
-+       BlockState blockstate1 = func_180495_p(pos);
++       Block block = p_241211_2_.func_177230_c();
++       BlockState blockstate1 = func_180495_p(p_241211_1_);
 +       {
 +           {
-+            if (blockstate1 == state) {
+             if (blockstate1 == p_241211_2_) {
                 if (blockstate != blockstate1) {
--                  this.func_225319_b(p_241211_1_, blockstate, blockstate1);
-+                  this.func_225319_b(pos, blockstate, blockstate1);
-                }
- 
--               if ((p_241211_3_ & 2) != 0 && (!this.field_72995_K || (p_241211_3_ & 4) == 0) && (this.field_72995_K || chunk.func_217321_u() != null && chunk.func_217321_u().func_219065_a(ChunkHolder.LocationType.TICKING))) {
--                  this.func_184138_a(p_241211_1_, blockstate, p_241211_2_, p_241211_3_);
-+               if ((flags & 2) != 0 && (!this.field_72995_K || (flags & 4) == 0) && (this.field_72995_K || chunk.func_217321_u() != null && chunk.func_217321_u().func_219065_a(ChunkHolder.LocationType.TICKING))) {
-+                  this.func_184138_a(pos, blockstate, state, flags);
-                }
- 
--               if ((p_241211_3_ & 1) != 0) {
--                  this.func_230547_a_(p_241211_1_, blockstate.func_177230_c());
--                  if (!this.field_72995_K && p_241211_2_.func_185912_n()) {
--                     this.func_175666_e(p_241211_1_, block);
-+               if ((flags & 1) != 0) {
-+                  this.func_230547_a_(pos, blockstate.func_177230_c());
-+                  if (!this.field_72995_K && state.func_185912_n()) {
-+                     this.func_175666_e(pos, block);
-                   }
-                }
- 
--               if ((p_241211_3_ & 16) == 0 && p_241211_4_ > 0) {
--                  int i = p_241211_3_ & -34;
--                  blockstate.func_241483_b_(this, p_241211_1_, i, p_241211_4_ - 1);
--                  p_241211_2_.func_241482_a_(this, p_241211_1_, i, p_241211_4_ - 1);
--                  p_241211_2_.func_241483_b_(this, p_241211_1_, i, p_241211_4_ - 1);
-+               if ((flags & 16) == 0 && recursionLeft > 0) {
-+                  int i = flags & -34;
-+                  blockstate.func_241483_b_(this, pos, i, recursionLeft - 1);
+                   this.func_225319_b(p_241211_1_, blockstate, blockstate1);
+@@ -210,19 +420,30 @@
+                if ((p_241211_3_ & 16) == 0 && p_241211_4_ > 0) {
+                   int i = p_241211_3_ & -34;
+                   blockstate.func_241483_b_(this, p_241211_1_, i, p_241211_4_ - 1);
 +
 +                  // CraftBukkit start
 +                  CraftWorld world = ((ServerWorld) this).getWorldCB();
 +                  if (world != null) {
-+                     BlockPhysicsEvent event = new BlockPhysicsEvent(world.getBlockAt(pos.func_177958_n(), pos.func_177956_o(), pos.func_177952_p()), CraftBlockData.fromData(state));
++                     BlockPhysicsEvent event = new BlockPhysicsEvent(world.getBlockAt(p_241211_1_.func_177958_n(), p_241211_1_.func_177956_o(), p_241211_1_.func_177952_p()), CraftBlockData.fromData(p_241211_2_));
 +                     this.getServerCB().getPluginManager().callEvent(event);
 +                     if (event.isCancelled()) {
 +                        return;
@@ -372,12 +347,11 @@
 +                  }
 +                  // CraftBukkit end
 +
-+                  state.func_241482_a_(this, pos, i, recursionLeft - 1);
-+                  state.func_241483_b_(this, pos, i, recursionLeft - 1);
+                   p_241211_2_.func_241482_a_(this, p_241211_1_, i, p_241211_4_ - 1);
+                   p_241211_2_.func_241483_b_(this, p_241211_1_, i, p_241211_4_ - 1);
                 }
  
--               this.func_217393_a(p_241211_1_, blockstate, blockstate1);
-+               this.func_217393_a(pos, blockstate, blockstate1);
+                this.func_217393_a(p_241211_1_, blockstate, blockstate1);
              }
 -
 -            return true;

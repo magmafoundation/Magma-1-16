@@ -351,7 +351,7 @@
     }
  
 +   @Override //Forge: Enable formated text for colors in console.
-+   public void func_145747_a(net.minecraft.util.text.ITextComponent message, java.util.UUID senderUUID) {
++   public void func_145747_a(net.minecraft.util.text.ITextComponent message, java.util.UUID p_145747_2_) {
 +      field_155771_h.info(message.getString());
 +   }
 +

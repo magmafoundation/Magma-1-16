@@ -39,4 +39,10 @@ public enum ConnectionType
     public int getFMLVersionNumber(final String fmlVersion) {
         return versionExtractor.apply(fmlVersion);
     }
+
+    public boolean isVanilla()
+    {
+        return this == VANILLA;
+    }
+
 }
