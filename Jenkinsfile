@@ -25,6 +25,10 @@ pipeline {
 
         stage('Build') {
             steps {
+                withCredentials([file(credentialsId: 'MAGMA_GRADLE_PRO', variable: 'MAGMA_GRADLE_PRO'),file(credentialsId: 'MAGMA_KEY_STORE', variable: 'MAGMA_KEY_STORE')]) {
+                  sh 'cp \$MAGMA_GRADLE_PRO ./gradle.properties'
+                  sh 'cp \$MAGMA_KEY_STORE ./keystore.jks'
+                }
                 sh './gradlew setup installerJar --console=plain'
             }
         }

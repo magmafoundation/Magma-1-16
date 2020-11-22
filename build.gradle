@@ -752,13 +752,12 @@ project(':forge') {
     [universalJar, launcherJar, installerJar].each { t ->
         task "sign${t.name.capitalize()}"(type: SignJar, dependsOn: t) {
             onlyIf {
-                JAR_SIGNER != null && t.state.failure == null
+                project.hasProperty('keyStore')
             }
-            def jarsigner = JAR_SIGNER == null ? [:] : JAR_SIGNER
-            alias = 'forge'
-            storePass = jarsigner.storepass
-            keyPass = jarsigner.keypass
-            keyStore = jarsigner.keystore
+            keyStore = project.findProperty('keyStore')
+            alias = project.findProperty('keyStoreAlias')
+            storePass = project.findProperty('keyStorePass')
+            keyPass = project.findProperty('keyStoreKeyPass')
             inputFile = t.archivePath
             outputFile = t.archivePath
             doFirst {
