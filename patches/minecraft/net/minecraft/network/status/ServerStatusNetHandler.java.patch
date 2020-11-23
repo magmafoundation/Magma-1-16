@@ -1,6 +1,6 @@
 --- a/net/minecraft/network/status/ServerStatusNetHandler.java
 +++ b/net/minecraft/network/status/ServerStatusNetHandler.java
-@@ -1,13 +1,26 @@
+@@ -1,13 +1,27 @@
  package net.minecraft.network.status;
  
 +import com.mojang.authlib.GameProfile;
@@ -21,13 +21,14 @@
  import net.minecraft.util.text.ITextComponent;
 +import net.minecraft.util.text.StringTextComponent;
  import net.minecraft.util.text.TranslationTextComponent;
++import net.minecraftforge.fml.network.FMLStatusPing;
 +import org.bukkit.craftbukkit.CraftServer;
 +import org.bukkit.craftbukkit.util.CraftIconCache;
 +import org.bukkit.entity.Player;
  
  public class ServerStatusNetHandler implements IServerStatusNetHandler {
     private static final ITextComponent field_183007_a = new TranslationTextComponent("multiplayer.status.request_handled");
-@@ -32,8 +45,100 @@
+@@ -32,8 +46,101 @@
           this.field_147313_b.func_150718_a(field_183007_a);
        } else {
           this.field_183008_d = true;
@@ -121,6 +122,7 @@
 +         ping.func_151320_a(event.icon.value);
 +         ping.func_151315_a(new StringTextComponent(event.getMotd()));
 +         ping.func_151319_a(playerSample);
++         ping.setForgeData(new FMLStatusPing()); // Magma
 +         int version = SharedConstants.func_215069_a().getProtocolVersion();
 +         ping.func_151321_a(new ServerStatusResponse.Version(String.valueOf(this.field_147314_a.getServerModName()) + " " + this.field_147314_a.func_71249_w(), version));
 +         this.field_147313_b.func_179290_a(new SServerInfoPacket(ping));
