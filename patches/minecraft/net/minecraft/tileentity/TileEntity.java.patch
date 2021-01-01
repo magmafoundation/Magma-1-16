@@ -76,7 +76,7 @@
              this.field_145850_b.func_175666_e(this.field_174879_c, this.field_195045_e.func_177230_c());
           }
        }
-@@ -133,6 +162,8 @@
+@@ -133,8 +162,15 @@
  
     public void func_145843_s() {
        this.field_145846_f = true;
@@ -84,8 +84,15 @@
 +      requestModelDataUpdate();
     }
  
++   @Override
++   public void onChunkUnloaded() {
++      this.invalidateCaps();
++   }
++
     public void func_145829_t() {
-@@ -175,6 +206,13 @@
+       this.field_145846_f = false;
+    }
+@@ -175,6 +211,13 @@
        return this.field_200663_e;
     }
  
@@ -99,7 +106,7 @@
     public void func_222814_r() {
        if (!this.field_222816_g) {
           this.field_222816_g = true;
-@@ -183,4 +221,10 @@
+@@ -183,4 +226,10 @@
           }, this::func_174877_v);
        }
     }

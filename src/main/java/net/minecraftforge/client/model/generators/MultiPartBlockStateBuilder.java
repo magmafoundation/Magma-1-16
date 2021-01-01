@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.MultimapBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -47,7 +47,7 @@ public final class MultiPartBlockStateBuilder implements IGeneratedBlockstate {
      * Creates a builder for models to assign to a {@link PartBuilder}, which when
      * completed via {@link ConfiguredModel.Builder#addModel()} will assign the
      * resultant set of models to the part and return it for further processing.
-     * 
+     *
      * @return the model builder
      * @see ConfiguredModel.Builder
      */
@@ -74,7 +74,7 @@ public final class MultiPartBlockStateBuilder implements IGeneratedBlockstate {
     public class PartBuilder {
         public BlockStateProvider.ConfiguredModelList models;
         public boolean useOr;
-        public final Multimap<Property<?>, Comparable<?>> conditions = HashMultimap.create();
+        public final Multimap<Property<?>, Comparable<?>> conditions = MultimapBuilder.linkedHashKeys().arrayListValues().build();
 
         PartBuilder(BlockStateProvider.ConfiguredModelList models) {
             this.models = models;
@@ -88,7 +88,7 @@ public final class MultiPartBlockStateBuilder implements IGeneratedBlockstate {
         /**
          * Set a condition for this part, which consists of a property and a set of
          * valid values. Can be called multiple times for multiple different properties.
-         * 
+         *
          * @param <T>    the type of the property value
          * @param prop   the property
          * @param values a set of valid values

@@ -47,7 +47,7 @@ public abstract class ModelProvider<T extends ModelBuilder<T>> implements IDataP
         private final ExistingFileHelper delegate;
 
         public ExistingFileHelperIncludingGenerated(ExistingFileHelper delegate) {
-            super(Collections.emptyList(), true);
+            super(Collections.emptyList(), Collections.emptySet(), true);
             this.delegate = delegate;
         }
 
@@ -292,7 +292,7 @@ public abstract class ModelProvider<T extends ModelBuilder<T>> implements IDataP
     public T wallSide(String name, ResourceLocation wall) {
         return singleTexture(name, BLOCK_FOLDER + "/template_wall_side", "wall", wall);
     }
-    
+
     public T wallSideTall(String name, ResourceLocation wall) {
         return singleTexture(name, BLOCK_FOLDER + "/template_wall_side_tall", "wall", wall);
     }
@@ -398,7 +398,7 @@ public abstract class ModelProvider<T extends ModelBuilder<T>> implements IDataP
         ret.assertExistence();
         return ret;
     }
-    
+
     protected void clear() {
         generatedModels.clear();
     }

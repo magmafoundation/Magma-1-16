@@ -114,7 +114,7 @@
           if (p_184288_1_ != null) {
              lootcontext$builder.func_186469_a(p_184288_1_.func_184817_da()).func_216015_a(LootParameters.field_216281_a, p_184288_1_);
           }
-@@ -215,4 +270,17 @@
+@@ -215,4 +270,23 @@
     }
  
     protected abstract Container func_213968_a(int p_213968_1_, PlayerInventory p_213968_2_);
@@ -126,6 +126,12 @@
 +      if (this.func_70089_S() && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 +         return itemHandler.cast();
 +      return super.getCapability(capability, facing);
++   }
++
++   @Override
++   protected void invalidateCaps() {
++      super.invalidateCaps();
++      itemHandler.invalidate();
 +   }
 +
 +   public void dropContentsWhenDead(boolean value) {

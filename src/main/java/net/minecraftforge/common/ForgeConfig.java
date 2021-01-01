@@ -113,6 +113,28 @@ public class ForgeConfig
     }
 
     /**
+     * General configuration that doesn't need to be synchronized but needs to be available before server startup
+     */
+    public static class Common {
+        public final ForgeConfigSpec.ConfigValue<? extends String> defaultWorldType;
+
+        Common(ForgeConfigSpec.Builder builder)
+        {
+            builder.comment("General configuration settings")
+                    .push("general");
+
+            defaultWorldType = builder
+                    .comment("Defines a default world type to use. The vanilla default world type is represented by 'default'.",
+                             "The modded world types are registry names which should include the registry namespace, such as 'examplemod:example_world_type'.")
+                    .translation("forge.configgui.defaultWorldType")
+                    .define("defaultWorldType", "default");
+
+            builder.pop();
+        }
+
+    }
+
+    /**
      * Client specific configuration - only loaded clientside from forge-client.toml
      */
     public static class Client {
@@ -193,6 +215,15 @@ public class ForgeConfig
         final Pair<Client, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Client::new);
         clientSpec = specPair.getRight();
         CLIENT = specPair.getLeft();
+    }
+
+
+    static final ForgeConfigSpec commonSpec;
+    public static final Common COMMON;
+    static {
+        final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+        commonSpec = specPair.getRight();
+        COMMON = specPair.getLeft();
     }
 
 

@@ -255,7 +255,7 @@ public abstract class BlockStateProvider implements IDataProvider {
     }
 
     public void horizontalFaceBlock(Block block, Function<BlockState, ModelFile> modelFunc) {
-        horizontalBlock(block, modelFunc, DEFAULT_ANGLE_OFFSET);
+        horizontalFaceBlock(block, modelFunc, DEFAULT_ANGLE_OFFSET);
     }
 
     public void horizontalFaceBlock(Block block, Function<BlockState, ModelFile> modelFunc, int angleOffset) {
@@ -423,7 +423,7 @@ public abstract class BlockStateProvider implements IDataProvider {
     private void wallBlockInternal(WallBlock block, String baseName, ResourceLocation texture) {
         wallBlock(block, models().wallPost(baseName + "_post", texture), models().wallSide(baseName + "_side", texture), models().wallSideTall(baseName + "_side_tall", texture));
     }
-    
+
     public static final ImmutableMap<Direction, Property<WallHeight>> WALL_PROPS = ImmutableMap.<Direction, Property<WallHeight>>builder()
     		.put(Direction.EAST,  BlockStateProperties.WALL_HEIGHT_EAST)
     		.put(Direction.NORTH, BlockStateProperties.WALL_HEIGHT_NORTH)
@@ -442,7 +442,7 @@ public abstract class BlockStateProvider implements IDataProvider {
         		wallSidePart(builder, sideTall, e, WallHeight.TALL);
         	});
     }
-    
+
     private void wallSidePart(MultiPartBlockStateBuilder builder, ModelFile model, Map.Entry<Direction, Property<WallHeight>> entry, WallHeight height) {
         builder.part()
         	.modelFile(model)

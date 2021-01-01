@@ -49,7 +49,7 @@ import net.minecraftforge.common.capabilities.Capability;
  * must never be null.
  * <p>
  * The empty instance can be retrieved with {@link #empty()}.
- * 
+ *
  * @param <T> The type of the optional value.
  */
 @ParametersAreNonnullByDefault
@@ -67,7 +67,7 @@ public class LazyOptional<T>
     /**
      * Construct a new {@link LazyOptional} that wraps the given
      * {@link NonNullSupplier}.
-     * 
+     *
      * @param instanceSupplier The {@link NonNullSupplier} to wrap. Cannot return
      *                         null, but can be null itself. If null, this method
      *                         returns {@link #empty()}.
@@ -89,7 +89,7 @@ public class LazyOptional<T>
      * This method hides an unchecked cast to the inferred type. Only use this if
      * you are sure the type should match. For capabilities, generally
      * {@link Capability#orEmpty(Capability, LazyOptional)} should be used.
-     * 
+     *
      * @return This {@link LazyOptional}, cast to the inferred generic type
      */
     @SuppressWarnings("unchecked")
@@ -124,7 +124,7 @@ public class LazyOptional<T>
         }
         return null;
     }
-    
+
     private T getValueUnsafe()
     {
         T ret = getValue();
@@ -137,7 +137,7 @@ public class LazyOptional<T>
 
     /**
      * Check if this {@link LazyOptional} is non-empty.
-     * 
+     *
      * @return {@code true} if this {@link LazyOptional} is non-empty, i.e. holds a
      *         non-null supplier
      */
@@ -213,7 +213,7 @@ public class LazyOptional<T>
      * <em>It is important to note that this method is <strong>not</strong> lazy, as
      * it must resolve the value of the supplier to validate it with the
      * predicate.</em>
-     * 
+     *
      * @param predicate A {@link NonNullPredicate} to apply to the result of the
      *                  contained supplier, if non-empty
      * @return An {@link Optional} containing the result of the contained
@@ -318,13 +318,17 @@ public class LazyOptional<T>
      * call this, if they are covered with a microblock panel, thus cutting off pipe
      * connectivity to this side.
      * <p>
-     * Also should be called for all when a TE is invalidated, or a world/chunk
-     * unloads, or a entity dies, etc... This allows modders to keep a cache of
-     * capability objects instead of re-checking them every tick.
+     * Also should be called for all when a TE is invalidated (for example, when
+     * the TE is removed or unloaded), or a world/chunk unloads, or a entity dies,
+     * etc... This allows modders to keep a cache of capability objects instead of
+     * re-checking them every tick.
      */
     public void invalidate()
     {
-        this.isValid = false;
-        this.listeners.forEach(e -> e.accept(this));
+        if (this.isValid)
+        {
+            this.isValid = false;
+            this.listeners.forEach(e -> e.accept(this));
+        }
     }
 }

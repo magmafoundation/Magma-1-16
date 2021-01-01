@@ -37,8 +37,8 @@
 +   }
 +
 +   @Override
-+   public void func_145843_s() {
-+      super.func_145843_s();
++   protected void invalidateCaps() {
++      super.invalidateCaps();
 +      itemHandler.invalidate();
 +   }
  }
