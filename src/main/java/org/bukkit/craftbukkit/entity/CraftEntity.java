@@ -139,6 +139,7 @@ import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -454,6 +455,11 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
             return ((AbstractArrowEntity) entity).inGround;
         }
         return entity.isOnGround();
+    }
+
+    @Override
+    public boolean isInWater() {
+        return entity.isInWater();
     }
 
     @Override
@@ -986,9 +992,9 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     }
 
     public void readBukkitValues(CompoundNBT c) {
-        CompoundNBT base = c.getCompound("BukkitValues");
-        if (base != null) {
-            this.persistentDataContainer.putAll(base);
+        INBT base = c.get("BukkitValues");
+        if (base instanceof CompoundNBT) {
+            this.persistentDataContainer.putAll((CompoundNBT) base);
         }
     }
 

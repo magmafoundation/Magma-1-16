@@ -31,7 +31,7 @@ public class CraftConsoleCommandSender extends ServerCommandSender implements Co
 
     @Override
     public void sendRawMessage(UUID sender, String message) {
-        this.sendRawMessage(message); // Console doesn't know of senders
+      this.sendRawMessage(message); // Console doesn't know of senders
     }
 
     @Override

@@ -99,6 +99,13 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
     public boolean isOnGround();
 
     /**
+     * Returns true if the entity is in water.
+     *
+     * @return <code>true</code> if the entity is in water.
+     */
+    public boolean isInWater();
+
+    /**
      * Gets the current world this entity resides in
      *
      * @return World
@@ -271,7 +278,7 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
      * @param passenger The new passenger.
      * @return false if it could not be done for whatever reason
      * @deprecated entities may have multiple passengers, use
-     * {@link #addPassenger(Entity)}
+     * {@link #addPassenger(org.bukkit.entity.Entity)}
      */
     @Deprecated
     public boolean setPassenger(@NotNull Entity passenger);

@@ -6,6 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
+
+import com.google.common.base.Preconditions;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Rotation;
 import org.bukkit.block.BlockFace;
@@ -67,6 +69,17 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
     @Override
     public org.bukkit.inventory.ItemStack getItem() {
         return CraftItemStack.asBukkitCopy(getHandle().getDisplayedItem());
+    }
+
+    @Override
+    public float getItemDropChance() {
+        return getHandle().itemDropChance;
+    }
+
+    @Override
+    public void setItemDropChance(float chance) {
+        Preconditions.checkArgument(0.0 <= chance && chance <= 1.0, "Chance outside range [0, 1]");
+        getHandle().itemDropChance = chance;
     }
 
     @Override

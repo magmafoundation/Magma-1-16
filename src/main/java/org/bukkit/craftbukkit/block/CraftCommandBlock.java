@@ -1,15 +1,13 @@
 package org.bukkit.craftbukkit.block;
 
-import net.minecraft.tileentity.CommandBlockTileEntity;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
 
-public class CraftCommandBlock extends CraftBlockEntityState<CommandBlockTileEntity> implements CommandBlock {
+import net.minecraft.tileentity.CommandBlockTileEntity;
 
-    private String command;
-    private String name;
+public class CraftCommandBlock extends CraftBlockEntityState<CommandBlockTileEntity> implements CommandBlock {
 
     public CraftCommandBlock(Block block) {
         super(block, CommandBlockTileEntity.class);
@@ -20,38 +18,22 @@ public class CraftCommandBlock extends CraftBlockEntityState<CommandBlockTileEnt
     }
 
     @Override
-    public void load(CommandBlockTileEntity commandBlock) {
-        super.load(commandBlock);
-
-        command = commandBlock.getCommandBlockLogic().getCommand();
-        name = CraftChatMessage.fromComponent(commandBlock.getCommandBlockLogic().getName());
-    }
-
-    @Override
     public String getCommand() {
-        return command;
+        return getSnapshot().getCommandBlockLogic().getCommand();
     }
 
     @Override
     public void setCommand(String command) {
-        this.command = command != null ? command : "";
+        getSnapshot().getCommandBlockLogic().setCommand(command != null ? command : "");
     }
 
     @Override
     public String getName() {
-        return name;
+        return CraftChatMessage.fromComponent(getSnapshot().getCommandBlockLogic().getName());
     }
 
     @Override
     public void setName(String name) {
-        this.name = name != null ? name : "@";
-    }
-
-    @Override
-    public void applyTo(CommandBlockTileEntity commandBlock) {
-        super.applyTo(commandBlock);
-
-        commandBlock.getCommandBlockLogic().setCommand(command);
-        commandBlock.getCommandBlockLogic().setName(CraftChatMessage.fromStringOrNull(name));
+        getSnapshot().getCommandBlockLogic().setName(CraftChatMessage.fromStringOrNull(name != null ? name : "@"));
     }
 }

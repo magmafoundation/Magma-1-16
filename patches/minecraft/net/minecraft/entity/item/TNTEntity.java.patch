@@ -9,7 +9,8 @@
  public class TNTEntity extends Entity {
     private static final DataParameter<Integer> field_184537_a = EntityDataManager.func_187226_a(TNTEntity.class, DataSerializers.field_187192_b);
     @Nullable
-    private LivingEntity field_94084_b;
+-   private LivingEntity field_94084_b;
++   public LivingEntity field_94084_b; // private->public CraftBukkit
     private int field_70516_a = 80;
 +   public float yield = 4; // CraftBukkit - add field
 +   public boolean isIncendiary = false; // CraftBukkit - add field

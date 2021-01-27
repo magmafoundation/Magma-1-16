@@ -17,12 +17,15 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.ClickEvent.Action;
+
+import com.google.gson.JsonParseException;
 import org.bukkit.ChatColor;
 
 public final class CraftChatMessage {
 
-    private static final Pattern LINK_PATTERN = Pattern.compile("((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + " \\n]|$))))");
+    private static final Pattern LINK_PATTERN = Pattern.compile("((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(ChatColor.COLOR_CHAR) + " \\n]|$))))");
     private static final Map<Character, TextFormatting> formatMap;
+    private static final String COLOR_CHAR_STRING = String.valueOf(ChatColor.COLOR_CHAR);
 
     static {
         Builder<Character, TextFormatting> builder = ImmutableMap.builder();
@@ -41,9 +44,9 @@ public final class CraftChatMessage {
     }
 
     private static final class StringMessage {
-        private static final Pattern INCREMENTAL_PATTERN = Pattern.compile("(" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + "[0-9a-fk-orx])|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + " \\n]|$))))|(\\n)", Pattern.CASE_INSENSITIVE);
+        private static final Pattern INCREMENTAL_PATTERN = Pattern.compile("(" + String.valueOf(ChatColor.COLOR_CHAR) + "[0-9a-fk-orx])|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(ChatColor.COLOR_CHAR) + " \\n]|$))))|(\\n)", Pattern.CASE_INSENSITIVE);
         // Separate pattern with no group 3, new lines are part of previous string
-        private static final Pattern INCREMENTAL_PATTERN_KEEP_NEWLINES = Pattern.compile("(" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + "[0-9a-fk-orx])|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + " ]|$))))", Pattern.CASE_INSENSITIVE);
+        private static final Pattern INCREMENTAL_PATTERN_KEEP_NEWLINES = Pattern.compile("(" + String.valueOf(ChatColor.COLOR_CHAR) + "[0-9a-fk-orx])|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(ChatColor.COLOR_CHAR) + " ]|$))))", Pattern.CASE_INSENSITIVE);
         // ChatColor.b does not explicitly reset, its more of empty
         private static final Style RESET = Style.EMPTY.setBold(false).setItalic(false).setUnderlined(false).setStrikethrough(false).setObfuscated(false);
 
@@ -55,7 +58,7 @@ public final class CraftChatMessage {
         private StringBuilder hex;
         private final String message;
 
-        private StringMessage(String message, boolean keepNewlines) {
+        private StringMessage(String message, boolean keepNewlines, boolean plain) {
             this.message = message;
             if (message == null) {
                 output = new ITextComponent[]{currentChatComponent};
@@ -116,12 +119,16 @@ public final class CraftChatMessage {
                     needsAdd = true;
                     break;
                 case 2:
-                    if (!(match.startsWith("http://") || match.startsWith("https://"))) {
-                        match = "http://" + match;
+                    if (plain) {
+                        appendNewComponent(matcher.end(groupId));
+                    } else {
+                        if (!(match.startsWith("http://") || match.startsWith("https://"))) {
+                            match = "http://" + match;
+                        }
+                        modifier = modifier.setClickEvent(new ClickEvent(Action.OPEN_URL, match));
+                        appendNewComponent(matcher.end(groupId));
+                        modifier = modifier.setClickEvent((ClickEvent) null);
                     }
-                    modifier = modifier.setClickEvent(new ClickEvent(Action.OPEN_URL, match));
-                    appendNewComponent(matcher.end(groupId));
-                    modifier = modifier.setClickEvent((ClickEvent) null);
                     break;
                 case 3:
                     if (needsAdd) {
@@ -168,11 +175,136 @@ public final class CraftChatMessage {
     }
 
     public static ITextComponent[] fromString(String message, boolean keepNewlines) {
-        return new StringMessage(message, keepNewlines).getOutput();
+        return fromString(message, keepNewlines, false);
+    }
+
+    public static ITextComponent[] fromString(String message, boolean keepNewlines, boolean plain) {
+        return new StringMessage(message, keepNewlines, plain).getOutput();
     }
 
     public static String toJSON(ITextComponent component) {
         return ITextComponent.Serializer.toJson(component);
+    }
+
+    public static String toJSONOrNull(ITextComponent component) {
+        if (component == null) return null;
+        return toJSON(component);
+    }
+
+    public static ITextComponent fromJSON(String jsonMessage) throws JsonParseException {
+        // Note: This also parses plain Strings to text components.
+        // Note: An empty message (empty, or only consisting of whitespace) results in null rather than a parse exception.
+        return ITextComponent.Serializer.getComponentFromJson(jsonMessage);
+    }
+
+    public static ITextComponent fromJSONOrNull(String jsonMessage) {
+        if (jsonMessage == null) return null;
+        try {
+            return fromJSON(jsonMessage); // Can return null
+        } catch (JsonParseException ex) {
+            return null;
+        }
+    }
+
+    public static ITextComponent fromJSONOrString(String message) {
+        return fromJSONOrString(message, false);
+    }
+
+    public static ITextComponent fromJSONOrString(String message, boolean keepNewlines) {
+        return fromJSONOrString(message, false, keepNewlines);
+    }
+
+    private static ITextComponent fromJSONOrString(String message, boolean nullable, boolean keepNewlines) {
+        if (message == null) message = "";
+        if (nullable && message.isEmpty()) return null;
+        if (isLegacy(message)) {
+            return fromString(message, keepNewlines)[0];
+        } else {
+            ITextComponent component = fromJSONOrNull(message);
+            if (component != null) {
+                return component;
+            } else {
+                return fromString(message, keepNewlines)[0];
+            }
+        }
+    }
+
+    public static String fromJSONOrStringToJSON(String message) {
+        return fromJSONOrStringToJSON(message, false);
+    }
+
+    public static String fromJSONOrStringToJSON(String message, boolean keepNewlines) {
+        return fromJSONOrStringToJSON(message, false, keepNewlines, Integer.MAX_VALUE, false);
+    }
+
+    public static String fromJSONOrStringOrNullToJSON(String message) {
+        return fromJSONOrStringOrNullToJSON(message, false);
+    }
+
+    public static String fromJSONOrStringOrNullToJSON(String message, boolean keepNewlines) {
+        return fromJSONOrStringToJSON(message, true, keepNewlines, Integer.MAX_VALUE, false);
+    }
+
+    public static String fromJSONOrStringToJSON(String message, boolean nullable, boolean keepNewlines, int maxLength, boolean checkJsonContentLength) {
+        if (message == null) message = "";
+        if (nullable && message.isEmpty()) return null;
+        if (isLegacy(message)) {
+            message = trimMessage(message, maxLength);
+            return fromStringToJSON(message, keepNewlines);
+        } else {
+            // If the input can be parsed as JSON, we use that:
+            ITextComponent component = fromJSONOrNull(message);
+            if (component != null) {
+                if (checkJsonContentLength) {
+                    String content = fromComponent(component);
+                    String trimmedContent = trimMessage(content, maxLength);
+                    if (content != trimmedContent) { // identity comparison is fine here
+                        // Note: The resulting text has all non-plain text features stripped.
+                        return fromStringToJSON(trimmedContent, keepNewlines);
+                    }
+                }
+                return message;
+            } else {
+                // Else we interpret the input as legacy text:
+                message = trimMessage(message, maxLength);
+                return fromStringToJSON(message, keepNewlines);
+            }
+        }
+    }
+
+    public static String trimMessage(String message, int maxLength) {
+        if (message != null && message.length() > maxLength) {
+            return message.substring(0, maxLength);
+        } else {
+            return message;
+        }
+    }
+
+    // Heuristic detection of legacy (plain) text.
+    // May produce false-negatives: I.e. a return value of false does not imply that the text represents modern (JSON-based) text.
+    // We also consider empty Strings as legacy. The component deserializer cannot parse them (produces null).
+    private static boolean isLegacy(String message) {
+        // assert: message != null
+        return message.trim().isEmpty() || message.contains(COLOR_CHAR_STRING);
+    }
+
+    public static String fromStringToJSON(String message) {
+        return fromStringToJSON(message, false);
+    }
+
+    public static String fromStringToJSON(String message, boolean keepNewlines) {
+        ITextComponent component = CraftChatMessage.fromString(message, keepNewlines)[0];
+        return CraftChatMessage.toJSON(component);
+    }
+
+    public static String fromStringOrNullToJSON(String message) {
+        ITextComponent component = CraftChatMessage.fromStringOrNull(message);
+        return CraftChatMessage.toJSONOrNull(component);
+    }
+
+    public static String fromJSONComponent(String jsonMessage) {
+        ITextComponent component = CraftChatMessage.fromJSONOrNull(jsonMessage);
+        return CraftChatMessage.fromComponent(component);
     }
 
     public static String fromComponent(ITextComponent component) {

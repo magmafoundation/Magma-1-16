@@ -629,6 +629,10 @@ public final class CraftServer implements Server {
     }
 
     @Override
+    public int getMaxWorldSize() {
+        return this.getProperties().maxWorldSize;
+    }
+    @Override
     public boolean getAllowEnd() {
         return this.configuration.getBoolean("settings.allow-end");
     }

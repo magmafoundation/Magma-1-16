@@ -1286,6 +1286,7 @@ public class CraftWorld implements World {
     public void setStorm(boolean hasStorm) {
         world.getWorldInfo().setRaining(hasStorm);
         setWeatherDuration(0); // Reset weather duration (legacy behaviour)
+        setClearWeatherDuration(0); // Reset clear weather duration (reset "/weather clear" commands)
     }
 
     @Override
@@ -1307,6 +1308,7 @@ public class CraftWorld implements World {
     public void setThundering(boolean thundering) {
         world.field_241103_E_.setThundering(thundering);
         setThunderDuration(0); // Reset weather duration (legacy behaviour)
+        setClearWeatherDuration(0); // Reset clear weather duration (reset "/weather clear" commands)
     }
 
     @Override
@@ -1317,6 +1319,21 @@ public class CraftWorld implements World {
     @Override
     public void setThunderDuration(int duration) {
         world.field_241103_E_.setThunderTime(duration);
+    }
+
+    @Override
+    public boolean isClearWeather() {
+        return !this.hasStorm() && !this.isThundering();
+    }
+
+    @Override
+    public void setClearWeatherDuration(int duration) {
+        world.field_241103_E_.setClearWeatherTime(duration); // PAIL rename setClearWeatherDuration
+    }
+
+    @Override
+    public int getClearWeatherDuration() {
+        return world.field_241103_E_.getClearWeatherTime(); // PAIL rename getClearWeatherDuration
     }
 
     @Override
@@ -2073,7 +2090,7 @@ public class CraftWorld implements World {
         double y = loc.getY();
         double z = loc.getZ();
 
-        getHandle().playSound(null, x, y, z, CraftSound.getSoundEffect(CraftSound.getSound(sound)), SoundCategory.valueOf(category.name()), volume, pitch);
+        getHandle().playSound(null, x, y, z, CraftSound.getSoundEffect(sound), SoundCategory.valueOf(category.name()), volume, pitch);
     }
 
     @Override
