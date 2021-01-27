@@ -16,16 +16,16 @@ public class Util {
 			}
 			return md.digest().collect {String.format "%02x", it}.join()
 		}
-	
+
 		File.metaClass.json = { -> new JsonSlurper().parseText(delegate.text) }
-		
+
 		Date.metaClass.iso8601 = { ->
 			def format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
 			def result = format.format(delegate)
 			return result[0..21] + ':' + result[22..-1]
 		}
 	}
-	
+
 	public static String[] getClasspath(project, libs, artifact) {
 		def ret = []
 		artifactTree(project, artifact).each { key, lib ->
@@ -35,7 +35,7 @@ public class Util {
 		}
 		return ret
 	}
-	
+
 	public static def getArtifacts(project, config, classifiers) {
 		def ret = [:]
 		config.resolvedConfiguration.resolvedArtifacts.each {
@@ -62,11 +62,12 @@ public class Util {
 				}
 			}
 			//TODO remove when Mojang launcher is updated
-			if (!classifiers && art.classifier != null) { //Mojang launcher doesn't currently support classifiers, so... move it to part of the version, and force the extension to 'jar'
+			if (!classifiers && art.classifier != null) {
+				//Mojang launcher doesn't currently support classifiers, so... move it to part of the version, and force the extension to 'jar'
+				// However, keep the path normal so that our mirror system works.
 				art.version = "${art.version}-${art.classifier}"
 				art.classifier = null
 				art.extension = 'jar'
-				path = "${art.group.replace('.', '/')}/${art.name}/${art.version}/${art.name}-${art.version}.jar"
 			}
 			ret[key] = [
 				name: "${art.group}:${art.name}:${art.version}" + (art.classifier == null ? '' : ":${art.classifier}") + (art.extension == 'jar' ? '' : "@${art.extension}"),
@@ -102,7 +103,7 @@ public class Util {
 		def files = cfg.resolve()
 		return getArtifacts(project, cfg, true)
 	}
-	
+
 	private static boolean checkExists(url) {
 		try {
 			def code = new URL(url).openConnection().with {

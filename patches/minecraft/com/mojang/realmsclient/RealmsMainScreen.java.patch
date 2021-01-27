@@ -1,23 +1,5 @@
 --- a/com/mojang/realmsclient/RealmsMainScreen.java
 +++ b/com/mojang/realmsclient/RealmsMainScreen.java
-@@ -1116,7 +1116,7 @@
- 
-       @Override
-       public void func_230930_b_() {
--            RealmsMainScreen.this.func_223955_A();
-+         RealmsMainScreen.this.func_223955_A();
-       }
- 
-       public void func_230431_b_(MatrixStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
-@@ -1138,7 +1138,7 @@
-       }
-       @Override
-       public void func_230930_b_() {
--            RealmsMainScreen.this.field_224035_x = !RealmsMainScreen.this.field_224035_x;
-+         RealmsMainScreen.this.field_224035_x = !RealmsMainScreen.this.field_224035_x;
-       }
- 
-       public void func_230431_b_(MatrixStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
 @@ -1160,16 +1160,16 @@
        }
        @Override
@@ -44,12 +26,3 @@
        }
  
        public void func_230431_b_(MatrixStack p_230431_1_, int p_230431_2_, int p_230431_3_, float p_230431_4_) {
-@@ -1185,7 +1185,7 @@
- 
-       @Override
-       public void func_230930_b_() {
--            RealmsMainScreen.this.func_237598_a_(this);
-+         RealmsMainScreen.this.func_237598_a_(this);
-       }
- 
-       public void func_231023_e_() {

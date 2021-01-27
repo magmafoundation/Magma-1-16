@@ -169,15 +169,6 @@
        return 20;
     }
  
-@@ -417,7 +452,7 @@
- 
-    @OnlyIn(Dist.CLIENT)
-    private void func_213824_a(IParticleData p_213824_1_) {
--      for(int i = 0; i < 5; ++i) {
-+      for (int i = 0; i < 5; ++i) {
-          double d0 = this.field_70146_Z.nextGaussian() * 0.02D;
-          double d1 = this.field_70146_Z.nextGaussian() * 0.02D;
-          double d2 = this.field_70146_Z.nextGaussian() * 0.02D;
 @@ -466,7 +501,8 @@
  
        if (this.field_70170_p.func_175659_aa() == Difficulty.PEACEFUL && this.field_70170_p.func_82736_K().func_223586_b(GameRules.field_223606_i)) {
@@ -188,28 +179,6 @@
           }
  
           if (this.field_71100_bB.func_75121_c() && this.field_70173_aa % 10 == 0) {
-@@ -479,10 +515,10 @@
-       super.func_70636_d();
-       this.field_70747_aH = 0.02F;
-       if (this.func_70051_ag()) {
--         this.field_70747_aH = (float)((double)this.field_70747_aH + 0.005999999865889549D);
-+         this.field_70747_aH = (float) ((double) this.field_70747_aH + 0.005999999865889549D);
-       }
- 
--      this.func_70659_e((float)this.func_233637_b_(Attributes.field_233821_d_));
-+      this.func_70659_e((float) this.func_233637_b_(Attributes.field_233821_d_));
-       float f;
-       if (this.field_70122_E && !this.func_233643_dh_() && !this.func_203007_ba()) {
-          f = Math.min(0.1F, MathHelper.func_76133_a(func_213296_b(this.func_213322_ci())));
-@@ -501,7 +537,7 @@
- 
-          List<Entity> list = this.field_70170_p.func_72839_b(this, axisalignedbb);
- 
--         for(int i = 0; i < list.size(); ++i) {
-+         for (int i = 0; i < list.size(); ++i) {
-             Entity entity = list.get(i);
-             if (!entity.field_70128_L) {
-                this.func_71044_o(entity);
 @@ -524,7 +560,8 @@
              return p_213830_0_ == EntityType.field_200783_W;
           }).ifPresent((p_213834_1_) -> {
@@ -239,15 +208,6 @@
        } else {
           this.func_213293_j(0.0D, 0.1D, 0.0D);
        }
-@@ -579,7 +619,7 @@
-    }
- 
-    protected void func_190776_cN() {
--      for(int i = 0; i < this.field_71071_by.func_70302_i_(); ++i) {
-+      for (int i = 0; i < this.field_71071_by.func_70302_i_(); ++i) {
-          ItemStack itemstack = this.field_71071_by.func_70301_a(i);
-          if (!itemstack.func_190926_b() && EnchantmentHelper.func_190939_c(itemstack)) {
-             this.field_71071_by.func_70304_b(i);
 @@ -603,12 +643,17 @@
     }
  
@@ -268,15 +228,6 @@
     }
  
     @Nullable
-@@ -620,7 +665,7 @@
-             this.func_184609_a(Hand.MAIN_HAND);
-          }
- 
--         double d0 = this.func_226280_cw_() - (double)0.3F;
-+         double d0 = this.func_226280_cw_() - (double) 0.3F;
-          ItemEntity itementity = new ItemEntity(this.field_70170_p, this.func_226277_ct_(), d0, this.func_226281_cx_(), p_146097_1_);
-          itementity.func_174867_a(40);
-          if (p_146097_3_) {
 @@ -629,52 +674,80 @@
  
           if (p_146097_2_) {
@@ -395,24 +346,6 @@
     }
  
     public void func_70037_a(CompoundNBT p_70037_1_) {
-@@ -713,7 +787,7 @@
-       this.func_85040_s(p_70037_1_.func_74762_e("Score"));
-       this.field_71100_bB.func_75112_a(p_70037_1_);
-       this.field_71075_bZ.func_75095_b(p_70037_1_);
--      this.func_110148_a(Attributes.field_233821_d_).func_111128_a((double)this.field_71075_bZ.func_75094_b());
-+      this.func_110148_a(Attributes.field_233821_d_).func_111128_a((double) this.field_71075_bZ.func_75094_b());
-       if (p_70037_1_.func_150297_b("EnderItems", 9)) {
-          this.field_71078_a.func_70486_a(p_70037_1_.func_150295_c("EnderItems", 10));
-       }
-@@ -733,7 +807,7 @@
-       p_213281_1_.func_74768_a("DataVersion", SharedConstants.func_215069_a().getWorldVersion());
-       p_213281_1_.func_218657_a("Inventory", this.field_71071_by.func_70442_a(new ListNBT()));
-       p_213281_1_.func_74768_a("SelectedItemSlot", this.field_71071_by.field_70461_c);
--      p_213281_1_.func_74777_a("SleepTimer", (short)this.field_71076_b);
-+      p_213281_1_.func_74777_a("SleepTimer", (short) this.field_71076_b);
-       p_213281_1_.func_74776_a("XpP", this.field_71106_cc);
-       p_213281_1_.func_74768_a("XpLevel", this.field_71068_ca);
-       p_213281_1_.func_74768_a("XpTotal", this.field_71067_cb);
 @@ -767,16 +841,19 @@
     }
  

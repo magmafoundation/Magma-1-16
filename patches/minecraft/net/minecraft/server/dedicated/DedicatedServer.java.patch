@@ -295,15 +295,6 @@
     }
  
     public boolean func_71279_ae() {
-@@ -410,7 +511,7 @@
-       return this.func_213221_d_().field_219003_P;
-    }
- 
--   public int func_175580_aG() {
-+    public int func_175580_aG() {
-       return this.func_213221_d_().field_219004_Q;
-    }
- 
 @@ -489,13 +590,39 @@
     }
  

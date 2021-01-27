@@ -107,15 +107,6 @@
     public ResourceLocation func_199560_c() {
        return this.field_199561_e;
     }
-@@ -46,7 +136,7 @@
-       return IRecipeSerializer.field_222157_a;
-    }
- 
--   public String func_193358_e() {
-+    public String func_193358_e() {
-       return this.field_194137_e;
-    }
- 
 @@ -109,10 +199,20 @@
        return this.field_77576_b;
     }

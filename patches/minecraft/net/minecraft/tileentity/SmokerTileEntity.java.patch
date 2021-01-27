@@ -18,9 +18,3 @@
  
  public class SmokerTileEntity extends AbstractFurnaceTileEntity {
     public SmokerTileEntity() {
-@@ -24,4 +29,5 @@
-    protected Container func_213906_a(int p_213906_1_, PlayerInventory p_213906_2_) {
-       return new SmokerContainer(p_213906_1_, p_213906_2_, this, this.field_214013_b);
-    }
-+
- }

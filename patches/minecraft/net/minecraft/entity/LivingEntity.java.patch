@@ -1450,9 +1450,3 @@
     @OnlyIn(Dist.CLIENT)
     public AxisAlignedBB func_184177_bl() {
        if (this.func_184582_a(EquipmentSlotType.HEAD).func_77973_b() == Items.field_196151_dA) {
-@@ -3091,4 +3649,5 @@
-          return super.func_184177_bl();
-       }
-    }
-+
- }

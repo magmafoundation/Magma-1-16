@@ -19,15 +19,6 @@
  
  public class BlockItem extends Item {
     @Deprecated
-@@ -35,7 +38,7 @@
-       this.field_150939_a = p_i48527_1_;
-    }
- 
--   public ActionResultType func_195939_a(ItemUseContext p_195939_1_) {
-+    public ActionResultType func_195939_a(ItemUseContext p_195939_1_) {
-       ActionResultType actionresulttype = this.func_195942_a(new BlockItemUseContext(p_195939_1_));
-       return !actionresulttype.func_226246_a_() && this.func_219971_r() ? this.func_77659_a(p_195939_1_.func_195991_k(), p_195939_1_.func_195999_j(), p_195939_1_.func_221531_n()).func_188397_a() : actionresulttype;
-    }
 @@ -49,6 +52,12 @@
              return ActionResultType.FAIL;
           } else {

@@ -39,15 +39,6 @@
     public ResourceLocation func_199560_c() {
        return this.field_199562_a;
     }
-@@ -33,7 +51,7 @@
-       return IRecipeSerializer.field_222158_b;
-    }
- 
--   public String func_193358_e() {
-+    public String func_193358_e() {
-       return this.field_194138_c;
-    }
- 
 @@ -47,17 +65,20 @@
  
     public boolean func_77569_a(CraftingInventory p_77569_1_, World p_77569_2_) {

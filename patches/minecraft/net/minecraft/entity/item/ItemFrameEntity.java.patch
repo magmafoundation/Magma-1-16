@@ -20,15 +20,6 @@
  
     public ItemFrameEntity(EntityType<? extends ItemFrameEntity> p_i50224_1_, World p_i50224_2_) {
        super(p_i50224_1_, p_i50224_2_);
-@@ -52,7 +54,7 @@
-       this.func_174859_a(p_i45852_3_);
-    }
- 
--   protected float func_213316_a(Pose p_213316_1_, EntitySize p_213316_2_) {
-+    protected float func_213316_a(Pose p_213316_1_, EntitySize p_213316_2_) {
-       return 0.0F;
-    }
- 
 @@ -61,7 +63,7 @@
        this.func_184212_Q().func_187214_a(field_184526_d, 0);
     }

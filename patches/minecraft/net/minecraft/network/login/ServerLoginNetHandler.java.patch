@@ -129,7 +129,7 @@
           this.field_147333_a.func_179290_a(new SEncryptionRequestPacket("", this.field_147327_f.func_71250_E().getPublic().getEncoded(), this.field_147330_e));
        } else {
 -         this.field_147328_g = ServerLoginNetHandler.State.READY_TO_ACCEPT;
-+	     // this.currentLoginState = ServerLoginNetHandler.State.NEGOTIATING;
++         // this.currentLoginState = ServerLoginNetHandler.State.NEGOTIATING;
 +         // Spigot start
 +         new Thread("User Authenticator #" + field_147331_b.incrementAndGet()) {
 +            @Override
@@ -147,15 +147,7 @@
        }
  
     }
-@@ -138,7 +210,6 @@
-    public void func_147315_a(CEncryptionResponsePacket p_147315_1_) {
-       Validate.validState(this.field_147328_g == ServerLoginNetHandler.State.KEY, "Unexpected key packet");
-       PrivateKey privatekey = this.field_147327_f.func_71250_E().getPrivate();
--
-       final String s;
-       try {
-          if (!Arrays.equals(this.field_147330_e, p_147315_1_.func_149299_b(privatekey))) {
-@@ -154,48 +225,95 @@
+@@ -154,48 +226,95 @@
        } catch (CryptException cryptexception) {
           throw new IllegalStateException("Protocol error", cryptexception);
        }

@@ -29,9 +29,3 @@
     }
  
     public boolean func_195039_a() {
-@@ -48,4 +60,5 @@
-    public boolean func_195041_r_() {
-       return this.field_184171_b.func_195569_l();
-    }
-+
- }
