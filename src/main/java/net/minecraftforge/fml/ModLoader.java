@@ -33,6 +33,7 @@ import net.minecraftforge.fml.loading.LoadingModList;
 import net.minecraftforge.fml.loading.moddiscovery.InvalidModIdentifier;
 import net.minecraftforge.fml.loading.moddiscovery.ModFile;
 import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo;
+import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -270,7 +271,7 @@ public class ModLoader
     {
         final Map<String, IModInfo> modInfoMap = modFile.getModFileInfo().getMods().stream().collect(Collectors.toMap(IModInfo::getModId, Function.identity()));
 
-        LOGGER.debug(LOADING, "ModContainer is {}", ModContainer.class.getClassLoader());
+        LOGGER.trace(LOADING, "ModContainer is {}", ModContainer.class.getClassLoader());
         final List<ModContainer> containers = modFile.getScanResult().getTargets()
                 .entrySet()
                 .stream()

@@ -60,8 +60,8 @@ ext {
     }
     MAPPING_CHANNEL = 'snapshot'
     MAPPING_VERSION = '20201028-1.16.3'
-    MC_VERSION = '1.16.4'
-    MCP_VERSION = '20201102.104115'
+    MC_VERSION = '1.16.5'
+    MCP_VERSION = '20210115.111550'
 }
 
 project(':mcp') {
@@ -185,7 +185,7 @@ project(':forge') {
     }
 
     ext {
-        SPEC_VERSION = '35.1' // This is overwritten by git tag, but here so dev time doesnt explode
+        SPEC_VERSION = '36.0' // This is overwritten by git tag, but here so dev time doesnt explode
         // The new versioning sceme is <MCVersion>-<ForgeMC>.<RB>.<CommitsSinceRB>
         // ForgeMC is a unique identifier for every MC version we have supported.
         // Essentially, the same as the old, except dropping the first number, and the builds are no longer unique.
@@ -194,10 +194,10 @@ project(':forge') {
         VERSION_JSON = project(':mcp').file('build/mcp/downloadJson/version.json')
         BINPATCH_TOOL = 'net.minecraftforge:binarypatcher:1.0.12:fatjar'
         INSTALLER_TOOLS = 'net.minecraftforge:installertools:1.1.11'
-        FORGE_VERSION = '35.1.28'
+        FORGE_VERSION = '36.0.7'
     }
 
-    version = "1.16.4-$FORGE_VERSION-$versioning.info.build"
+    version = "1.16.5-$FORGE_VERSION-$versioning.info.build"
     println('Forge Version: ' + version)
 
     patcher {

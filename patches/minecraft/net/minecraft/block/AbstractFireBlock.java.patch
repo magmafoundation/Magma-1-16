@@ -52,11 +52,10 @@
     }
  
     public void func_176208_a(World p_176208_1_, BlockPos p_176208_2_, BlockState p_176208_3_, PlayerEntity p_176208_4_) {
-@@ -174,4 +184,13 @@
-          return flag && PortalSize.func_242964_a(p_241466_0_, p_241466_1_, p_241466_2_.func_176735_f().func_176740_k()).isPresent();
+@@ -157,6 +167,14 @@
        }
     }
-+
+ 
 +   // CraftBukkit start
 +   protected void fireExtinguished(IWorld world, BlockPos position) {
 +      if (!org.bukkit.craftbukkit.event.CraftEventFactory.callBlockFadeEvent(world, position, Blocks.field_150350_a.func_176223_P()).isCancelled()) {
@@ -65,4 +64,6 @@
 +   }
 +   // CraftBukkit end
 +
- }
+    private static boolean func_241466_b_(World p_241466_0_, BlockPos p_241466_1_, Direction p_241466_2_) {
+       if (!func_242649_a(p_241466_0_)) {
+          return false;
