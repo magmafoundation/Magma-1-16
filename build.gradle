@@ -611,7 +611,6 @@ project(':forge') {
                     logo      : '/big_logo.png',
                     minecraft : MC_VERSION,
                     welcome   : "Welcome to the simple ${project.name.capitalize()} installer.",
-                    mirrorList: "https://files.minecraftforge.net/mirrors-2.0.json",
                     data      : [
                             MAPPINGS    : [
                                     client: "[${MCP_ARTIFACT.group}:${MCP_ARTIFACT.name}:${MCP_ARTIFACT.version}:mappings@txt]",

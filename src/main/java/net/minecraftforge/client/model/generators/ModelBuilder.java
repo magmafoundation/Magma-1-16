@@ -146,7 +146,7 @@ public class ModelBuilder<T extends ModelBuilder<T>> extends ModelFile {
     public T texture(String key, ResourceLocation texture) {
         Preconditions.checkNotNull(key, "Key must not be null");
         Preconditions.checkNotNull(texture, "Texture must not be null");
-        Preconditions.checkArgument(existingFileHelper.exists(texture, ResourcePackType.CLIENT_RESOURCES, ".png", "textures"),
+        Preconditions.checkArgument(existingFileHelper.exists(texture, ModelProvider.TEXTURE),
                 "Texture %s does not exist in any known resource pack", texture);
         this.textures.put(key, texture.toString());
         return self();

@@ -122,6 +122,12 @@ public class CompoundIngredient extends Ingredient
     }
 
     @Override
+    public boolean hasNoMatchingItems()
+    {
+        return getMatchingStacks().length == 0;
+    }
+
+    @Override
     public JsonElement serialize()
     {
        if (this.children.size() == 1)

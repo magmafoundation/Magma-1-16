@@ -51,7 +51,7 @@
 +            // CraftBukkit start - load chunk persistent data from nbt
 +            INBT persistentBase = compoundnbt.func_74781_a("ChunkBukkitValues");
 +            if (persistentBase instanceof CompoundNBT) {
-+               p_222648_1_.persistentDataContainer.putAll((CompoundNBT) compoundnbt);
++               p_222648_1_.persistentDataContainer.putAll((CompoundNBT) persistentBase);
 +            }
 +            // CraftBukkit end
           });
