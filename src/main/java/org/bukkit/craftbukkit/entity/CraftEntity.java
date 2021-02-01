@@ -173,6 +173,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
+import org.magmafoundation.magma.craftbukkit.entity.CraftCustomEntity;
 import org.magmafoundation.magma.craftbukkit.entity.CraftFakePlayer;
 
 public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -396,6 +397,9 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         else if (entity instanceof AreaEffectCloudEntity) { return new CraftAreaEffectCloud(server, (AreaEffectCloudEntity) entity); }
         else if (entity instanceof EvokerFangsEntity) { return new CraftEvokerFangs(server, (EvokerFangsEntity) entity); }
         else if (entity instanceof LlamaSpitEntity) { return new CraftLlamaSpit(server, (LlamaSpitEntity) entity); }
+        else {
+            return new CraftCustomEntity(server, entity);
+        }
         // CHECKSTYLE:ON
 
         throw new AssertionError("Unknown entity " + (entity == null ? null : entity.getClass()));

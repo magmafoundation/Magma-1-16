@@ -1265,7 +1265,7 @@ public class CraftWorld implements World {
 
     @Override
     public void setDifficulty(Difficulty difficulty) {
-        this.getHandle().field_241103_E_.setDifficulty(net.minecraft.world.Difficulty.byId(difficulty.getValue()));
+        this.getHandle().getServer().getServerConfiguration().setDifficulty(net.minecraft.world.Difficulty.byId(difficulty.getValue()));
     }
 
     @Override
@@ -1919,7 +1919,7 @@ public class CraftWorld implements World {
 
     @Override
     public boolean canGenerateStructures() {
-        return world.field_241103_E_.getDimensionGeneratorSettings().doesGenerateFeatures();
+        return world.getServer().getServerConfiguration().getDimensionGeneratorSettings().doesGenerateFeatures();
     }
 
     @Override
@@ -1929,7 +1929,7 @@ public class CraftWorld implements World {
 
     @Override
     public void setHardcore(boolean hardcore) {
-        world.field_241103_E_.worldSettings.hardcoreEnabled = hardcore;
+        world.getServer().getServerConfiguration().getWorldSettings().hardcoreEnabled = hardcore;
     }
 
     @Override

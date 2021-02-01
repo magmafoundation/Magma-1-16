@@ -143,7 +143,7 @@ public class ActivationRange {
      * @param chunk
      */
     private static void activateChunkEntities(Chunk chunk) {
-        for (List<Entity> slice : chunk.entityLists) {
+        for (ClassInheritanceMultiMap slice : chunk.entityLists) {
             for (Entity entity : (Collection<Entity>) slice) {
                 if (MinecraftServer.currentTick > entity.activatedTick) {
                     if (entity.defaultActivationState) {

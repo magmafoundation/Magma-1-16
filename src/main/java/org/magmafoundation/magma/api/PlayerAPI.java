@@ -18,12 +18,15 @@
 
 package org.magmafoundation.magma.api;
 
+import java.net.SocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 
 /**
  * PlayerAPI
@@ -33,8 +36,8 @@ import org.bukkit.entity.Player;
  */
 public class PlayerAPI {
 
-    public static Map<ServerPlayerEntity, Integer> mods = new ConcurrentHashMap<>();
-    public static Map<ServerPlayerEntity, String> modList = new ConcurrentHashMap<>();
+    public static Map<SocketAddress, Integer> mods = new ConcurrentHashMap<>();
+    public static Map<SocketAddress, String> modList = new ConcurrentHashMap<>();
 
     /**
      * Gets the NMS Player.
@@ -73,7 +76,8 @@ public class PlayerAPI {
      * @return loaded mod count.
      */
     public static int getModSize(Player player) {
-        return mods.get(getNMSPlayer(player)) == null ? 0 : mods.get(getNMSPlayer(player));
+        SocketAddress socketAddress = getRemoteAddress(player);
+        return mods.get(socketAddress) == null ? 0 : mods.get(socketAddress) - 2;
     }
 
     /**
@@ -83,18 +87,22 @@ public class PlayerAPI {
      * @return list of loaded mods.
      */
     public static String getModlist(Player player) {
-        return modList.get(getNMSPlayer(player)) == null ? "null" : modList.get(getNMSPlayer(player));
+        SocketAddress socketAddress = getRemoteAddress(player);
+        return modList.get(socketAddress) == null ? "null" : modList.get(socketAddress);
     }
 
     /**
      * Checks if a mod is in the list.
      *
      * @param player - The player
-     * @param modid for the mod wanted to check.
+     * @param modid  for the mod wanted to check.
      * @return boolean - if it's in the list or not.
      */
     public static boolean hasMod(Player player, String modid) {
         return getModlist(player).contains(modid);
     }
 
+    public static SocketAddress getRemoteAddress(Player player) {
+        return getNMSPlayer(player).connection.netManager.getRemoteAddress();
+    }
 }
