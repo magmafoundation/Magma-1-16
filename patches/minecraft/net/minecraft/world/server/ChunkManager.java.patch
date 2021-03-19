@@ -169,8 +169,9 @@
     }
  
     protected void func_219210_a(Entity p_219210_1_) {
+-      if (!(p_219210_1_ instanceof EnderDragonPartEntity)) {
 +      org.spigotmc.AsyncCatcher.catchOp("entity track"); // Spigot
-       if (!(p_219210_1_ instanceof EnderDragonPartEntity)) {
++      if (!(p_219210_1_ instanceof net.minecraftforge.entity.PartEntity)) {
           EntityType<?> entitytype = p_219210_1_.func_200600_R();
           int i = entitytype.func_233602_m_() * 16;
 +         i = org.spigotmc.TrackingRange.getEntityTrackingRange(p_219210_1_, i); // Spigot

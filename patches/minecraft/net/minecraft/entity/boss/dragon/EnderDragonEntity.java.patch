@@ -184,3 +184,18 @@
           }
        }
  
+@@ -842,4 +926,14 @@
+    public boolean func_184222_aU() {
+       return false;
+    }
++
++   @Override
++   public boolean isMultipartEntity() {
++      return true;
++   }
++
++   @Override
++   public net.minecraftforge.entity.PartEntity<?>[] getParts() {
++      return this.field_70977_g;
++   }
+ }

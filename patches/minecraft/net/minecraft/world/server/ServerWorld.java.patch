@@ -280,7 +280,7 @@
        this.field_211159_Q = false;
        iprofiler.func_219895_b("entities");
 -      boolean flag3 = !this.field_217491_A.isEmpty() || !this.func_217469_z().isEmpty();
-+      boolean flag3 = true || !this.field_217491_A.isEmpty() || !this.func_217469_z().isEmpty(); // CraftBukkit - this prevents entity cleanup, other issues on servers with no players
++      boolean flag3 = !this.field_217491_A.isEmpty() || net.minecraftforge.common.world.ForgeChunkManager.hasForcedChunks(this); //Forge: Replace vanilla's has forced chunk check with forge's that checks both the vanilla and forge added ones
        if (flag3) {
           this.func_82742_i();
        }
@@ -333,6 +333,15 @@
  
                 iprofiler.func_76320_a("checkDespawn");
                 if (!entity1.field_70128_L) {
+@@ -395,7 +511,7 @@
+             }
+ 
+             iprofiler.func_76320_a("tick");
+-            if (!entity1.field_70128_L && !(entity1 instanceof EnderDragonPartEntity)) {
++            if (!entity1.field_70128_L && !(entity1 instanceof net.minecraftforge.entity.PartEntity)) {
+                this.func_217390_a(this::func_217479_a, entity1);
+             }
+ 
 @@ -404,7 +520,7 @@
              if (entity1.field_70128_L) {
                 this.func_217454_n(entity1);
@@ -576,6 +585,9 @@
  
 +   @Deprecated //Forge: Use removeEntityComplete(entity,boolean)
     public void func_217484_g(Entity p_217484_1_) {
+-      if (p_217484_1_ instanceof EnderDragonEntity) {
+-         for(EnderDragonPartEntity enderdragonpartentity : ((EnderDragonEntity)p_217484_1_).func_213404_dT()) {
+-            enderdragonpartentity.func_70106_y();
 +      removeEntityComplete(p_217484_1_, false);
 +   }
 +   public void removeEntityComplete(Entity p_217484_1_, boolean keepData) {
@@ -603,9 +615,8 @@
 +         } );
 +      }
 +      // Spigot end
-       if (p_217484_1_ instanceof EnderDragonEntity) {
-          for(EnderDragonPartEntity enderdragonpartentity : ((EnderDragonEntity)p_217484_1_).func_213404_dT()) {
--            enderdragonpartentity.func_70106_y();
++      if (p_217484_1_.isMultipartEntity()) {
++         for(net.minecraftforge.entity.PartEntity<?> enderdragonpartentity : p_217484_1_.getParts()) {
 +            enderdragonpartentity.remove(keepData);
           }
        }
@@ -613,7 +624,7 @@
  
        this.field_175741_N.remove(p_217484_1_.func_110124_au());
        this.func_72863_F().func_217226_b(p_217484_1_);
-@@ -894,13 +1103,23 @@
+@@ -894,39 +1103,60 @@
        }
  
        this.func_96441_U().func_181140_a(p_217484_1_);
@@ -637,7 +648,14 @@
        if (this.field_217492_a) {
           this.field_217499_z.add(p_217465_1_);
        } else {
-@@ -913,20 +1132,31 @@
+          this.field_217498_x.put(p_217465_1_.func_145782_y(), p_217465_1_);
+-         if (p_217465_1_ instanceof EnderDragonEntity) {
+-            for(EnderDragonPartEntity enderdragonpartentity : ((EnderDragonEntity)p_217465_1_).func_213404_dT()) {
++         if (p_217465_1_.isMultipartEntity()) {
++            for(net.minecraftforge.entity.PartEntity<?> enderdragonpartentity : p_217465_1_.getParts()) {
+                this.field_217498_x.put(enderdragonpartentity.func_145782_y(), enderdragonpartentity);
+             }
+          }
  
           this.field_175741_N.put(p_217465_1_.func_110124_au(), p_217465_1_);
           this.func_72863_F().func_217230_c(p_217465_1_);

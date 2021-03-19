@@ -123,7 +123,7 @@
     }
  
     @OnlyIn(Dist.CLIENT)
-@@ -410,6 +435,95 @@
+@@ -410,6 +435,90 @@
        return this;
     }
  
@@ -132,11 +132,6 @@
 +   private net.minecraftforge.common.ToolType harvestTool;
 +   private int harvestLevel;
 +   private final net.minecraftforge.common.util.ReverseTagWrapper<Block> reverseTags = new net.minecraftforge.common.util.ReverseTagWrapper<>(this, BlockTags::func_199896_a);
-+
-+   @Override
-+   public float getSlipperiness(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity) {
-+      return this.field_149765_K;
-+   }
 +
 +   @Nullable
 +   @Override
