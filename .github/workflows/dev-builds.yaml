@@ -11,7 +11,7 @@ jobs:
           submodules: recursive
       - uses: gradle/wrapper-validation-action@v1.0.3
       - run: chmod +x ./gradlew
-      - run: ./gradlew setup installerJar --parallel
+      - run: ./gradlew setup installerJar
         env:
           STABLE_BUILD: 0
     #   - uses: actions/upload-artifact@v2.2.2
