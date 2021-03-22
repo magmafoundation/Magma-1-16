@@ -30,7 +30,7 @@ pipeline {
                   sh 'mkdir -p projects/magma'
                   sh 'cp \$MAGMA_KEY_STORE ./projects/magma/keystore.jks'
                 }
-                sh './gradlew setup installerJar --console=plain'
+//                 sh './gradlew setup installerJar --console=plain'
             }
         }
     }

@@ -188,7 +188,16 @@ project(':forge') {
         FORGE_VERSION = '36.1.0'
     }
 
-    version = "1.16.5-$FORGE_VERSION-$versioning.info.build"
+    if (System.getenv("STABLE_BUILD") != null) {
+        if (System.getenv("STABLE_BUILD") == '1') {
+            version "1.16.5-$FORGE_VERSION-$versioning.info.build" + "-STABLE"
+        } else {
+            version "1.16.5-$FORGE_VERSION-$versioning.info.build" + "-DEV"
+        }
+    } else {
+        version "1.16.5-$FORGE_VERSION-$versioning.info.build"+ "-CUSTOM"
+    }
+
     println('Forge Version: ' + version)
 
     patcher {
