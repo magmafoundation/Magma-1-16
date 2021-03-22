@@ -236,6 +236,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                         if (entity instanceof WolfEntity) { return new CraftWolf(server, (WolfEntity) entity); }
                         else if (entity instanceof CatEntity) { return new CraftCat(server, (CatEntity) entity); }
                         else if (entity instanceof ParrotEntity) { return new CraftParrot(server, (ParrotEntity) entity); }
+                        else { return new CraftTameableAnimal(server, (TameableEntity) entity); }
                     }
                     else if (entity instanceof SheepEntity) { return new CraftSheep(server, (SheepEntity) entity); }
                     else if (entity instanceof AbstractHorseEntity) {
@@ -314,6 +315,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                     if (entity instanceof SnowGolemEntity) { return new CraftSnowman(server, (SnowGolemEntity) entity); }
                     else if (entity instanceof IronGolemEntity) { return new CraftIronGolem(server, (IronGolemEntity) entity); }
                     else if (entity instanceof ShulkerEntity) { return new CraftShulker(server, (ShulkerEntity) entity); }
+                    else { return new CraftGolem(server, (GolemEntity) entity); }
                 }
                 else if (entity instanceof AbstractVillagerEntity) {
                     if (entity instanceof VillagerEntity) { return new CraftVillager(server, (VillagerEntity) entity); }
@@ -397,12 +399,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         else if (entity instanceof AreaEffectCloudEntity) { return new CraftAreaEffectCloud(server, (AreaEffectCloudEntity) entity); }
         else if (entity instanceof EvokerFangsEntity) { return new CraftEvokerFangs(server, (EvokerFangsEntity) entity); }
         else if (entity instanceof LlamaSpitEntity) { return new CraftLlamaSpit(server, (LlamaSpitEntity) entity); }
-        else {
-            return new CraftCustomEntity(server, entity);
-        }
         // CHECKSTYLE:ON
-
-        throw new AssertionError("Unknown entity " + (entity == null ? null : entity.getClass()));
+        return  new CraftCustomEntity(server, entity);
     }
 
     @Override

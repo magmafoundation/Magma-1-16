@@ -105,7 +105,7 @@
     private CompoundNBT field_77990_d;
     private boolean field_190928_g;
     private Entity field_234693_k_;
-@@ -109,34 +_,67 @@
+@@ -109,34 +_,61 @@
        p_i231596_3_.ifPresent(this::func_77982_d);
     }
  
@@ -139,12 +139,6 @@
 +   // CraftBukkit end
  
     private void func_190923_F() {
-+      // CraftBukkit start
-+      if (this.field_190928_g && this == ItemStack.field_190927_a) {
-+         throw new AssertionError((Object)"TRAP");
-+      }
-+      // CraftBukkit stop
-+
        this.field_190928_g = false;
        this.field_190928_g = this.func_190926_b();
     }

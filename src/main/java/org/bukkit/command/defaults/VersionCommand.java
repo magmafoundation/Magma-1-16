@@ -31,6 +31,8 @@ public class VersionCommand extends Command {
             return false;
         }
 
+        sender.sendMessage("Java Verison: " + System.getProperty("java.version") + ", " + System.getProperty("java.vendor"));
+
         sender.sendMessage("This server is running " + Bukkit.getName() + " version " + Magma.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ", Forge Version " + ForgeVersion.getVersion() + ")");
         return true;
     }
