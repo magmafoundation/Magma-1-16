@@ -10,8 +10,6 @@ jobs:
       image: openjdk:${{ matrix.java }}
     steps:
       - uses: actions/checkout@v2.3.4
-        with:
-          submodules: recursive
       - uses: gradle/wrapper-validation-action@v1.0.3
       - run: chmod +x ./gradlew
       - run: ./gradlew setup installerJar
