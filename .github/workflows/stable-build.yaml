@@ -1,0 +1,21 @@
+name: Stable Builds
+on: [workflow_dispatch] # Manual trigger
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    container:
+      image: openjdk:8-jdk
+    steps:
+      - uses: actions/checkout@v2.3.4
+        with:
+          submodules: recursive
+      - uses: gradle/wrapper-validation-action@v1.0.3
+      - run: chmod +x ./gradlew
+      - run: ./gradlew setup installerJar  --parallel
+        env:
+          STABLE_BUILD: 1
+      - uses: actions/upload-artifact@v2.2.2
+        with:
+          name: Builds
+          path: build/distributions/*server.*
+
