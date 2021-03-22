@@ -59,7 +59,7 @@ ext {
     MAPPING_VERSION = '1.16.5'
     MC_VERSION = '1.16.5'
     MCP_VERSION = '20210115.111550'
-	SPI_VERSION = '3.2.0'
+    SPI_VERSION = '3.2.0'
 }
 
 project(':mcp') {
@@ -75,8 +75,8 @@ project(':mcp') {
 
 project(':clean') {
     evaluationDependsOn(':mcp')
-	apply plugin: 'eclipse'
-	apply plugin: 'net.minecraftforge.gradle.patcher'
+    apply plugin: 'eclipse'
+    apply plugin: 'net.minecraftforge.gradle.patcher'
 
     java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
@@ -195,7 +195,7 @@ project(':forge') {
             version "1.16.5-$FORGE_VERSION-$versioning.info.build" + "-DEV"
         }
     } else {
-        version "1.16.5-$FORGE_VERSION-$versioning.info.build"+ "-CUSTOM"
+        version "1.16.5-$FORGE_VERSION-$versioning.info.build" + "-CUSTOM"
     }
 
     println('Forge Version: ' + version)
@@ -354,7 +354,8 @@ project(':forge') {
 
     configurations {
         installer {
-            transitive = false //Don't pull all libraries, if we're missing something, add it to the installer list so the installer knows to download it.
+            transitive = false
+            //Don't pull all libraries, if we're missing something, add it to the installer list so the installer knows to download it.
         }
         api.extendsFrom(installer)
         fmllauncherImplementation.extendsFrom(installer, implementation)
@@ -440,7 +441,7 @@ project(':forge') {
     task extractInheritance(type: ExtractInheritance, dependsOn: [genJoinedBinPatches, downloadLibraries]) {
         tool = INSTALLER_TOOLS + ':fatjar'
         input { genJoinedBinPatches.cleanJar }
-        doFirst { downloadLibraries.libraries.each{ addLibrary(it) } }
+        doFirst { downloadLibraries.libraries.each { addLibrary(it) } }
     }
 
     task findFieldInstanceChecks(type: FieldCompareFinder, dependsOn: ['createJoinedSRG']) {
@@ -450,17 +451,17 @@ project(':forge') {
             bows {
                 cls = 'net/minecraft/item/Items'
                 name = 'field_151031_f'
-				replacement = 'net/minecraft/item/BowItem'
+                replacement = 'net/minecraft/item/BowItem'
             }
             crossbows {
                 cls = 'net/minecraft/item/Items'
                 name = 'field_222114_py'
-				replacement = 'net/minecraft/item/CrossbowItem'
+                replacement = 'net/minecraft/item/CrossbowItem'
             }
             filled_map {
                 cls = 'net/minecraft/item/Items'
                 name = 'field_151098_aY'
-				replacement = 'net/minecraft/item/FilledMapItem'
+                replacement = 'net/minecraft/item/FilledMapItem'
                 blacklist 'net/minecraft/client/gui/screen/inventory/CartographyTableScreen', 'func_230450_a_', '(Lcom/mojang/blaze3d/matrix/MatrixStack;FII)V'
                 blacklist 'net/minecraft/client/renderer/entity/ItemFrameRenderer', 'func_225623_a_', '(Lnet/minecraft/entity/item/ItemFrameEntity;FFLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;I)V'
                 blacklist 'net/minecraft/item/crafting/MapCloningRecipe'
@@ -469,12 +470,12 @@ project(':forge') {
             fishing_rod {
                 cls = 'net/minecraft/item/Items'
                 name = 'field_151112_aM'
-				replacement = 'net/minecraft/item/FishingRodItem'
+                replacement = 'net/minecraft/item/FishingRodItem'
             }
             shears {
                 cls = 'net/minecraft/item/Items'
                 name = 'field_151097_aZ'
-				replacement = 'net/minecraft/item/ShearsItem'
+                replacement = 'net/minecraft/item/ShearsItem'
             }
         }
     }
@@ -494,7 +495,7 @@ project(':forge') {
         excs = patcher.excs
     }
 
-    task checkAll(dependsOn: [checkATs, checkSAS, checkExcs, findFieldInstanceChecks]){}
+    task checkAll(dependsOn: [checkATs, checkSAS, checkExcs, findFieldInstanceChecks]) {}
 
     task checkPatchesAndFix(type: CheckPatches) {
         patchDir = file("$rootDir/patches")
@@ -677,7 +678,7 @@ project(':forge') {
                                             '{MC_EXTRA}': '{MC_EXTRA_SHA}'
                                     ]
                             ], [
-                                    jar: SPECIAL_SOURCE_MCP,
+                                    jar      : SPECIAL_SOURCE_MCP,
                                     classpath: getClasspath(project, libs, SPECIAL_SOURCE_MCP),
                                     args     : [
                                             //'--stable', Java 9 Is borked, https://bugs.openjdk.java.net/browse/JDK-8184940 TODO: find a fix.
@@ -870,23 +871,28 @@ project(':forge') {
     }
 
     license {
-        header = file("$rootDir/LICENSE-header.txt")
-//        header = file("$rootDir/FORGE-LICENSE-header.txt")
 
         ext {
             year = new Date().format("yyyy")
         }
 
-        include 'org/magmafoundation/'
+        matching(includes: ['**/magmafoundation/**.java']) {
+            include 'org/magmafoundation/'
 
-//        include 'net/minecraftforge/'
-//        exclude 'net/minecraftforge/server/terminalconsole/'
-//        exclude 'net/minecraftforge/api/' // exclude API here because it's validated in the SPI build
-//        exclude 'net/minecraftforge/fml/common/versioning/ComparableVersion.java'
-//        exclude 'net/minecraftforge/fml/common/versioning/InvalidVersionSpecificationException.java'
-//        exclude 'net/minecraftforge/fml/common/versioning/Restriction.java'
-//        exclude 'net/minecraftforge/fml/common/versioning/VersionRange.java'
-//        exclude 'net/minecraftforge/common/LenientUnboundedMapCodec.java'
+            header = file("$rootDir/LICENSE-header.txt")
+        }
+
+        matching(includes: ['**/minecraftforge/**.java']) {
+            include 'net/minecraftforge/'
+            exclude 'net/minecraftforge/server/terminalconsole/'
+            exclude 'net/minecraftforge/api/' // exclude API here because it's validated in the SPI build
+            exclude 'net/minecraftforge/fml/common/versioning/ComparableVersion.java'
+            exclude 'net/minecraftforge/fml/common/versioning/InvalidVersionSpecificationException.java'
+            exclude 'net/minecraftforge/fml/common/versioning/Restriction.java'
+            exclude 'net/minecraftforge/fml/common/versioning/VersionRange.java'
+            exclude 'net/minecraftforge/common/LenientUnboundedMapCodec.java'
+            header = file("$rootDir/FORGE-LICENSE-header.txt")
+        }
 
 
         tasks {
@@ -952,7 +958,8 @@ project(':forge') {
 //evaluationDependsOnChildren()
 task setup() {
     dependsOn ':clean:extractMapped'
-    dependsOn ':forge:extractMapped' //These must be strings so that we can do lazy resolution. Else we need evaluationDependsOnChildren above
+    dependsOn ':forge:extractMapped'
+    //These must be strings so that we can do lazy resolution. Else we need evaluationDependsOnChildren above
 }
 
 

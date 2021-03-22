@@ -2,9 +2,12 @@ name: Dev-Builds
 on: [push, pull_request]
 jobs:
   build:
+    strategy:
+      matrix:
+        java: [ 8-jdk, 11-jdk, 15-jdk ]
     runs-on: ubuntu-20.04
     container:
-      image: openjdk:8-jdk
+      image: openjdk:${{ matrix.java }}
     steps:
       - uses: actions/checkout@v2.3.4
         with:
