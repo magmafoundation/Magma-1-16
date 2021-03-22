@@ -1,6 +1,6 @@
 /*
  * Minecraft Forge
- * Copyright (c) 2016-2020.
+ * Copyright (c) 2016-2021.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -164,6 +164,9 @@ public class ForgeHooksClient
         StartupMessageManager.mcLoaderConsumer().ifPresent(c->c.accept("Atlas Stitching : "+map.location().toString()));
         ModLoader.get().postEvent(new TextureStitchEvent.Pre(map, resourceLocations));
 //        ModelLoader.White.INSTANCE.register(map); // TODO Custom TAS
+        Atlases.SIGN_MATERIALS.values().stream()
+                .filter(rm -> rm.atlasLocation().equals(map.location()))
+                .forEach(rm -> resourceLocations.add(rm.texture()));
     }
 
     public static void onTextureStitchedPost(AtlasTexture map)
