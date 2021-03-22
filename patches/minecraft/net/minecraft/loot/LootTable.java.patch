@@ -1,6 +1,6 @@
 --- a/net/minecraft/loot/LootTable.java
 +++ b/net/minecraft/loot/LootTable.java
-@@ -15,6 +15,7 @@
+@@ -15,6 +_,7 @@
  import java.util.Random;
  import java.util.function.BiFunction;
  import java.util.function.Consumer;
@@ -8,7 +8,7 @@
  import net.minecraft.inventory.IInventory;
  import net.minecraft.item.ItemStack;
  import net.minecraft.loot.functions.ILootFunction;
-@@ -25,19 +26,22 @@
+@@ -25,19 +_,22 @@
  import org.apache.commons.lang3.ArrayUtils;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -33,7 +33,7 @@
        this.field_216128_f = p_i51265_3_;
        this.field_216129_g = LootFunctionManager.func_216241_a(p_i51265_3_);
     }
-@@ -75,6 +79,7 @@
+@@ -75,6 +_,7 @@
  
     }
  
@@ -41,7 +41,7 @@
     public void func_216120_b(LootContext p_216120_1_, Consumer<ItemStack> p_216120_2_) {
        this.func_216114_a(p_216120_1_, func_216124_a(p_216120_2_));
     }
-@@ -82,6 +87,7 @@
+@@ -82,6 +_,7 @@
     public List<ItemStack> func_216113_a(LootContext p_216113_1_) {
        List<ItemStack> list = Lists.newArrayList();
        this.func_216120_b(p_216113_1_, list::add);
@@ -49,7 +49,7 @@
        return list;
     }
  
-@@ -90,8 +96,8 @@
+@@ -90,8 +_,8 @@
     }
  
     public void func_227506_a_(ValidationTracker p_227506_1_) {
@@ -60,7 +60,7 @@
        }
  
        for(int j = 0; j < this.field_216128_f.length; ++j) {
-@@ -103,6 +109,17 @@
+@@ -103,6 +_,44 @@
     public void func_216118_a(IInventory p_216118_1_, LootContext p_216118_2_) {
        List<ItemStack> list = this.func_216113_a(p_216118_2_);
        Random random = p_216118_2_.func_216032_b();
@@ -75,25 +75,6 @@
 +         // CraftBukkit end
 +      }
 +      // Magma end
-       List<Integer> list1 = this.func_186459_a(p_216118_1_, random);
-       this.func_186463_a(list, list1.size(), random);
- 
-@@ -118,7 +135,34 @@
-             p_216118_1_.func_70299_a(list1.remove(list1.size() - 1), itemstack);
-          }
-       }
-+   }
- 
-+   public void fillInventory(IInventory p_216118_1_, LootContext context, boolean plugin) {
-+      List<ItemStack> list = this.func_216113_a(context);
-+      Random random = context.func_216032_b();
-+      // CraftBukkit start
-+      LootGenerateEvent event = CraftEventFactory.callLootGenerateEvent(p_216118_1_, this, context, list, plugin);
-+      if (event.isCancelled()) {
-+         return;
-+      }
-+      list = event.getLoot().stream().map(CraftItemStack::asNMSCopy).collect(Collectors.toList());
-+      // CraftBukkit end
 +      List<Integer> list1 = this.func_186459_a(p_216118_1_, random);
 +      this.func_186463_a(list, list1.size(), random);
 +
@@ -109,11 +90,22 @@
 +            p_216118_1_.func_70299_a(list1.remove(list1.size() - 1), itemstack);
 +         }
 +      }
++   }
 +
-    }
++   public void fillInventory(IInventory p_216118_1_, LootContext context, boolean plugin) {
++      List<ItemStack> list = this.func_216113_a(context);
++      Random random = context.func_216032_b();
++      // CraftBukkit start
++      LootGenerateEvent event = CraftEventFactory.callLootGenerateEvent(p_216118_1_, this, context, list, plugin);
++      if (event.isCancelled()) {
++         return;
++      }
++      list = event.getLoot().stream().map(CraftItemStack::asNMSCopy).collect(Collectors.toList());
++      // CraftBukkit end
+       List<Integer> list1 = this.func_186459_a(p_216118_1_, random);
+       this.func_186463_a(list, list1.size(), random);
  
-    private void func_186463_a(List<ItemStack> p_186463_1_, int p_186463_2_, Random p_186463_3_) {
-@@ -173,6 +217,48 @@
+@@ -173,6 +_,48 @@
        return new LootTable.Builder();
     }
  
@@ -162,7 +154,7 @@
     public static class Builder implements ILootFunctionConsumer<LootTable.Builder> {
        private final List<LootPool> field_216041_a = Lists.newArrayList();
        private final List<ILootFunction> field_216042_b = Lists.newArrayList();
-@@ -227,7 +313,7 @@
+@@ -227,7 +_,7 @@
              }
           }
  

@@ -1,6 +1,6 @@
 --- a/net/minecraft/inventory/container/AbstractRepairContainer.java
 +++ b/net/minecraft/inventory/container/AbstractRepairContainer.java
-@@ -9,6 +9,8 @@
+@@ -9,6 +_,8 @@
  import net.minecraft.inventory.Inventory;
  import net.minecraft.item.ItemStack;
  import net.minecraft.util.IWorldPosCallable;
@@ -9,7 +9,7 @@
  
  public abstract class AbstractRepairContainer extends Container {
     protected final CraftResultInventory field_234642_c_ = new CraftResultInventory();
-@@ -77,6 +79,7 @@
+@@ -77,6 +_,7 @@
     }
  
     public boolean func_75145_c(PlayerEntity p_75145_1_) {
@@ -17,7 +17,7 @@
        return this.field_234644_e_.func_221485_a((p_234646_2_, p_234646_3_) -> {
           return !this.func_230302_a_(p_234646_2_.func_180495_p(p_234646_3_)) ? false : p_75145_1_.func_70092_e((double)p_234646_3_.func_177958_n() + 0.5D, (double)p_234646_3_.func_177956_o() + 0.5D, (double)p_234646_3_.func_177952_p() + 0.5D) <= 64.0D;
        }, true);
-@@ -86,7 +89,12 @@
+@@ -86,7 +_,12 @@
        return false;
     }
  

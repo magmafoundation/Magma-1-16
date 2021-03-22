@@ -1,6 +1,6 @@
 --- a/net/minecraft/entity/projectile/DamagingProjectileEntity.java
 +++ b/net/minecraft/entity/projectile/DamagingProjectileEntity.java
-@@ -16,11 +16,15 @@
+@@ -16,11 +_,15 @@
  import net.minecraft.world.World;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
@@ -16,14 +16,15 @@
  
     protected DamagingProjectileEntity(EntityType<? extends DamagingProjectileEntity> p_i50173_1_, World p_i50173_2_) {
        super(p_i50173_1_, p_i50173_2_);
-@@ -37,8 +41,23 @@
+@@ -37,7 +_,22 @@
           this.field_70230_d = p_i50174_12_ / d0 * 0.1D;
        }
  
+-   }
 +      // CraftBukkit start - Added setDirection method
 +      this.setDirection(p_i50174_8_, p_i50174_10_, p_i50174_12_);
-    }
- 
++   }
++
 +   // CraftBukkit - start
 +   public void setDirection(double x, double y, double z) {
 +      // CraftBukkit end
@@ -36,11 +37,10 @@
 +      this.field_70230_d = z / d3 * 0.1;
 +   }
 +   // CraftBukkit - end
-+
+ 
     public DamagingProjectileEntity(EntityType<? extends DamagingProjectileEntity> p_i50175_1_, LivingEntity p_i50175_2_, double p_i50175_3_, double p_i50175_5_, double p_i50175_7_, World p_i50175_9_) {
        this(p_i50175_1_, p_i50175_2_.func_226277_ct_(), p_i50175_2_.func_226278_cu_(), p_i50175_2_.func_226281_cx_(), p_i50175_3_, p_i50175_5_, p_i50175_7_, p_i50175_9_);
-       this.func_212361_a(p_i50175_2_);
-@@ -68,8 +87,14 @@
+@@ -68,8 +_,14 @@
           }
  
           RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
@@ -56,7 +56,7 @@
           }
  
           this.func_145775_I();
-@@ -145,6 +170,11 @@
+@@ -145,6 +_,11 @@
           this.func_70018_K();
           Entity entity = p_70097_1_.func_76346_g();
           if (entity != null) {

@@ -1,6 +1,6 @@
 --- a/net/minecraft/server/Main.java
 +++ b/net/minecraft/server/Main.java
-@@ -1,22 +1,26 @@
+@@ -1,22 +_,26 @@
  package net.minecraft.server;
  
 -import com.google.common.collect.ImmutableSet;
@@ -34,7 +34,7 @@
  import net.minecraft.command.Commands;
  import net.minecraft.crash.CrashReport;
  import net.minecraft.nbt.INBT;
-@@ -31,6 +35,7 @@
+@@ -31,6 +_,7 @@
  import net.minecraft.server.management.PlayerProfileCache;
  import net.minecraft.util.DefaultUncaughtExceptionHandler;
  import net.minecraft.util.RegistryKey;
@@ -42,7 +42,7 @@
  import net.minecraft.util.Util;
  import net.minecraft.util.WorldOptimizer;
  import net.minecraft.util.datafix.DataFixesManager;
-@@ -40,6 +45,7 @@
+@@ -40,6 +_,7 @@
  import net.minecraft.util.registry.DynamicRegistries;
  import net.minecraft.util.registry.WorldSettingsImport;
  import net.minecraft.util.text.ITextComponent;
@@ -50,7 +50,7 @@
  import net.minecraft.world.GameRules;
  import net.minecraft.world.World;
  import net.minecraft.world.WorldSettings;
-@@ -49,8 +55,6 @@
+@@ -49,8 +_,6 @@
  import net.minecraft.world.storage.IServerConfiguration;
  import net.minecraft.world.storage.SaveFormat;
  import net.minecraft.world.storage.ServerWorldInfo;
@@ -59,7 +59,7 @@
  
  public class Main {
     private static final Logger field_240759_a_ = LogManager.getLogger();
-@@ -71,42 +75,79 @@
+@@ -71,42 +_,79 @@
        OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1);
        OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
        OptionSpec<String> optionspec13 = optionparser.nonOptions();
@@ -95,7 +95,7 @@
           }
 +         Path path1 = Paths.get("eula.txt");
 +         ServerEula servereula = new ServerEula(path1);
- 
++
 +         // Spigot Start
 +         boolean eulaAgreed = Boolean.getBoolean( "com.mojang.eula.agree" );
 +         if ( eulaAgreed )
@@ -109,7 +109,7 @@
 +            field_240759_a_.info("You need to agree to the EULA in order to run the server. Go to eula.txt for more info.");
 +            return;
 +         }
-+
+ 
           CrashReport.func_230188_h_();
           Bootstrap.func_151354_b();
           Bootstrap.func_218821_c();
@@ -147,7 +147,7 @@
           MinecraftServer.func_240777_a_(saveformat$levelsave);
           DatapackCodec datapackcodec = saveformat$levelsave.func_237297_e_();
           boolean flag = optionset.has(optionspec6);
-@@ -115,6 +156,25 @@
+@@ -115,6 +_,25 @@
           }
  
           ResourcePackList resourcepacklist = new ResourcePackList(new ServerPackFinder(), new FolderPackFinder(saveformat$levelsave.func_237285_a_(FolderName.field_237251_g_).toFile(), IPackNameDecorator.field_232627_c_));
@@ -173,7 +173,7 @@
           DatapackCodec datapackcodec1 = MinecraftServer.func_240772_a_(resourcepacklist, datapackcodec == null ? DatapackCodec.field_234880_a_ : datapackcodec, flag);
           CompletableFuture<DataPackRegistries> completablefuture = DataPackRegistries.func_240961_a_(resourcepacklist.func_232623_f_(), Commands.EnvironmentType.DEDICATED, serverpropertiesprovider.func_219034_a().field_225395_K, Util.func_215072_e(), Runnable::run);
  
-@@ -142,6 +202,8 @@
+@@ -142,6 +_,8 @@
                 dimensiongeneratorsettings = optionset.has(optionspec3) ? serverproperties.field_241082_U_.func_236230_k_() : serverproperties.field_241082_U_;
              }
  
@@ -182,7 +182,7 @@
              iserverconfiguration = new ServerWorldInfo(worldsettings, dimensiongeneratorsettings, Lifecycle.stable());
           }
  
-@@ -159,16 +221,13 @@
+@@ -159,16 +_,13 @@
              dedicatedserver1.func_71208_b(optionset.valueOf(optionspec11));
              dedicatedserver1.func_71204_b(optionset.has(optionspec2));
              dedicatedserver1.func_213208_c(optionset.valueOf(optionspec12));

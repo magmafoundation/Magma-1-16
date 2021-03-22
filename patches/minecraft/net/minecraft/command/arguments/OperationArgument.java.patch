@@ -1,6 +1,6 @@
 --- a/net/minecraft/command/arguments/OperationArgument.java
 +++ b/net/minecraft/command/arguments/OperationArgument.java
-@@ -61,44 +61,44 @@
+@@ -61,44 +_,44 @@
  
     private static OperationArgument.IIntOperation func_197182_b(String p_197182_0_) throws CommandSyntaxException {
        switch(p_197182_0_) {

@@ -48,9 +48,9 @@ public class CraftShulkerBox extends CraftLootable<ShulkerBoxTileEntity> impleme
     public void open() {
         requirePlaced();
         if (!getTileEntity().opened) {
-            World world = getTileEntity().getWorld();
-            world.addBlockEvent(getPosition(), getTileEntity().getBlockState().getBlock(), 1, 1);
-            world.playSound(null, getPosition(), SoundEvents.BLOCK_SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
+            World world = getTileEntity().getLevel();
+            world.blockEvent(getPosition(), getTileEntity().getBlockState().getBlock(), 1, 1);
+            world.playSound(null, getPosition(), SoundEvents.SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5F, world.random.nextFloat() * 0.1F + 0.9F);
         }
         getTileEntity().opened = true;
     }
@@ -59,9 +59,9 @@ public class CraftShulkerBox extends CraftLootable<ShulkerBoxTileEntity> impleme
     public void close() {
         requirePlaced();
         if (getTileEntity().opened) {
-            World world = getTileEntity().getWorld();
-            world.addBlockEvent(getPosition(), getTileEntity().getBlockState().getBlock(), 1, 0);
-            world.playSound(null, getPosition(), SoundEvents.BLOCK_SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
+            World world = getTileEntity().getLevel();
+            world.blockEvent(getPosition(), getTileEntity().getBlockState().getBlock(), 1, 0);
+            world.playSound(null, getPosition(), SoundEvents.SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5F, world.random.nextFloat() * 0.1F + 0.9F);
         }
         getTileEntity().opened = false;
     }

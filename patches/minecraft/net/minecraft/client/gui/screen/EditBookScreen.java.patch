@@ -1,6 +1,6 @@
 --- a/net/minecraft/client/gui/screen/EditBookScreen.java
 +++ b/net/minecraft/client/gui/screen/EditBookScreen.java
-@@ -283,42 +283,42 @@
+@@ -283,42 +_,42 @@
           return true;
        } else {
           switch(p_214230_1_) {
@@ -79,7 +79,7 @@
           }
        }
     }
-@@ -352,21 +352,21 @@
+@@ -352,21 +_,21 @@
  
     private boolean func_214196_c(int p_214196_1_, int p_214196_2_, int p_214196_3_) {
        switch(p_214196_1_) {

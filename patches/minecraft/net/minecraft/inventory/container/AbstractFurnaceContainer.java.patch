@@ -1,6 +1,6 @@
 --- a/net/minecraft/inventory/container/AbstractFurnaceContainer.java
 +++ b/net/minecraft/inventory/container/AbstractFurnaceContainer.java
-@@ -19,6 +19,9 @@
+@@ -19,6 +_,9 @@
  import net.minecraft.world.World;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
@@ -10,7 +10,7 @@
  
  public abstract class AbstractFurnaceContainer extends RecipeBookContainer<IInventory> {
     private final IInventory field_217063_d;
-@@ -27,6 +30,23 @@
+@@ -27,6 +_,23 @@
     private final IRecipeType<? extends AbstractCookingRecipe> field_217065_f;
     private final RecipeBookCategory field_242384_g;
  
@@ -34,7 +34,7 @@
     protected AbstractFurnaceContainer(ContainerType<?> p_i241921_1_, IRecipeType<? extends AbstractCookingRecipe> p_i241921_2_, RecipeBookCategory p_i241921_3_, int p_i241921_4_, PlayerInventory p_i241921_5_) {
        this(p_i241921_1_, p_i241921_2_, p_i241921_3_, p_i241921_4_, p_i241921_5_, new Inventory(3), new IntArray(4));
     }
-@@ -38,6 +58,7 @@
+@@ -38,6 +_,7 @@
        func_216962_a(p_i241922_6_, 3);
        func_216959_a(p_i241922_7_, 4);
        this.field_217063_d = p_i241922_6_;
@@ -42,7 +42,7 @@
        this.field_217064_e = p_i241922_7_;
        this.field_217062_c = p_i241922_5_.field_70458_d.field_70170_p;
        this.func_75146_a(new Slot(p_i241922_6_, 0, 56, 17));
-@@ -94,6 +115,7 @@
+@@ -94,6 +_,7 @@
     }
  
     public boolean func_75145_c(PlayerEntity p_75145_1_) {

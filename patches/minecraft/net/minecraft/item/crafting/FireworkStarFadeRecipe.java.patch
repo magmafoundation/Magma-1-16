@@ -1,6 +1,6 @@
 --- a/net/minecraft/item/crafting/FireworkStarFadeRecipe.java
 +++ b/net/minecraft/item/crafting/FireworkStarFadeRecipe.java
-@@ -9,6 +9,7 @@
+@@ -9,6 +_,7 @@
  import net.minecraft.item.Items;
  import net.minecraft.util.ResourceLocation;
  import net.minecraft.world.World;
@@ -8,7 +8,7 @@
  
  public class FireworkStarFadeRecipe extends SpecialRecipe {
     private static final Ingredient field_196217_a = Ingredient.func_199804_a(Items.field_196153_dF);
-@@ -73,4 +74,9 @@
+@@ -73,4 +_,9 @@
     public IRecipeSerializer<?> func_199559_b() {
        return IRecipeSerializer.field_222165_i;
     }

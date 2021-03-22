@@ -34,7 +34,7 @@ import java.util.List;
  * @since 08/06/2020 - 05:59 pm
  */
 
-
+// TODO: 21/03/2021 Make Java9+ Compatable
 public class EnumHelper {
 
     private static Object reflectionFactory = null;

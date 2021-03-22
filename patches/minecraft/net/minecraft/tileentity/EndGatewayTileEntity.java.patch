@@ -1,6 +1,6 @@
 --- a/net/minecraft/tileentity/EndGatewayTileEntity.java
 +++ b/net/minecraft/tileentity/EndGatewayTileEntity.java
-@@ -20,6 +20,8 @@
+@@ -20,6 +_,8 @@
  import net.minecraft.util.math.ChunkPos;
  import net.minecraft.util.math.MathHelper;
  import net.minecraft.util.math.vector.Vector3d;
@@ -9,7 +9,7 @@
  import net.minecraft.world.IBlockReader;
  import net.minecraft.world.World;
  import net.minecraft.world.chunk.Chunk;
-@@ -31,14 +33,18 @@
+@@ -31,14 +_,18 @@
  import net.minecraftforge.api.distmarker.OnlyIn;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -31,7 +31,7 @@
  
     public EndGatewayTileEntity() {
        super(TileEntityType.field_200991_v);
-@@ -148,7 +154,7 @@
+@@ -148,7 +_,7 @@
     public void func_195496_a(Entity p_195496_1_) {
        if (this.field_145850_b instanceof ServerWorld && !this.func_195500_d()) {
           this.field_195505_g = 100;
@@ -40,10 +40,11 @@
              this.func_227015_a_((ServerWorld)this.field_145850_b);
           }
  
-@@ -171,6 +177,24 @@
+@@ -170,6 +_,24 @@
+             } else {
                 entity = p_195496_1_.func_184208_bv();
              }
- 
++
 +
 +            // CraftBukkit start - Fire PlayerTeleportEvent
 +            if (p_195496_1_ instanceof ServerPlayerEntity) {
@@ -61,7 +62,6 @@
 +               return;
 +            }
 +            // CraftBukkit end
-+
+ 
              entity.func_242279_ag();
              entity.func_223102_j((double)blockpos.func_177958_n() + 0.5D, (double)blockpos.func_177956_o(), (double)blockpos.func_177952_p() + 0.5D);
-          }

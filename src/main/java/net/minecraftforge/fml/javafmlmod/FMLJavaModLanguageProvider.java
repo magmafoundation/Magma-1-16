@@ -43,7 +43,6 @@ import static net.minecraftforge.fml.Logging.*;
 
 public class FMLJavaModLanguageProvider implements IModLanguageProvider
 {
-
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static class FMLModTarget implements IModLanguageProvider.IModLanguageLoader {

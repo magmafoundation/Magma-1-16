@@ -1,6 +1,6 @@
 --- a/com/mojang/realmsclient/RealmsMainScreen.java
 +++ b/com/mojang/realmsclient/RealmsMainScreen.java
-@@ -1160,16 +1160,16 @@
+@@ -1160,16 +_,16 @@
        }
        @Override
        public void func_230930_b_() {

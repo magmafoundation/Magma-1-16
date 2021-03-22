@@ -15,7 +15,7 @@ public class CraftComplexPart extends CraftEntity implements ComplexEntityPart {
 
     @Override
     public ComplexLivingEntity getParent() {
-        return (ComplexLivingEntity) ((EnderDragonEntity) getHandle().dragon).getBukkitEntity();
+        return (ComplexLivingEntity) ((EnderDragonEntity) getHandle().parentMob).getBukkitEntity();
     }
 
     @Override

@@ -1,6 +1,6 @@
 --- a/net/minecraft/network/play/server/SEntityPropertiesPacket.java
 +++ b/net/minecraft/network/play/server/SEntityPropertiesPacket.java
-@@ -13,6 +13,8 @@
+@@ -13,6 +_,8 @@
  import net.minecraft.network.PacketBuffer;
  import net.minecraft.util.ResourceLocation;
  import net.minecraft.util.registry.Registry;
@@ -9,7 +9,7 @@
  
  public class SEntityPropertiesPacket implements IPacket<IClientPlayNetHandler> {
     private int field_149445_a;
-@@ -73,6 +75,7 @@
+@@ -73,6 +_,7 @@
        p_148833_1_.func_147290_a(this);
     }
  

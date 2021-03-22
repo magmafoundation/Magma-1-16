@@ -100,7 +100,7 @@ public class ExistingFileHelper {
      * <p>
      * Only create a new helper if you intentionally want to ignore the existence of
      * other generated files.
-     *
+     * 
      * @param existingPacks
      * @param existingMods
      * @param enable
@@ -108,20 +108,20 @@ public class ExistingFileHelper {
     public ExistingFileHelper(Collection<Path> existingPacks, Set<String> existingMods, boolean enable) {
         this.clientResources = new SimpleReloadableResourceManager(ResourcePackType.CLIENT_RESOURCES);
         this.serverData = new SimpleReloadableResourceManager(ResourcePackType.SERVER_DATA);
-        this.clientResources.addResourcePack(new VanillaPack("minecraft", "realms"));
-        this.serverData.addResourcePack(new VanillaPack("minecraft"));
+        this.clientResources.add(new VanillaPack("minecraft", "realms"));
+        this.serverData.add(new VanillaPack("minecraft"));
         for (Path existing : existingPacks) {
             File file = existing.toFile();
             IResourcePack pack = file.isDirectory() ? new FolderPack(file) : new FilePack(file);
-            this.clientResources.addResourcePack(pack);
-            this.serverData.addResourcePack(pack);
+            this.clientResources.add(pack);
+            this.serverData.add(pack);
         }
         for (String existingMod : existingMods) {
             ModFileInfo modFileInfo = ModList.get().getModFileById(existingMod);
             if (modFileInfo != null) {
                 IResourcePack pack = new ModFileResourcePack(modFileInfo.getFile());
-                this.clientResources.addResourcePack(pack);
-                this.serverData.addResourcePack(pack);
+                this.clientResources.add(pack);
+                this.serverData.add(pack);
             }
         }
         this.enable = enable;
@@ -156,7 +156,7 @@ public class ExistingFileHelper {
      * convenience method to avoid repeating type/prefix/suffix and instead use the
      * common definitions in {@link ResourceType}, or a custom {@link IResourceType}
      * definition.
-     *
+     * 
      * @param loc  the base location of the resource, e.g.
      *             {@code "minecraft:block/stone"}
      * @param type a {@link IResourceType} describing how to form the path to the
@@ -170,7 +170,7 @@ public class ExistingFileHelper {
 
     /**
      * Check if a given resource exists in the known resource packs.
-     *
+     * 
      * @param loc        the base location of the resource, e.g.
      *                   {@code "minecraft:block/stone"}
      * @param packType   the type of resources to check
@@ -197,7 +197,7 @@ public class ExistingFileHelper {
      * <p>
      * This represents a <em>promise</em> to generate the file later, since other
      * datagen may rely on this file existing.
-     *
+     * 
      * @param loc  the base location of the resource, e.g.
      *             {@code "minecraft:block/stone"}
      * @param type a {@link IResourceType} describing how to form the path to the
@@ -218,7 +218,7 @@ public class ExistingFileHelper {
      * <p>
      * This represents a <em>promise</em> to generate the file later, since other
      * datagen may rely on this file existing.
-     *
+     * 
      * @param loc        the base location of the resource, e.g.
      *                   {@code "minecraft:block/stone"}
      * @param packType   the type of resources to check

@@ -50,7 +50,7 @@ public class OBJLoaderBuilder<T extends ModelBuilder<T>> extends CustomLoaderBui
     {
         Preconditions.checkNotNull(modelLocation, "modelLocation must not be null");
         Preconditions.checkArgument(existingFileHelper.exists(modelLocation, ResourcePackType.CLIENT_RESOURCES),
-            "OBJ Model %s does not exist in any known resource pack", modelLocation);
+                "OBJ Model %s does not exist in any known resource pack", modelLocation);
         this.modelLocation = modelLocation;
         return this;
     }
@@ -83,7 +83,7 @@ public class OBJLoaderBuilder<T extends ModelBuilder<T>> extends CustomLoaderBui
     {
         Preconditions.checkNotNull(materialLibraryOverrideLocation, "materialLibraryOverrideLocation must not be null");
         Preconditions.checkArgument(existingFileHelper.exists(materialLibraryOverrideLocation, ResourcePackType.CLIENT_RESOURCES),
-            "OBJ Model %s does not exist in any known resource pack", materialLibraryOverrideLocation);
+                "OBJ Model %s does not exist in any known resource pack", materialLibraryOverrideLocation);
         this.materialLibraryOverrideLocation = materialLibraryOverrideLocation;
         return this;
     }

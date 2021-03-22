@@ -1,6 +1,6 @@
 --- a/net/minecraft/tileentity/CampfireTileEntity.java
 +++ b/net/minecraft/tileentity/CampfireTileEntity.java
-@@ -21,11 +21,14 @@
+@@ -21,11 +_,14 @@
  import net.minecraft.util.math.BlockPos;
  import net.minecraft.util.math.MathHelper;
  import net.minecraft.world.World;
@@ -17,7 +17,7 @@
  
     public CampfireTileEntity() {
        super(TileEntityType.field_222488_F);
-@@ -64,6 +67,19 @@
+@@ -64,6 +_,19 @@
                    return p_213979_1_.func_77572_b(iinventory);
                 }).orElse(itemstack);
                 BlockPos blockpos = this.func_174877_v();

@@ -1,6 +1,6 @@
 --- a/net/minecraft/tileentity/SkullTileEntity.java
 +++ b/net/minecraft/tileentity/SkullTileEntity.java
-@@ -1,16 +1,32 @@
+@@ -1,16 +_,32 @@
  package net.minecraft.tileentity;
  
 +import com.google.common.base.Predicate;
@@ -33,7 +33,7 @@
  import net.minecraft.server.management.PlayerProfileCache;
  import net.minecraft.util.StringUtils;
  import net.minecraftforge.api.distmarker.Dist;
-@@ -22,10 +38,54 @@
+@@ -22,10 +_,54 @@
     @Nullable
     private static MinecraftSessionService field_184299_k;
     @Nullable
@@ -89,7 +89,7 @@
     public SkullTileEntity() {
        super(TileEntityType.field_200985_p);
     }
-@@ -101,32 +161,72 @@
+@@ -101,32 +_,72 @@
     }
  
     private void func_152109_d() {
@@ -170,8 +170,9 @@
 -         return p_174884_0_;
 +         callback.apply(input);
        }
+-   }
 +      return Futures.immediateFuture(input);
-    }
++   }
 +   // Spigot end
 +
 +   // Magma start - compile client code

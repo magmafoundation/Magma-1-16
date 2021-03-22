@@ -30,5 +30,5 @@ import net.minecraft.client.world.ClientWorld;
  */
 @FunctionalInterface
 public interface IWeatherParticleRenderHandler {
-	void render(int ticks, ClientWorld world, Minecraft mc, ActiveRenderInfo activeRenderInfoIn);
+    void render(int ticks, ClientWorld world, Minecraft mc, ActiveRenderInfo activeRenderInfoIn);
 }

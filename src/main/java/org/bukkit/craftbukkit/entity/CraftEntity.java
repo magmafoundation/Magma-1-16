@@ -206,7 +206,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                         return new CraftPlayer(server, (ServerPlayerEntity) entity);
                     }
                 } else {
-                    return new CraftFakePlayer(server, FakePlayerFactory.get((ServerWorld) entity.world, ((PlayerEntity) entity).getGameProfile()));
+                    return new CraftFakePlayer(server, FakePlayerFactory.get((ServerWorld) entity.level, ((PlayerEntity) entity).getGameProfile()));
                 }
                 // Magma end
             }
@@ -346,7 +346,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         }
         else if (entity instanceof EnderDragonPartEntity) {
             EnderDragonPartEntity part = (EnderDragonPartEntity) entity;
-            if (part.dragon instanceof EnderDragonEntity) { return new CraftEnderDragonPart(server, (EnderDragonPartEntity) entity); }
+            if (part.parentMob instanceof EnderDragonEntity) { return new CraftEnderDragonPart(server, (EnderDragonPartEntity) entity); }
             else { return new CraftComplexPart(server, (EnderDragonPartEntity) entity); }
         }
         else if (entity instanceof ExperienceOrbEntity) { return new CraftExperienceOrb(server, (ExperienceOrbEntity) entity); }
@@ -407,18 +407,18 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public Location getLocation() {
-        return new Location(getWorld(), entity.getPosX(), entity.getPosY(), entity.getPosZ(), entity.getBukkitYaw(), entity.rotationPitch);
+        return new Location(getWorld(), entity.getX(), entity.getY(), entity.getZ(), entity.getBukkitYaw(), entity.xRot);
     }
 
     @Override
     public Location getLocation(Location loc) {
         if (loc != null) {
             loc.setWorld(getWorld());
-            loc.setX(entity.getPosX());
-            loc.setY(entity.getPosY());
-            loc.setZ(entity.getPosZ());
+            loc.setX(entity.getX());
+            loc.setY(entity.getY());
+            loc.setZ(entity.getZ());
             loc.setYaw(entity.getBukkitYaw());
-            loc.setPitch(entity.rotationPitch);
+            loc.setPitch(entity.xRot);
         }
 
         return loc;
@@ -426,25 +426,25 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public Vector getVelocity() {
-        return CraftVector.toBukkit(entity.getMotion());
+        return CraftVector.toBukkit(entity.getDeltaMovement());
     }
 
     @Override
     public void setVelocity(Vector velocity) {
         Preconditions.checkArgument(velocity != null, "velocity");
         velocity.checkFinite();
-        entity.setMotion(CraftVector.toNMS(velocity));
-        entity.velocityChanged = true;
+        entity.setDeltaMovement(CraftVector.toNMS(velocity));
+        entity.hurtMarked = true;
     }
 
     @Override
     public double getHeight() {
-        return getHandle().getHeight();
+        return getHandle().getBbHeight();
     }
 
     @Override
     public double getWidth() {
-        return getHandle().getWidth();
+        return getHandle().getBbWidth();
     }
 
     @Override
@@ -468,7 +468,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public World getWorld() {
-        return entity.world.getWorldCB();
+        return entity.level.getWorldCB();
     }
 
     @Override
@@ -479,11 +479,11 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         yaw = Location.normalizeYaw(yaw);
         pitch = Location.normalizePitch(pitch);
 
-        entity.rotationYaw = yaw;
-        entity.rotationPitch = pitch;
-        entity.prevRotationYaw = yaw;
-        entity.prevRotationPitch = pitch;
-        entity.setRotationYawHead(yaw);
+        entity.yRot = yaw;
+        entity.xRot = pitch;
+        entity.yRotO = yaw;
+        entity.xRotO = pitch;
+        entity.setYHeadRot(yaw);
     }
 
     @Override
@@ -496,13 +496,13 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         Preconditions.checkArgument(location != null, "location");
         location.checkFinite();
 
-        if (entity.isBeingRidden() || entity.removed) {
+        if (entity.isVehicle() || entity.removed) {
             return false;
         }
 
         // If this entity is riding another entity, we must dismount before teleporting.
         entity.stopRiding();
-        entity.world = ((CraftWorld) location.getWorld()).getHandle();
+        entity.level = ((CraftWorld) location.getWorld()).getHandle();
 
         // Let the server handle cross world teleports
         if (!location.getWorld().equals(getWorld())) {
@@ -511,10 +511,10 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         }
 
         // entity.setLocation() throws no event, and so cannot be cancelled
-        entity.setPositionAndRotation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+        entity.absMoveTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
         // SPIGOT-619: Force sync head rotation also
-        entity.setRotationYawHead(location.getYaw());
-        ((ServerWorld) entity.world).chunkCheck(entity); // Spigot - register to new chunk
+        entity.setYHeadRot(location.getYaw());
+        ((ServerWorld) entity.level).updateChunkPos(entity); // Spigot - register to new chunk
 
         return true;
     }
@@ -532,7 +532,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     @Override
     public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z) {
         org.spigotmc.AsyncCatcher.catchOp("getNearbyEntities"); // Spigot
-        List<Entity> notchEntityList = entity.world.getEntitiesInAABBexcluding(entity, entity.getBoundingBox().grow(x, y, z), null);
+        List<Entity> notchEntityList = entity.level.getEntities(entity, entity.getBoundingBox().inflate(x, y, z), null);
         List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
 
         for (Entity e : notchEntityList) {
@@ -543,12 +543,12 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public int getEntityId() {
-        return entity.getEntityId();
+        return entity.getId();
     }
 
     @Override
     public int getFireTicks() {
-        return entity.fire;
+        return entity.remainingFireTicks;
     }
 
     @Override
@@ -558,7 +558,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public void setFireTicks(int ticks) {
-        entity.fire = ticks;
+        entity.remainingFireTicks = ticks;
     }
 
     @Override
@@ -642,7 +642,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean isEmpty() {
-        return !getHandle().isBeingRidden();
+        return !getHandle().isVehicle();
     }
 
     @Override
@@ -651,7 +651,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
             return false;
         }
 
-        getHandle().removePassengers();
+        getHandle().ejectPassengers();
         return true;
     }
 
@@ -677,12 +677,12 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public UUID getUniqueId() {
-        return getHandle().getUniqueID();
+        return getHandle().getUUID();
     }
 
     @Override
     public int getTicksLived() {
-        return getHandle().ticksExisted;
+        return getHandle().tickCount;
     }
 
     @Override
@@ -690,7 +690,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         if (value <= 0) {
             throw new IllegalArgumentException("Age must be at least 1 tick");
         }
-        getHandle().ticksExisted = value;
+        getHandle().tickCount = value;
     }
 
     public Entity getHandle() {
@@ -702,7 +702,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         Preconditions.checkArgument(type != null, "type");
 
         if (type.getApplicable().isInstance(this)) {
-            this.getHandle().world.setEntityState(getHandle(), type.getData());
+            this.getHandle().level.broadcastEntityEvent(getHandle(), type.getData());
         }
     }
 
@@ -775,7 +775,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
             return null;
         }
 
-        return getHandle().getRidingEntity().getBukkitEntity();
+        return getHandle().getVehicle().getBukkitEntity();
     }
 
     @Override
@@ -903,8 +903,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     public void setGlowing(boolean flag) {
         getHandle().glowing = flag;
         Entity e = getHandle();
-        if (e.getFlag(6) != flag) {
-            e.setFlag(6, flag);
+        if (e.getSharedFlag(6) != flag) {
+            e.setSharedFlag(6, flag);
         }
     }
 
@@ -935,7 +935,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean hasGravity() {
-        return !getHandle().hasNoGravity();
+        return !getHandle().isNoGravity();
     }
 
     @Override
@@ -945,12 +945,12 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public int getPortalCooldown() {
-        return getHandle().field_242273_aw;
+        return getHandle().portalCooldown;
     }
 
     @Override
     public void setPortalCooldown(int cooldown) {
-        getHandle().field_242273_aw = cooldown;
+        getHandle().portalCooldown = cooldown;
     }
 
     @Override
@@ -970,13 +970,13 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public PistonMoveReaction getPistonMoveReaction() {
-        return PistonMoveReaction.getById(getHandle().getPushReaction().ordinal());
+        return PistonMoveReaction.getById(getHandle().getPistonPushReaction().ordinal());
     }
 
     @Override
     public BlockFace getFacing() {
         // Use this method over getDirection because it handles boats and minecarts.
-        return CraftBlock.notchToBlockFace(getHandle().getAdjustedHorizontalFacing());
+        return CraftBlock.notchToBlockFace(getHandle().getMotionDirection());
     }
 
     @Override
@@ -1005,8 +1005,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     protected CompoundNBT save() {
         CompoundNBT nbttagcompound = new CompoundNBT();
 
-        nbttagcompound.putString("id", getHandle().getEntityString());
-        getHandle().writeWithoutTypeId(nbttagcompound);
+        nbttagcompound.putString("id", getHandle().getEncodeId());
+        getHandle().saveWithoutId(nbttagcompound);
 
         return nbttagcompound;
     }

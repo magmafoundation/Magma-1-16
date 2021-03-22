@@ -1,6 +1,6 @@
 --- a/net/minecraft/block/FarmlandBlock.java
 +++ b/net/minecraft/block/FarmlandBlock.java
-@@ -20,6 +20,8 @@
+@@ -20,6 +_,8 @@
  import net.minecraft.world.IWorldReader;
  import net.minecraft.world.World;
  import net.minecraft.world.server.ServerWorld;
@@ -9,7 +9,7 @@
  
  public class FarmlandBlock extends Block {
     public static final IntegerProperty field_176531_a = BlockStateProperties.field_208133_ah;
-@@ -66,31 +68,53 @@
+@@ -66,31 +_,53 @@
        int i = p_225542_1_.func_177229_b(field_176531_a);
        if (!func_176530_e(p_225542_2_, p_225542_3_) && !p_225542_2_.func_175727_C(p_225542_3_.func_177984_a())) {
           if (i > 0) {
@@ -70,7 +70,7 @@
     }
  
     private static boolean func_176530_e(IWorldReader p_176530_0_, BlockPos p_176530_1_) {
-@@ -100,7 +124,7 @@
+@@ -100,7 +_,7 @@
           }
        }
  

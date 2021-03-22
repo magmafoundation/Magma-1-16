@@ -16,7 +16,7 @@ public class TrackingRange {
      * @param defaultRange Default range defined by Mojang
      */
     public static int getEntityTrackingRange(Entity entity, int defaultRange) {
-        SpigotWorldConfig config = entity.world.spigotConfig;
+        SpigotWorldConfig config = entity.level.spigotConfig;
         if (entity instanceof PlayerEntity) {
             return config.playerTrackingRange;
         } else if (entity.activationType == ActivationRange.ActivationType.MONSTER || entity.activationType == ActivationRange.ActivationType.RAIDER) {

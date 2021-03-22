@@ -1,6 +1,6 @@
 --- a/net/minecraft/block/BedBlock.java
 +++ b/net/minecraft/block/BedBlock.java
-@@ -100,10 +100,20 @@
+@@ -100,10 +_,20 @@
  
              return ActionResultType.SUCCESS;
           } else {
@@ -24,7 +24,7 @@
  
              });
              return ActionResultType.SUCCESS;
-@@ -111,8 +121,24 @@
+@@ -111,8 +_,24 @@
        }
     }
  
@@ -50,7 +50,7 @@
     }
  
     private boolean func_226861_a_(World p_226861_1_, BlockPos p_226861_2_) {
-@@ -186,14 +212,14 @@
+@@ -186,14 +_,14 @@
     public VoxelShape func_220053_a(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
        Direction direction = func_226862_h_(p_220053_1_).func_176734_d();
        switch(direction) {

@@ -1,6 +1,6 @@
 --- a/net/minecraft/client/gui/social/SocialInteractionsScreen.java
 +++ b/net/minecraft/client/gui/social/SocialInteractionsScreen.java
-@@ -41,7 +41,7 @@
+@@ -41,7 +_,7 @@
     private FilterList field_244673_t;
     private TextFieldWidget field_244674_u;
     private String field_244675_v = "";
@@ -9,7 +9,7 @@
     private Button field_244677_x;
     private Button field_244678_y;
     private Button field_244760_E;
-@@ -98,13 +98,13 @@
+@@ -98,13 +_,13 @@
        int i1 = 64 + 16 * this.func_244690_l();
        int j1 = (this.field_230708_k_ - l) / 2;
        this.field_244677_x = this.func_230480_a_(new Button(j, 45, i, 20, field_244667_b, (p_244686_1_) -> {
@@ -26,7 +26,7 @@
        }));
        this.field_244761_F = this.func_230480_a_(new Button(j1, i1, l, 20, field_244766_x, (p_244767_1_) -> {
           this.field_230706_i_.func_147108_a(new ConfirmOpenLinkScreen((p_244771_1_) -> {
-@@ -133,7 +133,7 @@
+@@ -133,7 +_,7 @@
        this.func_244682_a(this.field_244676_w);
     }
  
@@ -35,7 +35,7 @@
        this.field_244676_w = p_244682_1_;
        this.field_244677_x.func_238482_a_(field_244667_b);
        this.field_244678_y.func_238482_a_(field_244668_c);
-@@ -162,9 +162,9 @@
+@@ -162,9 +_,9 @@
        if (!this.field_244674_u.func_146179_b().isEmpty() && this.field_244673_t.func_244660_f() && !this.field_244674_u.func_230999_j_()) {
           NarratorChatListener.field_193643_a.func_216864_a(field_244764_u.getString());
        } else if (collection.isEmpty()) {
@@ -47,7 +47,7 @@
              NarratorChatListener.field_193643_a.func_216864_a(field_244765_w.getString());
           }
        }
-@@ -217,7 +217,7 @@
+@@ -217,7 +_,7 @@
           this.field_244674_u.func_230430_a_(p_230430_1_, p_230430_2_, p_230430_3_, p_230430_4_);
        }
  

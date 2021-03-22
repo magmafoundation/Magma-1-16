@@ -37,17 +37,17 @@ import net.minecraftforge.fml.event.lifecycle.IModBusEvent;
  **/
 public class EntityAttributeCreationEvent extends Event implements IModBusEvent
 {
-	private final Map<EntityType<? extends LivingEntity>, AttributeModifierMap> map;
+    private final Map<EntityType<? extends LivingEntity>, AttributeModifierMap> map;
 
-	public EntityAttributeCreationEvent(Map<EntityType<? extends LivingEntity>, AttributeModifierMap> map)
-	{
-		this.map = map;
-	}
+    public EntityAttributeCreationEvent(Map<EntityType<? extends LivingEntity>, AttributeModifierMap> map)
+    {
+        this.map = map;
+    }
 
-	public void put(EntityType<? extends LivingEntity> entity, AttributeModifierMap map)
-	{
-		if (GlobalEntityTypeAttributes.doesEntityHaveAttributes(entity))
-			throw new IllegalStateException("Duplicate GlobalEntityTypeAttributes entry: " + entity);
-		this.map.put(entity, map);
-	}
+    public void put(EntityType<? extends LivingEntity> entity, AttributeModifierMap map)
+    {
+        if (GlobalEntityTypeAttributes.hasSupplier(entity))
+            throw new IllegalStateException("Duplicate GlobalEntityTypeAttributes entry: " + entity);
+        this.map.put(entity, map);
+    }
 }

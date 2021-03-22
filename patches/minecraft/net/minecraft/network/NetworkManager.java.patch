@@ -1,6 +1,6 @@
 --- a/net/minecraft/network/NetworkManager.java
 +++ b/net/minecraft/network/NetworkManager.java
-@@ -31,9 +31,12 @@
+@@ -31,9 +_,12 @@
  import java.util.Queue;
  import javax.annotation.Nullable;
  import javax.crypto.Cipher;
@@ -13,7 +13,7 @@
  import net.minecraft.util.LazyValue;
  import net.minecraft.util.math.MathHelper;
  import net.minecraft.util.text.ITextComponent;
-@@ -63,7 +66,12 @@
+@@ -63,7 +_,12 @@
     private final PacketDirection field_179294_g;
     private final Queue<NetworkManager.QueuedPacket> field_150745_j = Queues.newConcurrentLinkedQueue();
     private Channel field_150746_k;
@@ -27,7 +27,7 @@
     private INetHandler field_150744_m;
     private ITextComponent field_150742_o;
     private boolean field_152463_r;
-@@ -74,6 +82,7 @@
+@@ -74,6 +_,7 @@
     private float field_211397_t;
     private int field_211398_u;
     private boolean field_211399_v;
@@ -35,20 +35,19 @@
  
     public NetworkManager(PacketDirection p_i46004_1_) {
        this.field_179294_g = p_i46004_1_;
-@@ -83,7 +92,12 @@
+@@ -83,6 +_,11 @@
        super.channelActive(p_channelActive_1_);
        this.field_150746_k = p_channelActive_1_.channel();
        this.field_150743_l = this.field_150746_k.remoteAddress();
 +      if (activationHandler != null) activationHandler.accept(this);
- 
++
 +      // Spigot Start
 +      this.preparing = false;
 +      // Spigot End
-+
+ 
        try {
           this.func_150723_a(ProtocolType.HANDSHAKING);
-       } catch (Throwable throwable) {
-@@ -128,6 +142,7 @@
+@@ -128,6 +_,7 @@
  
           }
        }
@@ -56,7 +55,7 @@
     }
  
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, IPacket<?> p_channelRead0_2_) throws Exception {
-@@ -171,7 +186,7 @@
+@@ -171,7 +_,7 @@
        ++this.field_211395_r;
        if (protocoltype1 != protocoltype) {
           field_150735_g.debug("Disabled auto read");
@@ -65,7 +64,7 @@
        }
  
        if (this.field_150746_k.eventLoop().inEventLoop()) {
-@@ -246,8 +261,11 @@
+@@ -246,8 +_,11 @@
     }
  
     public void func_150718_a(ITextComponent p_150718_1_) {
@@ -78,7 +77,7 @@
           this.field_150742_o = p_150718_1_;
        }
  
-@@ -259,7 +277,9 @@
+@@ -259,7 +_,9 @@
  
     @OnlyIn(Dist.CLIENT)
     public static NetworkManager func_181124_a(InetAddress p_181124_0_, int p_181124_1_, boolean p_181124_2_) {
@@ -88,7 +87,7 @@
        Class<? extends SocketChannel> oclass;
        LazyValue<? extends EventLoopGroup> lazyvalue;
        if (Epoll.isAvailable() && p_181124_2_) {
-@@ -286,6 +306,7 @@
+@@ -286,6 +_,7 @@
     @OnlyIn(Dist.CLIENT)
     public static NetworkManager func_150722_a(SocketAddress p_150722_0_) {
        final NetworkManager networkmanager = new NetworkManager(PacketDirection.CLIENTBOUND);
@@ -96,7 +95,7 @@
        (new Bootstrap()).group(field_179296_e.func_179281_c()).handler(new ChannelInitializer<Channel>() {
           protected void initChannel(Channel p_initChannel_1_) throws Exception {
              p_initChannel_1_.pipeline().addLast("packet_handler", networkmanager);
-@@ -362,6 +383,7 @@
+@@ -362,6 +_,7 @@
              } else if (this.func_150729_e() != null) {
                 this.func_150729_e().func_147231_a(new TranslationTextComponent("multiplayer.disconnect.generic"));
              }
@@ -104,7 +103,7 @@
           }
  
        }
-@@ -376,6 +398,14 @@
+@@ -376,6 +_,14 @@
        return this.field_211397_t;
     }
  
@@ -119,7 +118,7 @@
     static class QueuedPacket {
        private final IPacket<?> field_150774_a;
        @Nullable
-@@ -386,4 +416,11 @@
+@@ -386,4 +_,11 @@
           this.field_201049_b = p_i48604_2_;
        }
     }

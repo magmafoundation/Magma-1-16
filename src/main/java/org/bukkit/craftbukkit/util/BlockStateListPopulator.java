@@ -36,7 +36,7 @@ public class BlockStateListPopulator extends DummyGeneratorAccess {
     }
 
     @Override
-    public boolean setBlockState(BlockPos pos, BlockState newState, int flags) {
+    public boolean setBlock(BlockPos pos, BlockState newState, int flags) {
         CraftBlockState state = CraftBlockState.getBlockState(world, pos, flags);
         state.setData(newState);
         list.put(pos, state);

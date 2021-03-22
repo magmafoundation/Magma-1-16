@@ -1,6 +1,6 @@
 --- a/net/minecraft/server/management/PlayerList.java
 +++ b/net/minecraft/server/management/PlayerList.java
-@@ -9,11 +9,14 @@
+@@ -9,11 +_,14 @@
  import java.io.File;
  import java.net.SocketAddress;
  import java.text.SimpleDateFormat;
@@ -15,7 +15,7 @@
  import javax.annotation.Nullable;
  import net.minecraft.advancements.PlayerAdvancements;
  import net.minecraft.block.BlockState;
-@@ -27,10 +30,12 @@
+@@ -27,10 +_,12 @@
  import net.minecraft.network.IPacket;
  import net.minecraft.network.NetworkManager;
  import net.minecraft.network.PacketBuffer;
@@ -28,7 +28,7 @@
  import net.minecraft.network.play.server.SEntityStatusPacket;
  import net.minecraft.network.play.server.SHeldItemChangePacket;
  import net.minecraft.network.play.server.SJoinGamePacket;
-@@ -38,6 +43,7 @@
+@@ -38,6 +_,7 @@
  import net.minecraft.network.play.server.SPlaySoundEffectPacket;
  import net.minecraft.network.play.server.SPlayerAbilitiesPacket;
  import net.minecraft.network.play.server.SPlayerListItemPacket;
@@ -36,7 +36,7 @@
  import net.minecraft.network.play.server.SRespawnPacket;
  import net.minecraft.network.play.server.SServerDifficultyPacket;
  import net.minecraft.network.play.server.SSetExperiencePacket;
-@@ -54,9 +60,11 @@
+@@ -54,9 +_,11 @@
  import net.minecraft.scoreboard.ServerScoreboard;
  import net.minecraft.scoreboard.Team;
  import net.minecraft.server.MinecraftServer;
@@ -48,7 +48,7 @@
  import net.minecraft.util.RegistryKey;
  import net.minecraft.util.SoundCategory;
  import net.minecraft.util.SoundEvents;
-@@ -64,6 +72,7 @@
+@@ -64,6 +_,7 @@
  import net.minecraft.util.math.BlockPos;
  import net.minecraft.util.math.MathHelper;
  import net.minecraft.util.math.vector.Vector3d;
@@ -56,7 +56,7 @@
  import net.minecraft.util.registry.DynamicRegistries;
  import net.minecraft.util.text.ChatType;
  import net.minecraft.util.text.IFormattableTextComponent;
-@@ -85,6 +94,21 @@
+@@ -85,6 +_,21 @@
  import net.minecraftforge.api.distmarker.OnlyIn;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -78,7 +78,7 @@
  
  public abstract class PlayerList {
     public static final File field_152613_a = new File("banned-players.json");
-@@ -94,15 +118,17 @@
+@@ -94,15 +_,17 @@
     private static final Logger field_148546_d = LogManager.getLogger();
     private static final SimpleDateFormat field_72403_e = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
     private final MinecraftServer field_72400_f;
@@ -100,17 +100,17 @@
     private boolean field_72409_l;
     private final DynamicRegistries.Impl field_232639_s_;
     protected final int field_72405_c;
-@@ -110,8 +136,20 @@
+@@ -110,8 +_,20 @@
     private GameType field_72410_m;
     private boolean field_72407_n;
     private int field_72408_o;
 +   private final List<ServerPlayerEntity> playersView = java.util.Collections.unmodifiableList(field_72404_b);
- 
++
 +   // CraftBukkit start
 +   private CraftServer cserver;
 +   private final Map<String,ServerPlayerEntity> playersByName = new java.util.HashMap<>(); // Spigot
 +
-+
+ 
     public PlayerList(MinecraftServer p_i231425_1_, DynamicRegistries.Impl p_i231425_2_, PlayerData p_i231425_3_, int p_i231425_4_) {
 +      this.cserver = p_i231425_1_.server = new CraftServer((DedicatedServer) p_i231425_1_, this);
 +      ForgeInject.injectForge();
@@ -121,7 +121,7 @@
        this.field_72400_f = p_i231425_1_;
        this.field_232639_s_ = p_i231425_2_;
        this.field_72405_c = p_i231425_4_;
-@@ -125,6 +163,14 @@
+@@ -125,6 +_,14 @@
        String s = gameprofile1 == null ? gameprofile.getName() : gameprofile1.getName();
        playerprofilecache.func_152649_a(gameprofile);
        CompoundNBT compoundnbt = this.func_72380_a(p_72355_2_);
@@ -136,7 +136,7 @@
        RegistryKey<World> registrykey = compoundnbt != null ? DimensionType.func_236025_a_(new Dynamic<>(NBTDynamicOps.field_210820_a, compoundnbt.func_74781_a("Dimension"))).resultOrPartial(field_148546_d::error).orElse(World.field_234918_g_) : World.field_234918_g_;
        ServerWorld serverworld = this.field_72400_f.func_71218_a(registrykey);
        ServerWorld serverworld1;
-@@ -142,20 +188,35 @@
+@@ -142,20 +_,35 @@
           s1 = p_72355_1_.func_74430_c().toString();
        }
  
@@ -174,7 +174,7 @@
        this.func_187243_f(p_72355_2_);
        p_72355_2_.func_147099_x().func_150877_d();
        p_72355_2_.func_192037_E().func_192826_c(p_72355_2_);
-@@ -167,20 +228,56 @@
+@@ -167,20 +_,56 @@
        } else {
           iformattabletextcomponent = new TranslationTextComponent("multiplayer.player.joined.renamed", p_72355_2_.func_145748_c_(), s);
        }
@@ -190,7 +190,7 @@
        this.field_177454_f.put(p_72355_2_.func_110124_au(), p_72355_2_);
 -      this.func_148540_a(new SPlayerListItemPacket(SPlayerListItemPacket.Action.ADD_PLAYER, p_72355_2_));
 +      // this.sendPacketToAllPlayers(new SPlayerListItemPacket(SPlayerListItemPacket.Action.ADD_PLAYER, playerIn)); // CraftBukkit - replaced with loop below
- 
++
 +      // CraftBukkit start
 +      PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(cserver.getPlayer(p_72355_2_), joinMessage);
 +      cserver.getPluginManager().callEvent(playerJoinEvent);
@@ -206,7 +206,7 @@
 +      // CraftBukkit end
 +      // CraftBukkit start - sendAll above replaced with this loop
 +      SPlayerListItemPacket packet = new SPlayerListItemPacket(SPlayerListItemPacket.Action.ADD_PLAYER, p_72355_2_);
-+
+ 
        for(int i = 0; i < this.field_72404_b.size(); ++i) {
           p_72355_2_.field_71135_a.func_147359_a(new SPlayerListItemPacket(SPlayerListItemPacket.Action.ADD_PLAYER, this.field_72404_b.get(i)));
 +         ServerPlayerEntity entityplayer1 = (ServerPlayerEntity) this.field_72404_b.get(i);
@@ -237,7 +237,7 @@
        if (!this.field_72400_f.func_147133_T().isEmpty()) {
           p_72355_2_.func_175397_a(this.field_72400_f.func_147133_T(), this.field_72400_f.func_175581_ab());
        }
-@@ -191,8 +288,11 @@
+@@ -191,8 +_,11 @@
  
        if (compoundnbt != null && compoundnbt.func_150297_b("RootVehicle", 10)) {
           CompoundNBT compoundnbt1 = compoundnbt.func_74775_l("RootVehicle");
@@ -251,7 +251,7 @@
           });
           if (entity1 != null) {
              UUID uuid;
-@@ -225,9 +325,12 @@
+@@ -225,9 +_,12 @@
        }
  
        p_72355_2_.func_71116_b();
@@ -265,7 +265,7 @@
        Set<ScoreObjective> set = Sets.newHashSet();
  
        for(ScorePlayerTeam scoreplayerteam : p_96456_1_.func_96525_g()) {
-@@ -248,25 +351,27 @@
+@@ -248,25 +_,27 @@
     }
  
     public void func_212504_a(ServerWorld p_212504_1_) {
@@ -298,7 +298,7 @@
           }
  
           public void func_177696_b(WorldBorder p_177696_1_, double p_177696_2_) {
-@@ -285,6 +390,7 @@
+@@ -285,6 +_,7 @@
           compoundnbt1 = compoundnbt;
           p_72380_1_.func_70020_e(compoundnbt);
           field_148546_d.debug("loading single player");
@@ -306,7 +306,7 @@
        } else {
           compoundnbt1 = this.field_72412_k.func_237336_b_(p_72380_1_);
        }
-@@ -293,28 +399,42 @@
+@@ -293,28 +_,42 @@
     }
  
     protected void func_72391_b(ServerPlayerEntity p_72391_1_) {
@@ -358,7 +358,7 @@
              serverworld.func_217467_h(entity);
              entity.field_70128_L = true;
  
-@@ -323,107 +443,181 @@
+@@ -323,107 +_,181 @@
                 entity1.field_70128_L = true;
              }
  
@@ -386,13 +386,15 @@
           this.field_177454_f.remove(uuid);
 -         this.field_148547_k.remove(uuid);
 -         this.field_192055_p.remove(uuid);
+-      }
+-
+-      this.func_148540_a(new SPlayerListItemPacket(SPlayerListItemPacket.Action.REMOVE_PLAYER, p_72367_1_));
 +         // CraftBukkit start
 +         // this.playerStatFiles.remove(uuid);
 +         // this.advancements.remove(uuid);
 +         // CraftBukkit end
-       }
- 
--      this.func_148540_a(new SPlayerListItemPacket(SPlayerListItemPacket.Action.REMOVE_PLAYER, p_72367_1_));
++      }
++
 +      // CraftBukkit start
 +      // this.sendPacketToAllPlayers(new SPlayerListItemPacket(SPlayerListItemPacket.Action.REMOVE_PLAYER, playerIn));
 +      SPlayerListItemPacket packet = new SPlayerListItemPacket(SPlayerListItemPacket.Action.REMOVE_PLAYER, playerIn);
@@ -472,11 +474,12 @@
 +         event.disallow(PlayerLoginEvent.Result.KICK_BANNED, CraftChatMessage.fromComponent(iformattabletextcomponent));
        } else {
 -         return this.field_72404_b.size() >= this.field_72405_c && !this.func_183023_f(p_206258_2_) ? new TranslationTextComponent("multiplayer.disconnect.server_full") : null;
+-      }
 +         // return this.players.size() >= this.maxPlayers && !this.bypassesPlayerLimit(gameProfile) ? new TranslationTextComponent("multiplayer.disconnect.server_full") : null;
 +         if (this.field_72404_b.size() >= this.field_72405_c && !this.func_183023_f(gameProfile)) {
 +            event.disallow(PlayerLoginEvent.Result.KICK_FULL,  org.spigotmc.SpigotConfig.serverFullMessage); // Spigot
 +         }
-       }
++      }
 +      cserver.getPluginManager().callEvent(event);
 +      if (event.getResult() != PlayerLoginEvent.Result.ALLOWED) {
 +         netHandler.disconnect(event.getKickMessage());
@@ -514,7 +517,7 @@
        }
  
 -      ServerWorld serverworld = this.field_72400_f.func_241755_D_();
-+      ServerWorld serverworld = this.server.func_241755_D_();
++      ServerWorld serverworld = this.server.overworld();
        PlayerInteractionManager playerinteractionmanager;
 -      if (this.field_72400_f.func_71242_L()) {
 +      if (this.server.isDemo()) {
@@ -547,17 +550,17 @@
        boolean flag = p_232644_1_.func_241142_M_();
 -      ServerWorld serverworld = this.field_72400_f.func_71218_a(p_232644_1_.func_241141_L_());
 +       /* CraftBukkit start
-+      ServerWorld serverworld = this.server.getWorld(p_232644_1_.func_241141_L_());
++      ServerWorld serverworld = this.server.getWorld(p_232644_1_.getRespawnDimension());
        Optional<Vector3d> optional;
        if (serverworld != null && blockpos != null) {
 -         optional = PlayerEntity.func_242374_a(serverworld, blockpos, f, flag, p_232644_2_);
-+         optional = PlayerEntity.func_242374_a(serverworld, blockpos, f, flag, conqueredEnd);
++         optional = PlayerEntity.findRespawnPositionAndUseSpawnBlock(serverworld, blockpos, f, flag, conqueredEnd);
        } else {
           optional = Optional.empty();
        }
  
 -      ServerWorld serverworld1 = serverworld != null && optional.isPresent() ? serverworld : this.field_72400_f.func_241755_D_();
-+      ServerWorld serverworld1 = serverworld != null && optional.isPresent() ? serverworld : this.server.func_241755_D_();
++      ServerWorld serverworld1 = serverworld != null && optional.isPresent() ? serverworld : this.server.overworld();
        PlayerInteractionManager playerinteractionmanager;
 -      if (this.field_72400_f.func_71242_L()) {
 +      if (this.server.isDemo()) {
@@ -581,7 +584,7 @@
        serverplayerentity.func_145769_d(p_232644_1_.func_145782_y());
        serverplayerentity.func_184819_a(p_232644_1_.func_184591_cq());
  
-@@ -431,48 +625,114 @@
+@@ -431,48 +_,114 @@
           serverplayerentity.func_184211_a(s);
        }
  
@@ -723,7 +726,7 @@
        return serverplayerentity;
     }
  
-@@ -484,12 +744,36 @@
+@@ -484,12 +_,36 @@
  
     public void func_72374_b() {
        if (++this.field_72408_o > 600) {
@@ -761,7 +764,7 @@
     public void func_148540_a(IPacket<?> p_148540_1_) {
        for(int i = 0; i < this.field_72404_b.size(); ++i) {
           (this.field_72404_b.get(i)).field_71135_a.func_147359_a(p_148540_1_);
-@@ -585,6 +869,7 @@
+@@ -585,6 +_,7 @@
           p_187245_1_.field_71135_a.func_147359_a(new SEntityStatusPacket(p_187245_1_, b0));
        }
  
@@ -769,7 +772,7 @@
        this.field_72400_f.func_195571_aL().func_197051_a(p_187245_1_);
     }
  
-@@ -598,18 +883,19 @@
+@@ -598,18 +_,19 @@
  
     @Nullable
     public ServerPlayerEntity func_152612_a(String p_152612_1_) {
@@ -796,7 +799,7 @@
           if (serverplayerentity != p_148543_1_ && serverplayerentity.field_70170_p.func_234923_W_() == p_148543_10_) {
              double d0 = p_148543_2_ - serverplayerentity.func_226277_ct_();
              double d1 = p_148543_4_ - serverplayerentity.func_226278_cu_();
-@@ -649,22 +935,32 @@
+@@ -649,22 +_,32 @@
     }
  
     public void func_72354_b(ServerPlayerEntity p_72354_1_, ServerWorld p_72354_2_) {
@@ -831,7 +834,7 @@
     }
  
     public int func_72394_k() {
-@@ -719,7 +1015,7 @@
+@@ -719,7 +_,7 @@
           p_72381_1_.field_71134_c.func_241820_a(this.field_72410_m, GameType.NOT_SET);
        }
  
@@ -840,7 +843,7 @@
     }
  
     @OnlyIn(Dist.CLIENT)
-@@ -728,32 +1024,46 @@
+@@ -728,32 +_,46 @@
     }
  
     public void func_72392_r() {
@@ -861,14 +864,16 @@
     public void func_232641_a_(ITextComponent p_232641_1_, ChatType p_232641_2_, UUID p_232641_3_) {
        this.field_72400_f.func_145747_a(p_232641_1_, p_232641_3_);
 -      this.func_148540_a(new SChatPacket(p_232641_1_, p_232641_2_, p_232641_3_));
-+      // CraftBukkit start - we run this through our processor first so we can get web links etc
-+      this.func_148540_a(new SChatPacket(CraftChatMessage.fixComponent(p_232641_1_), p_232641_2_, p_232641_3_));
-+      // CraftBukkit end
-    }
- 
+-   }
+-
 -   public ServerStatisticsManager func_152602_a(PlayerEntity p_152602_1_) {
 -      UUID uuid = p_152602_1_.func_110124_au();
 -      ServerStatisticsManager serverstatisticsmanager = uuid == null ? null : this.field_148547_k.get(uuid);
++      // CraftBukkit start - we run this through our processor first so we can get web links etc
++      this.func_148540_a(new SChatPacket(CraftChatMessage.fixComponent(p_232641_1_), p_232641_2_, p_232641_3_));
++      // CraftBukkit end
++   }
++
 +   //CraftBukkit start
 +   public ServerStatisticsManager getPlayerStats(ServerPlayerEntity playerIn) {
 +      ServerStatisticsManager serverStatisticsManager = playerIn.func_147099_x();
@@ -896,7 +901,7 @@
        }
  
        return serverstatisticsmanager;
-@@ -761,14 +1071,16 @@
+@@ -761,14 +_,16 @@
  
     public PlayerAdvancements func_192054_h(ServerPlayerEntity p_192054_1_) {
        UUID uuid = p_192054_1_.func_110124_au();
@@ -915,7 +920,7 @@
        playeradvancements.func_192739_a(p_192054_1_);
        return playeradvancements;
     }
-@@ -786,7 +1098,7 @@
+@@ -786,7 +_,7 @@
     }
  
     public List<ServerPlayerEntity> func_181057_v() {
@@ -924,7 +929,7 @@
     }
  
     @Nullable
-@@ -799,11 +1111,14 @@
+@@ -799,11 +_,14 @@
     }
  
     public void func_193244_w() {
@@ -934,17 +939,18 @@
 +         player.func_192039_O().func_240918_a_(this.field_72400_f.func_191949_aK());
 +         player.func_192039_O().func_192741_b(player); // CraftBukkit - trigger immediate flush of advancements
        }
- 
 +
+ 
        this.func_148540_a(new STagsListPacket(this.field_72400_f.func_244266_aF()));
 +      net.minecraftforge.fml.network.NetworkHooks.syncCustomTagTypes(this.field_72400_f.func_244266_aF());
        SUpdateRecipesPacket supdaterecipespacket = new SUpdateRecipesPacket(this.field_72400_f.func_199529_aN().func_199510_b());
  
        for(ServerPlayerEntity serverplayerentity : this.field_72404_b) {
-@@ -816,4 +1131,12 @@
+@@ -815,5 +_,13 @@
+ 
     public boolean func_206257_x() {
        return this.field_72407_n;
-    }
++   }
 +
 +   public boolean addPlayer(ServerPlayerEntity player) {
 +      return field_72404_b.add(player);
@@ -952,5 +958,5 @@
 +
 +   public boolean removePlayer(ServerPlayerEntity player) {
 +       return this.field_72404_b.remove(player);
-+   }
+    }
  }

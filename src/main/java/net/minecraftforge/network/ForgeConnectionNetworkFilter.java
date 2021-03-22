@@ -20,28 +20,28 @@ import com.google.common.collect.ImmutableMap;
 public class ForgeConnectionNetworkFilter extends VanillaPacketFilter
 {
 
-	public ForgeConnectionNetworkFilter()
-	{
-		super(
-				ImmutableMap.of(
-						SUpdateRecipesPacket.class, ForgeConnectionNetworkFilter::splitPacket,
-						STagsListPacket.class, ForgeConnectionNetworkFilter::splitPacket
-				)
-		);
-	}
+    public ForgeConnectionNetworkFilter()
+    {
+        super(
+                ImmutableMap.of(
+                        SUpdateRecipesPacket.class, ForgeConnectionNetworkFilter::splitPacket,
+                        STagsListPacket.class, ForgeConnectionNetworkFilter::splitPacket
+                )
+        );
+    }
 
-	@Override
-	protected boolean isNecessary(NetworkManager manager)
-	{
-		// not needed on local connections, because packets are not encoded to bytes there
-		return !manager.isLocalChannel() && !NetworkHooks.isVanillaConnection(manager);
-	}
+    @Override
+    protected boolean isNecessary(NetworkManager manager)
+    {
+        // not needed on local connections, because packets are not encoded to bytes there
+        return !manager.isMemoryConnection() && !NetworkHooks.isVanillaConnection(manager);
+    }
 
-	private static void splitPacket(IPacket<?> packet, List<? super IPacket<?>> out)
-	{
-		VanillaPacketSplitter.appendPackets(
-				ProtocolType.PLAY, PacketDirection.CLIENTBOUND, packet, out
-		);
-	}
+    private static void splitPacket(IPacket<?> packet, List<? super IPacket<?>> out)
+    {
+        VanillaPacketSplitter.appendPackets(
+                ProtocolType.PLAY, PacketDirection.CLIENTBOUND, packet, out
+        );
+    }
 
 }

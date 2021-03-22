@@ -1,6 +1,6 @@
 --- a/net/minecraft/block/WitherSkeletonSkullBlock.java
 +++ b/net/minecraft/block/WitherSkeletonSkullBlock.java
-@@ -21,6 +21,8 @@
+@@ -21,6 +_,8 @@
  import net.minecraft.util.math.BlockPos;
  import net.minecraft.world.Difficulty;
  import net.minecraft.world.World;
@@ -9,7 +9,7 @@
  
  public class WitherSkeletonSkullBlock extends SkullBlock {
     @Nullable
-@@ -42,6 +44,7 @@
+@@ -42,6 +_,7 @@
     }
  
     public static void func_196298_a(World p_196298_0_, BlockPos p_196298_1_, SkullTileEntity p_196298_2_) {
@@ -17,7 +17,7 @@
        if (!p_196298_0_.field_72995_K) {
           BlockState blockstate = p_196298_2_.func_195044_w();
           boolean flag = blockstate.func_203425_a(Blocks.field_196705_eO) || blockstate.func_203425_a(Blocks.field_196704_eN);
-@@ -49,11 +52,13 @@
+@@ -49,11 +_,13 @@
              BlockPattern blockpattern = func_196296_d();
              BlockPattern.PatternHelper blockpattern$patternhelper = blockpattern.func_177681_a(p_196298_0_, p_196298_1_);
              if (blockpattern$patternhelper != null) {
@@ -33,7 +33,7 @@
                    }
                 }
  
-@@ -63,11 +68,21 @@
+@@ -63,11 +_,21 @@
                 witherentity.field_70761_aq = blockpattern$patternhelper.func_177669_b().func_176740_k() == Direction.Axis.X ? 0.0F : 90.0F;
                 witherentity.func_82206_m();
  

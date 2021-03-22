@@ -52,7 +52,6 @@ import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.magmafoundation.magma.api.ServerAPI;
 
 import static net.minecraftforge.fml.Logging.CORE;
 import static net.minecraftforge.fml.Logging.LOADING;
@@ -185,8 +184,6 @@ public class ModLoader
             throw new LoadingFailedException(loadingExceptions);
         }
         modList.setLoadedMods(modContainers);
-        ServerAPI.mods.put("mods", modList.size());
-        modList.getMods().forEach(modInfo -> ServerAPI.modList.add(modInfo.getModId()));
         statusConsumer.ifPresent(c->c.accept(String.format("Constructing %d mods", modList.size())));
         dispatchAndHandleError(ModLoadingStage.CONSTRUCT, syncExecutor, parallelExecutor, periodicTask);
         statusConsumer.ifPresent(c->c.accept("Creating registries"));

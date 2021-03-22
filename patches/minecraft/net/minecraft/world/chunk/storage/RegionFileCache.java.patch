@@ -1,6 +1,6 @@
 --- a/net/minecraft/world/chunk/storage/RegionFileCache.java
 +++ b/net/minecraft/world/chunk/storage/RegionFileCache.java
-@@ -20,8 +20,13 @@
+@@ -20,8 +_,13 @@
        this.field_235986_c_ = p_i231895_2_;
     }
  
@@ -15,7 +15,7 @@
        RegionFile regionfile = this.field_219102_c.getAndMoveToFirst(i);
        if (regionfile != null) {
           return regionfile;
-@@ -34,7 +39,8 @@
+@@ -34,7 +_,8 @@
              this.field_219101_a.mkdirs();
           }
  
@@ -25,7 +25,7 @@
           RegionFile regionfile1 = new RegionFile(file1, this.field_219101_a, this.field_235986_c_);
           this.field_219102_c.putAndMoveToFirst(i, regionfile1);
           return regionfile1;
-@@ -43,7 +49,12 @@
+@@ -43,7 +_,12 @@
  
     @Nullable
     public CompoundNBT func_219099_e(ChunkPos p_219099_1_) throws IOException {
@@ -39,7 +39,7 @@
  
        Object object;
        try (DataInputStream datainputstream = regionfile.func_222666_a(p_219099_1_)) {
-@@ -58,7 +69,7 @@
+@@ -58,7 +_,7 @@
     }
  
     protected void func_219100_a(ChunkPos p_219100_1_, CompoundNBT p_219100_2_) throws IOException {

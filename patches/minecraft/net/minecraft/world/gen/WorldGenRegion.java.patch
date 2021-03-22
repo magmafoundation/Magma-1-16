@@ -1,6 +1,6 @@
 --- a/net/minecraft/world/gen/WorldGenRegion.java
 +++ b/net/minecraft/world/gen/WorldGenRegion.java
-@@ -32,6 +32,7 @@
+@@ -32,6 +_,7 @@
  import net.minecraft.world.DimensionType;
  import net.minecraft.world.ISeedReader;
  import net.minecraft.world.ITickList;
@@ -8,7 +8,7 @@
  import net.minecraft.world.WorldGenTickList;
  import net.minecraft.world.biome.Biome;
  import net.minecraft.world.biome.BiomeManager;
-@@ -173,11 +174,11 @@
+@@ -173,11 +_,11 @@
  
     public boolean func_241212_a_(BlockPos p_241212_1_, boolean p_241212_2_, @Nullable Entity p_241212_3_, int p_241212_4_) {
        BlockState blockstate = this.func_180495_p(p_241212_1_);
@@ -22,7 +22,7 @@
              Block.func_220054_a(blockstate, this.field_201689_f, p_241212_1_, tileentity, p_241212_3_, ItemStack.field_190927_a);
           }
  
-@@ -197,11 +198,11 @@
+@@ -197,11 +_,11 @@
           if (compoundnbt != null) {
              if ("DUMMY".equals(compoundnbt.func_74779_i("id"))) {
                 Block block = blockstate.func_177230_c();
@@ -36,7 +36,7 @@
              } else {
                 tileentity = TileEntity.func_235657_b_(blockstate, compoundnbt);
              }
-@@ -212,8 +213,8 @@
+@@ -212,8 +_,8 @@
              }
           }
  
@@ -47,7 +47,7 @@
           }
  
           return null;
-@@ -228,9 +229,9 @@
+@@ -228,9 +_,9 @@
        }
  
        Block block = p_241211_2_.func_177230_c();
@@ -59,7 +59,7 @@
           } else {
              CompoundNBT compoundnbt = new CompoundNBT();
              compoundnbt.func_74768_a("x", p_241211_1_.func_177958_n());
-@@ -239,7 +240,7 @@
+@@ -239,7 +_,7 @@
              compoundnbt.func_74778_a("id", "DUMMY");
              ichunk.func_201591_a(compoundnbt);
           }
@@ -68,7 +68,7 @@
           ichunk.func_177425_e(p_241211_1_);
        }
  
-@@ -255,9 +256,16 @@
+@@ -255,9 +_,16 @@
     }
  
     public boolean func_217376_c(Entity p_217376_1_) {
@@ -88,15 +88,15 @@
        return true;
     }
  
-@@ -331,6 +339,11 @@
-    public void func_217378_a(@Nullable PlayerEntity p_217378_1_, int p_217378_2_, BlockPos p_217378_3_, int p_217378_4_) {
+@@ -329,6 +_,11 @@
     }
  
+    public void func_217378_a(@Nullable PlayerEntity p_217378_1_, int p_217378_2_, BlockPos p_217378_3_, int p_217378_4_) {
++   }
++
 +   @Override
 +   public ServerWorld getMinecraftWorld() {
 +      return field_201689_f;
-+   }
-+
-    public DimensionType func_230315_m_() {
-       return this.field_241159_j_;
     }
+ 
+    public DimensionType func_230315_m_() {

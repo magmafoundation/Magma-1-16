@@ -1,6 +1,6 @@
 --- a/net/minecraft/world/server/ServerTickList.java
 +++ b/net/minecraft/world/server/ServerTickList.java
-@@ -47,12 +47,19 @@
+@@ -47,11 +_,18 @@
  
     public void func_205365_a() {
        int i = this.field_205375_e.size();
@@ -15,9 +15,8 @@
 +            }
 +            else {
              i = 65536;
-          }
-+            // CraftBukkit end
 +         }
++            // CraftBukkit end
+          }
  
           ServerChunkProvider serverchunkprovider = this.field_205376_f.func_72863_F();
-          Iterator<NextTickListEntry<T>> iterator = this.field_205375_e.iterator();

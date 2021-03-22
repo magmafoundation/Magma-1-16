@@ -1,6 +1,6 @@
 --- a/net/minecraft/inventory/container/WorkbenchContainer.java
 +++ b/net/minecraft/inventory/container/WorkbenchContainer.java
-@@ -19,13 +19,22 @@
+@@ -19,13 +_,22 @@
  import net.minecraft.world.World;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,7 +25,7 @@
     public WorkbenchContainer(int p_i50089_1_, PlayerInventory p_i50089_2_) {
        this(p_i50089_1_, p_i50089_2_, IWorldPosCallable.field_221489_a);
     }
-@@ -33,6 +42,11 @@
+@@ -33,6 +_,11 @@
     public WorkbenchContainer(int p_i50090_1_, PlayerInventory p_i50090_2_, IWorldPosCallable p_i50090_3_) {
        super(ContainerType.field_221518_l, p_i50090_1_);
        this.field_217070_e = p_i50090_3_;
@@ -37,7 +37,7 @@
        this.field_192390_i = p_i50090_2_.field_70458_d;
        this.func_75146_a(new CraftingResultSlot(p_i50090_2_.field_70458_d, this.field_75162_e, this.field_75160_f, 0, 124, 35));
  
-@@ -54,26 +68,27 @@
+@@ -54,26 +_,27 @@
  
     }
  
@@ -74,7 +74,7 @@
        });
     }
  
-@@ -98,10 +113,11 @@
+@@ -98,10 +_,11 @@
     }
  
     public boolean func_75145_c(PlayerEntity p_75145_1_) {
@@ -87,7 +87,7 @@
        ItemStack itemstack = ItemStack.field_190927_a;
        Slot slot = this.field_75151_b.get(p_82846_2_);
        if (slot != null && slot.func_75216_d()) {
-@@ -174,4 +190,16 @@
+@@ -174,4 +_,16 @@
     public RecipeBookCategory func_241850_m() {
        return RecipeBookCategory.CRAFTING;
     }

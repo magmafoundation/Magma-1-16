@@ -1,6 +1,6 @@
 --- a/com/mojang/realmsclient/gui/screens/RealmsSelectWorldTemplateScreen.java
 +++ b/com/mojang/realmsclient/gui/screens/RealmsSelectWorldTemplateScreen.java
-@@ -215,34 +215,34 @@
+@@ -215,34 +_,34 @@
              RealmsClient realmsclient = RealmsClient.func_224911_a();
              while (worldtemplatepaginatedlist != null) {
                 Either<WorldTemplatePaginatedList, String> either = RealmsSelectWorldTemplateScreen.this.func_224509_a(worldtemplatepaginatedlist, realmsclient);

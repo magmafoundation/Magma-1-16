@@ -1,6 +1,6 @@
 --- a/net/minecraft/server/management/PreYggdrasilConverter.java
 +++ b/net/minecraft/server/management/PreYggdrasilConverter.java
-@@ -19,6 +19,8 @@
+@@ -19,6 +_,8 @@
  import java.util.UUID;
  import javax.annotation.Nullable;
  import net.minecraft.entity.player.PlayerEntity;
@@ -9,7 +9,7 @@
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.server.dedicated.DedicatedServer;
  import net.minecraft.util.StringUtils;
-@@ -53,7 +55,7 @@
+@@ -53,7 +_,7 @@
        }).toArray((p_201149_0_) -> {
           return new String[p_201149_0_];
        });
@@ -18,7 +18,7 @@
           p_152717_0_.func_152359_aw().findProfilesByNames(astring, Agent.MINECRAFT, p_152717_2_);
        } else {
           for(String s : astring) {
-@@ -72,7 +74,7 @@
+@@ -72,7 +_,7 @@
              try {
                 banlist.func_152679_g();
              } catch (IOException ioexception1) {
@@ -27,7 +27,7 @@
              }
           }
  
-@@ -125,7 +127,7 @@
+@@ -125,7 +_,7 @@
              try {
                 ipbanlist.func_152679_g();
              } catch (IOException ioexception1) {
@@ -36,7 +36,7 @@
              }
           }
  
-@@ -161,7 +163,7 @@
+@@ -161,7 +_,7 @@
              try {
                 oplist.func_152679_g();
              } catch (IOException ioexception1) {
@@ -45,7 +45,7 @@
              }
           }
  
-@@ -203,7 +205,7 @@
+@@ -203,7 +_,7 @@
              try {
                 whitelist.func_152679_g();
              } catch (IOException ioexception1) {
@@ -54,7 +54,7 @@
              }
           }
  
-@@ -314,6 +316,28 @@
+@@ -314,6 +_,28 @@
                 private void func_152743_a(File p_152743_1_, String p_152743_2_, String p_152743_3_) {
                    File file5 = new File(file1, p_152743_2_ + ".dat");
                    File file6 = new File(p_152743_1_, p_152743_3_ + ".dat");

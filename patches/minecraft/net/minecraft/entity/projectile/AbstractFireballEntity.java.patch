@@ -1,6 +1,6 @@
 --- a/net/minecraft/entity/projectile/AbstractFireballEntity.java
 +++ b/net/minecraft/entity/projectile/AbstractFireballEntity.java
-@@ -42,14 +42,14 @@
+@@ -42,14 +_,14 @@
  
     }
  
@@ -17,7 +17,7 @@
     }
  
     protected void func_70088_a() {
-@@ -68,6 +68,6 @@
+@@ -68,6 +_,6 @@
     public void func_70037_a(CompoundNBT p_70037_1_) {
        super.func_70037_a(p_70037_1_);
        ItemStack itemstack = ItemStack.func_199557_a(p_70037_1_.func_74775_l("Item"));

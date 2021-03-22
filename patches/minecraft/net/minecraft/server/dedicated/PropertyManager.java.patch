@@ -1,6 +1,6 @@
 --- a/net/minecraft/server/dedicated/PropertyManager.java
 +++ b/net/minecraft/server/dedicated/PropertyManager.java
-@@ -13,13 +13,14 @@
+@@ -13,13 +_,14 @@
  import java.util.function.Supplier;
  import java.util.function.UnaryOperator;
  import javax.annotation.Nullable;
@@ -16,7 +16,7 @@
  
     public PropertyManager(Properties p_i50717_1_) {
        this.field_73672_b = p_i50717_1_;
-@@ -39,7 +40,7 @@
+@@ -39,7 +_,7 @@
  
     public void func_218970_c(Path p_218970_1_) {
        try (OutputStream outputstream = Files.newOutputStream(p_218970_1_)) {

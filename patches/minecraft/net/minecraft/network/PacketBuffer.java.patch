@@ -1,6 +1,6 @@
 --- a/net/minecraft/network/PacketBuffer.java
 +++ b/net/minecraft/network/PacketBuffer.java
-@@ -38,8 +38,9 @@
+@@ -38,8 +_,9 @@
  import net.minecraft.util.text.ITextComponent;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
@@ -11,7 +11,7 @@
     private final ByteBuf field_150794_a;
  
     public PacketBuffer(ByteBuf p_i45154_1_) {
-@@ -256,7 +257,7 @@
+@@ -256,7 +_,7 @@
        } else {
           try {
              CompressedStreamTools.func_74800_a(p_150786_1_, new ByteBufOutputStream(this));
@@ -20,7 +20,7 @@
              throw new EncoderException(ioexception);
           }
        }
-@@ -292,7 +293,16 @@
+@@ -292,7 +_,16 @@
     }
  
     public PacketBuffer func_150788_a(ItemStack p_150788_1_) {
@@ -38,7 +38,7 @@
           this.writeBoolean(false);
        } else {
           this.writeBoolean(true);
-@@ -300,8 +310,12 @@
+@@ -300,8 +_,12 @@
           this.func_150787_b(Item.func_150891_b(item));
           this.writeByte(p_150788_1_.func_190916_E());
           CompoundNBT compoundnbt = null;
@@ -53,7 +53,7 @@
           }
  
           this.func_150786_a(compoundnbt);
-@@ -317,7 +331,12 @@
+@@ -317,7 +_,12 @@
           int i = this.func_150792_a();
           int j = this.readByte();
           ItemStack itemstack = new ItemStack(Item.func_150899_d(i), j);

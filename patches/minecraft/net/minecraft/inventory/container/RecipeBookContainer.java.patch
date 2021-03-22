@@ -1,6 +1,6 @@
 --- a/net/minecraft/inventory/container/RecipeBookContainer.java
 +++ b/net/minecraft/inventory/container/RecipeBookContainer.java
-@@ -8,9 +8,12 @@
+@@ -8,9 +_,12 @@
  import net.minecraft.item.crafting.ServerRecipePlacer;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
@@ -14,14 +14,14 @@
        super(p_i50067_1_, p_i50067_2_);
     }
  
-@@ -33,6 +36,10 @@
+@@ -32,6 +_,10 @@
+ 
     @OnlyIn(Dist.CLIENT)
     public abstract int func_203721_h();
- 
++
 +   public java.util.List<net.minecraft.client.util.RecipeBookCategories> getRecipeBookCategories() {
 +      return net.minecraft.client.util.RecipeBookCategories.func_243236_a(this.func_241850_m());
 +   }
-+
+ 
     @OnlyIn(Dist.CLIENT)
     public abstract RecipeBookCategory func_241850_m();
- }

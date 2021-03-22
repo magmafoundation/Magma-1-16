@@ -66,7 +66,7 @@ public class PlayerAPI {
      * @return boolean - is op or not.
      */
     public static boolean isOp(PlayerEntity entityPlayer) {
-        return ServerAPI.getNMSServer().getPlayerList().canSendCommands(entityPlayer.getGameProfile());
+        return ServerAPI.getNMSServer().getPlayerList().isOp(entityPlayer.getGameProfile());
     }
 
     /**
@@ -103,6 +103,6 @@ public class PlayerAPI {
     }
 
     public static SocketAddress getRemoteAddress(Player player) {
-        return getNMSPlayer(player).connection.netManager.getRemoteAddress();
+        return getNMSPlayer(player).connection.connection.getRemoteAddress();
     }
 }

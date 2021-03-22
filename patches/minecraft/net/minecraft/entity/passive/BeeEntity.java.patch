@@ -1,6 +1,6 @@
 --- a/net/minecraft/entity/passive/BeeEntity.java
 +++ b/net/minecraft/entity/passive/BeeEntity.java
-@@ -84,6 +84,9 @@
+@@ -84,6 +_,9 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
@@ -10,7 +10,7 @@
  
  public class BeeEntity extends AnimalEntity implements IAngerable, IFlyingAnimal {
     private static final DataParameter<Byte> field_226374_bw_ = EntityDataManager.func_187226_a(BeeEntity.class, DataSerializers.field_187191_a);
-@@ -94,14 +97,14 @@
+@@ -94,14 +_,14 @@
     private float field_226361_bA_;
     private int field_226362_bB_;
     private int field_226363_bC_;
@@ -27,7 +27,7 @@
     private BeeEntity.PollinateGoal field_226370_bJ_;
     private BeeEntity.FindBeehiveGoal field_226371_bK_;
     private BeeEntity.FindFlowerGoal field_226372_bL_;
-@@ -184,6 +187,7 @@
+@@ -184,6 +_,7 @@
        this.field_226363_bC_ = p_70037_1_.func_74762_e("TicksSincePollination");
        this.field_226364_bD_ = p_70037_1_.func_74762_e("CannotEnterHiveTicks");
        this.field_226365_bE_ = p_70037_1_.func_74762_e("CropsGrownSincePollination");
@@ -35,7 +35,7 @@
        this.func_241358_a_((ServerWorld)this.field_70170_p, p_70037_1_);
     }
  
-@@ -201,7 +205,7 @@
+@@ -201,7 +_,7 @@
              }
  
              if (i > 0) {
@@ -44,7 +44,7 @@
              }
           }
  
-@@ -425,7 +429,7 @@
+@@ -425,7 +_,7 @@
           return false;
        } else {
           TileEntity tileentity = this.field_70170_p.func_175625_s(this.field_226369_bI_);
@@ -53,7 +53,7 @@
        }
     }
  
-@@ -433,7 +437,7 @@
+@@ -433,7 +_,7 @@
        return this.func_226456_v_(8);
     }
  
@@ -62,7 +62,7 @@
        if (p_226447_1_) {
           this.func_226426_eu_();
        }
-@@ -445,7 +449,7 @@
+@@ -445,7 +_,7 @@
        return this.func_226456_v_(4);
     }
  
@@ -71,7 +71,7 @@
        this.func_226404_d_(4, p_226449_1_);
     }
  
-@@ -552,11 +556,14 @@
+@@ -552,11 +_,14 @@
           return false;
        } else {
           Entity entity = p_70097_1_.func_76346_g();
@@ -88,7 +88,7 @@
        }
     }
  
-@@ -588,7 +595,7 @@
+@@ -588,7 +_,7 @@
  
        protected void func_220793_a(MobEntity p_220793_1_, LivingEntity p_220793_2_) {
           if (p_220793_1_ instanceof BeeEntity && this.field_75299_d.func_70685_l(p_220793_2_)) {
@@ -97,7 +97,7 @@
           }
  
        }
-@@ -871,7 +878,7 @@
+@@ -871,7 +_,7 @@
                       }
                    }
  

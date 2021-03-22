@@ -1,6 +1,6 @@
 --- a/net/minecraft/inventory/container/HorseInventoryContainer.java
 +++ b/net/minecraft/inventory/container/HorseInventoryContainer.java
-@@ -9,15 +9,32 @@
+@@ -9,15 +_,32 @@
  import net.minecraft.item.Items;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;

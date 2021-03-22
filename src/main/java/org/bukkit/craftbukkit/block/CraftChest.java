@@ -48,7 +48,7 @@ public class CraftChest extends CraftLootable<ChestTileEntity> implements Chest 
         CraftWorld world = (CraftWorld) this.getWorld();
 
         ChestBlock blockChest = (ChestBlock) (this.getType() == Material.CHEST ? Blocks.CHEST : Blocks.TRAPPED_CHEST);
-        INamedContainerProvider nms = blockChest.getContainer(data, world.getHandle(), this.getPosition());
+        INamedContainerProvider nms = blockChest.getMenuProvider(data, world.getHandle(), this.getPosition());
 
         if (nms instanceof ChestBlock.DoubleInventory) {
             inventory = new CraftInventoryDoubleChest((ChestBlock.DoubleInventory) nms);
@@ -61,8 +61,8 @@ public class CraftChest extends CraftLootable<ChestTileEntity> implements Chest 
         requirePlaced();
         if (!getTileEntity().opened) {
             net.minecraft.block.Block block = getTileEntity().getBlockState().getBlock();
-            getTileEntity().getWorld().addBlockEvent(getTileEntity().getPos(), block, 1, getTileEntity().numPlayersUsing + 1);
-            getTileEntity().playSound(SoundEvents.BLOCK_CHEST_OPEN);
+            getTileEntity().getLevel().blockEvent(getTileEntity().getBlockPos(), block, 1, getTileEntity().openCount + 1);
+            getTileEntity().playSound(SoundEvents.CHEST_OPEN);
         }
         getTileEntity().opened = true;
     }
@@ -72,8 +72,8 @@ public class CraftChest extends CraftLootable<ChestTileEntity> implements Chest 
         requirePlaced();
         if (getTileEntity().opened) {
             net.minecraft.block.Block block = getTileEntity().getBlockState().getBlock();
-            getTileEntity().getWorld().addBlockEvent(getTileEntity().getPos(), block, 1, 0);
-            getTileEntity().playSound(SoundEvents.BLOCK_CHEST_CLOSE);
+            getTileEntity().getLevel().blockEvent(getTileEntity().getBlockPos(), block, 1, 0);
+            getTileEntity().playSound(SoundEvents.CHEST_CLOSE);
         }
         getTileEntity().opened = false;
     }

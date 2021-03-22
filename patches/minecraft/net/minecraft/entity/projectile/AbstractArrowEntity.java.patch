@@ -1,6 +1,6 @@
 --- a/net/minecraft/entity/projectile/AbstractArrowEntity.java
 +++ b/net/minecraft/entity/projectile/AbstractArrowEntity.java
-@@ -15,6 +15,7 @@
+@@ -15,6 +_,7 @@
  import net.minecraft.entity.LivingEntity;
  import net.minecraft.entity.MoverType;
  import net.minecraft.entity.Pose;
@@ -8,7 +8,7 @@
  import net.minecraft.entity.player.PlayerEntity;
  import net.minecraft.entity.player.ServerPlayerEntity;
  import net.minecraft.item.ItemStack;
-@@ -44,19 +45,23 @@
+@@ -44,19 +_,23 @@
  import net.minecraft.world.World;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
@@ -35,7 +35,7 @@
     private SoundEvent field_213877_ay = this.func_213867_k();
     private IntOpenHashSet field_213878_az;
     private List<Entity> field_213875_aA;
-@@ -130,7 +135,7 @@
+@@ -130,7 +_,7 @@
  
        BlockPos blockpos = this.func_233580_cy_();
        BlockState blockstate = this.field_70170_p.func_180495_p(blockpos);
@@ -44,7 +44,7 @@
           VoxelShape voxelshape = blockstate.func_196952_d(this.field_70170_p, blockpos);
           if (!voxelshape.func_197766_b()) {
              Vector3d vector3d1 = this.func_213303_ch();
-@@ -184,7 +189,7 @@
+@@ -184,7 +_,7 @@
                 }
              }
  
@@ -53,7 +53,7 @@
                 this.func_70227_a(raytraceresult);
                 this.field_70160_al = true;
              }
-@@ -262,7 +267,7 @@
+@@ -262,7 +_,7 @@
  
     protected void func_225516_i_() {
        ++this.field_70252_j;
@@ -62,7 +62,7 @@
           this.func_70106_y();
        }
  
-@@ -320,7 +325,13 @@
+@@ -320,7 +_,13 @@
        boolean flag = entity.func_200600_R() == EntityType.field_200803_q;
        int k = entity.func_223314_ad();
        if (this.func_70027_ad() && !flag) {
@@ -77,7 +77,7 @@
        }
  
        if (entity.func_70097_a(damagesource, (float)i)) {
-@@ -477,8 +488,22 @@
+@@ -477,8 +_,22 @@
  
     public void func_70100_b_(PlayerEntity p_70100_1_) {
        if (!this.field_70170_p.field_72995_K && (this.field_70254_i || this.func_203047_q()) && this.field_70249_b <= 0) {

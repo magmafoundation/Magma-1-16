@@ -1,6 +1,6 @@
 --- a/net/minecraft/client/gui/screen/PackScreen.java
 +++ b/net/minecraft/client/gui/screen/PackScreen.java
-@@ -129,7 +129,7 @@
+@@ -129,7 +_,7 @@
  
     private void func_238899_a_(net.minecraft.client.gui.widget.list.ResourcePackList p_238899_1_, Stream<PackLoadingManager.IPack> p_238899_2_) {
        p_238899_1_.func_231039_at__().clear();
@@ -9,7 +9,7 @@
           p_238899_1_.func_231039_at__().add(new net.minecraft.client.gui.widget.list.ResourcePackList.ResourcePackEntry(this.field_230706_i_, p_238899_1_, this, p_238898_2_));
        });
     }
-@@ -189,8 +189,8 @@
+@@ -189,8 +_,8 @@
  
     private ResourceLocation func_243397_a(TextureManager p_243397_1_, ResourcePackInfo p_243397_2_) {
        try (

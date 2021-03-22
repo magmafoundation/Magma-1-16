@@ -27,20 +27,20 @@ import static net.minecraftforge.common.Tags.Fluids.MILK;
 
 public class ForgeFluidTagsProvider extends FluidTagsProvider
 {
-	public ForgeFluidTagsProvider(DataGenerator gen, ExistingFileHelper existingFileHelper)
-	{
-		super(gen, "forge", existingFileHelper);
-	}
+    public ForgeFluidTagsProvider(DataGenerator gen, ExistingFileHelper existingFileHelper)
+    {
+        super(gen, "forge", existingFileHelper);
+    }
 
-	@Override
-	public void registerTags()
-	{
-		getOrCreateBuilder(MILK).addOptional(ForgeMod.MILK.getId()).addOptional(ForgeMod.FLOWING_MILK.getId());
-	}
+    @Override
+    public void addTags()
+    {
+        tag(MILK).addOptional(ForgeMod.MILK.getId()).addOptional(ForgeMod.FLOWING_MILK.getId());
+    }
 
-	@Override
-	public String getName()
-	{
-		return "Forge Fluid Tags";
-	}
+    @Override
+    public String getName()
+    {
+        return "Forge Fluid Tags";
+    }
 }

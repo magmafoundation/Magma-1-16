@@ -68,13 +68,13 @@ public class ForgeInject {
             if(!resourceLocation.getNamespace().equals("minecraft")) {
                 String materialName = Material.normalizeName(registryKeyItemEntry.getKey().toString()).replace("RESOURCEKEYMINECRAFT_ITEM__", "");
                 Material material = Material
-                    .addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE, Integer.TYPE}, new Object[]{Item.getIdFromItem(item), item.getMaxStackSize()}));
+                    .addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE, Integer.TYPE}, new Object[]{Item.getId(item), item.getMaxStackSize()}));
                 CraftMagicNumbers.ITEM_MATERIAL.put(item, material);
                 CraftMagicNumbers.MATERIAL_ITEM.put(material, item);
                 if (material != null) {
                     LOGGER.info(String.format("Injected new Forge item material %s.", material.name()));
                 } else {
-                    LOGGER.info(String.format("Inject item failure %s with ID %d.", materialName, Item.getIdFromItem(item)));
+                    LOGGER.info(String.format("Inject item failure %s with ID %d.", materialName, Item.getId(item)));
                 }
             }
         });
@@ -86,13 +86,13 @@ public class ForgeInject {
             Block block = registryKeyBlockEntry.getValue();
             if(!resourceLocation.getNamespace().equals("minecraft")) {
                 String materialName = Material.normalizeName(registryKeyBlockEntry.getKey().toString()).replace("RESOURCEKEYMINECRAFT_BLOCK__", "");
-                Material material = Material.addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE}, new Object[]{Item.getIdFromItem(block.asItem())}));
+                Material material = Material.addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE}, new Object[]{Item.getId(block.asItem())}));
                 CraftMagicNumbers.BLOCK_MATERIAL.put(block, material);
                 CraftMagicNumbers.MATERIAL_BLOCK.put(material, block);
                 if (material != null) {
                     LOGGER.info(String.format("Injected new Forge block material %s.", material.name()));
                 } else {
-                    LOGGER.info(String.format("Inject block failure %s with ID %d.", materialName, Item.getIdFromItem(block.asItem())));
+                    LOGGER.info(String.format("Inject block failure %s with ID %d.", materialName, Item.getId(block.asItem())));
                 }
             }
         });

@@ -1,6 +1,6 @@
 --- a/net/minecraft/command/arguments/EntityOptions.java
 +++ b/net/minecraft/command/arguments/EntityOptions.java
-@@ -189,21 +189,21 @@
+@@ -189,21 +_,21 @@
              });
              BiConsumer<Vector3d, List<? extends Entity>> biconsumer;
              switch(s) {

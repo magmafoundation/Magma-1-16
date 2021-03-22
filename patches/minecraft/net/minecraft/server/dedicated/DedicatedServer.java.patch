@@ -1,6 +1,6 @@
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -6,12 +6,9 @@
+@@ -6,12 +_,9 @@
  import com.mojang.authlib.GameProfileRepository;
  import com.mojang.authlib.minecraft.MinecraftSessionService;
  import com.mojang.datafixers.DataFixer;
@@ -13,7 +13,7 @@
  import java.util.Collections;
  import java.util.List;
  import java.util.Locale;
-@@ -35,14 +32,17 @@
+@@ -35,14 +_,17 @@
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.server.ServerPropertiesProvider;
  import net.minecraft.server.gui.MinecraftServerGui;
@@ -31,7 +31,7 @@
  import net.minecraft.util.math.BlockPos;
  import net.minecraft.util.math.MathHelper;
  import net.minecraft.util.registry.DynamicRegistries;
-@@ -55,17 +55,26 @@
+@@ -55,17 +_,26 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraft.world.storage.IServerConfiguration;
  import net.minecraft.world.storage.SaveFormat;
@@ -60,11 +60,16 @@
     @Nullable
     private MinecraftServerGui field_213225_q;
     @Nullable
-@@ -81,12 +90,43 @@
+@@ -81,12 +_,43 @@
     public boolean func_71197_b() throws IOException {
        Thread thread = new Thread("Server console handler") {
           public void run() {
 -            BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+-
+-            String s1;
+-            try {
+-               while(!DedicatedServer.this.func_71241_aa() && DedicatedServer.this.func_71278_l() && (s1 = bufferedreader.readLine()) != null) {
+-                  DedicatedServer.this.func_195581_a(s1, DedicatedServer.this.func_195573_aM());
 +            if (net.minecraftforge.server.console.TerminalHandler.handleCommands(DedicatedServer.this)) return;
 +            // CraftBukkit start
 +            if (!org.bukkit.craftbukkit.Main.useConsole) {
@@ -78,12 +83,9 @@
 +               return;
 +            }
 +            // CraftBukkit end
- 
--            String s1;
++
 +            String s3;
-             try {
--               while(!DedicatedServer.this.func_71241_aa() && DedicatedServer.this.func_71278_l() && (s1 = bufferedreader.readLine()) != null) {
--                  DedicatedServer.this.func_195581_a(s1, DedicatedServer.this.func_195573_aM());
++            try {
 +               // CraftBukkit start - JLine disabling compatibility
 +               while (!DedicatedServer.this.func_71241_aa() && DedicatedServer.this.func_71278_l()) {
 +                  if (Main.useJline) {
@@ -108,7 +110,7 @@
                 }
              } catch (IOException ioexception1) {
                 DedicatedServer.field_155771_h.error("Exception handling console input", (Throwable)ioexception1);
-@@ -94,6 +134,28 @@
+@@ -94,6 +_,28 @@
  
           }
        };
@@ -137,7 +139,7 @@
        thread.setDaemon(true);
        thread.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler(field_155771_h));
        thread.start();
-@@ -112,6 +174,14 @@
+@@ -112,6 +_,14 @@
           this.func_71189_e(serverproperties.field_219009_c);
        }
  
@@ -152,7 +154,7 @@
        this.func_71188_g(serverproperties.field_219012_f);
        this.func_71245_h(serverproperties.field_219013_g);
        this.func_180507_a_(serverproperties.field_219014_h, this.func_184113_aK());
-@@ -145,7 +215,14 @@
+@@ -145,7 +_,14 @@
        if (!this.func_71266_T()) {
           field_155771_h.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
           field_155771_h.warn("The server will make no attempt to authenticate usernames. Beware.");
@@ -168,7 +170,7 @@
           field_155771_h.warn("To change this, set \"online-mode\" to \"true\" in the server.properties file.");
        }
  
-@@ -156,17 +233,20 @@
+@@ -156,17 +_,20 @@
        if (!PreYggdrasilConverter.func_219587_e(this)) {
           return false;
        } else {
@@ -190,7 +192,7 @@
           if (serverproperties.field_219027_u != null) {
              this.func_200252_aR().func_223585_a(GameRules.field_223620_w).func_223570_a(serverproperties.field_219027_u, this);
           }
-@@ -179,9 +259,10 @@
+@@ -179,9 +_,10 @@
           if (serverproperties.field_219030_x) {
              field_155771_h.info("Starting remote control listener");
              this.field_71339_n = MainThread.func_242130_a(this);
@@ -202,7 +204,7 @@
              Thread thread1 = new Thread(new ServerHangWatchdog(this));
              thread1.setUncaughtExceptionHandler(new DefaultWithNameUncaughtExceptionHandler(field_155771_h));
              thread1.setName("Server Watchdog");
-@@ -190,12 +271,14 @@
+@@ -190,12 +_,14 @@
           }
  
           Items.field_190931_a.func_150895_a(ItemGroup.field_78027_g, NonNullList.func_191196_a());
@@ -218,7 +220,7 @@
     }
  
     public boolean func_230537_U_() {
-@@ -280,7 +363,7 @@
+@@ -280,7 +_,7 @@
        if (this.field_71342_m != null) {
           this.field_71342_m.func_219591_b();
        }
@@ -227,7 +229,7 @@
     }
  
     public void func_71190_q(BooleanSupplier p_71190_1_) {
-@@ -303,11 +386,21 @@
+@@ -303,11 +_,21 @@
     }
  
     public void func_71333_ah() {
@@ -250,7 +252,7 @@
     }
  
     public boolean func_71262_S() {
-@@ -343,10 +436,11 @@
+@@ -343,10 +_,11 @@
     }
  
     public void func_120011_ar() {
@@ -260,13 +262,13 @@
 -
 +      // Magma start - Disable Server Gui
 +      // if (this.serverGui == null) {
-+      //    this.serverGui = MinecraftServerGui.func_219048_a(this);
++      //    this.serverGui = MinecraftServerGui.showFrameFor(this);
 +      // }
 +      // Magma end
     }
  
     public boolean func_71279_ae() {
-@@ -489,13 +583,39 @@
+@@ -489,13 +_,39 @@
     }
  
     public String func_71258_A() {
@@ -308,7 +310,7 @@
        });
        return this.field_184115_n.func_70008_c();
     }
-@@ -515,6 +635,11 @@
+@@ -515,6 +_,11 @@
        return false;
     }
  
@@ -320,7 +322,7 @@
     public int func_230512_b_(int p_230512_1_) {
        return this.func_213221_d_().field_241081_R_ * p_230512_1_ / 100;
     }
-@@ -531,4 +656,15 @@
+@@ -531,4 +_,15 @@
     public IChatFilter func_244435_a(ServerPlayerEntity p_244435_1_) {
        return this.field_244714_r != null ? this.field_244714_r.func_244566_a(p_244435_1_.func_146103_bH()) : null;
     }

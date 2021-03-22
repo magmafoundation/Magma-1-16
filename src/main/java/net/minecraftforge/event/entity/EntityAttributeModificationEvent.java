@@ -42,42 +42,42 @@ import java.util.stream.Collectors;
  **/
 public class EntityAttributeModificationEvent extends Event implements IModBusEvent
 {
-	private final Map<EntityType<? extends LivingEntity>, AttributeModifierMap.MutableAttribute> entityAttributes;
-	private final List<EntityType<? extends LivingEntity>> entityTypes;
+    private final Map<EntityType<? extends LivingEntity>, AttributeModifierMap.MutableAttribute> entityAttributes;
+    private final List<EntityType<? extends LivingEntity>> entityTypes;
 
-	@SuppressWarnings("unchecked")
-	public EntityAttributeModificationEvent(Map<EntityType<? extends LivingEntity>, AttributeModifierMap.MutableAttribute> mapIn)
-	{
-		this.entityAttributes = mapIn;
-		this.entityTypes = ImmutableList.copyOf(
-				ForgeRegistries.ENTITIES.getValues().stream()
-						.filter(GlobalEntityTypeAttributes::doesEntityHaveAttributes)
-						.map(entityType -> (EntityType<? extends LivingEntity>) entityType)
-						.collect(Collectors.toList())
-		);
-	}
+    @SuppressWarnings("unchecked")
+    public EntityAttributeModificationEvent(Map<EntityType<? extends LivingEntity>, AttributeModifierMap.MutableAttribute> mapIn)
+    {
+        this.entityAttributes = mapIn;
+        this.entityTypes = ImmutableList.copyOf(
+            ForgeRegistries.ENTITIES.getValues().stream()
+                .filter(GlobalEntityTypeAttributes::hasSupplier)
+                .map(entityType -> (EntityType<? extends LivingEntity>) entityType)
+                .collect(Collectors.toList())
+        );
+    }
 
-	public void add(EntityType<? extends LivingEntity> entityType, Attribute attribute, double value)
-	{
-		AttributeModifierMap.MutableAttribute attributes = entityAttributes.computeIfAbsent(entityType,
-				(type) -> new AttributeModifierMap.MutableAttribute());
-		attributes.createMutableAttribute(attribute, value);
-	}
+    public void add(EntityType<? extends LivingEntity> entityType, Attribute attribute, double value)
+    {
+        AttributeModifierMap.MutableAttribute attributes = entityAttributes.computeIfAbsent(entityType,
+                (type) -> new AttributeModifierMap.MutableAttribute());
+        attributes.add(attribute, value);
+    }
 
-	public void add(EntityType<? extends LivingEntity> entityType, Attribute attribute)
-	{
-		add(entityType, attribute, attribute.getDefaultValue());
-	}
+    public void add(EntityType<? extends LivingEntity> entityType, Attribute attribute)
+    {
+        add(entityType, attribute, attribute.getDefaultValue());
+    }
 
-	public boolean has(EntityType<? extends LivingEntity> entityType, Attribute attribute)
-	{
-		AttributeModifierMap globalMap = GlobalEntityTypeAttributes.getAttributesForEntity(entityType);
-		return globalMap.hasAttribute(attribute) || (entityAttributes.get(entityType) != null && entityAttributes.get(entityType).hasAttribute(attribute));
-	}
+    public boolean has(EntityType<? extends LivingEntity> entityType, Attribute attribute)
+    {
+        AttributeModifierMap globalMap = GlobalEntityTypeAttributes.getSupplier(entityType);
+        return globalMap.hasAttribute(attribute) || (entityAttributes.get(entityType) != null && entityAttributes.get(entityType).hasAttribute(attribute));
+    }
 
-	public List<EntityType<? extends LivingEntity>> getTypes()
-	{
-		return entityTypes;
-	}
+    public List<EntityType<? extends LivingEntity>> getTypes()
+    {
+        return entityTypes;
+    }
 
 }

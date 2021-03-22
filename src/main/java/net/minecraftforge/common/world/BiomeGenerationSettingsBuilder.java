@@ -39,24 +39,24 @@ public class BiomeGenerationSettingsBuilder extends BiomeGenerationSettings.Buil
     {
         surfaceBuilder = Optional.of(orig.getSurfaceBuilder());
         orig.getCarvingStages().forEach(k -> carvers.put(k, new ArrayList<>(orig.getCarvers(k))));
-        orig.getFeatures().forEach(l -> features.add(new ArrayList<>(l)));
-        structures.addAll(orig.getStructures());
+        orig.features().forEach(l -> features.add(new ArrayList<>(l)));
+        structureStarts.addAll(orig.structures());
     }
 
     public List<Supplier<ConfiguredFeature<?, ?>>> getFeatures(GenerationStage.Decoration stage) {
-        populateStageEntries(stage.ordinal());
+        addFeatureStepsUpTo(stage.ordinal());
         return features.get(stage.ordinal());
     }
 
     public Optional<Supplier<ConfiguredSurfaceBuilder<?>>> getSurfaceBuilder() {
         return surfaceBuilder;
-}
+    }
 
     public List<Supplier<ConfiguredCarver<?>>> getCarvers(GenerationStage.Carving stage) {
         return carvers.computeIfAbsent(stage, key -> new ArrayList<>());
     }
 
     public List<Supplier<StructureFeature<?, ?>>> getStructures() {
-        return structures;
+        return structureStarts;
     }
 }

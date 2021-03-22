@@ -1,6 +1,6 @@
 --- a/net/minecraft/util/text/filter/package-info.java
 +++ b/net/minecraft/util/text/filter/package-info.java
-@@ -3,5 +3,5 @@
+@@ -3,5 +_,5 @@
  @MethodsReturnNonnullByDefault
  package net.minecraft.util.text.filter;
  

@@ -1,6 +1,6 @@
 --- a/net/minecraft/server/management/PlayerInteractionManager.java
 +++ b/net/minecraft/server/management/PlayerInteractionManager.java
-@@ -1,19 +1,29 @@
+@@ -1,19 +_,29 @@
  package net.minecraft.server.management;
  
 +import java.util.ArrayList;
@@ -30,7 +30,7 @@
  import net.minecraft.tileentity.TileEntity;
  import net.minecraft.util.ActionResult;
  import net.minecraft.util.ActionResultType;
-@@ -26,6 +36,13 @@
+@@ -26,6 +_,13 @@
  import net.minecraft.world.server.ServerWorld;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -44,7 +44,7 @@
  
  public class PlayerInteractionManager {
     private static final Logger field_225418_c = LogManager.getLogger();
-@@ -55,7 +72,7 @@
+@@ -55,7 +_,7 @@
        this.field_73091_c = p_241820_1_;
        p_241820_1_.func_77147_a(this.field_73090_b.field_71075_bZ);
        this.field_73090_b.func_71016_p();
@@ -53,7 +53,7 @@
        this.field_73092_a.func_72854_c();
     }
  
-@@ -84,10 +101,10 @@
+@@ -84,10 +_,10 @@
     }
  
     public void func_73075_a() {
@@ -66,7 +66,7 @@
              this.field_73097_j = false;
           } else {
              float f = this.func_229859_a_(blockstate, this.field_180241_i, this.field_73093_n);
-@@ -98,7 +115,7 @@
+@@ -98,7 +_,7 @@
           }
        } else if (this.field_73088_d) {
           BlockState blockstate1 = this.field_73092_a.func_180495_p(this.field_180240_f);
@@ -75,7 +75,7 @@
              this.field_73092_a.func_175715_c(this.field_73090_b.func_145782_y(), this.field_180240_f, -1);
              this.field_73094_o = -1;
              this.field_73088_d = false;
-@@ -126,17 +143,45 @@
+@@ -126,16 +_,44 @@
        double d1 = this.field_73090_b.func_226278_cu_() - ((double)p_225416_1_.func_177956_o() + 0.5D) + 1.5D;
        double d2 = this.field_73090_b.func_226281_cx_() - ((double)p_225416_1_.func_177952_p() + 0.5D);
        double d3 = d0 * d0 + d1 * d1 + d2 * d2;
@@ -98,15 +98,17 @@
 +               // CraftBukkit start - fire PlayerInteractEvent
 +               CraftEventFactory.callPlayerInteractEvent(this.field_73090_b, Action.LEFT_CLICK_BLOCK, p_225416_1_, p_225416_3_, this.field_73090_b.field_71071_by.func_70448_g(), Hand.MAIN_HAND);
                 this.field_73090_b.field_71135_a.func_147359_a(new SPlayerDiggingPacket(p_225416_1_, this.field_73092_a.func_180495_p(p_225416_1_), p_225416_2_, false, "may not interact"));
+-               return;
+-            }
 +               // Update any tile entity data for this block
 +               TileEntity tileentity = field_73092_a.func_175625_s(p_225416_1_);
 +               if (tileentity != null) {
 +                  this.field_73090_b.field_71135_a.func_147359_a(tileentity.func_189518_D_());
 +               }
 +               // CraftBukkit end
-                return;
-             }
- 
++               return;
++            }
++
 +            // CraftBukkit start
 +            PlayerInteractEvent playerInteractEvent = CraftEventFactory.callPlayerInteractEvent(this.field_73090_b, Action.LEFT_CLICK_BLOCK, p_225416_1_, p_225416_3_, this.field_73090_b.field_71071_by.func_70448_g(), Hand.MAIN_HAND);
 +            if (playerInteractEvent.isCancelled()) {
@@ -118,11 +120,10 @@
 +               return;
 +            }
 +               // CraftBukkit end
-+
+ 
              if (this.func_73083_d()) {
                 this.func_229860_a_(p_225416_1_, p_225416_2_, "creative destroy");
-                return;
-@@ -150,12 +195,43 @@
+@@ -150,12 +_,43 @@
              this.field_73089_e = this.field_73100_i;
              float f = 1.0F;
              BlockState blockstate = this.field_73092_a.func_180495_p(p_225416_1_);
@@ -168,7 +169,7 @@
                 this.func_229860_a_(p_225416_1_, p_225416_2_, "insta mine");
              } else {
                 if (this.field_73088_d) {
-@@ -195,7 +271,7 @@
+@@ -195,7 +_,7 @@
           } else if (p_225416_2_ == CPlayerDiggingPacket.Action.ABORT_DESTROY_BLOCK) {
              this.field_73088_d = false;
              if (!Objects.equals(this.field_180240_f, p_225416_1_)) {
@@ -177,7 +178,7 @@
                 this.field_73092_a.func_175715_c(this.field_73090_b.func_145782_y(), this.field_180240_f, -1);
                 this.field_73090_b.field_71135_a.func_147359_a(new SPlayerDiggingPacket(this.field_180240_f, this.field_73092_a.func_180495_p(this.field_180240_f), p_225416_2_, true, "aborted mismatched destroying"));
              }
-@@ -211,53 +287,129 @@
+@@ -211,45 +_,119 @@
        if (this.func_180237_b(p_229860_1_)) {
           this.field_73090_b.field_71135_a.func_147359_a(new SPlayerDiggingPacket(p_229860_1_, this.field_73092_a.func_180495_p(p_229860_1_), p_229860_2_, true, p_229860_3_));
        } else {
@@ -271,7 +272,7 @@
                 ItemStack itemstack = this.field_73090_b.func_184614_ca();
                 ItemStack itemstack1 = itemstack.func_77946_l();
 -               boolean flag1 = this.field_73090_b.func_234569_d_(blockstate);
-+               boolean flag1 = blockstate.canHarvestBlock(this.field_73092_a, p_180237_1_, this.field_73090_b); // previously player.func_234569_d_(blockstate)
++               boolean flag1 = blockstate.canHarvestBlock(this.field_73092_a, p_180237_1_, this.field_73090_b); // previously player.hasCorrectToolForDrops(blockstate)
                 itemstack.func_179548_a(this.field_73092_a, blockstate, p_180237_1_, this.field_73090_b);
 -               if (flag && flag1) {
 +               if (itemstack.func_190926_b() && !itemstack1.func_190926_b())
@@ -297,19 +298,18 @@
           }
        }
 +      return false;
-    }
- 
++   }
++
 +   private boolean removeBlock(BlockPos p_180235_1_, boolean canHarvest) {
 +      BlockState state = this.field_73092_a.func_180495_p(p_180235_1_);
 +      boolean removed = state.removedByPlayer(this.field_73092_a, p_180235_1_, this.field_73090_b, canHarvest, this.field_73092_a.func_204610_c(p_180235_1_));
 +      if (removed)
 +         state.func_177230_c().func_176206_d(this.field_73092_a, p_180235_1_, state);
 +      return removed;
-+   }
-+
+    }
+ 
     public ActionResultType func_187250_a(ServerPlayerEntity p_187250_1_, World p_187250_2_, ItemStack p_187250_3_, Hand p_187250_4_) {
-       if (this.field_73091_c == GameType.SPECTATOR) {
-          return ActionResultType.PASS;
+@@ -258,6 +_,8 @@
        } else if (p_187250_1_.func_184811_cZ().func_185141_a(p_187250_3_.func_77973_b())) {
           return ActionResultType.PASS;
        } else {
@@ -318,7 +318,7 @@
           int i = p_187250_3_.func_190916_E();
           int j = p_187250_3_.func_77952_i();
           ActionResult<ItemStack> actionresult = p_187250_3_.func_77957_a(p_187250_2_, p_187250_1_, p_187250_4_);
-@@ -288,11 +440,45 @@
+@@ -288,10 +_,44 @@
        }
     }
  
@@ -336,7 +336,7 @@
 +      net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock event = net.minecraftforge.common.ForgeHooks.onRightClickBlock(p_219441_1_, p_219441_4_, blockpos, p_219441_5_);
 +      if (event.isCanceled()) return event.getCancellationResult();
        if (this.field_73091_c == GameType.SPECTATOR) {
-          INamedContainerProvider inamedcontainerprovider = blockstate.func_215699_b(p_219441_2_, blockpos);
++         INamedContainerProvider inamedcontainerprovider = blockstate.func_215699_b(p_219441_2_, blockpos);
 +         cancelledBlock = !(inamedcontainerprovider instanceof INamedContainerProvider);
 +      }
 +      if (p_219441_1_.func_184811_cZ().func_185141_a(p_219441_3_.func_77973_b())) {
@@ -360,11 +360,10 @@
 +         p_219441_1_.getBukkitEntity().updateInventory(); // SPIGOT-2867
 +         enuminteractionresult = (eventCB.useItemInHand() != Event.Result.ALLOW) ? ActionResultType.SUCCESS : ActionResultType.PASS;
 +      } else if (this.field_73091_c == GameType.SPECTATOR) {
-+         INamedContainerProvider inamedcontainerprovider = blockstate.func_215699_b(p_219441_2_, blockpos);
+          INamedContainerProvider inamedcontainerprovider = blockstate.func_215699_b(p_219441_2_, blockpos);
           if (inamedcontainerprovider != null) {
              p_219441_1_.func_213829_a(inamedcontainerprovider);
-             return ActionResultType.SUCCESS;
-@@ -300,10 +486,15 @@
+@@ -300,10 +_,15 @@
              return ActionResultType.PASS;
           }
        } else {
@@ -382,7 +381,7 @@
              ActionResultType actionresulttype = blockstate.func_227031_a_(p_219441_2_, p_219441_1_, p_219441_4_, p_219441_5_);
              if (actionresulttype.func_226246_a_()) {
                 CriteriaTriggers.field_232607_M_.func_226695_a_(p_219441_1_, blockpos, itemstack);
-@@ -311,8 +502,8 @@
+@@ -311,8 +_,8 @@
              }
           }
  
@@ -393,7 +392,7 @@
              ActionResultType actionresulttype1;
              if (this.func_73083_d()) {
                 int i = p_219441_3_.func_190916_E();
-@@ -331,6 +522,8 @@
+@@ -331,6 +_,8 @@
              return ActionResultType.PASS;
           }
        }

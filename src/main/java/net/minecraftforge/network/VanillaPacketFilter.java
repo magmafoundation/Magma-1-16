@@ -19,41 +19,41 @@ import net.minecraft.network.NetworkManager;
 public abstract class VanillaPacketFilter extends MessageToMessageEncoder<IPacket<?>>
 {
 
-	protected final Map<Class<? extends IPacket<?>>, BiConsumer<IPacket<?>, List<? super IPacket<?>>>> handlers;
+    protected final Map<Class<? extends IPacket<?>>, BiConsumer<IPacket<?>, List<? super IPacket<?>>>> handlers;
 
-	protected VanillaPacketFilter(Map<Class<? extends IPacket<?>>, BiConsumer<IPacket<?>, List<? super IPacket<?>>>> handlers)
-	{
-		this.handlers = handlers;
-	}
+    protected VanillaPacketFilter(Map<Class<? extends IPacket<?>>, BiConsumer<IPacket<?>, List<? super IPacket<?>>>> handlers)
+    {
+        this.handlers = handlers;
+    }
 
-	/**
-	 * Helper function for building the handler map.
-	 */
-	@Nonnull
-	protected static <T extends IPacket<?>> Map.Entry<Class<? extends IPacket<?>>, BiConsumer<IPacket<?>, List<? super IPacket<?>>>> handler(Class<T> cls, Function<T, ? extends IPacket<?>> function)
-	{
-		return handler(cls, (pkt, list) -> list.add(function.apply(cls.cast(pkt))));
-	}
+    /**
+     * Helper function for building the handler map.
+     */
+    @Nonnull
+    protected static <T extends IPacket<?>> Map.Entry<Class<? extends IPacket<?>>, BiConsumer<IPacket<?>, List<? super IPacket<?>>>> handler(Class<T> cls, Function<T, ? extends IPacket<?>> function)
+    {
+        return handler(cls, (pkt, list) -> list.add(function.apply(cls.cast(pkt))));
+    }
 
-	/**
-	 * Helper function for building the handler map.
-	 */
-	@Nonnull
-	protected static <T extends IPacket<?>> Map.Entry<Class<? extends IPacket<?>>, BiConsumer<IPacket<?>, List<? super IPacket<?>>>> handler(Class<T> cls, BiConsumer<IPacket<?>, List<? super IPacket<?>>> consumer)
-	{
-		return new AbstractMap.SimpleEntry<>(cls, consumer);
-	}
+    /**
+     * Helper function for building the handler map.
+     */
+    @Nonnull
+    protected static <T extends IPacket<?>> Map.Entry<Class<? extends IPacket<?>>, BiConsumer<IPacket<?>, List<? super IPacket<?>>>> handler(Class<T> cls, BiConsumer<IPacket<?>, List<? super IPacket<?>>> consumer)
+    {
+        return new AbstractMap.SimpleEntry<>(cls, consumer);
+    }
 
-	/**
-	 * Whether this filter is necessary on the given connection.
-	 */
-	protected abstract boolean isNecessary(NetworkManager manager);
+    /**
+     * Whether this filter is necessary on the given connection.
+     */
+    protected abstract boolean isNecessary(NetworkManager manager);
 
-	@Override
-	protected void encode(ChannelHandlerContext ctx, IPacket<?> msg, List<Object> out)
-	{
-		BiConsumer<IPacket<?>, List<? super IPacket<?>>> consumer = handlers.getOrDefault(msg.getClass(), (pkt, list) -> list.add(pkt));
-		consumer.accept(msg, out);
-	}
+    @Override
+    protected void encode(ChannelHandlerContext ctx, IPacket<?> msg, List<Object> out)
+    {
+        BiConsumer<IPacket<?>, List<? super IPacket<?>>> consumer = handlers.getOrDefault(msg.getClass(), (pkt, list) -> list.add(pkt));
+        consumer.accept(msg, out);
+    }
 
 }

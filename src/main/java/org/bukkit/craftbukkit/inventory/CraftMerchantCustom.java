@@ -1,6 +1,5 @@
 package org.bukkit.craftbukkit.inventory;
 
-import javax.annotation.Nullable;
 import net.minecraft.entity.merchant.IMerchant;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -12,6 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import org.apache.commons.lang.Validate;
+import org.jetbrains.annotations.Nullable;
 
 public class CraftMerchantCustom extends CraftMerchant {
 
@@ -44,20 +44,16 @@ public class CraftMerchantCustom extends CraftMerchant {
         }
 
         @Override
-        public CraftMerchant getCraftMerchant() {
-            return craftMerchant;
-        }
-
-        @Override
-        public void setCustomer(PlayerEntity entityhuman) {
-            this.tradingPlayer = entityhuman;
-            if (entityhuman != null) {
-                this.tradingWorld = entityhuman.world;
+        public void setTradingPlayer(@Nullable PlayerEntity p_70932_1_) {
+            this.tradingPlayer = p_70932_1_;
+            if(p_70932_1_ != null){
+                this.tradingWorld = p_70932_1_.level;
             }
         }
 
+        @Nullable
         @Override
-        public PlayerEntity getCustomer() {
+        public PlayerEntity getTradingPlayer() {
             return this.tradingPlayer;
         }
 
@@ -67,47 +63,52 @@ public class CraftMerchantCustom extends CraftMerchant {
         }
 
         @Override
-        public void setClientSideOffers(@Nullable MerchantOffers offers) {
+        public void overrideOffers(@Nullable MerchantOffers p_213703_1_) {
 
         }
 
         @Override
-        public void onTrade(MerchantOffer merchantrecipe) {
-            // increase recipe's uses
-            merchantrecipe.increaseUses();
+        public void notifyTrade(MerchantOffer p_213704_1_) {
+            p_213704_1_.increaseUses();
         }
 
         @Override
-        public void verifySellingItem(ItemStack stack) {
+        public void notifyTradeUpdated(ItemStack p_110297_1_) {
 
-        }
-
-        public ITextComponent getScoreboardDisplayName() {
-            return title;
         }
 
         @Override
-        public World getWorld() {
+        public World getLevel() {
             return this.tradingWorld;
         }
 
         @Override
-        public int getXp() {
-            return 0; // xp
+        public int getVillagerXp() {
+            return 0;
         }
 
         @Override
-        public void setXP(int i) {
+        public void overrideXp(int p_213702_1_) {
+
         }
 
         @Override
-        public boolean hasXPBar() {
-            return false; // is-regular-villager flag (hides some gui elements: xp bar, name suffix)
+        public boolean showProgressBar() {
+            return false;  // is-regular-villager flag (hides some gui elements: xp bar, name suffix)
         }
 
         @Override
-        public SoundEvent getYesSound() {
-            return SoundEvents.ENTITY_VILLAGER_YES;
+        public SoundEvent getNotifyTradeSound() {
+            return SoundEvents.VILLAGER_YES;
+        }
+
+        @Override
+        public CraftMerchant getCraftMerchant() {
+            return craftMerchant;
+        }
+
+        public ITextComponent getTitle() {
+            return title;
         }
     }
 }

@@ -78,39 +78,58 @@ public class CraftInventoryCustom extends CraftInventory {
             this.type = InventoryType.CHEST;
         }
 
+
         @Override
-        public int getSizeInventory() {
+        public void clearContent() {
+            items.clear();
+        }
+
+        @Override
+        public int getContainerSize() {
             return items.size();
         }
 
         @Override
-        public ItemStack getStackInSlot(int i) {
-            return items.get(i);
+        public boolean isEmpty() {
+            Iterator iterator = this.items.iterator();
+            ItemStack itemstack;
+            do {
+                if (!iterator.hasNext()) {
+                    return true;
+                }
+                itemstack = (ItemStack) iterator.next();
+            } while (itemstack.isEmpty());
+            return false;
         }
 
         @Override
-        public ItemStack decrStackSize(int i, int j) {
-            ItemStack stack = this.getStackInSlot(i);
+        public ItemStack getItem(int p_70301_1_) {
+            return items.get(p_70301_1_);
+        }
+
+        @Override
+        public ItemStack removeItem(int p_70298_1_, int p_70298_2_) {
+            ItemStack stack = this.getItem(p_70298_1_);
             ItemStack result;
             if (stack == ItemStack.EMPTY) return stack;
-            if (stack.getCount() <= j) {
-                this.setInventorySlotContents(i, ItemStack.EMPTY);
+            if (stack.getCount() <= p_70298_2_) {
+                this.setItem(p_70298_1_, ItemStack.EMPTY);
                 result = stack;
             } else {
-                result = CraftItemStack.copyNMSStack(stack, j);
-                stack.shrink(j);
+                result = CraftItemStack.copyNMSStack(stack, p_70298_2_);
+                stack.shrink(p_70298_2_);
             }
-            this.markDirty();
+            this.setChanged();
             return result;
         }
 
         @Override
-        public ItemStack removeStackFromSlot(int i) {
-            ItemStack stack = this.getStackInSlot(i);
+        public ItemStack removeItemNoUpdate(int p_70304_1_) {
+            ItemStack stack = this.getItem(p_70304_1_);
             ItemStack result;
             if (stack == ItemStack.EMPTY) return stack;
             if (stack.getCount() <= 1) {
-                this.setInventorySlotContents(i, null);
+                this.setItem(p_70304_1_, null);
                 result = stack;
             } else {
                 result = CraftItemStack.copyNMSStack(stack, 1);
@@ -120,28 +139,25 @@ public class CraftInventoryCustom extends CraftInventory {
         }
 
         @Override
-        public void setInventorySlotContents(int i, ItemStack itemstack) {
-            items.set(i, itemstack);
-            if (itemstack != ItemStack.EMPTY && this.getInventoryStackLimit() > 0 && itemstack.getCount() > this.getInventoryStackLimit()) {
-                itemstack.setCount(this.getInventoryStackLimit());
+        public void setItem(int p_70299_1_, ItemStack p_70299_2_) {
+            items.set(p_70299_1_, p_70299_2_);
+            if (p_70299_2_ != ItemStack.EMPTY && this.getMaxStackSize() > 0 && p_70299_2_.getCount() > this.getMaxStackSize()) {
+                p_70299_2_.setCount(this.getMaxStackSize());
             }
         }
 
         @Override
-        public int getInventoryStackLimit() {
+        public int getMaxStackSize() {
             return maxStack;
         }
 
         @Override
-        public void setMaxStackSize(int size) {
-            maxStack = size;
+        public void setChanged() {
+
         }
 
         @Override
-        public void markDirty() {}
-
-        @Override
-        public boolean isUsableByPlayer(PlayerEntity entityhuman) {
+        public boolean stillValid(PlayerEntity p_70300_1_) {
             return true;
         }
 
@@ -165,33 +181,14 @@ public class CraftInventoryCustom extends CraftInventory {
             return viewers;
         }
 
-        public InventoryType getType() {
-            return type;
-        }
-
         @Override
         public InventoryHolder getOwner() {
             return owner;
         }
 
         @Override
-        public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-            return true;
-        }
-
-        @Override
-        public void openInventory(PlayerEntity entityHuman) {
-
-        }
-
-        @Override
-        public void closeInventory(PlayerEntity entityHuman) {
-
-        }
-
-        @Override
-        public void clear() {
-            items.clear();
+        public void setMaxStackSize(int size) {
+            maxStack = size;
         }
 
         @Override
@@ -203,21 +200,8 @@ public class CraftInventoryCustom extends CraftInventory {
             return title;
         }
 
-        @Override
-        public boolean isEmpty() {
-            Iterator iterator = this.items.iterator();
-
-            ItemStack itemstack;
-
-            do {
-                if (!iterator.hasNext()) {
-                    return true;
-                }
-
-                itemstack = (ItemStack) iterator.next();
-            } while (itemstack.isEmpty());
-
-            return false;
+        public InventoryType getType() {
+            return type;
         }
     }
 }

@@ -1,6 +1,6 @@
 --- a/net/minecraft/world/TrackedEntity.java
 +++ b/net/minecraft/world/TrackedEntity.java
-@@ -37,6 +37,9 @@
+@@ -37,6 +_,9 @@
  import net.minecraft.world.storage.MapData;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -10,7 +10,7 @@
  
  public class TrackedEntity {
     private static final Logger field_219459_a = LogManager.getLogger();
-@@ -58,41 +61,47 @@
+@@ -58,41 +_,47 @@
     private boolean field_219475_q;
     private boolean field_219476_r;
  
@@ -78,7 +78,7 @@
           this.func_219457_c();
        }
  
-@@ -119,6 +128,18 @@
+@@ -119,6 +_,18 @@
              IPacket<?> ipacket1 = null;
              boolean flag4 = flag3 || this.field_219472_n % 60 == 0;
              boolean flag = Math.abs(l - this.field_219468_j) >= 1 || Math.abs(k1 - this.field_219469_k) >= 1;
@@ -97,7 +97,7 @@
              if (this.field_219472_n > 0 || this.field_219461_c instanceof AbstractArrowEntity) {
                 long i = SEntityPacket.func_218743_a(vector3d.field_72450_a);
                 long j = SEntityPacket.func_218743_a(vector3d.field_72448_b);
-@@ -155,14 +176,16 @@
+@@ -155,14 +_,16 @@
              }
  
              this.func_219457_c();
@@ -117,7 +117,7 @@
  
              this.field_219475_q = false;
           }
-@@ -178,7 +201,23 @@
+@@ -178,7 +_,23 @@
  
        ++this.field_219472_n;
        if (this.field_219461_c.field_70133_I) {
@@ -141,7 +141,7 @@
           this.field_219461_c.field_70133_I = false;
        }
  
-@@ -187,31 +226,42 @@
+@@ -187,31 +_,42 @@
     public void func_219454_a(ServerPlayerEntity p_219454_1_) {
        this.field_219461_c.func_184203_c(p_219454_1_);
        p_219454_1_.func_152339_d(this.field_219461_c);
@@ -190,7 +190,7 @@
           }
  
           if (((LivingEntity)this.field_219461_c).func_184613_cA()) {
-@@ -221,7 +271,7 @@
+@@ -221,7 +_,7 @@
  
        this.field_219471_m = this.field_219461_c.func_213322_ci();
        if (flag && !(ipacket instanceof SSpawnMobPacket)) {
@@ -199,7 +199,7 @@
        }
  
        if (this.field_219461_c instanceof LivingEntity) {
-@@ -235,30 +285,35 @@
+@@ -235,30 +_,35 @@
           }
  
           if (!list.isEmpty()) {
@@ -207,12 +207,12 @@
 +            packetConsumer.accept(new SEntityEquipmentPacket(this.field_219461_c.func_145782_y(), list));
           }
        }
- 
++
 +      // CraftBukkit start - Fix for nonsensical head yaw
 +      this.field_219470_l = MathHelper.func_76141_d(this.field_219461_c.func_70079_am() * 256.0F / 360.0F);
 +      packetConsumer.accept(new SEntityHeadLookPacket(this.field_219461_c, (byte) field_219470_l));
 +      // CraftBukkit end
-+
+ 
        if (this.field_219461_c instanceof LivingEntity) {
           LivingEntity livingentity = (LivingEntity)this.field_219461_c;
  
@@ -240,7 +240,7 @@
           }
        }
  
-@@ -273,6 +328,11 @@
+@@ -273,6 +_,11 @@
        if (this.field_219461_c instanceof LivingEntity) {
           Set<ModifiableAttributeInstance> set = ((LivingEntity)this.field_219461_c).func_233645_dx_().func_233778_a_();
           if (!set.isEmpty()) {

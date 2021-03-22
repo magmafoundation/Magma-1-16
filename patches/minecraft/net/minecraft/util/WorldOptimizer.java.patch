@@ -1,6 +1,6 @@
 --- a/net/minecraft/util/WorldOptimizer.java
 +++ b/net/minecraft/util/WorldOptimizer.java
-@@ -1,22 +1,28 @@
+@@ -1,22 +_,28 @@
  package net.minecraft.util;
  
 +import java.io.File;
@@ -37,7 +37,7 @@
  import net.minecraft.crash.ReportedException;
  import net.minecraft.nbt.CompoundNBT;
  import net.minecraft.util.math.ChunkPos;
-@@ -27,10 +33,6 @@
+@@ -27,10 +_,6 @@
  import net.minecraft.world.chunk.storage.RegionFile;
  import net.minecraft.world.storage.DimensionSavedDataManager;
  import net.minecraft.world.storage.SaveFormat;
@@ -48,11 +48,11 @@
  
  public class WorldOptimizer {
     private static final Logger field_212219_a = LogManager.getLogger();
-@@ -226,6 +228,7 @@
+@@ -225,6 +_,7 @@
+    public boolean func_212218_b() {
        return this.field_212225_g;
     }
- 
 +
+ 
     @OnlyIn(Dist.CLIENT)
     public ImmutableSet<RegistryKey<World>> func_233533_c_() {
-       return this.field_233529_c_;

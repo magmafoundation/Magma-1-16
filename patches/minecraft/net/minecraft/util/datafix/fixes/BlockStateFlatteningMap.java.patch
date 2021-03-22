@@ -1,6 +1,6 @@
 --- a/net/minecraft/util/datafix/fixes/BlockStateFlatteningMap.java
 +++ b/net/minecraft/util/datafix/fixes/BlockStateFlatteningMap.java
-@@ -20,7 +20,7 @@
+@@ -20,7 +_,7 @@
        p_209419_0_.defaultReturnValue(-1);
     });
  

@@ -158,7 +158,7 @@ public class CraftEntityEquipment implements EntityEquipment {
     }
 
     private ItemStack getEquipment(EquipmentSlotType slot) {
-        return CraftItemStack.asBukkitCopy(entity.getHandle().getItemStackFromSlot(slot));
+        return CraftItemStack.asBukkitCopy(entity.getHandle().getItemBySlot(slot));
     }
 
     private void setEquipment(EquipmentSlotType slot, ItemStack stack, boolean silent) {
@@ -249,17 +249,17 @@ public class CraftEntityEquipment implements EntityEquipment {
 
     private void setDropChance(EquipmentSlotType slot, float chance) {
         if (slot == EquipmentSlotType.MAINHAND || slot == EquipmentSlotType.OFFHAND) {
-            ((MobEntity) entity.getHandle()).inventoryHandsDropChances[slot.getIndex()] = chance;
+            ((MobEntity) entity.getHandle()).handDropChances[slot.getIndex()] = chance;
         } else {
-            ((MobEntity) entity.getHandle()).inventoryArmorDropChances[slot.getIndex()] = chance;
+            ((MobEntity) entity.getHandle()).handDropChances[slot.getIndex()] = chance;
         }
     }
 
     private float getDropChance(EquipmentSlotType slot) {
         if (slot == EquipmentSlotType.MAINHAND || slot == EquipmentSlotType.OFFHAND) {
-            return ((MobEntity) entity.getHandle()).inventoryHandsDropChances[slot.getIndex()];
+            return ((MobEntity) entity.getHandle()).handDropChances[slot.getIndex()];
         } else {
-            return ((MobEntity) entity.getHandle()).inventoryArmorDropChances[slot.getIndex()];
+            return ((MobEntity) entity.getHandle()).handDropChances[slot.getIndex()];
         }
     }
 }

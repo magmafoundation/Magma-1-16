@@ -1,6 +1,6 @@
 --- a/net/minecraft/server/dedicated/ServerProperties.java
 +++ b/net/minecraft/server/dedicated/ServerProperties.java
-@@ -3,6 +3,7 @@
+@@ -3,6 +_,7 @@
  import java.nio.file.Path;
  import java.util.Properties;
  import java.util.concurrent.TimeUnit;
@@ -8,7 +8,7 @@
  import net.minecraft.util.math.MathHelper;
  import net.minecraft.util.registry.DynamicRegistries;
  import net.minecraft.world.Difficulty;
-@@ -10,6 +11,7 @@
+@@ -10,6 +_,7 @@
  import net.minecraft.world.gen.settings.DimensionGeneratorSettings;
  
  public class ServerProperties extends PropertyManager<ServerProperties> {

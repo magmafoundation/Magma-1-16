@@ -15,10 +15,10 @@ public abstract class CraftThrowableProjectile extends CraftProjectile implement
 
     @Override
     public ItemStack getItem() {
-        if (getHandle().func_213882_k().isEmpty()) {
+        if (getHandle().getItem().isEmpty()) {
             return CraftItemStack.asBukkitCopy(new net.minecraft.item.ItemStack(getHandle().getDefaultItemPublic()));
         } else {
-            return CraftItemStack.asBukkitCopy(getHandle().func_213882_k());
+            return CraftItemStack.asBukkitCopy(getHandle().getItem());
         }
     }
 

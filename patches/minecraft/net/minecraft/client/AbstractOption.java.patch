@@ -1,6 +1,6 @@
 --- a/net/minecraft/client/AbstractOption.java
 +++ b/net/minecraft/client/AbstractOption.java
-@@ -252,14 +252,14 @@
+@@ -252,14 +_,14 @@
        }
     }, (p_216633_0_, p_216633_1_) -> {
        switch(p_216633_0_.field_238330_f_) {

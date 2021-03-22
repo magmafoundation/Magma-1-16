@@ -1,6 +1,6 @@
 --- a/net/minecraft/world/chunk/NibbleArray.java
 +++ b/net/minecraft/world/chunk/NibbleArray.java
-@@ -33,27 +33,26 @@
+@@ -33,27 +_,26 @@
        return p_177483_2_ << 8 | p_177483_3_ << 4 | p_177483_1_;
     }
  

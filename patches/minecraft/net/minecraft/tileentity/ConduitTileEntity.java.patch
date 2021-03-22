@@ -1,6 +1,6 @@
 --- a/net/minecraft/tileentity/ConduitTileEntity.java
 +++ b/net/minecraft/tileentity/ConduitTileEntity.java
-@@ -26,6 +26,9 @@
+@@ -26,6 +_,9 @@
  import net.minecraft.util.math.vector.Vector3d;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
@@ -10,7 +10,7 @@
  
  public class ConduitTileEntity extends TileEntity implements ITickableTileEntity {
     private static final Block[] field_205042_e = new Block[]{Blocks.field_180397_cI, Blocks.field_196779_gQ, Blocks.field_180398_cJ, Blocks.field_196781_gR};
-@@ -130,15 +133,13 @@
+@@ -130,15 +_,13 @@
                    BlockPos blockpos1 = this.field_174879_c.func_177982_a(j1, k1, l1);
                    BlockState blockstate = this.field_145850_b.func_180495_p(blockpos1);
  
@@ -27,7 +27,7 @@
  
        this.func_207736_b(this.field_205046_i.size() >= 42);
        return this.field_205046_i.size() >= 16;
-@@ -155,7 +156,7 @@
+@@ -155,7 +_,7 @@
        if (!list.isEmpty()) {
           for(PlayerEntity playerentity : list) {
              if (this.field_174879_c.func_218141_a(playerentity.func_233580_cy_(), (double)j) && playerentity.func_70026_G()) {
@@ -36,7 +36,7 @@
              }
           }
  
-@@ -182,8 +183,13 @@
+@@ -182,8 +_,13 @@
        }
  
        if (this.field_205047_j != null) {

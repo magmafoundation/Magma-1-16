@@ -1,6 +1,6 @@
 --- a/net/minecraft/network/datasync/EntityDataManager.java
 +++ b/net/minecraft/network/datasync/EntityDataManager.java
-@@ -4,6 +4,7 @@
+@@ -4,6 +_,7 @@
  import com.google.common.collect.Maps;
  import io.netty.handler.codec.DecoderException;
  import io.netty.handler.codec.EncoderException;
@@ -8,7 +8,7 @@
  import java.io.IOException;
  import java.util.List;
  import java.util.Map;
-@@ -26,21 +27,24 @@
+@@ -26,21 +_,24 @@
     private static final Logger field_190303_a = LogManager.getLogger();
     private static final Map<Class<? extends Entity>, Integer> field_187232_a = Maps.newHashMap();
     private final Entity field_187233_b;
@@ -37,7 +37,7 @@
              }
           } catch (ClassNotFoundException classnotfoundexception) {
           }
-@@ -73,6 +77,7 @@
+@@ -73,6 +_,7 @@
     }
  
     public <T> void func_187214_a(DataParameter<T> p_187214_1_, T p_187214_2_) {
@@ -45,7 +45,7 @@
        int i = p_187214_1_.func_187155_a();
        if (i > 254) {
           throw new IllegalArgumentException("Data value id is too big with " + i + "! (Max is " + 254 + ")");
-@@ -87,28 +92,31 @@
+@@ -87,28 +_,31 @@
  
     private <T> void func_187222_c(DataParameter<T> p_187222_1_, T p_187222_2_) {
        EntityDataManager.DataEntry<T> dataentry = new EntityDataManager.DataEntry<>(p_187222_1_, p_187222_2_);
@@ -86,7 +86,7 @@
     }
  
     public <T> T func_187225_a(DataParameter<T> p_187225_1_) {
-@@ -126,6 +134,13 @@
+@@ -126,6 +_,13 @@
  
     }
  
@@ -100,7 +100,7 @@
     public boolean func_187223_a() {
        return this.field_187237_f;
     }
-@@ -146,7 +161,7 @@
+@@ -146,7 +_,7 @@
     public List<EntityDataManager.DataEntry<?>> func_187221_b() {
        List<EntityDataManager.DataEntry<?>> list = null;
        if (this.field_187237_f) {
@@ -109,7 +109,7 @@
  
           for(EntityDataManager.DataEntry<?> dataentry : this.field_187234_c.values()) {
              if (dataentry.func_187209_c()) {
-@@ -159,7 +174,7 @@
+@@ -159,7 +_,7 @@
              }
           }
  
@@ -118,7 +118,7 @@
        }
  
        this.field_187237_f = false;
-@@ -169,7 +184,7 @@
+@@ -169,7 +_,7 @@
     @Nullable
     public List<EntityDataManager.DataEntry<?>> func_187231_c() {
        List<EntityDataManager.DataEntry<?>> list = null;
@@ -127,7 +127,7 @@
  
        for(EntityDataManager.DataEntry<?> dataentry : this.field_187234_c.values()) {
           if (list == null) {
-@@ -179,7 +194,7 @@
+@@ -179,7 +_,7 @@
           list.add(dataentry.func_192735_d());
        }
  
@@ -136,7 +136,7 @@
        return list;
     }
  
-@@ -223,7 +238,7 @@
+@@ -223,7 +_,7 @@
  
     @OnlyIn(Dist.CLIENT)
     public void func_187218_a(List<EntityDataManager.DataEntry<?>> p_187218_1_) {
@@ -145,7 +145,7 @@
  
        for(EntityDataManager.DataEntry<?> dataentry : p_187218_1_) {
           EntityDataManager.DataEntry<?> dataentry1 = this.field_187234_c.get(dataentry.func_187205_a().func_187155_a());
-@@ -233,7 +248,7 @@
+@@ -233,7 +_,7 @@
           }
        }
  
@@ -154,7 +154,7 @@
        this.field_187237_f = true;
     }
  
-@@ -252,13 +267,13 @@
+@@ -252,13 +_,13 @@
  
     public void func_187230_e() {
        this.field_187237_f = false;

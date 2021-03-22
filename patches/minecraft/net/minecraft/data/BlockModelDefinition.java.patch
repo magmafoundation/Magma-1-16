@@ -1,6 +1,6 @@
 --- a/net/minecraft/data/BlockModelDefinition.java
 +++ b/net/minecraft/data/BlockModelDefinition.java
-@@ -8,6 +8,8 @@
+@@ -8,6 +_,8 @@
  import java.util.Map;
  import java.util.function.Supplier;
  

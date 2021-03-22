@@ -1,6 +1,6 @@
 --- a/net/minecraft/util/text/filter/ChatFilterClient.java
 +++ b/net/minecraft/util/text/filter/ChatFilterClient.java
-@@ -148,8 +148,8 @@
+@@ -148,8 +_,8 @@
        httpurlconnection.setRequestProperty("User-Agent", "Minecraft server" + SharedConstants.func_215069_a().getName());
  
        try (

@@ -1,6 +1,6 @@
 --- a/net/minecraft/util/CryptException.java
 +++ b/net/minecraft/util/CryptException.java
-@@ -1,7 +1,7 @@
+@@ -1,7 +_,7 @@
  package net.minecraft.util;
  
  public class CryptException extends Exception {

@@ -29,10 +29,8 @@ import java.util.stream.Collectors;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.tags.ITagCollection;
 import net.minecraft.tags.ITagCollectionSupplier;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 import org.apache.logging.log4j.LogManager;
@@ -54,11 +52,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.config.ConfigTracker;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.event.CraftEventFactory;
-import org.bukkit.craftbukkit.inventory.CraftInventory;
-import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-import org.bukkit.event.inventory.InventoryType;
 
 public class NetworkHooks
 {
@@ -97,7 +90,7 @@ public class NetworkHooks
 
     private static boolean validateSideForProcessing(final ICustomPacket<?> packet, final NetworkInstance ni, final NetworkManager manager) {
         if (packet.getDirection().getReceptionSide() != EffectiveSide.get()) {
-            manager.closeChannel(new StringTextComponent("Illegal packet received, terminating connection"));
+            manager.disconnect(new StringTextComponent("Illegal packet received, terminating connection"));
             return false;
         }
         return true;
@@ -105,7 +98,7 @@ public class NetworkHooks
 
     public static void validatePacketDirection(final NetworkDirection packetDirection, final Optional<NetworkDirection> expectedDirection, final NetworkManager connection) {
         if (packetDirection != expectedDirection.orElse(packetDirection)) {
-            connection.closeChannel(new StringTextComponent("Illegal packet received, terminating connection"));
+            connection.disconnect(new StringTextComponent("Illegal packet received, terminating connection"));
             throw new IllegalStateException("Invalid packet received, aborting connection");
         }
     }
@@ -211,10 +204,10 @@ public class NetworkHooks
      */
     public static void openGui(ServerPlayerEntity player, INamedContainerProvider containerSupplier, Consumer<PacketBuffer> extraDataWriter)
     {
-        if (player.world.isRemote) return;
-        player.closeContainer();
-        player.getNextWindowId();
-        int openContainerId = player.currentWindowId;
+        if (player.level.isClientSide) return;
+        player.doCloseContainer();
+        player.nextContainerCounter();
+        int openContainerId = player.containerCounter;
         PacketBuffer extraData = new PacketBuffer(Unpooled.buffer());
         extraDataWriter.accept(extraData);
         extraData.readerIndex(0); // reset to beginning in case modders read for whatever reason
@@ -227,26 +220,12 @@ public class NetworkHooks
             throw new IllegalArgumentException("Invalid PacketBuffer for openGui, found "+ output.readableBytes()+ " bytes");
         }
         Container c = containerSupplier.createMenu(openContainerId, player.inventory, player);
-        // Magma start - Forge Inventory View
-        if (c.getBukkitView() == null) {
-            TileEntity tileEntity = player.world.getTileEntity(output.readBlockPos());
-            if (tileEntity instanceof IInventory) {
-                c.setBukkitView(new CraftInventoryView(player.getBukkitEntity(), new CraftInventory((IInventory) tileEntity), c));
-            } else {
-                c.setBukkitView(new CraftInventoryView(player.getBukkitEntity(), Bukkit.createInventory(player.getBukkitEntity(), InventoryType.CHEST), c));
-            }
-        }
-        c = CraftEventFactory.callInventoryOpenEvent(player, c, false);
-        if (c == null) {
-            return;
-        }
-        // Magma end
         ContainerType<?> type = c.getType();
         FMLPlayMessages.OpenContainer msg = new FMLPlayMessages.OpenContainer(type, openContainerId, containerSupplier.getDisplayName(), output);
-        FMLNetworkConstants.playChannel.sendTo(msg, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+        FMLNetworkConstants.playChannel.sendTo(msg, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
 
-        player.openContainer = c;
-        player.openContainer.addListener(player);
+        player.containerMenu = c;
+        player.containerMenu.addSlotListener(player);
         MinecraftForge.EVENT_BUS.post(new PlayerContainerEvent.Open(player, c));
     }
 
@@ -273,7 +252,7 @@ public class NetworkHooks
         Map<ResourceLocation, ITagCollection<?>> customTagTypes = tagCollectionSupplier.getCustomTagTypes();
         if (!customTagTypes.isEmpty())
         {
-            FMLNetworkConstants.playChannel.sendTo(new FMLPlayMessages.SyncCustomTagTypes(customTagTypes), player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+            FMLNetworkConstants.playChannel.sendTo(new FMLPlayMessages.SyncCustomTagTypes(customTagTypes), player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 }

@@ -1,6 +1,6 @@
 --- a/net/minecraft/world/LockCode.java
 +++ b/net/minecraft/world/LockCode.java
-@@ -7,7 +7,7 @@
+@@ -7,7 +_,7 @@
  @Immutable
  public class LockCode {
     public static final LockCode field_180162_a = new LockCode("");

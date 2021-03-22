@@ -1,6 +1,6 @@
 --- a/net/minecraft/network/play/server/SWorldSpawnChangedPacket.java
 +++ b/net/minecraft/network/play/server/SWorldSpawnChangedPacket.java
-@@ -7,6 +7,7 @@
+@@ -7,6 +_,7 @@
  import net.minecraft.util.math.BlockPos;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
@@ -8,7 +8,7 @@
  
  public class SWorldSpawnChangedPacket implements IPacket<IClientPlayNetHandler> {
     private BlockPos field_240831_a_;
-@@ -20,7 +21,11 @@
+@@ -20,7 +_,11 @@
        this.field_244312_b = p_i242086_2_;
     }
  
@@ -21,7 +21,7 @@
        this.field_240831_a_ = p_148837_1_.func_179259_c();
     }
  
-@@ -32,7 +37,6 @@
+@@ -32,7 +_,6 @@
        p_148833_1_.func_230488_a_(this);
     }
  

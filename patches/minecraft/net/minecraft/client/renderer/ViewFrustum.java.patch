@@ -1,6 +1,6 @@
 --- a/net/minecraft/client/renderer/ViewFrustum.java
 +++ b/net/minecraft/client/renderer/ViewFrustum.java
-@@ -8,6 +8,8 @@
+@@ -8,6 +_,8 @@
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
  

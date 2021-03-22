@@ -1,6 +1,6 @@
 --- a/net/minecraft/tileentity/SignTileEntity.java
 +++ b/net/minecraft/tileentity/SignTileEntity.java
-@@ -1,6 +1,7 @@
+@@ -1,6 +_,7 @@
  package net.minecraft.tileentity;
  
  import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -8,7 +8,7 @@
  import java.util.function.Function;
  import javax.annotation.Nullable;
  import net.minecraft.block.BlockState;
-@@ -23,10 +24,11 @@
+@@ -23,10 +_,11 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
@@ -23,7 +23,7 @@
     private PlayerEntity field_145917_k;
     private final IReorderingProcessor[] field_212367_h = new IReorderingProcessor[4];
     private DyeColor field_214073_l = DyeColor.BLACK;
-@@ -43,6 +45,12 @@
+@@ -43,6 +_,12 @@
           p_189515_1_.func_74778_a("Text" + (i + 1), s);
        }
  
@@ -36,7 +36,7 @@
        p_189515_1_.func_74778_a("Color", this.field_214073_l.func_176762_d());
        return p_189515_1_;
     }
-@@ -52,17 +60,36 @@
+@@ -52,17 +_,36 @@
        super.func_230337_a_(p_230337_1_, p_230337_2_);
        this.field_214073_l = DyeColor.func_204271_a(p_230337_2_.func_74779_i("Color"), DyeColor.BLACK);
  
@@ -81,7 +81,7 @@
           }
  
           this.field_212367_h[i] = null;
-@@ -138,10 +165,38 @@
+@@ -138,10 +_,38 @@
        return true;
     }
  

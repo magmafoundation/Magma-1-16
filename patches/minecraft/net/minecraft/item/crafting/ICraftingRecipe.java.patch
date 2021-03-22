@@ -1,6 +1,6 @@
 --- a/net/minecraft/item/crafting/ICraftingRecipe.java
 +++ b/net/minecraft/item/crafting/ICraftingRecipe.java
-@@ -1,9 +1,15 @@
+@@ -1,9 +_,15 @@
  package net.minecraft.item.crafting;
  
  import net.minecraft.inventory.CraftingInventory;

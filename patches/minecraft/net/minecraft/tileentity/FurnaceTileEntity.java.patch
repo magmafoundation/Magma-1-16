@@ -1,6 +1,6 @@
 --- a/net/minecraft/tileentity/FurnaceTileEntity.java
 +++ b/net/minecraft/tileentity/FurnaceTileEntity.java
-@@ -1,11 +1,17 @@
+@@ -1,11 +_,17 @@
  package net.minecraft.tileentity;
  
 +import java.util.List;

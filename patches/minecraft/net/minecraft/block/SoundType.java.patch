@@ -1,6 +1,6 @@
 --- a/net/minecraft/block/SoundType.java
 +++ b/net/minecraft/block/SoundType.java
-@@ -53,12 +53,13 @@
+@@ -53,12 +_,13 @@
     public static final SoundType field_235599_U_ = new SoundType(1.0F, 1.0F, SoundEvents.field_232707_eX_, SoundEvents.field_232721_fb_, SoundEvents.field_232720_fa_, SoundEvents.field_232709_eZ_, SoundEvents.field_232708_eY_);
     public final float field_185860_m;
     public final float field_185861_n;

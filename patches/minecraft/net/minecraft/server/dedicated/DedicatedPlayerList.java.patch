@@ -1,6 +1,6 @@
 --- a/net/minecraft/server/dedicated/DedicatedPlayerList.java
 +++ b/net/minecraft/server/dedicated/DedicatedPlayerList.java
-@@ -2,11 +2,15 @@
+@@ -2,11 +_,15 @@
  
  import com.mojang.authlib.GameProfile;
  import java.io.IOException;

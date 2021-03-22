@@ -108,6 +108,7 @@ public class ForgeConfig
                     .comment("Fix advancement loading to use a proper topological sort. This may have visibility side-effects and can thus be turned off if needed for data-pack compatibility.")
                     .translation("forge.configgui.fixAdvancementLoading")
                     .define("fixAdvancementLoading", true);
+
             builder.pop();
         }
     }

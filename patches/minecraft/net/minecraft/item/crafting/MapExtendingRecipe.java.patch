@@ -1,6 +1,6 @@
 --- a/net/minecraft/item/crafting/MapExtendingRecipe.java
 +++ b/net/minecraft/item/crafting/MapExtendingRecipe.java
-@@ -9,6 +9,7 @@
+@@ -9,6 +_,7 @@
  import net.minecraft.world.World;
  import net.minecraft.world.storage.MapData;
  import net.minecraft.world.storage.MapDecoration;

@@ -1,6 +1,6 @@
 --- a/net/minecraft/world/gen/feature/template/TemplateManager.java
 +++ b/net/minecraft/world/gen/feature/template/TemplateManager.java
-@@ -29,7 +29,7 @@
+@@ -29,7 +_,7 @@
  
  public class TemplateManager {
     private static final Logger field_195431_a = LogManager.getLogger();

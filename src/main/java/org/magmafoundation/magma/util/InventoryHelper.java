@@ -43,7 +43,7 @@ public class InventoryHelper {
      * @return {@link InventoryHolder} or {@link CraftCustomInventory}
      */
     public static InventoryHolder getHolder(TileEntity tileEntity) {
-        return getHolder(tileEntity.getWorld(), tileEntity.getPos());
+        return getHolder(tileEntity.getLevel(), tileEntity.getBlockPos());
     }
 
     /**

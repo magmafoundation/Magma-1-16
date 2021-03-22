@@ -1,6 +1,6 @@
 --- a/net/minecraft/client/gui/screen/ServerSelectionList.java
 +++ b/net/minecraft/client/gui/screen/ServerSelectionList.java
-@@ -172,16 +172,16 @@
+@@ -172,16 +_,16 @@
           this.field_148288_a.field_71466_p.func_243248_b(p_230432_1_, ServerSelectionList.field_243365_r, (float)(this.field_148288_a.field_71462_r.field_230708_k_ / 2 - this.field_148288_a.field_71466_p.func_238414_a_(ServerSelectionList.field_243365_r) / 2), (float)i, 16777215);
           String s;
           switch((int)(Util.func_211177_b() / 300L % 4L)) {
@@ -27,12 +27,12 @@
           }
  
           this.field_148288_a.field_71466_p.func_238421_b_(p_230432_1_, s, (float)(this.field_148288_a.field_71462_r.field_230708_k_ / 2 - this.field_148288_a.field_71466_p.func_78256_a(s) / 2), (float)(i + 9), 8421504);
-@@ -307,6 +307,8 @@
+@@ -306,6 +_,8 @@
+          } else if (i1 >= p_230432_5_ - j - 15 - 2 && i1 <= p_230432_5_ - 15 - 2 && j1 >= 0 && j1 <= 8) {
              this.field_148303_c.func_238854_b_(list1);
           }
- 
-+         net.minecraftforge.fml.client.ClientHooks.drawForgePingInfo(this.field_148303_c, field_148301_e, p_230432_1_, p_230432_4_, p_230432_3_, p_230432_5_, i1, j1);
 +
++         net.minecraftforge.fml.client.ClientHooks.drawForgePingInfo(this.field_148303_c, field_148301_e, p_230432_1_, p_230432_4_, p_230432_3_, p_230432_5_, i1, j1);
+ 
           if (this.field_148300_d.field_71474_y.field_85185_A || p_230432_9_) {
              this.field_148300_d.func_110434_K().func_110577_a(ServerSelectionList.field_214360_d);
-             AbstractGui.func_238467_a_(p_230432_1_, p_230432_4_, p_230432_3_, p_230432_4_ + 32, p_230432_3_ + 32, -1601138544);

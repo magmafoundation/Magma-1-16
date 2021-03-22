@@ -1,6 +1,6 @@
 --- a/net/minecraft/block/PortalInfo.java
 +++ b/net/minecraft/block/PortalInfo.java
-@@ -1,17 +1,25 @@
+@@ -1,17 +_,25 @@
  package net.minecraft.block;
  
  import net.minecraft.util.math.vector.Vector3d;

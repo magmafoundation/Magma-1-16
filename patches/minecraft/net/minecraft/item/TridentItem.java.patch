@@ -1,6 +1,6 @@
 --- a/net/minecraft/item/TridentItem.java
 +++ b/net/minecraft/item/TridentItem.java
-@@ -1,8 +1,8 @@
+@@ -1,8 +_,8 @@
  package net.minecraft.item;
  
  import com.google.common.collect.ImmutableMultimap;
@@ -10,7 +10,7 @@
  import net.minecraft.block.BlockState;
  import net.minecraft.enchantment.EnchantmentHelper;
  import net.minecraft.enchantment.IVanishable;
-@@ -12,6 +12,7 @@
+@@ -12,6 +_,7 @@
  import net.minecraft.entity.ai.attributes.AttributeModifier;
  import net.minecraft.entity.ai.attributes.Attributes;
  import net.minecraft.entity.player.PlayerEntity;
@@ -18,12 +18,12 @@
  import net.minecraft.entity.projectile.AbstractArrowEntity;
  import net.minecraft.entity.projectile.TridentEntity;
  import net.minecraft.inventory.EquipmentSlotType;
-@@ -27,124 +28,145 @@
+@@ -27,124 +_,145 @@
  import net.minecraft.world.World;
  
  public class TridentItem extends Item implements IVanishable {
 -   private final Multimap<Attribute, AttributeModifier> field_234812_a_;
- 
+-
 -   public TridentItem(Item.Properties p_i48788_1_) {
 -      super(p_i48788_1_);
 -      Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
@@ -31,33 +31,19 @@
 -      builder.put(Attributes.field_233825_h_, new AttributeModifier(field_185050_h, "Tool modifier", (double)-2.9F, AttributeModifier.Operation.ADDITION));
 -      this.field_234812_a_ = builder.build();
 -   }
-+    private final Multimap<Attribute, AttributeModifier> field_234812_a_;
- 
+-
 -   public boolean func_195938_a(BlockState p_195938_1_, World p_195938_2_, BlockPos p_195938_3_, PlayerEntity p_195938_4_) {
 -      return !p_195938_4_.func_184812_l_();
 -   }
-+    public TridentItem(Item.Properties p_i48788_1_) {
-+        super(p_i48788_1_);
-+        Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-+        builder.put(Attributes.field_233823_f_, new AttributeModifier(field_111210_e, "Tool modifier", 8.0D, AttributeModifier.Operation.ADDITION));
-+        builder.put(Attributes.field_233825_h_, new AttributeModifier(field_185050_h, "Tool modifier", (double) -2.9F, AttributeModifier.Operation.ADDITION));
-+        this.field_234812_a_ = builder.build();
-+    }
- 
+-
 -   public UseAction func_77661_b(ItemStack p_77661_1_) {
 -      return UseAction.SPEAR;
 -   }
-+    public boolean func_195938_a(BlockState p_195938_1_, World p_195938_2_, BlockPos p_195938_3_, PlayerEntity p_195938_4_) {
-+        return !p_195938_4_.func_184812_l_();
-+    }
- 
+-
 -   public int func_77626_a(ItemStack p_77626_1_) {
 -      return 72000;
 -   }
-+    public UseAction func_77661_b(ItemStack p_77661_1_) {
-+        return UseAction.SPEAR;
-+    }
- 
+-
 -   public void func_77615_a(ItemStack p_77615_1_, World p_77615_2_, LivingEntity p_77615_3_, int p_77615_4_) {
 -      if (p_77615_3_ instanceof PlayerEntity) {
 -         PlayerEntity playerentity = (PlayerEntity)p_77615_3_;
@@ -75,10 +61,7 @@
 -                     if (playerentity.field_71075_bZ.field_75098_d) {
 -                        tridententity.field_70251_a = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
 -                     }
-+    public int func_77626_a(ItemStack p_77626_1_) {
-+        return 72000;
-+    }
- 
+-
 -                     p_77615_2_.func_217376_c(tridententity);
 -                     p_77615_2_.func_217384_a((PlayerEntity)null, tridententity, SoundEvents.field_203274_ip, SoundCategory.PLAYERS, 1.0F, 1.0F);
 -                     if (!playerentity.field_71075_bZ.field_75098_d) {
@@ -86,24 +69,7 @@
 -                     }
 -                  }
 -               }
-+    public void func_77615_a(ItemStack p_77615_1_, World p_77615_2_, LivingEntity p_77615_3_, int p_77615_4_) {
-+        if (p_77615_3_ instanceof PlayerEntity) {
-+            PlayerEntity playerentity = (PlayerEntity) p_77615_3_;
-+            int i = this.func_77626_a(p_77615_1_) - p_77615_4_;
-+            if (i >= 10) {
-+                int j = EnchantmentHelper.func_203190_g(p_77615_1_);
-+                if (j <= 0 || playerentity.func_70026_G()) {
-+                    if (!p_77615_2_.field_72995_K) {
-+                        p_77615_1_.func_222118_a(1, playerentity, (p_220047_1_) -> {
-+                            p_220047_1_.func_213334_d(p_77615_3_.func_184600_cs());
-+                        });
-+                        if (j == 0) {
-+                            TridentEntity tridententity = new TridentEntity(p_77615_2_, playerentity, p_77615_1_);
-+                            tridententity.func_234612_a_(playerentity, playerentity.field_70125_A, playerentity.field_70177_z, 0.0F, 2.5F + (float) j * 0.5F, 1.0F);
-+                            if (playerentity.field_71075_bZ.field_75098_d) {
-+                                tridententity.field_70251_a = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
-+                            }
- 
+-
 -               playerentity.func_71029_a(Stats.field_75929_E.func_199076_b(this));
 -               if (j > 0) {
 -                  float f7 = playerentity.field_70177_z;
@@ -122,8 +88,7 @@
 -                     float f6 = 1.1999999F;
 -                     playerentity.func_213315_a(MoverType.SELF, new Vector3d(0.0D, (double)1.1999999F, 0.0D));
 -                  }
-+                            p_77615_2_.func_217376_c(tridententity);
- 
+-
 -                  SoundEvent soundevent;
 -                  if (j >= 3) {
 -                     soundevent = SoundEvents.field_203273_io;
@@ -132,6 +97,53 @@
 -                  } else {
 -                     soundevent = SoundEvents.field_203271_im;
 -                  }
+-
+-                  p_77615_2_.func_217384_a((PlayerEntity)null, playerentity, soundevent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+-               }
+-
++
++    private final Multimap<Attribute, AttributeModifier> field_234812_a_;
++
++    public TridentItem(Item.Properties p_i48788_1_) {
++        super(p_i48788_1_);
++        Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
++        builder.put(Attributes.field_233823_f_, new AttributeModifier(field_111210_e, "Tool modifier", 8.0D, AttributeModifier.Operation.ADDITION));
++        builder.put(Attributes.field_233825_h_, new AttributeModifier(field_185050_h, "Tool modifier", (double) -2.9F, AttributeModifier.Operation.ADDITION));
++        this.field_234812_a_ = builder.build();
++    }
++
++    public boolean func_195938_a(BlockState p_195938_1_, World p_195938_2_, BlockPos p_195938_3_, PlayerEntity p_195938_4_) {
++        return !p_195938_4_.func_184812_l_();
++    }
++
++    public UseAction func_77661_b(ItemStack p_77661_1_) {
++        return UseAction.SPEAR;
++    }
++
++    public int func_77626_a(ItemStack p_77626_1_) {
++        return 72000;
++    }
++
++    public void func_77615_a(ItemStack p_77615_1_, World p_77615_2_, LivingEntity p_77615_3_, int p_77615_4_) {
++        if (p_77615_3_ instanceof PlayerEntity) {
++            PlayerEntity playerentity = (PlayerEntity) p_77615_3_;
++            int i = this.func_77626_a(p_77615_1_) - p_77615_4_;
++            if (i >= 10) {
++                int j = EnchantmentHelper.func_203190_g(p_77615_1_);
++                if (j <= 0 || playerentity.func_70026_G()) {
++                    if (!p_77615_2_.field_72995_K) {
++                        p_77615_1_.func_222118_a(1, playerentity, (p_220047_1_) -> {
++                            p_220047_1_.func_213334_d(p_77615_3_.func_184600_cs());
++                        });
++                        if (j == 0) {
++                            TridentEntity tridententity = new TridentEntity(p_77615_2_, playerentity, p_77615_1_);
++                            tridententity.func_234612_a_(playerentity, playerentity.field_70125_A, playerentity.field_70177_z, 0.0F, 2.5F + (float) j * 0.5F, 1.0F);
++                            if (playerentity.field_71075_bZ.field_75098_d) {
++                                tridententity.field_70251_a = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
++                            }
++
++                            p_77615_2_.func_217376_c(tridententity);
++
 +                            // CraftBukkit start
 +                            if (!p_77615_2_.func_217376_c(tridententity)) {
 +                                if (playerentity instanceof ServerPlayerEntity) {
@@ -139,15 +151,13 @@
 +                                }
 +                                return;
 +                            }
- 
--                  p_77615_2_.func_217384_a((PlayerEntity)null, playerentity, soundevent, SoundCategory.PLAYERS, 1.0F, 1.0F);
--               }
++
 +                            p_77615_1_.func_222118_a(1, playerentity, (p_220047_1_) -> {
 +                                p_220047_1_.func_213334_d(p_77615_3_.func_184600_cs());
 +                            });
 +                            tridententity.field_203054_h = p_77615_1_.func_77946_l(); // SPIGOT-4511 update since damage call moved
 +                            // CraftBukkit end
- 
++
 +                            p_77615_2_.func_217384_a((PlayerEntity) null, tridententity, SoundEvents.field_203274_ip, SoundCategory.PLAYERS, 1.0F, 1.0F);
 +                            if (!playerentity.field_71075_bZ.field_75098_d) {
 +                                playerentity.field_71071_by.func_184437_d(p_77615_1_);
@@ -196,9 +206,7 @@
 -         }
 -      }
 -   }
-+        }
-+    }
- 
+-
 -   public ActionResult<ItemStack> func_77659_a(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_) {
 -      ItemStack itemstack = p_77659_2_.func_184586_b(p_77659_3_);
 -      if (itemstack.func_77952_i() >= itemstack.func_77958_k() - 1) {
@@ -210,6 +218,34 @@
 -         return ActionResult.func_226249_b_(itemstack);
 -      }
 -   }
+-
+-   public boolean func_77644_a(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
+-      p_77644_1_.func_222118_a(1, p_77644_3_, (p_220048_0_) -> {
+-         p_220048_0_.func_213361_c(EquipmentSlotType.MAINHAND);
+-      });
+-      return true;
+-   }
+-
+-   public boolean func_179218_a(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
+-      if ((double)p_179218_3_.func_185887_b(p_179218_2_, p_179218_4_) != 0.0D) {
+-         p_179218_1_.func_222118_a(2, p_179218_5_, (p_220046_0_) -> {
+-            p_220046_0_.func_213361_c(EquipmentSlotType.MAINHAND);
+-         });
+-      }
+-
+-      return true;
+-   }
+-
+-   public Multimap<Attribute, AttributeModifier> func_111205_h(EquipmentSlotType p_111205_1_) {
+-      return p_111205_1_ == EquipmentSlotType.MAINHAND ? this.field_234812_a_ : super.func_111205_h(p_111205_1_);
+-   }
+-
+-   public int func_77619_b() {
+-      return 1;
+-   }
++        }
++    }
++
 +    public ActionResult<ItemStack> func_77659_a(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_) {
 +        ItemStack itemstack = p_77659_2_.func_184586_b(p_77659_3_);
 +        if (itemstack.func_77952_i() >= itemstack.func_77958_k() - 1) {
@@ -221,48 +257,28 @@
 +            return ActionResult.func_226249_b_(itemstack);
 +        }
 +    }
- 
--   public boolean func_77644_a(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
--      p_77644_1_.func_222118_a(1, p_77644_3_, (p_220048_0_) -> {
--         p_220048_0_.func_213361_c(EquipmentSlotType.MAINHAND);
--      });
--      return true;
--   }
++
 +    public boolean func_77644_a(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
 +        p_77644_1_.func_222118_a(1, p_77644_3_, (p_220048_0_) -> {
 +            p_220048_0_.func_213361_c(EquipmentSlotType.MAINHAND);
 +        });
 +        return true;
 +    }
- 
--   public boolean func_179218_a(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
--      if ((double)p_179218_3_.func_185887_b(p_179218_2_, p_179218_4_) != 0.0D) {
--         p_179218_1_.func_222118_a(2, p_179218_5_, (p_220046_0_) -> {
--            p_220046_0_.func_213361_c(EquipmentSlotType.MAINHAND);
--         });
--      }
++
 +    public boolean func_179218_a(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
 +        if ((double) p_179218_3_.func_185887_b(p_179218_2_, p_179218_4_) != 0.0D) {
 +            p_179218_1_.func_222118_a(2, p_179218_5_, (p_220046_0_) -> {
 +                p_220046_0_.func_213361_c(EquipmentSlotType.MAINHAND);
 +            });
 +        }
- 
--      return true;
--   }
++
 +        return true;
 +    }
- 
--   public Multimap<Attribute, AttributeModifier> func_111205_h(EquipmentSlotType p_111205_1_) {
--      return p_111205_1_ == EquipmentSlotType.MAINHAND ? this.field_234812_a_ : super.func_111205_h(p_111205_1_);
--   }
++
 +    public Multimap<Attribute, AttributeModifier> func_111205_h(EquipmentSlotType p_111205_1_) {
 +        return p_111205_1_ == EquipmentSlotType.MAINHAND ? this.field_234812_a_ : super.func_111205_h(p_111205_1_);
 +    }
- 
--   public int func_77619_b() {
--      return 1;
--   }
++
 +    public int func_77619_b() {
 +        return 1;
 +    }

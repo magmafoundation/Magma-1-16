@@ -12,26 +12,26 @@ import com.google.common.collect.ImmutableMap;
 public class NetworkFilters
 {
 
-	private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
-	private static final Map<String, VanillaPacketFilter> instances = ImmutableMap.of(
-			"forge:vanilla_filter", new VanillaConnectionNetworkFilter(),
-			"forge:forge_fixes", new ForgeConnectionNetworkFilter()
-	);
+    private static final Map<String, VanillaPacketFilter> instances = ImmutableMap.of(
+            "forge:vanilla_filter", new VanillaConnectionNetworkFilter(),
+            "forge:forge_fixes", new ForgeConnectionNetworkFilter()
+    );
 
-	public static void injectIfNecessary(NetworkManager manager)
-	{
-		instances.forEach((key, filter) -> {
-			if (filter.isNecessary(manager))
-			{
-				manager.channel().pipeline().addBefore("packet_handler", key, filter);
-				LOGGER.debug("Injected {} into {}", filter, manager);
-			}
-		});
-	}
+    public static void injectIfNecessary(NetworkManager manager)
+    {
+        instances.forEach((key, filter) -> {
+            if (filter.isNecessary(manager))
+            {
+                manager.channel().pipeline().addBefore("packet_handler", key, filter);
+                LOGGER.debug("Injected {} into {}", filter, manager);
+            }
+        });
+    }
 
-	private NetworkFilters()
-	{
-	}
+    private NetworkFilters()
+    {
+    }
 
 }

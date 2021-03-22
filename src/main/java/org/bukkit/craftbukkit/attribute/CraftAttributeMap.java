@@ -19,13 +19,13 @@ public class CraftAttributeMap implements Attributable {
     @Override
     public AttributeInstance getAttribute(Attribute attribute) {
         Preconditions.checkArgument(attribute != null, "attribute");
-        net.minecraft.entity.ai.attributes.ModifiableAttributeInstance nms = handle.createInstanceIfAbsent(toMinecraft(attribute));
+        net.minecraft.entity.ai.attributes.ModifiableAttributeInstance nms = handle.getInstance(toMinecraft(attribute));
 
         return (nms == null) ? null : new CraftAttributeInstance(nms, attribute);
     }
 
     public static net.minecraft.entity.ai.attributes.Attribute toMinecraft(Attribute attribute) {
-        return net.minecraft.util.registry.Registry.ATTRIBUTE.getOrDefault(CraftNamespacedKey.toMinecraft(attribute.getKey()));
+        return net.minecraft.util.registry.Registry.ATTRIBUTE.get(CraftNamespacedKey.toMinecraft(attribute.getKey()));
     }
 
     public static Attribute fromMinecraft(String nms) {
