@@ -19,11 +19,18 @@
 package org.magmafoundation.magma.commands;
 
 import com.google.common.collect.ImmutableList;
+
+import java.io.*;
 import java.util.Collections;
 import java.util.List;
+
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -76,6 +83,12 @@ public class MagmaCommand extends Command {
                     sender.sendMessage(ChatColor.RED + "The player [" + args[1] + "] is not online.");
                 }
                 break;
+            case "dump":
+                createMagmaDump("permissions.mdump");
+                createMagmaDump("materials.mdump");
+                createMagmaDump("biomes.mdump");
+                sender.sendMessage(ChatColor.RED + "Dump saved!");
+                break;
             default:
                 sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
                 return false;
@@ -87,9 +100,52 @@ public class MagmaCommand extends Command {
     @Override
     public List<String> tabComplete(CommandSender sender, String alias, String[] args, Location location) throws IllegalArgumentException {
         if (args.length <= 1) {
-            return ImmutableList.of("mods", "playermods");
+            return ImmutableList.of("mods", "playermods", "dump");
         }
         return Collections.emptyList();
+    }
+
+    private void createMagmaDump(String fileName) {
+        try {
+
+            File dumpFolder = new File("dump");
+            dumpFolder.mkdirs();
+            File dumpFile = new File(dumpFolder, fileName);
+            OutputStream os = new FileOutputStream(dumpFile);
+            Writer writer = new OutputStreamWriter(os);
+
+            switch (fileName.split("\\.")[0]) {
+                // TODO: Re-add worlds and entites
+                case "permissions":
+
+                    for (Command command : MinecraftServer.getServerInstance().server.getCommandMap().getCommands()) {
+                        if (command.getPermission() == null) {
+                            continue;
+                        }
+                        writer.write(command.getName() + ": " + command.getPermission() + "\n");
+                    }
+
+                    writer.close();
+                case "materials":
+
+                    for (Material material : Material.values()) {
+                        writer.write(material.name() + "\n");
+                    }
+
+                    writer.close();
+                case "biomes":
+
+                    for (Biome biome : ForgeRegistries.BIOMES.getValues()) {
+                        writer.write(biome.getRegistryName() + "\n");
+                    }
+
+                    writer.close();
+            }
+        } catch (Exception e) {
+
+        }
+
+
     }
 
 }
