@@ -186,7 +186,7 @@
              return p_82487_2_;
           }
  
-@@ -318,9 +_,49 @@
+@@ -318,9 +_,48 @@
              BucketItem bucketitem = (BucketItem)p_82487_2_.func_77973_b();
              BlockPos blockpos = p_82487_1_.func_180699_d().func_177972_a(p_82487_1_.func_189992_e().func_177229_b(DispenserBlock.field_176441_a));
              World world = p_82487_1_.func_197524_h();
@@ -227,8 +227,7 @@
 +               Item item = Items.field_151133_ar;
 +               p_82487_2_.func_190918_g(1);
 +               if (p_82487_2_.func_190926_b()) {
-+                  p_82487_2_.setItem(Items.field_151133_ar);
-+                  p_82487_2_.func_190920_e(1);
++                  p_82487_2_ = new ItemStack(Items.field_151133_ar);
 +               } else if (((DispenserTileEntity) p_82487_1_.func_150835_j()).func_146019_a(new ItemStack(item)) < 0) {
 +                  this.field_239793_b_.dispense(p_82487_1_, new ItemStack(item));
 +               }

@@ -1383,7 +1383,7 @@
 +               Location to = teleport.getTo();
 +               this.func_70634_a(to.getX(), to.getY(), to.getZ());
 +               if (world.func_226669_j_(this) && !world.func_72953_d(this.func_174813_aQ())) {
-+                  flag1 = true;
++                  flag = true;
 +               }
              }
 +            // CraftBukkit end
