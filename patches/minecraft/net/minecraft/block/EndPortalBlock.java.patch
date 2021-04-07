@@ -28,7 +28,7 @@
     public void func_196262_a(BlockState p_196262_1_, World p_196262_2_, BlockPos p_196262_3_, Entity p_196262_4_) {
        if (p_196262_2_ instanceof ServerWorld && !p_196262_4_.func_184218_aH() && !p_196262_4_.func_184207_aI() && p_196262_4_.func_184222_aU() && VoxelShapes.func_197879_c(VoxelShapes.func_197881_a(p_196262_4_.func_174813_aQ().func_72317_d((double)(-p_196262_3_.func_177958_n()), (double)(-p_196262_3_.func_177956_o()), (double)(-p_196262_3_.func_177952_p()))), p_196262_1_.func_196954_c(p_196262_2_, p_196262_3_), IBooleanFunction.field_223238_i_)) {
 -         RegistryKey<World> registrykey = p_196262_2_.func_234923_W_() == World.field_234920_i_ ? World.field_234918_g_ : World.field_234920_i_;
-+         RegistryKey<World> registrykey = p_196262_2_.getTypeKey() == DimensionType.field_236001_e_ ? World.field_234918_g_ : World.field_234920_i_; // CraftBukkit - SPIGOT-6152: send back to main overworld in custom ends
++         RegistryKey<World> registrykey = p_196262_2_.func_234923_W_() == World.field_234920_i_ ? World.field_234918_g_ : World.field_234920_i_; // CraftBukkit - SPIGOT-6152: send back to main overworld in custom ends
           ServerWorld serverworld = ((ServerWorld)p_196262_2_).func_73046_m().func_71218_a(registrykey);
           if (serverworld == null) {
 +            //return; // CraftBukkit - always fire event in case plugins wish to change it
