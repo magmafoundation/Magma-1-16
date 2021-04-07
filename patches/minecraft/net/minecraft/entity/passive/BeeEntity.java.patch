@@ -1,10 +1,12 @@
 --- a/net/minecraft/entity/passive/BeeEntity.java
 +++ b/net/minecraft/entity/passive/BeeEntity.java
-@@ -84,6 +_,9 @@
+@@ -84,6 +_,11 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
++import org.bukkit.Bukkit;
 +import org.bukkit.craftbukkit.event.CraftEventFactory;
++import org.bukkit.entity.Bee;
 +import org.bukkit.event.entity.EntityPotionEffectEvent.Cause;
 +import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
  
@@ -71,18 +73,20 @@
        this.func_226404_d_(4, p_226449_1_);
     }
  
-@@ -552,11 +_,14 @@
+@@ -551,12 +_,15 @@
+       if (this.func_180431_b(p_70097_1_)) {
           return false;
        } else {
-          Entity entity = p_70097_1_.func_76346_g();
--         if (!this.field_70170_p.field_72995_K) {
+-         Entity entity = p_70097_1_.func_76346_g();
++//         Entity entity = damageSource.getEntity();
 +         // CraftBukkit Start
 +         boolean result = super.damageEntityCB(p_70097_1_, p_70097_2_);
-+         if (result && !this.field_70170_p.field_72995_K) {
+          if (!this.field_70170_p.field_72995_K) {
              this.field_226370_bJ_.func_226504_l_();
           }
- 
+-
 -         return super.func_70097_a(p_70097_1_, p_70097_2_);
++         Bukkit.broadcastMessage("Hey, a bee was punched: ds: " + p_70097_1_.func_180136_u() + " a: " + p_70097_2_);
 +         return result;
 +         // CraftBukkit end
        }

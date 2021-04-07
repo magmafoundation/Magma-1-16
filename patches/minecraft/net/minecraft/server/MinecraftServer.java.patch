@@ -714,6 +714,19 @@
     protected void func_244801_P() {
        field_147145_h.info("Generating keypair");
  
+@@ -991,10 +_,12 @@
+    }
+ 
+    public void func_147139_a(Difficulty p_147139_1_, boolean p_147139_2_) {
++      System.out.println("Setting new difficulty");
+       if (p_147139_2_ || !this.field_240768_i_.func_176123_z()) {
+          this.field_240768_i_.func_230409_a_(this.field_240768_i_.func_76093_s() ? Difficulty.HARD : p_147139_1_);
+          this.func_240794_aZ_();
+          this.func_184103_al().func_181057_v().forEach(this::func_213189_a);
++         System.out.println("New difficulty set! d: " + p_147139_1_ + " isNotLocked: " + p_147139_2_);
+       }
+    }
+ 
 @@ -1158,7 +_,7 @@
  
     @Nullable

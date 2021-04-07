@@ -140,12 +140,18 @@
     }
  
     public boolean func_226563_dT_() {
-@@ -280,7 +_,7 @@
+@@ -280,7 +_,13 @@
     private void func_203041_m() {
        ItemStack itemstack = this.func_184582_a(EquipmentSlotType.HEAD);
        if (itemstack.func_77973_b() == Items.field_203179_ao && !this.func_208600_a(FluidTags.field_206959_a)) {
 -         this.func_195064_c(new EffectInstance(Effects.field_76427_o, 200, 0, false, false, true));
-+         this.addPotionEffect(new EffectInstance(Effects.field_76427_o, 200, 0, false, false, true), Cause.TURTLE_HELMET); // CraftBukkit
++         if(this.func_184603_cC() && this.func_193076_bZ().containsKey(Effects.field_76427_o)){
++            if(this.func_193076_bZ().get(Effects.field_76427_o).func_76459_b() >= 8){
++               return;
++            } else {
++               this.addPotionEffect(new EffectInstance(Effects.field_76427_o, 200, 0, false, false, true), Cause.TURTLE_HELMET); // CraftBukkit
++            }
++         }
        }
  
     }

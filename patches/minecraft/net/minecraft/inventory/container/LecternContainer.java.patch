@@ -59,10 +59,11 @@
     }
  
     public boolean func_75140_a(PlayerEntity p_75140_1_, int p_75140_2_) {
-@@ -52,6 +_,14 @@
+@@ -52,11 +_,21 @@
                 return false;
              }
  
+-            ItemStack itemstack = this.field_217018_c.func_70304_b(0);
 +            // CraftBukkit start - Event for taking the book
 +            PlayerTakeLecternBookEvent event = new PlayerTakeLecternBookEvent(player, ((CraftInventoryLectern) getBukkitView().getTopInventory()).getHolder());
 +            Bukkit.getServer().getPluginManager().callEvent(event);
@@ -71,9 +72,18 @@
 +            }
 +            // CraftBukkit end
 +
-             ItemStack itemstack = this.field_217018_c.func_70304_b(0);
++//            ItemStack itemstack = this.lectern.removeItemNoUpdate(0);
++            ItemStack itemstack = this.field_217018_c.func_70298_a(0, 1);
              this.field_217018_c.func_70296_d();
-             if (!p_75140_1_.field_71071_by.func_70441_a(itemstack)) {
+-            if (!p_75140_1_.field_71071_by.func_70441_a(itemstack)) {
++            this.bukkitEntity.close();
++//            if (!p_75140_1_.inventory.add(itemstack)) {
+                p_75140_1_.func_71019_a(itemstack, false);
+-            }
++//            }
+ 
+             return true;
+          default:
 @@ -71,6 +_,7 @@
     }
  

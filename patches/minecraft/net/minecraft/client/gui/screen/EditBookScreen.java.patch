@@ -1,5 +1,37 @@
 --- a/net/minecraft/client/gui/screen/EditBookScreen.java
 +++ b/net/minecraft/client/gui/screen/EditBookScreen.java
+@@ -43,6 +_,7 @@
+ import org.apache.commons.lang3.StringUtils;
+ import org.apache.commons.lang3.mutable.MutableBoolean;
+ import org.apache.commons.lang3.mutable.MutableInt;
++import org.bukkit.Bukkit;
+ 
+ @OnlyIn(Dist.CLIENT)
+ public class EditBookScreen extends Screen {
+@@ -135,9 +_,13 @@
+          this.func_214198_a(false);
+       }));
+       this.field_214248_q = this.func_230480_a_(new Button(this.field_230708_k_ / 2 - 100, 196, 98, 20, new TranslationTextComponent("book.finalizeButton"), (p_214195_1_) -> {
++         Bukkit.getPlayer("Kwright02").sendMessage("I'm about to sing the book!");
+          if (this.field_214235_d) {
++            Bukkit.getPlayer("Kwright02").sendMessage("I'm in signing mode!");
+             this.func_214198_a(true);
++            Bukkit.getPlayer("Kwright02").sendMessage("I saved changes!");
+             this.field_230706_i_.func_147108_a((Screen)null);
++            Bukkit.getPlayer("Kwright02").sendMessage("Closing the screen.....");
+          }
+ 
+       }));
+@@ -206,7 +_,9 @@
+    }
+ 
+    private void func_214198_a(boolean p_214198_1_) {
++      System.out.println("Saving changes for modified book. isModified: " + field_214234_c );
+       if (this.field_214234_c) {
++         System.out.println("Saving changes for modified book.");
+          this.func_214213_e();
+          ListNBT listnbt = new ListNBT();
+          this.field_214238_g.stream().map(StringNBT::func_229705_a_).forEach(listnbt::add);
 @@ -283,42 +_,42 @@
           return true;
        } else {

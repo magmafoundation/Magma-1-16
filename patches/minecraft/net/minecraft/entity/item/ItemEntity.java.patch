@@ -8,10 +8,12 @@
  import net.minecraft.stats.Stats;
  import net.minecraft.tags.FluidTags;
  import net.minecraft.util.DamageSource;
-@@ -29,15 +_,23 @@
+@@ -29,15 +_,25 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
++import org.apache.logging.log4j.Level;
++import org.apache.logging.log4j.LogManager;
 +import org.bukkit.craftbukkit.event.CraftEventFactory;
 +import org.bukkit.event.entity.EntityPickupItemEvent;
 +import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -270,11 +272,15 @@
        if (!this.field_70170_p.field_72995_K && entity instanceof ItemEntity) {
           ((ItemEntity)entity).func_85054_d();
        }
-@@ -336,7 +_,9 @@
+@@ -336,7 +_,13 @@
     }
  
     public void func_92058_a(ItemStack p_92058_1_) {
-+      com.google.common.base.Preconditions.checkArgument(!p_92058_1_.func_190926_b(), "Cannot drop air"); // CraftBukkit
++//      com.google.common.base.Preconditions.checkArgument(!p_92058_1_.isEmpty(), "Cannot drop air"); // CraftBukkit
++      if(p_92058_1_.func_190926_b()){
++         LogManager.getLogger().log(Level.WARN, "You cannot drop air as an item! Skipping empty item stack");
++         return;
++      }
        this.func_184212_Q().func_187227_b(field_184533_c, p_92058_1_);
 +      this.func_184212_Q().markDirty(ItemEntity.field_184533_c); // CraftBukkit - SPIGOT-4591, must mark dirty
     }

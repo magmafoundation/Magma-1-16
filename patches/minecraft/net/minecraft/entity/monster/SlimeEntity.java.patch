@@ -9,10 +9,11 @@
  import java.util.Objects;
  import java.util.Optional;
  import java.util.Random;
-@@ -44,6 +_,10 @@
+@@ -44,6 +_,11 @@
  import net.minecraft.world.IWorld;
  import net.minecraft.world.World;
  import net.minecraft.world.biome.Biomes;
++import org.bukkit.Bukkit;
 +import org.bukkit.craftbukkit.event.CraftEventFactory;
 +import org.bukkit.event.entity.CreatureSpawnEvent;
 +import org.bukkit.event.entity.EntityTransformEvent;
@@ -37,7 +38,7 @@
           for(int j = 0; j < i * 8; ++j) {
              float f = this.field_70146_Z.nextFloat() * ((float)Math.PI * 2F);
              float f1 = this.field_70146_Z.nextFloat() * 0.5F + 0.5F;
-@@ -178,15 +_,28 @@
+@@ -178,15 +_,31 @@
        return (EntityType<? extends SlimeEntity>)super.func_200600_R();
     }
  
@@ -47,6 +48,7 @@
        int i = this.func_70809_q();
 -      if (!this.field_70170_p.field_72995_K && i > 1 && this.func_233643_dh_()) {
 +      if (!this.field_70170_p.field_72995_K && i > 1 && this.func_233643_dh_() && !this.field_70128_L) {
++         Bukkit.broadcastMessage("Slime/Magma has died, starting removal/split process");
           ITextComponent itextcomponent = this.func_200201_e();
           boolean flag = this.func_175446_cd();
           float f = (float)i / 4.0F;
@@ -64,6 +66,8 @@
 +         }
 +         List<LivingEntity> slimes = new ArrayList<>(j);
 +         // CraftBukkit end
++
++         Bukkit.broadcastMessage("Split: count: " + k + " eventStatus: " + event.isCancelled());
 +
           for(int l = 0; l < k; ++l) {
              float f1 = ((float)(l % 2) - 0.5F) * f;

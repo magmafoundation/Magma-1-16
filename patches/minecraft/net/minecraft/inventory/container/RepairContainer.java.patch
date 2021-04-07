@@ -33,7 +33,7 @@
        this.field_234643_d_.func_70299_a(0, ItemStack.field_190927_a);
        if (this.field_82856_l > 0) {
           ItemStack itemstack = this.field_234643_d_.func_70301_a(1);
-@@ -64,7 +_,7 @@
+@@ -64,9 +_,10 @@
        this.field_82854_e.func_221494_a(0);
        this.field_234644_e_.func_221486_a((p_234633_1_, p_234633_2_) -> {
           BlockState blockstate = p_234633_1_.func_180495_p(p_234633_2_);
@@ -41,7 +41,10 @@
 +         if (!p_230301_1_.field_71075_bZ.field_75098_d && blockstate.func_235714_a_(BlockTags.field_200572_k) && p_230301_1_.func_70681_au().nextFloat() < breakChance) {
              BlockState blockstate1 = AnvilBlock.func_196433_f(blockstate);
              if (blockstate1 == null) {
++               p_230301_1_.func_71053_j();
                 p_234633_1_.func_217377_a(p_234633_2_, false);
+                p_234633_1_.func_217379_c(1029, p_234633_2_, 0);
+             } else {
 @@ -88,7 +_,7 @@
        int j = 0;
        int k = 0;

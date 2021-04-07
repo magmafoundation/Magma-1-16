@@ -1855,11 +1855,11 @@
 +   public void func_147349_a(CCustomPayloadPacket p_147349_1_) {
 +      PacketThreadUtil.func_218796_a(p_147349_1_, this, this.field_147369_b.func_71121_q());
 +      net.minecraftforge.fml.network.NetworkHooks.onCustomPayload(p_147349_1_, this.field_147371_a);
-+      field_147370_c.error("processCustomPayload: packetIn.channel: "  + p_147349_1_.field_149562_a);
++//      LOGGER.error("processCustomPayload: packetIn.channel: "  + p_147349_1_.identifier);
 +      if (p_147349_1_.field_149562_a.equals(ServerPlayNetHandler.CUSTOM_REGISTER)) {
 +         try {
 +            String channels = p_147349_1_.field_149561_c.toString(com.google.common.base.Charsets.UTF_8);
-+            field_147370_c.error("processCustomPayload: channels: "  + channels);
++//            LOGGER.error("processCustomPayload: channels: "  + channels);
 +            for (String channel : channels.split("\0")) {
 +               getPlayer().addChannel(channel);
 +            }

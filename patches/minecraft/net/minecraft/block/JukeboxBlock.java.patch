@@ -1,5 +1,31 @@
 --- a/net/minecraft/block/JukeboxBlock.java
 +++ b/net/minecraft/block/JukeboxBlock.java
+@@ -20,6 +_,8 @@
+ import net.minecraft.world.IBlockReader;
+ import net.minecraft.world.IWorld;
+ import net.minecraft.world.World;
++import org.bukkit.GameMode;
++import org.bukkit.craftbukkit.inventory.CraftItemStack;
+ 
+ public class JukeboxBlock extends ContainerBlock {
+    public static final BooleanProperty field_176432_a = BlockStateProperties.field_208187_n;
+@@ -48,6 +_,16 @@
+          p_225533_2_.func_180501_a(p_225533_3_, p_225533_1_, 2);
+          return ActionResultType.func_233537_a_(p_225533_2_.field_72995_K);
+       } else {
++//         ItemStack record = playerEntity.getItemInHand(hand).copy();
++//         org.bukkit.inventory.ItemStack stack = CraftItemStack.asNewCraftStack(record.getItem());
++//         if(!stack.getType().isRecord()) return ActionResultType.PASS;
++//         if(playerEntity.getBukkitEntity().getGameMode() != GameMode.CREATIVE) {
++//            record.shrink(1);
++//         }
++//         this.setRecord(world,blockPos,blockState, record);
++//         world.setBlock(blockPos, blockState.setValue(HAS_RECORD, true), 2);
++//         world.levelEvent(1010, blockPos, 0);
++//         return ActionResultType.sidedSuccess(world.isClientSide);
+          return ActionResultType.PASS;
+       }
+    }
 @@ -55,12 +_,18 @@
     public void func_176431_a(IWorld p_176431_1_, BlockPos p_176431_2_, BlockState p_176431_3_, ItemStack p_176431_4_) {
        TileEntity tileentity = p_176431_1_.func_175625_s(p_176431_2_);

@@ -1,14 +1,36 @@
 --- a/net/minecraft/client/multiplayer/PlayerController.java
 +++ b/net/minecraft/client/multiplayer/PlayerController.java
-@@ -93,6 +_,7 @@
+@@ -49,6 +_,9 @@
+ import net.minecraftforge.api.distmarker.OnlyIn;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
++import org.bukkit.Material;
++
++import java.util.ArrayList;
+ 
+ @OnlyIn(Dist.CLIENT)
+ public class PlayerController {
+@@ -92,24 +_,30 @@
+       return this.field_78779_k.func_77144_e();
     }
  
++   ArrayList<Material> forbidden = new ArrayList<>();
++
++   {
++      forbidden.add(Material.TRIDENT);
++   }
++
     public boolean func_187103_a(BlockPos p_187103_1_) {
 +      if (field_78776_a.field_71439_g.func_184614_ca().onBlockStartBreak(p_187103_1_, field_78776_a.field_71439_g)) return false;
        if (this.field_78776_a.field_71439_g.func_223729_a(this.field_78776_a.field_71441_e, p_187103_1_, this.field_78779_k)) {
           return false;
        } else {
-@@ -104,12 +_,11 @@
+          World world = this.field_78776_a.field_71441_e;
+          BlockState blockstate = world.func_180495_p(p_187103_1_);
+-         if (!this.field_78776_a.field_71439_g.func_184614_ca().func_77973_b().func_195938_a(blockstate, world, p_187103_1_, this.field_78776_a.field_71439_g)) {
++         if (!this.field_78776_a.field_71439_g.func_184614_ca().func_77973_b().func_195938_a(blockstate, world, p_187103_1_, this.field_78776_a.field_71439_g) || forbidden.contains(blockstate.func_185904_a())) {
+             return false;
+          } else {
              Block block = blockstate.func_177230_c();
              if ((block instanceof CommandBlockBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !this.field_78776_a.field_71439_g.func_195070_dx()) {
                 return false;
@@ -172,3 +194,13 @@
        return this.field_78779_k == GameType.SPECTATOR ? ActionResultType.PASS : p_187102_2_.func_184199_a(p_187102_1_, vector3d, p_187102_4_);
     }
  
+@@ -428,6 +_,9 @@
+    public void func_225323_a(ClientWorld p_225323_1_, BlockPos p_225323_2_, BlockState p_225323_3_, CPlayerDiggingPacket.Action p_225323_4_, boolean p_225323_5_) {
+       Vector3d vector3d = this.field_225326_k.remove(Pair.of(p_225323_2_, p_225323_4_));
+       BlockState blockstate = p_225323_1_.func_180495_p(p_225323_2_);
++      if(this.field_78776_a.field_71439_g.func_184812_l_() && forbidden.contains(p_225323_3_.func_185904_a())){
++         return;
++      }
+       if ((vector3d == null || !p_225323_5_ || p_225323_4_ != CPlayerDiggingPacket.Action.START_DESTROY_BLOCK && blockstate != p_225323_3_) && blockstate != p_225323_3_) {
+          p_225323_1_.func_195597_b(p_225323_2_, p_225323_3_);
+          PlayerEntity playerentity = this.field_78776_a.field_71439_g;

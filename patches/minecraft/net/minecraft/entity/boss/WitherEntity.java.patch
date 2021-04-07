@@ -20,13 +20,14 @@
  import net.minecraft.tags.BlockTags;
  import net.minecraft.util.DamageSource;
  import net.minecraft.util.SoundEvent;
-@@ -51,8 +_,13 @@
+@@ -51,8 +_,14 @@
  import net.minecraft.world.GameRules;
  import net.minecraft.world.World;
  import net.minecraft.world.server.ServerBossInfo;
 +import net.minecraft.world.server.ServerWorld;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
++import org.bukkit.Bukkit;
 +import org.bukkit.craftbukkit.event.CraftEventFactory;
 +import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 +import org.bukkit.event.entity.EntityTargetEvent;
@@ -43,6 +44,14 @@
     private static final Predicate<LivingEntity> field_82219_bJ = (p_213797_0_) -> {
        return p_213797_0_.func_70668_bt() != CreatureAttribute.field_223223_b_ && p_213797_0_.func_190631_cK();
     };
+@@ -126,6 +_,7 @@
+    }
+ 
+    protected SoundEvent func_184601_bQ(DamageSource p_184601_1_) {
++      Bukkit.getServer().broadcastMessage("Wither boss was damaged by source: " + p_184601_1_.field_76373_n);
+       return SoundEvents.field_187851_gB;
+    }
+ 
 @@ -213,16 +_,36 @@
        if (this.func_82212_n() > 0) {
           int j1 = this.func_82212_n() - 1;
