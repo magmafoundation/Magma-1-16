@@ -1,0 +1,12 @@
+--- a/net/minecraft/client/gui/screen/LecternScreen.java
++++ b/net/minecraft/client/gui/screen/LecternScreen.java
+@@ -48,7 +_,8 @@
+    }
+ 
+    public void func_231175_as__() {
+-      this.field_230706_i_.field_71439_g.func_71053_j();
++//      this.minecraft.player.closeContainer();
++      this.field_230706_i_.func_147108_a((Screen)null);
+       super.func_231175_as__();
+    }
+ 
