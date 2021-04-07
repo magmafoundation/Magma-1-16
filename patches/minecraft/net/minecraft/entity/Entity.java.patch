@@ -761,12 +761,7 @@
     }
  
     protected boolean func_184219_q(Entity p_184219_1_) {
-@@ -1743,11 +_,17 @@
-             MinecraftServer minecraftserver = serverworld.func_73046_m();
-             RegistryKey<World> registrykey = this.field_70170_p.func_234923_W_() == World.field_234919_h_ ? World.field_234918_g_ : World.field_234919_h_;
-             ServerWorld serverworld1 = minecraftserver.func_71218_a(registrykey);
--            if (serverworld1 != null && minecraftserver.func_71255_r() && !this.func_184218_aH() && this.field_82153_h++ >= i) {
-+            if (true && !this.func_184218_aH() && this.field_82153_h++ >= i) {
+@@ -1747,7 +_,13 @@
                 this.field_70170_p.func_217381_Z().func_76320_a("portal");
                 this.field_82153_h = i;
                 this.func_242279_ag();
@@ -892,7 +887,7 @@
     }
  
     public boolean func_70028_i(Entity p_70028_1_) {
-@@ -2087,32 +_,69 @@
+@@ -2087,32 +_,70 @@
  
     @Nullable
     public Entity func_241206_a_(ServerWorld p_241206_1_) {
@@ -923,7 +918,8 @@
 +         // CraftBukkit end
           this.field_70170_p.func_217381_Z().func_76320_a("reposition");
 -         PortalInfo portalinfo = this.func_241829_a(p_241206_1_);
-+         PortalInfo portalinfo = (location == null) ? teleporter.getPortalInfo(this, server, this::func_241829_a) : new PortalInfo(new Vector3d(location.func_177958_n(), location.func_177956_o(), location.func_177952_p()), Vector3d.field_186680_a, this.field_70177_z, this.field_70125_A, server, null);
++         PortalInfo portalinfo = (location == null) ? teleporter.getPortalInfo(this, server, this::func_241829_a) : new PortalInfo(new Vector3d(location.func_177958_n(), location.func_177956_o(), location.func_177952_p()), Vector3d.field_186680_a, this.field_70177_z, this.field_70125_A);
++         if (location != null) portalinfo.setCBPortalEvent(server, null);
 +
           if (portalinfo == null) {
              return null;
@@ -1012,7 +1008,7 @@
              }).orElse((PortalInfo)null);
           }
        } else {
-@@ -2165,7 +_,16 @@
+@@ -2165,7 +_,18 @@
              blockpos = p_241829_1_.func_205770_a(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, p_241829_1_.func_241135_u_());
           }
  
@@ -1025,7 +1021,9 @@
 +         blockpos = new BlockPos(event.getTo().getX(), event.getTo().getY(), event.getTo().getZ());
 +
 +
-+         return new PortalInfo(new Vector3d((double)blockpos.func_177958_n() + 0.5D, (double)blockpos.func_177956_o(), (double)blockpos.func_177952_p() + 0.5D), this.func_213322_ci(), this.field_70177_z, this.field_70125_A, ((CraftWorld) event.getTo().getWorld()).getHandle(), event);
++         PortalInfo portalInfo = new PortalInfo(new Vector3d((double)blockpos.func_177958_n() + 0.5D, (double)blockpos.func_177956_o(), (double)blockpos.func_177952_p() + 0.5D), this.func_213322_ci(), this.field_70177_z, this.field_70125_A);
++         portalInfo.setCBPortalEvent(((CraftWorld) event.getTo().getWorld()).getHandle(), event);
++         return portalInfo;
 +         // CraftBukkit end
        }
     }

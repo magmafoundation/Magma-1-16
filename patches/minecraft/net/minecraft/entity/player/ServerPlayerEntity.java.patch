@@ -387,7 +387,7 @@
           }
        }
  
-@@ -603,28 +_,44 @@
+@@ -603,28 +_,46 @@
     }
  
     private boolean func_175400_cq() {
@@ -405,7 +405,9 @@
 +      if (portalinfo != null && this.field_70170_p.getTypeKey() == DimensionType.field_235999_c_ && p_241829_1_ != null && p_241829_1_.getTypeKey() == DimensionType.field_236001_e_) { // CraftBukkit
           Vector3d vector3d = portalinfo.field_222505_a.func_72441_c(0.0D, -1.0D, 0.0D);
 -         return new PortalInfo(vector3d, Vector3d.field_186680_a, 90.0F, 0.0F);
-+         return new PortalInfo(vector3d, Vector3d.field_186680_a, 90.0F, 0.0F, p_241829_1_, portalinfo.portalEventInfo); // CraftBukkit
++         PortalInfo portalInfo = new PortalInfo(vector3d, Vector3d.field_186680_a, 90.0F, 0.0F);
++         portalInfo.setCBPortalEvent(p_241829_1_, portalinfo.portalEventInfo);  // CraftBukkit
++         return portalInfo;
        } else {
           return portalinfo;
        }

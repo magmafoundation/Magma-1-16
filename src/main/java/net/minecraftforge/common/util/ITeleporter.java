@@ -81,7 +81,9 @@ public interface ITeleporter
     @Nullable
     default PortalInfo getPortalInfo(Entity entity, ServerWorld destWorld, Function<ServerWorld, PortalInfo> defaultPortalInfo)
     {
-        return this.isVanilla() ? defaultPortalInfo.apply(destWorld) : new PortalInfo(entity.position(), Vector3d.ZERO, entity.yRot, entity.xRot, destWorld, null);
+        PortalInfo portalInfo = new PortalInfo(entity.position(), Vector3d.ZERO, entity.yRot, entity.xRot);
+        portalInfo.setCBPortalEvent(destWorld, null);
+        return this.isVanilla() ? defaultPortalInfo.apply(destWorld) : portalInfo;
     }
 
     /**
