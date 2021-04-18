@@ -13,16 +13,6 @@
           p_225533_2_.func_180501_a(p_225533_3_, p_225533_1_, 2);
           return ActionResultType.func_233537_a_(p_225533_2_.field_72995_K);
        } else {
-+//         ItemStack record = playerEntity.getItemInHand(hand).copy();
-+//         org.bukkit.inventory.ItemStack stack = CraftItemStack.asNewCraftStack(record.getItem());
-+//         if(!stack.getType().isRecord()) return ActionResultType.PASS;
-+//         if(playerEntity.getBukkitEntity().getGameMode() != GameMode.CREATIVE) {
-+//            record.shrink(1);
-+//         }
-+//         this.setRecord(world,blockPos,blockState, record);
-+//         world.setBlock(blockPos, blockState.setValue(HAS_RECORD, true), 2);
-+//         world.levelEvent(1010, blockPos, 0);
-+//         return ActionResultType.sidedSuccess(world.isClientSide);
           return ActionResultType.PASS;
        }
     }
