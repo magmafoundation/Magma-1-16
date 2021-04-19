@@ -22,4 +22,3 @@ jobs:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           message: "New Dev Build: https://nightly.link/magmafoundation/Magma-1.16.x/workflows/dev-builds.yaml/1.16.x/Builds.zip"
-          file: projects/magma/build/libs/*.jar
