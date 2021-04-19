@@ -12,7 +12,14 @@ jobs:
       - run: ./gradlew setup installerJar
         env:
           STABLE_BUILD: 0
-    #   - uses: actions/upload-artifact@v2.2.2
-    #     with:
-    #       name: Builds
-    #       path: build/distributions/*server.*
+      - uses: actions/upload-artifact@v2.2.2
+        with:
+          name: Builds
+          path: projects/magma/build/libs/*installer*.jar
+      - name: Discord Message Notify
+        uses: appleboy/discord-action@0.0.3
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          message: "New Dev Build: https://nightly.link/magmafoundation/Magma-1.16.x/workflows/dev-builds.yaml/1.16.x/Builds.zip"
+          file: projects/magma/build/libs/
