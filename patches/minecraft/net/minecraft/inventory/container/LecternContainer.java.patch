@@ -28,7 +28,7 @@
 +   @Override
 +   public CraftInventoryView getBukkitView() {
 +      if (this.bukkitEntity != null) {
-+         return this.bukkitEntity;
++         return bukkitEntity;
 +      }
 +      final CraftInventoryLectern inventory = new CraftInventoryLectern(this.field_217018_c);
 +      return this.bukkitEntity = new CraftInventoryView(this.player, inventory, this);
@@ -59,7 +59,7 @@
     }
  
     public boolean func_75140_a(PlayerEntity p_75140_1_, int p_75140_2_) {
-@@ -52,6 +_,14 @@
+@@ -52,8 +_,17 @@
                 return false;
              }
  
@@ -73,7 +73,10 @@
 +
              ItemStack itemstack = this.field_217018_c.func_70304_b(0);
              this.field_217018_c.func_70296_d();
++            this.bukkitEntity.close(); // Magma - GH-47
              if (!p_75140_1_.field_71071_by.func_70441_a(itemstack)) {
+                p_75140_1_.func_71019_a(itemstack, false);
+             }
 @@ -71,6 +_,7 @@
     }
  
