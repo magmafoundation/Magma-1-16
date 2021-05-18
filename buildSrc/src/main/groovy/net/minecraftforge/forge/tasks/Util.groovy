@@ -68,7 +68,7 @@ public class Util {
 			def path = "${folder}${filename}"
 			def url = "https://libraries.minecraft.net/${path}"
 			if (!checkExists(url)) {
-				url = "https://files.minecraftforge.net/maven/${path}"
+				url = "https://maven.minecraftforge.net/${path}"
 				if (!checkExists(url)) { // Checks if not in the forge repo then use magma repo
 					url = "https://repo.hexeption.dev/repository/magma/${path}"
 				}
