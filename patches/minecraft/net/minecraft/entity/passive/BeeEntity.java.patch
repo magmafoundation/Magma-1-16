@@ -71,23 +71,6 @@
        this.func_226404_d_(4, p_226449_1_);
     }
  
-@@ -552,11 +_,14 @@
-          return false;
-       } else {
-          Entity entity = p_70097_1_.func_76346_g();
--         if (!this.field_70170_p.field_72995_K) {
-+         // CraftBukkit Start
-+         boolean result = super.damageEntityCB(p_70097_1_, p_70097_2_);
-+         if (result && !this.field_70170_p.field_72995_K) {
-             this.field_226370_bJ_.func_226504_l_();
-          }
- 
--         return super.func_70097_a(p_70097_1_, p_70097_2_);
-+         return result;
-+         // CraftBukkit end
-       }
-    }
- 
 @@ -588,7 +_,7 @@
  
        protected void func_220793_a(MobEntity p_220793_1_, LivingEntity p_220793_2_) {
