@@ -202,7 +202,7 @@
 +         event = new BlockBreakEvent(bblock, this.field_73090_b.getBukkitEntity());
 +
 +         //Magma start
-+         if(this.field_73090_b.func_184812_l_() && ((Player) this.field_73090_b.getBukkitEntity()).getInventory().getItemInMainHand().getType().toString().contains("SWORD")){
++         if(this.field_73090_b.func_184812_l_() && ((Player) this.field_73090_b.getBukkitEntity()).getInventory().getItemInMainHand().getType().toString().contains("SWORD") || ((Player) this.field_73090_b.getBukkitEntity()).getInventory().getItemInMainHand().getType().toString().contains("TRIDENT")){
 +            event.setCancelled(true);
 +            isSwordNoBreak = true;
 +         }
