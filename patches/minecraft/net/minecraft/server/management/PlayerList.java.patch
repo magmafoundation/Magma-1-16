@@ -358,7 +358,7 @@
              serverworld.func_217467_h(entity);
              entity.field_70128_L = true;
  
-@@ -323,107 +_,181 @@
+@@ -323,92 +_,158 @@
                 entity1.field_70128_L = true;
              }
  
@@ -548,31 +548,18 @@
        BlockPos blockpos = p_232644_1_.func_241140_K_();
        float f = p_232644_1_.func_242109_L();
        boolean flag = p_232644_1_.func_241142_M_();
--      ServerWorld serverworld = this.field_72400_f.func_71218_a(p_232644_1_.func_241141_L_());
-+       /* CraftBukkit start
-+      ServerWorld serverworld = this.server.getWorld(p_232644_1_.getRespawnDimension());
+       ServerWorld serverworld = this.field_72400_f.func_71218_a(p_232644_1_.func_241141_L_());
        Optional<Vector3d> optional;
        if (serverworld != null && blockpos != null) {
 -         optional = PlayerEntity.func_242374_a(serverworld, blockpos, f, flag, p_232644_2_);
-+         optional = PlayerEntity.findRespawnPositionAndUseSpawnBlock(serverworld, blockpos, f, flag, conqueredEnd);
++         optional = PlayerEntity.func_242374_a(serverworld, blockpos, f, flag, conqueredEnd);
        } else {
           optional = Optional.empty();
        }
- 
--      ServerWorld serverworld1 = serverworld != null && optional.isPresent() ? serverworld : this.field_72400_f.func_241755_D_();
-+      ServerWorld serverworld1 = serverworld != null && optional.isPresent() ? serverworld : this.server.overworld();
-       PlayerInteractionManager playerinteractionmanager;
--      if (this.field_72400_f.func_71242_L()) {
-+      if (this.server.isDemo()) {
-          playerinteractionmanager = new DemoPlayerInteractionManager(serverworld1);
-       } else {
-          playerinteractionmanager = new PlayerInteractionManager(serverworld1);
+@@ -422,8 +_,13 @@
        }
  
--      ServerPlayerEntity serverplayerentity = new ServerPlayerEntity(this.field_72400_f, serverworld1, p_232644_1_.func_146103_bH(), playerinteractionmanager);
-+      ServerPlayerEntity serverplayerentity = new ServerPlayerEntity(this.server, serverworld1, p_232644_1_.getGameProfile(), playerinteractionmanager);
-+       // */
-+      ServerPlayerEntity serverplayerentity = p_232644_1_;
+       ServerPlayerEntity serverplayerentity = new ServerPlayerEntity(this.field_72400_f, serverworld1, p_232644_1_.func_146103_bH(), playerinteractionmanager);
 +      org.bukkit.World fromWorld = p_232644_1_.getBukkitEntity().getWorld();
 +      p_232644_1_.field_71136_j = false;
 +      // CraftBukkit end
@@ -584,7 +571,7 @@
        serverplayerentity.func_145769_d(p_232644_1_.func_145782_y());
        serverplayerentity.func_184819_a(p_232644_1_.func_184591_cq());
  
-@@ -431,48 +_,114 @@
+@@ -431,48 +_,113 @@
           serverplayerentity.func_184211_a(s);
        }
  
@@ -606,7 +593,6 @@
 +         boolean isBedSpawn = false;
 +         ServerWorld worldserver1 = this.field_72400_f.func_71218_a(p_232644_1_.func_241141_L_());
 +         if (worldserver1 != null) {
-+            Optional optional;
 +            if (blockpos != null) {
 +               optional = PlayerEntity.func_242374_a(worldserver1, blockpos, f, conqueredEnd, flag);
 +            } else {

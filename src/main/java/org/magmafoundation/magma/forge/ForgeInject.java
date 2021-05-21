@@ -18,17 +18,28 @@
 
 package org.magmafoundation.magma.forge;
 
+import static org.bukkit.Material.normalizeName;
+
 import java.util.Map;
 import java.util.stream.IntStream;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.BannerPattern;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.DimensionType;
+
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableMap;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.craftbukkit.enchantments.CraftEnchantment;
 import org.bukkit.craftbukkit.potion.CraftPotionEffectType;
@@ -66,7 +77,7 @@ public class ForgeInject {
             ResourceLocation resourceLocation = registryKeyItemEntry.getValue().getRegistryName();
             Item item = registryKeyItemEntry.getValue();
             if(!resourceLocation.getNamespace().equals("minecraft")) {
-                String materialName = Material.normalizeName(registryKeyItemEntry.getKey().toString()).replace("RESOURCEKEYMINECRAFT_ITEM__", "");
+                String materialName = normalizeName(registryKeyItemEntry.getKey().toString()).replace("RESOURCEKEYMINECRAFT_ITEM__", "");
                 Material material = Material
                     .addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE, Integer.TYPE}, new Object[]{Item.getId(item), item.getMaxStackSize()}));
                 CraftMagicNumbers.ITEM_MATERIAL.put(item, material);
@@ -85,7 +96,7 @@ public class ForgeInject {
             ResourceLocation resourceLocation = registryKeyBlockEntry.getValue().getRegistryName();
             Block block = registryKeyBlockEntry.getValue();
             if(!resourceLocation.getNamespace().equals("minecraft")) {
-                String materialName = Material.normalizeName(registryKeyBlockEntry.getKey().toString()).replace("RESOURCEKEYMINECRAFT_BLOCK__", "");
+                String materialName = normalizeName(registryKeyBlockEntry.getKey().toString()).replace("RESOURCEKEYMINECRAFT_BLOCK__", "");
                 Material material = Material.addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE}, new Object[]{Item.getId(block.asItem())}));
                 CraftMagicNumbers.BLOCK_MATERIAL.put(block, material);
                 CraftMagicNumbers.MATERIAL_BLOCK.put(material, block);
@@ -134,6 +145,29 @@ public class ForgeInject {
             PATTERN_MAP.put(BannerPattern.values()[i].getHashname(), patternType);
         });
 
+    }
+
+    public static void addForgeEnvironment() {
+        BiMap<RegistryKey<DimensionType>, World.Environment> environment = HashBiMap.create(ImmutableMap.<RegistryKey<DimensionType>, World.Environment>builder()
+                .put(DimensionType.OVERWORLD_LOCATION, World.Environment.NORMAL)
+                .put(DimensionType.NETHER_LOCATION, World.Environment.NETHER)
+                .put(DimensionType.END_LOCATION, World.Environment.THE_END)
+                .build());
+
+        int i = World.Environment.values().length;
+        Registry<DimensionType> registry = MinecraftServer.getServer().registryHolder.dimensionTypes();
+        for (Map.Entry<RegistryKey<DimensionType>, DimensionType> entry : registry.entrySet()) {
+            RegistryKey<DimensionType> key = entry.getKey();
+            World.Environment environment1 = environment.get(key);
+            if (environment1 == null) {
+                String name = normalizeName(key.location().toString());
+                int id = i - 1;
+                environment1 = EnumHelper.addEnum(World.Environment.class, name, new Class[]{Integer.TYPE}, new Object[]{id});
+                environment.put(key, environment1);
+                LOGGER.info(String.format("Injected new Forge DimensionType %s.", environment1));
+                i++;
+            }
+        }
     }
 
 }

@@ -887,7 +887,7 @@
     }
  
     public boolean func_70028_i(Entity p_70028_1_) {
-@@ -2087,32 +_,70 @@
+@@ -2087,32 +_,74 @@
  
     @Nullable
     public Entity func_241206_a_(ServerWorld p_241206_1_) {
@@ -907,6 +907,10 @@
 +
 +   @Nullable
 +   public Entity changeDimension(ServerWorld server, net.minecraftforge.common.util.ITeleporter teleporter, BlockPos location) {
++      if (!func_70089_S() || !valid) {
++         field_184243_a.warn("Illegal Entity Teleport " + this + " to " + server + ":" + location, new Throwable());
++         return null;
++      }
 +      // Magma - end
        if (this.field_70170_p instanceof ServerWorld && !this.field_70128_L) {
           this.field_70170_p.func_217381_Z().func_76320_a("changeDimension");

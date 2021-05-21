@@ -389,7 +389,7 @@
           }
        }
  
-@@ -603,66 +_,97 @@
+@@ -603,66 +_,93 @@
     }
  
     private boolean func_175400_cq() {
@@ -431,18 +431,6 @@
 +      if (this.func_70608_bn()) {
 +         return this; // CraftBukkit - SPIGOT-3154
 +      }
-+      PortalInfo portalinfo = teleporter.getPortalInfo(this, server, this::func_241829_a);
-+      if (portalinfo == null)
-+         return null;
-+      // CraftBukkit - start
-+      Location enter = this.getBukkitEntity().getLocation();
-+      Location exit = (server == null) ? null : new Location(server.getWorldCB(), portalinfo.field_222505_a.field_72450_a, portalinfo.field_222505_a.field_72448_b, portalinfo.field_222505_a.field_72449_c, portalinfo.field_242960_c, portalinfo.field_242961_d);
-+      final PlayerTeleportEvent tpEvent = new PlayerTeleportEvent(this.getBukkitEntity(), enter, exit, cause);
-+      Bukkit.getServer().getPluginManager().callEvent(tpEvent);
-+      if (tpEvent.isCancelled() || tpEvent.getTo() == null) {
-+         return null;
-+      }
-+      // CraftBukkit end
        this.field_184851_cj = true;
        ServerWorld serverworld = this.func_71121_q();
        RegistryKey<World> registrykey = serverworld.func_234923_W_();
@@ -471,6 +459,7 @@
 -         PortalInfo portalinfo = this.func_241829_a(p_241206_1_);
 +         serverworld.removeEntity(this, true); //Forge: the player entity is moved to the new world, NOT cloned. So keep the data alive with no matching invalidate call.
 +         this.revive();
++         PortalInfo portalinfo = teleporter.getPortalInfo(this, server, this::func_241829_a);
           if (portalinfo != null) {
 +            Entity e = teleporter.placeEntity(this, serverworld, server, this.field_70177_z, spawnPortal -> {//Forge: Start vanilla logic
              serverworld.func_217381_Z().func_76320_a("moving");
@@ -492,6 +481,13 @@
 -            serverworld.func_217381_Z().func_76319_b();
 -            this.func_213846_b(serverworld);
 -            this.field_71134_c.func_73080_a(p_241206_1_);
++               Location enter = this.getBukkitEntity().getLocation();
++               Location exit = (server == null) ? null : new Location(server.getWorldCB(), portalinfo.field_222505_a.field_72450_a, portalinfo.field_222505_a.field_72448_b, portalinfo.field_222505_a.field_72449_c, portalinfo.field_242960_c, portalinfo.field_242961_d);
++               final PlayerTeleportEvent tpEvent = new PlayerTeleportEvent(this.getBukkitEntity(), enter, exit, cause);
++               Bukkit.getServer().getPluginManager().callEvent(tpEvent);
++               if (tpEvent.isCancelled() || tpEvent.getTo() == null) {
++                  return null;
++               }
 +               serverworld.func_217381_Z().func_76319_b();
 +               serverworld.func_217381_Z().func_76320_a("placing");
 +               this.func_70029_a(server);
@@ -545,7 +541,7 @@
  
     private void func_242110_a(ServerWorld p_242110_1_, BlockPos p_242110_2_) {
        BlockPos.Mutable blockpos$mutable = p_242110_2_.func_239590_i_();
-@@ -690,8 +_,8 @@
+@@ -690,22 +_,22 @@
  
     }
  
@@ -556,7 +552,14 @@
        if (optional.isPresent()) {
           return optional;
        } else {
-@@ -705,7 +_,7 @@
+          Direction.Axis direction$axis = this.field_70170_p.func_180495_p(this.field_242271_ac).func_235903_d_(NetherPortalBlock.field_176550_a).orElse(Direction.Axis.X);
+          Optional<TeleportationRepositioner.Result> optional1 = p_241830_1_.func_85176_s().func_242956_a(p_241830_2_, direction$axis);
+          if (!optional1.isPresent()) {
+-            field_147102_bM.error("Unable to create a portal, likely target out of worldborder");
++            //LOGGER.error("Unable to create a portal, likely target out of worldborder");
+          }
+ 
+          return optional1;
        }
     }
  

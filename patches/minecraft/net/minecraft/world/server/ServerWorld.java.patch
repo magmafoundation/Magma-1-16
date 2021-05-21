@@ -125,7 +125,7 @@
        this.field_241107_Q_ = p_i241885_13_;
        this.field_73061_a = p_i241885_1_;
        this.field_241104_N_ = p_i241885_12_;
-@@ -200,8 +_,38 @@
+@@ -200,8 +_,31 @@
        } else {
           this.field_241105_O_ = null;
        }
@@ -152,14 +152,7 @@
 +      return result;
 +   }
 +
-+   private TileEntity fixTileEntity(final BlockPos pos, final Block type, final TileEntity found) {
-+      this.getServerCB().getLogger().log(
-+          Level.SEVERE, "Block at {0}, {1}, {2} is {3} but has {4}. Bukkit will attempt to fix this, but there may be additional damage that we cannot recover.", new Object[] { pos.func_177958_n(), pos.func_177956_o(), pos.func_177952_p(), type, found });
-+      if (type instanceof ITileEntityProvider) {
-+         final TileEntity replacement = ((ITileEntityProvider)type).func_196283_a_(this);
-+         (replacement.field_145850_b = this).func_175690_a(pos, replacement);
-+         return replacement;
-+      }
++   private TileEntity fixTileEntity(BlockPos pos, Block type, TileEntity found) {
 +      return found;
 +   }
 +   // CraftBukkit end
