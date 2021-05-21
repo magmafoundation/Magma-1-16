@@ -403,14 +403,30 @@
        }
  
        field_147145_h.info("Saving worlds");
-@@ -566,6 +_,7 @@
-       for(ServerWorld serverworld1 : this.func_212370_w()) {
-          if (serverworld1 != null) {
-             try {
-+               net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.world.WorldEvent.Unload(serverworld1));
-                serverworld1.close();
-             } catch (IOException ioexception1) {
-                field_147145_h.error("Exception closing the level", (Throwable)ioexception1);
+@@ -563,13 +_,17 @@
+ 
+       this.func_213211_a(false, true, false);
+ 
+-      for(ServerWorld serverworld1 : this.func_212370_w()) {
+-         if (serverworld1 != null) {
+-            try {
+-               serverworld1.close();
+-            } catch (IOException ioexception1) {
+-               field_147145_h.error("Exception closing the level", (Throwable)ioexception1);
++      for(ServerWorld serverworld1 : this.field_71305_c.values()) {
++         ForcedChunksSaveData forcedchunkssavedata = serverworld1.func_217481_x().func_215753_b(ForcedChunksSaveData::new, "chunks");
++         if (forcedchunkssavedata != null) {
++            LongIterator longiterator = forcedchunkssavedata.func_212438_a().iterator();
++
++            while(longiterator.hasNext()) {
++               long i = longiterator.nextLong();
++               ChunkPos chunkpos = new ChunkPos(i);
++               serverworld1.func_72863_F().func_217206_a(chunkpos, true);
+             }
++            net.minecraftforge.common.world.ForgeChunkManager.reinstatePersistentChunks(serverworld1, forcedchunkssavedata);
+          }
+       }
+ 
 @@ -585,6 +_,13 @@
           field_147145_h.error("Failed to unlock level {}", this.field_71310_m.func_237282_a_(), ioexception);
        }
@@ -546,7 +562,11 @@
        return new TickDelayedTask(this.field_71315_w, p_212875_1_);
     }
  
-@@ -770,7 +_,10 @@
+@@ -767,10 +_,14 @@
+    }
+ 
+    protected void func_71240_o() {
++      System.exit(0);
     }
  
     protected void func_71217_p(BooleanSupplier p_71217_1_) {

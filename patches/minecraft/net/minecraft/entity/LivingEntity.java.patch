@@ -224,7 +224,7 @@
        ++this.field_70725_aQ;
 -      if (this.field_70725_aQ == 20) {
 -         this.func_70106_y();
-+      if (this.field_70725_aQ >= 20 && !this.field_70729_aU) { // CraftBukkit - (this.deathTime == 20) -> (this.deathTime >= 20 && !this.dead)
++      if (this.field_70725_aQ >= 20 && !this.field_70128_L) { // CraftBukkit - (this.deathTime == 20) -> (this.deathTime >= 20 && !this.dead)
 +         this.remove(this instanceof net.minecraft.entity.player.ServerPlayerEntity); //Forge keep data until we revive player
  
           for(int i = 0; i < 20; ++i) {

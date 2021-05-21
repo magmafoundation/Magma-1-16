@@ -59,7 +59,7 @@
  
  public class Main {
     private static final Logger field_240759_a_ = LogManager.getLogger();
-@@ -71,42 +_,79 @@
+@@ -71,40 +_,77 @@
        OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1);
        OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
        OptionSpec<String> optionspec13 = optionparser.nonOptions();
@@ -142,11 +142,8 @@
 +            return;
 +         }
           SaveFormat saveformat = SaveFormat.func_237269_a_(file1.toPath());
--         SaveFormat.LevelSave saveformat$levelsave = saveformat.func_237274_c_(s);
-+         SaveFormat.LevelSave saveformat$levelsave = saveformat.getLevelSave(s, Dimension.field_236053_b_);
+          SaveFormat.LevelSave saveformat$levelsave = saveformat.func_237274_c_(s);
           MinecraftServer.func_240777_a_(saveformat$levelsave);
-          DatapackCodec datapackcodec = saveformat$levelsave.func_237297_e_();
-          boolean flag = optionset.has(optionspec6);
 @@ -115,6 +_,25 @@
           }
  
