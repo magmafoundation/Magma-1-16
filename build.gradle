@@ -966,7 +966,6 @@ task setup() {
 
 githubRelease {
     apply plugin: 'net.nemerosa.versioning'
-    println(System.getenv("GITHUB_TOKEN"))
     if (System.getenv("GITHUB_TOKEN") != null) {
         token System.getenv("GITHUB_TOKEN")
     } else {
