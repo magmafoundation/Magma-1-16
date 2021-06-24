@@ -17,6 +17,7 @@ buildscript {
         classpath 'org.ow2.asm:asm:9.0'
         classpath 'org.ow2.asm:asm-tree:9.0'
         classpath "gradle.plugin.net.nemerosa:versioning:2.14.0"
+        classpath "com.github.breadmoirai:github-release:2.2.12"
     }
 }
 
@@ -39,6 +40,7 @@ plugins {
     id 'org.ajoberstar.grgit' version '3.1.1'
     id 'de.undercouch.download' version '3.3.0'
     id 'com.github.ben-manes.versions' version '0.22.0'
+    id "com.github.breadmoirai.github-release" version "2.2.12"
 }
 apply plugin: 'eclipse'
 
@@ -962,4 +964,29 @@ task setup() {
     //These must be strings so that we can do lazy resolution. Else we need evaluationDependsOnChildren above
 }
 
+githubRelease {
+    apply plugin: 'net.nemerosa.versioning'
+    println(System.getenv("GITHUB_TOKEN"))
+    if (System.getenv("GITHUB_TOKEN") != null) {
+        token System.getenv("GITHUB_TOKEN")
+    } else {
+        token ""
+    }
+    owner "MagmaFoundation"
+    repo "Magma-1.16.x"
+    targetCommitish versioning.info.branch
+    tagName "v" +  versioning.info.build
+    releaseName "Magma Dev " + versioning.info.branch + "-" + versioning.info.build
+    prerelease true
+    body {
+"""\
+## Change Log
+${changelog().call().replace('\n', '\n* ')}
+"""
+    }
+    draft false
+    releaseAssets = [
+            fileTree("projects/magma/build/libs/").filter { it.name.endsWith("jar") || it.name.endsWith("zip") },
+    ]
+}
 
