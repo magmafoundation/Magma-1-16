@@ -187,7 +187,7 @@ project(':forge') {
         VERSION_JSON = project(':mcp').file('build/mcp/downloadJson/version.json')
         BINPATCH_TOOL = 'net.minecraftforge:binarypatcher:1.0.12:fatjar'
         INSTALLER_TOOLS = 'net.minecraftforge:installertools:1.1.11'
-        FORGE_VERSION = '36.1.23'
+        FORGE_VERSION = '36.1.32'
     }
 
     if (System.getenv("STABLE_BUILD") != null) {
