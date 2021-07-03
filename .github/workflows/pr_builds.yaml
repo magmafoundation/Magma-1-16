@@ -1,5 +1,5 @@
 name: Dev-Builds
-on: [push]
+on: [pull_request]
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: gradle/wrapper-validation-action@v1.0.3
       - run: chmod +x ./gradlew
-      - run: ./gradlew setup installerJar githubRelease
+      - run: ./gradlew setup installerJar
         env:
           STABLE_BUILD: 0
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
