@@ -973,10 +973,18 @@ githubRelease {
     }
     owner "MagmaFoundation"
     repo "Magma-1.16.x"
-    targetCommitish versioning.info.branch
+    targetCommitish "1.16.x"
     tagName "v" +  versioning.info.build
     releaseName "Magma Dev " + versioning.info.branch + "-" + versioning.info.build
-    prerelease true
+    if (System.getenv("STABLE_BUILD") != null) {
+        if (System.getenv("STABLE_BUILD") == '1') {
+            prerelease false
+        } else {
+            prerelease true
+        }
+    } else {
+        prerelease true
+    }
     body {
 """\
 ## Change Log
