@@ -18,6 +18,8 @@
 
 package org.magmafoundation.magma;
 
+import org.magmafoundation.magma.patcher.PatcherManager;
+
 /**
  * Magma
  *
@@ -31,6 +33,7 @@ public class Magma {
     private static final String BUKKIT_VERSION = "v1_16_R4";
     private static final String NMS_PREFIX = "net/minecraft/server/";
     private static Magma INSTANCE = new Magma();
+    private PatcherManager patcherManager;
 
     public Magma() {
         INSTANCE = this;
@@ -60,4 +63,11 @@ public class Magma {
         return NMS_PREFIX;
     }
 
+    public PatcherManager getPatcherManager() {
+        return patcherManager;
+    }
+
+    public void setPatcherManager(PatcherManager patcherManager) {
+        this.patcherManager = patcherManager;
+    }
 }

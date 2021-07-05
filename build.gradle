@@ -412,6 +412,7 @@ project(':forge') {
         installer 'net.md-5:bungeecord-chat:1.16-R0.3'
         installer 'net.md-5:SpecialSource:1.8.5'
         installer 'org.apache.logging.log4j:log4j-iostreams:2.8.1'
+        installer 'org.reflections:reflections:0.9.12'
     }
 
     // We apply the bin patches we just created to make a jar that is JUST our changes

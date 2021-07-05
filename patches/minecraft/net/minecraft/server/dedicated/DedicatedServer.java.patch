@@ -170,10 +170,11 @@
           field_155771_h.warn("To change this, set \"online-mode\" to \"true\" in the server.properties file.");
        }
  
-@@ -157,16 +_,20 @@
+@@ -156,17 +_,20 @@
+       if (!PreYggdrasilConverter.func_219587_e(this)) {
           return false;
        } else {
-          this.func_184105_a(new DedicatedPlayerList(this, this.field_240767_f_, this.field_240766_e_));
+-         this.func_184105_a(new DedicatedPlayerList(this, this.field_240767_f_, this.field_240766_e_));
 +         server.loadPlugins();
 +         server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
           long i = Util.func_211178_c();
