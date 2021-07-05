@@ -2,10 +2,8 @@ package net.minecraftforge.forge.tasks
 
 import groovy.json.JsonSlurper
 
-import java.io.File
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
-import java.util.Date
 
 public class Util {
 	static void init() {
@@ -71,6 +69,9 @@ public class Util {
 				url = "https://maven.minecraftforge.net/${path}"
 				if (!checkExists(url)) { // Checks if not in the forge repo then use magma repo
 					url = "https://repo.hexeption.dev/repository/magma/${path}"
+					if (!checkExists(url)) { // If all else fails use maven central repo
+						url = "https://repo1.maven.org/maven2/${path}"
+					}
 				}
 			}
 			//TODO remove when Mojang launcher is updated

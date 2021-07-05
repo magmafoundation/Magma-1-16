@@ -105,7 +105,7 @@
     private CompoundNBT field_77990_d;
     private boolean field_190928_g;
     private Entity field_234693_k_;
-@@ -109,34 +_,61 @@
+@@ -109,34 +_,62 @@
        p_i231596_3_.ifPresent(this::func_77982_d);
     }
  
@@ -146,8 +146,9 @@
 +   // CraftBukkit start - break into own method
 +   private void load(CompoundNBT compound) {
 +      this.capNBT = compound.func_74764_b("ForgeCaps") ? compound.func_74775_l("ForgeCaps") : null;
++      Item rawItem =
 +      this.field_151002_e = Registry.field_212630_s.func_82594_a(new ResourceLocation(compound.func_74779_i("id")));
-+      this.delegate = field_151002_e.delegate;
++      this.delegate = rawItem.delegate;
 +      this.field_77994_a = compound.func_74771_c("Count");
 +      if (compound.func_150297_b("tag", 10)) {
 +         // CraftBukkit start - make defensive copy as this data may be coming from the save thread

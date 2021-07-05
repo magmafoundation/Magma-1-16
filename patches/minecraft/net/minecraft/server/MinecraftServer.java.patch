@@ -19,7 +19,7 @@
  import java.awt.image.BufferedImage;
  import java.io.File;
  import java.io.IOException;
-@@ -37,19 +_,59 @@
+@@ -37,19 +_,60 @@
  import java.util.Date;
  import java.util.List;
  import java.util.Map;
@@ -75,6 +75,7 @@
 +import org.magmafoundation.magma.Metrics.SimplePie;
 +import org.magmafoundation.magma.api.ServerAPI;
 +import org.magmafoundation.magma.forge.ForgeInject;
++import org.magmafoundation.magma.patcher.PatcherManager;
 +import org.spigotmc.SlackActivityAccountant;
 +
  import net.minecraft.advancements.AdvancementManager;
@@ -137,7 +138,7 @@
     protected long field_211151_aa = Util.func_211177_b();
     private long field_213213_ab;
     private boolean field_213214_ac;
-@@ -219,16 +_,42 @@
+@@ -219,16 +_,45 @@
     private final FrameTimer field_213215_ap = new FrameTimer();
     private boolean field_205745_an;
     private float field_211152_ao;
@@ -175,7 +176,10 @@
 +
 +   private static MinecraftServer instance;
 +
++   // Magma start
 +   private static Metrics metrics;
++   public static Magma magma;
++   // Magma end
  
     public static <S extends MinecraftServer> S func_240784_a_(Function<Thread, S> p_240784_0_) {
        AtomicReference<S> atomicreference = new AtomicReference<>();
@@ -207,7 +211,7 @@
        this.field_213220_d = p_i232576_12_;
        this.field_71310_m = p_i232576_3_;
        this.field_240766_e_ = p_i232576_3_.func_237292_b_();
-@@ -259,7 +_,38 @@
+@@ -259,7 +_,44 @@
        this.field_240765_ak_ = new TemplateManager(p_i232576_8_.func_240970_h_(), p_i232576_3_, p_i232576_7_);
        this.field_175590_aa = p_i232576_1_;
        this.field_213217_au = Util.func_215072_e();
@@ -215,10 +219,16 @@
 +      // CraftBukkit start
 +      this.vanillaCommandDispatcher = p_i232576_8_.field_240953_c_; // CraftBukkit
 +
++      // Magma Start
 +      if(metrics == null){
 +         metrics = new Metrics();
 +         metrics.addCustomChart(new SimplePie("number_of_mods", () -> String.valueOf(ServerAPI.getModSize()))); // Report how many mods are running
 +      }
++
++      magma = Magma.getInstance();
++      magma.setPatcherManager(new PatcherManager());
++      magma.getPatcherManager().init();
++      // Magma end
 +
 +      // Try to see if we're actually running in a terminal, disable jline if not
 +      if (System.console() == null && System.getProperty("jline.terminal") == null) {
