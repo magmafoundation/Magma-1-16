@@ -36,10 +36,11 @@
  import net.minecraft.network.play.server.SRespawnPacket;
  import net.minecraft.network.play.server.SServerDifficultyPacket;
  import net.minecraft.network.play.server.SSetExperiencePacket;
-@@ -54,9 +_,11 @@
+@@ -54,9 +_,12 @@
  import net.minecraft.scoreboard.ServerScoreboard;
  import net.minecraft.scoreboard.Team;
  import net.minecraft.server.MinecraftServer;
++import net.minecraft.server.dedicated.DedicatedPlayerList;
 +import net.minecraft.server.dedicated.DedicatedServer;
  import net.minecraft.stats.ServerStatisticsManager;
  import net.minecraft.stats.Stats;
@@ -100,7 +101,7 @@
     private boolean field_72409_l;
     private final DynamicRegistries.Impl field_232639_s_;
     protected final int field_72405_c;
-@@ -110,8 +_,20 @@
+@@ -110,8 +_,25 @@
     private GameType field_72410_m;
     private boolean field_72407_n;
     private int field_72408_o;
@@ -112,10 +113,15 @@
 +
  
     public PlayerList(MinecraftServer p_i231425_1_, DynamicRegistries.Impl p_i231425_2_, PlayerData p_i231425_3_, int p_i231425_4_) {
-+      this.cserver = p_i231425_1_.server = new CraftServer((DedicatedServer) p_i231425_1_, this);
-+      ForgeInject.injectForge();
-+      p_i231425_1_.console = ColouredConsoleSender.getInstance();
-+      p_i231425_1_.reader.addCompleter(new ConsoleCommandCompleter(p_i231425_1_.server));
++      if(cserver == null){
++         this.cserver = new CraftServer((DedicatedServer) p_i231425_1_, this);
++         ForgeInject.injectForge();
++         p_i231425_1_.server = cserver;
++         p_i231425_1_.console = ColouredConsoleSender.getInstance();
++         p_i231425_1_.reader.addCompleter(new ConsoleCommandCompleter(p_i231425_1_.server));
++      }else{
++         cserver.playerList = (DedicatedPlayerList) this;
++      }
 +      // CraftBukkit end
 +
        this.field_72400_f = p_i231425_1_;

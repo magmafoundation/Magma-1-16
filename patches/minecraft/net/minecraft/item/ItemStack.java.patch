@@ -90,7 +90,7 @@
           return Optional.ofNullable(p_234704_0_.field_77990_d);
        })).apply(p_234698_0_, ItemStack::new);
     });
-+   private final net.minecraftforge.registries.IRegistryDelegate<Item> delegate;
++   private net.minecraftforge.registries.IRegistryDelegate<Item> delegate;
 +   private CompoundNBT capNBT;
 +
     private static final Logger field_199558_c = LogManager.getLogger();
@@ -147,6 +147,7 @@
 +   private void load(CompoundNBT compound) {
 +      this.capNBT = compound.func_74764_b("ForgeCaps") ? compound.func_74775_l("ForgeCaps") : null;
 +      this.field_151002_e = Registry.field_212630_s.func_82594_a(new ResourceLocation(compound.func_74779_i("id")));
++      this.delegate = field_151002_e.delegate;
 +      this.field_77994_a = compound.func_74771_c("Count");
 +      if (compound.func_150297_b("tag", 10)) {
 +         // CraftBukkit start - make defensive copy as this data may be coming from the save thread
@@ -155,7 +156,7 @@
 +         // CraftBukkit end
 +      }
 +
-+      if (this.func_77973_b().isDamageable(this)) {
++      if (this.func_77973_b().func_77645_m()) {
 +         this.func_196085_b(this.func_77952_i());
 +      }
 +   }
@@ -174,7 +175,6 @@
 -
 +      super(ItemStack.class);
 +      this.load(p_i47263_1_);
-+      this.delegate = field_151002_e.delegate;
 +      // CraftBukkit stop
        this.func_190923_F();
 +      this.forgeInit();
@@ -406,7 +406,7 @@
        return multimap;
     }
  
-@@ -839,6 +_,13 @@
+@@ -839,6 +_,14 @@
        listnbt.add(compoundnbt);
     }
  
@@ -414,6 +414,7 @@
 +   @Deprecated
 +   public void setItem(Item item) {
 +      this.field_151002_e = item;
++      this.delegate = item.delegate;
 +   }
 +   // CraftBukkit end
 +

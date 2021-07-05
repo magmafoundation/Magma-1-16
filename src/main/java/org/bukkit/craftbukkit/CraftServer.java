@@ -241,7 +241,7 @@ public final class CraftServer implements Server {
     private final StandardMessenger messenger = new StandardMessenger();
     private final SimplePluginManager pluginManager = new SimplePluginManager(this, commandMap);
     protected final DedicatedServer console;
-    protected final DedicatedPlayerList playerList;
+    public DedicatedPlayerList playerList;
     private final Map<String, World> worlds = new LinkedHashMap<String, World>();
     private YamlConfiguration configuration;
     private YamlConfiguration commandsConfiguration;

@@ -60,6 +60,12 @@ import org.magmafoundation.magma.util.EnumHelper;
  */
 public class ForgeInject {
 
+    public static BiMap<RegistryKey<DimensionType>, World.Environment> environment = HashBiMap.create(ImmutableMap.<RegistryKey<DimensionType>, World.Environment>builder()
+            .put(DimensionType.OVERWORLD_LOCATION, World.Environment.NORMAL)
+            .put(DimensionType.NETHER_LOCATION, World.Environment.NETHER)
+            .put(DimensionType.END_LOCATION, World.Environment.THE_END)
+            .build());
+
     public static final Logger LOGGER = LogManager.getLogger();
 
     public static void injectForge() {
@@ -148,12 +154,6 @@ public class ForgeInject {
     }
 
     public static void addForgeEnvironment() {
-        BiMap<RegistryKey<DimensionType>, World.Environment> environment = HashBiMap.create(ImmutableMap.<RegistryKey<DimensionType>, World.Environment>builder()
-                .put(DimensionType.OVERWORLD_LOCATION, World.Environment.NORMAL)
-                .put(DimensionType.NETHER_LOCATION, World.Environment.NETHER)
-                .put(DimensionType.END_LOCATION, World.Environment.THE_END)
-                .build());
-
         int i = World.Environment.values().length;
         Registry<DimensionType> registry = MinecraftServer.getServer().registryHolder.dimensionTypes();
         for (Map.Entry<RegistryKey<DimensionType>, DimensionType> entry : registry.entrySet()) {

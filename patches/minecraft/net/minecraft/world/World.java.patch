@@ -45,7 +45,7 @@
  import net.minecraft.world.border.WorldBorder;
  import net.minecraft.world.chunk.AbstractChunkProvider;
  import net.minecraft.world.chunk.Chunk;
-@@ -55,15 +_,25 @@
+@@ -55,15 +_,26 @@
  import net.minecraft.world.gen.Heightmap;
  import net.minecraft.world.lighting.WorldLightManager;
  import net.minecraft.world.server.ChunkHolder;
@@ -66,6 +66,7 @@
 +import org.bukkit.craftbukkit.block.CapturedBlockState;
 +import org.bukkit.craftbukkit.block.data.CraftBlockData;
 +import org.bukkit.event.block.BlockPhysicsEvent;
++import org.magmafoundation.magma.forge.ForgeInject;
  
 -public abstract class World implements IWorld, AutoCloseable {
 +public abstract class World extends net.minecraftforge.common.capabilities.CapabilityProvider<World> implements IWorld, AutoCloseable, net.minecraftforge.common.extensions.IForgeWorld {
@@ -155,7 +156,7 @@
 +         generator = getServerCB().getGenerator(((IServerWorldInfo) p_i241925_1_).func_76065_j());
 +      }
 +      if (environment == null) {
-+         //environment = ForgeInjectBukkit.environment.get(getTypeKey());
++         environment = ForgeInject.environment.get(getTypeKey());
 +      }
 +      // CraftBukkit end
        this.field_72984_F = p_i241925_4_;

@@ -845,7 +845,7 @@
     }
  
     @Nullable
-@@ -1399,15 +_,40 @@
+@@ -1399,15 +_,45 @@
     }
  
     public static void func_241121_a_(ServerWorld p_241121_0_) {
@@ -887,5 +887,10 @@
 +
 +   public java.util.stream.Stream<Entity> getEntities() {
 +       return field_217498_x.values().stream();
++   }
++
++   @Override
++   public Stream<VoxelShape> func_230318_c_(@org.jetbrains.annotations.Nullable Entity p_230318_1_, AxisAlignedBB p_230318_2_, Predicate<Entity> p_230318_3_) {
++      return Stream.empty();
     }
  }
