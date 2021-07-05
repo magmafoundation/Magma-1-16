@@ -1,11 +1,10 @@
 --- a/net/minecraft/client/gui/screen/inventory/CreativeScreen.java
 +++ b/net/minecraft/client/gui/screen/inventory/CreativeScreen.java
-@@ -49,6 +_,8 @@
+@@ -49,6 +_,7 @@
  import net.minecraft.util.text.TranslationTextComponent;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.inventory.InventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
  
  @OnlyIn(Dist.CLIENT)
  public class CreativeScreen extends DisplayEffectsScreen<CreativeScreen.CreativeContainer> {

@@ -1,14 +1,13 @@
 --- a/net/minecraft/inventory/container/CartographyContainer.java
 +++ b/net/minecraft/inventory/container/CartographyContainer.java
-@@ -14,8 +_,30 @@
+@@ -14,8 +_,29 @@
  import net.minecraft.util.SoundCategory;
  import net.minecraft.util.SoundEvents;
  import net.minecraft.world.storage.MapData;
 +import org.bukkit.Location;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryCartography;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryCartography;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
 +import org.bukkit.entity.Player;
-+import org.bukkit.inventory.InventoryView;
  
  public class CartographyContainer extends Container {
 +

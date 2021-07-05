@@ -4,7 +4,7 @@
  import net.minecraft.world.World;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
  
  @OnlyIn(
     value = Dist.CLIENT,
@@ -32,7 +32,7 @@
 +      this.field_92056_a += 1;
 +      if (!this.field_70170_p.field_72995_K && this.field_92056_a > this.field_92055_b) {
 +         // CraftBukkit start
-+         if (!org.bukkit.craftbukkit.event.CraftEventFactory.callFireworkExplodeEvent(this).isCancelled()) {
++         if (!org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory.callFireworkExplodeEvent(this).isCancelled()) {
 +            this.func_191510_k();
 +         }
 +         // CraftBukkit end

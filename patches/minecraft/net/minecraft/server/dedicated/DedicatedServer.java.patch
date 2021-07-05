@@ -13,7 +13,7 @@
  import java.util.Collections;
  import java.util.List;
  import java.util.Locale;
-@@ -35,14 +_,17 @@
+@@ -35,6 +_,7 @@
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.server.ServerPropertiesProvider;
  import net.minecraft.server.gui.MinecraftServerGui;
@@ -21,16 +21,6 @@
  import net.minecraft.server.management.PlayerProfileCache;
  import net.minecraft.server.management.PreYggdrasilConverter;
  import net.minecraft.tileentity.SkullTileEntity;
-+import net.minecraft.util.CryptManager;
- import net.minecraft.util.DefaultUncaughtExceptionHandler;
- import net.minecraft.util.DefaultWithNameUncaughtExceptionHandler;
- import net.minecraft.util.NonNullList;
- import net.minecraft.util.SharedConstants;
- import net.minecraft.util.Util;
-+import net.minecraft.util.datafix.codec.DatapackCodec;
- import net.minecraft.util.math.BlockPos;
- import net.minecraft.util.math.MathHelper;
- import net.minecraft.util.registry.DynamicRegistries;
 @@ -55,17 +_,26 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraft.world.storage.IServerConfiguration;
@@ -41,7 +31,7 @@
 +import org.apache.logging.log4j.io.IoBuilder;
 +import org.bukkit.command.CommandSender;
 +import org.bukkit.craftbukkit.Main;
-+import org.bukkit.craftbukkit.SpigotTimings;
++import org.bukkit.craftbukkit.v1_16_R3.SpigotTimings;
 +import org.bukkit.event.server.RemoteServerCommandEvent;
 +import org.bukkit.event.server.ServerCommandEvent;
 +import org.bukkit.plugin.Plugin;
@@ -121,7 +111,7 @@
 +      for (java.util.logging.Handler handler : global.getHandlers()) {
 +         global.removeHandler(handler);
 +      }
-+      global.addHandler(new org.bukkit.craftbukkit.util.ForwardLogHandler());
++      global.addHandler(new org.bukkit.craftbukkit.v1_16_R3.util.ForwardLogHandler());
 +
 +      final org.apache.logging.log4j.core.Logger logger = ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger());
 +      for (org.apache.logging.log4j.core.Appender appender : logger.getAppenders().values()) {
@@ -130,7 +120,7 @@
 +         }
 +      }
 +
-+      new org.bukkit.craftbukkit.util.TerminalConsoleWriterThread(System.out, this.reader).start();
++      new org.bukkit.craftbukkit.v1_16_R3.util.TerminalConsoleWriterThread(System.out, this.reader).start();
 +
 +      System.setOut(IoBuilder.forLogger(logger).setLevel(Level.INFO).buildPrintStream());
 +      System.setErr(IoBuilder.forLogger(logger).setLevel(Level.WARN).buildPrintStream());
@@ -196,7 +186,7 @@
           if (serverproperties.field_219030_x) {
              field_155771_h.info("Starting remote control listener");
              this.field_71339_n = MainThread.func_242130_a(this);
-+            this.remoteConsole = new org.bukkit.craftbukkit.command.CraftRemoteConsoleCommandSender(this.field_184115_n); // CraftBukkit
++            this.remoteConsole = new org.bukkit.craftbukkit.v1_16_R3.command.CraftRemoteConsoleCommandSender(this.field_184115_n); // CraftBukkit
           }
  
 -         if (this.func_175593_aQ() > 0L) {

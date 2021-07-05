@@ -1,13 +1,12 @@
 --- a/net/minecraft/inventory/container/WorkbenchContainer.java
 +++ b/net/minecraft/inventory/container/WorkbenchContainer.java
-@@ -19,13 +_,22 @@
+@@ -19,13 +_,21 @@
  import net.minecraft.world.World;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryCrafting;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.inventory.InventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryCrafting;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
  
  public class WorkbenchContainer extends RecipeBookContainer<CraftingInventory> {
 -   private final CraftingInventory field_75162_e = new CraftingInventory(this, 3, 3);

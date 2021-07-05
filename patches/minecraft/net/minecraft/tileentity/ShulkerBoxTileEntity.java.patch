@@ -1,13 +1,11 @@
 --- a/net/minecraft/tileentity/ShulkerBoxTileEntity.java
 +++ b/net/minecraft/tileentity/ShulkerBoxTileEntity.java
-@@ -30,6 +_,10 @@
+@@ -30,6 +_,8 @@
  import net.minecraft.util.text.TranslationTextComponent;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.Location;
-+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
++import org.bukkit.craftbukkit.v1_16_R3.entity.CraftHumanEntity;
 +import org.bukkit.entity.HumanEntity;
-+import org.bukkit.inventory.InventoryHolder;
  
  public class ShulkerBoxTileEntity extends LockableLootTileEntity implements ISidedInventory, ITickableTileEntity {
     private static final int[] field_190595_a = IntStream.range(0, 27).toArray();

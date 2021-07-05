@@ -7,13 +7,12 @@
  import net.minecraft.entity.player.PlayerEntity;
  import net.minecraft.entity.player.PlayerInventory;
  import net.minecraft.inventory.IInventory;
-@@ -7,11 +_,39 @@
+@@ -7,11 +_,38 @@
  import net.minecraft.item.ItemStack;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.inventory.CraftInventory;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.inventory.InventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventory;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
  
  public class ChestContainer extends Container {
     private final IInventory field_75155_e;
@@ -31,9 +30,9 @@
 +      }
 +      CraftInventory inventory;
 +      if (this.field_75155_e instanceof PlayerInventory) {
-+         inventory = new org.bukkit.craftbukkit.inventory.CraftInventoryPlayer((PlayerInventory) this.field_75155_e);
++         inventory = new org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryPlayer((PlayerInventory) this.field_75155_e);
 +      } else if (this.field_75155_e instanceof DoubleInventory) {
-+         inventory = new org.bukkit.craftbukkit.inventory.CraftInventoryDoubleChest((DoubleInventory) this.field_75155_e);
++         inventory = new org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryDoubleChest((DoubleInventory) this.field_75155_e);
 +      } else {
 +         inventory = new CraftInventory(this.field_75155_e);
 +      }

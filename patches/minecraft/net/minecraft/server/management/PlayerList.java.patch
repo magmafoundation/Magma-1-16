@@ -63,11 +63,11 @@
  import org.apache.logging.log4j.Logger;
 +import org.bukkit.Bukkit;
 +import org.bukkit.Location;
-+import org.bukkit.craftbukkit.CraftServer;
-+import org.bukkit.craftbukkit.CraftWorld;
-+import org.bukkit.craftbukkit.command.ColouredConsoleSender;
-+import org.bukkit.craftbukkit.command.ConsoleCommandCompleter;
-+import org.bukkit.craftbukkit.util.CraftChatMessage;
++import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
++import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
++import org.bukkit.craftbukkit.v1_16_R3.command.ColouredConsoleSender;
++import org.bukkit.craftbukkit.v1_16_R3.command.ConsoleCommandCompleter;
++import org.bukkit.craftbukkit.v1_16_R3.util.CraftChatMessage;
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.player.PlayerChangedWorldEvent;
 +import org.bukkit.event.player.PlayerJoinEvent;
@@ -205,7 +205,7 @@
 +      }
 +      joinMessage = playerJoinEvent.getJoinMessage();
 +      if (joinMessage != null && joinMessage.length() > 0) {
-+         for (ITextComponent line : org.bukkit.craftbukkit.util.CraftChatMessage.fromString(joinMessage)) {
++         for (ITextComponent line : org.bukkit.craftbukkit.v1_16_R3.util.CraftChatMessage.fromString(joinMessage)) {
 +            field_72400_f.func_184103_al().func_148540_a(new SChatPacket(line, ChatType.SYSTEM, Util.field_240973_b_));
 +         }
 +      }

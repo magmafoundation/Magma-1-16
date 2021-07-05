@@ -1,14 +1,10 @@
 --- a/net/minecraft/entity/item/ItemFrameEntity.java
 +++ b/net/minecraft/entity/item/ItemFrameEntity.java
-@@ -32,16 +_,18 @@
- import net.minecraft.world.storage.MapData;
- import net.minecraftforge.api.distmarker.Dist;
- import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.apache.commons.lang.NotImplementedException;
+@@ -35,13 +_,14 @@
  import org.apache.commons.lang3.Validate;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
  
  public class ItemFrameEntity extends HangingEntity {
     private static final Logger field_195052_c = LogManager.getLogger();

@@ -1,14 +1,13 @@
 --- a/net/minecraft/inventory/container/GrindstoneContainer.java
 +++ b/net/minecraft/inventory/container/GrindstoneContainer.java
-@@ -17,6 +_,11 @@
+@@ -17,6 +_,10 @@
  import net.minecraft.item.Items;
  import net.minecraft.util.IWorldPosCallable;
  import net.minecraft.world.World;
 +import org.bukkit.Location;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryGrindstone;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryGrindstone;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
 +import org.bukkit.entity.Player;
-+import org.bukkit.inventory.InventoryView;
  
  public class GrindstoneContainer extends Container {
     private final IInventory field_217013_c = new CraftResultInventory();

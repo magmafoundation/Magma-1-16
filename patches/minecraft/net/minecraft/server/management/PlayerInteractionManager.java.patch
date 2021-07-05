@@ -1,6 +1,6 @@
 --- a/net/minecraft/server/management/PlayerInteractionManager.java
 +++ b/net/minecraft/server/management/PlayerInteractionManager.java
-@@ -1,19 +_,29 @@
+@@ -1,19 +_,27 @@
  package net.minecraft.server.management;
  
 +import java.util.ArrayList;
@@ -8,14 +8,12 @@
  import net.minecraft.advancements.CriteriaTriggers;
  import net.minecraft.block.Block;
  import net.minecraft.block.BlockState;
-+import net.minecraft.block.Blocks;
 +import net.minecraft.block.CakeBlock;
  import net.minecraft.block.CommandBlockBlock;
 +import net.minecraft.block.DoorBlock;
  import net.minecraft.block.JigsawBlock;
  import net.minecraft.block.StructureBlock;
 +import net.minecraft.block.TrapDoorBlock;
-+import net.minecraft.entity.player.PlayerEntity;
  import net.minecraft.entity.player.ServerPlayerEntity;
 +import net.minecraft.inventory.EquipmentSlotType;
  import net.minecraft.inventory.container.INamedContainerProvider;
@@ -34,8 +32,8 @@
  import net.minecraft.world.server.ServerWorld;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
-+import org.bukkit.craftbukkit.block.CraftBlock;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.block.CraftBlock;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.block.Action;
@@ -285,7 +283,7 @@
  
 +               // CraftBukkit start
 +               if (event.isDropItems()) {
-+                  org.bukkit.craftbukkit.event.CraftEventFactory.handleBlockDropItemEvent(bblock, state, this.field_73090_b, field_73092_a.captureDrops);
++                  org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory.handleBlockDropItemEvent(bblock, state, this.field_73090_b, field_73092_a.captureDrops);
 +               }
 +               field_73092_a.captureDrops = null;
 +               // Drop event experience

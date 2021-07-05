@@ -1,10 +1,18 @@
 --- a/net/minecraft/entity/passive/RabbitEntity.java
 +++ b/net/minecraft/entity/passive/RabbitEntity.java
+@@ -48,7 +_,6 @@
+ import net.minecraft.util.math.vector.Vector3d;
+ import net.minecraft.util.text.TranslationTextComponent;
+ import net.minecraft.world.DifficultyInstance;
+-import net.minecraft.world.GameRules;
+ import net.minecraft.world.IServerWorld;
+ import net.minecraft.world.IWorld;
+ import net.minecraft.world.IWorldReader;
 @@ -57,6 +_,7 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
  
  public class RabbitEntity extends AnimalEntity {
     private static final DataParameter<Integer> field_184773_bv = EntityDataManager.func_187226_a(RabbitEntity.class, DataSerializers.field_187192_b);

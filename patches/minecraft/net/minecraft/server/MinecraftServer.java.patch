@@ -62,11 +62,11 @@
 +import org.apache.logging.log4j.Logger;
 +import org.bukkit.Bukkit;
 +import org.bukkit.command.CommandSender;
-+import org.bukkit.craftbukkit.CraftServer;
++import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
 +import org.bukkit.craftbukkit.Main;
-+import org.bukkit.craftbukkit.SpigotTimings;
-+import org.bukkit.craftbukkit.scoreboard.CraftScoreboardManager;
-+import org.bukkit.craftbukkit.util.CraftChatMessage;
++import org.bukkit.craftbukkit.v1_16_R3.SpigotTimings;
++import org.bukkit.craftbukkit.v1_16_R3.scoreboard.CraftScoreboardManager;
++import org.bukkit.craftbukkit.v1_16_R3.util.CraftChatMessage;
 +import org.bukkit.event.server.ServerLoadEvent;
 +import org.bukkit.event.world.WorldInitEvent;
 +import org.bukkit.event.world.WorldLoadEvent;
@@ -250,7 +250,7 @@
 +            field_147145_h.warn((String) null, ex);
 +         }
 +      }
-+      Runtime.getRuntime().addShutdownHook(new org.bukkit.craftbukkit.util.ServerShutdownThread(this));
++      Runtime.getRuntime().addShutdownHook(new org.bukkit.craftbukkit.v1_16_R3.util.ServerShutdownThread(this));
     }
 +   // CraftBukkit end
  

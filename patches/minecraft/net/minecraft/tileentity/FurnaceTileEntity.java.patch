@@ -1,20 +1,11 @@
 --- a/net/minecraft/tileentity/FurnaceTileEntity.java
 +++ b/net/minecraft/tileentity/FurnaceTileEntity.java
-@@ -1,11 +_,17 @@
- package net.minecraft.tileentity;
- 
-+import java.util.List;
- import net.minecraft.entity.player.PlayerInventory;
- import net.minecraft.inventory.container.Container;
- import net.minecraft.inventory.container.FurnaceContainer;
-+import net.minecraft.item.ItemStack;
- import net.minecraft.item.crafting.IRecipeType;
+@@ -7,6 +_,8 @@
  import net.minecraft.util.text.ITextComponent;
  import net.minecraft.util.text.TranslationTextComponent;
-+import org.bukkit.Location;
-+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
-+import org.bukkit.entity.HumanEntity;
-+import org.bukkit.inventory.InventoryHolder;
  
++import org.bukkit.craftbukkit.v1_16_R3.entity.CraftHumanEntity;
++
  public class FurnaceTileEntity extends AbstractFurnaceTileEntity {
     public FurnaceTileEntity() {
+       super(TileEntityType.field_200971_b, IRecipeType.field_222150_b);

@@ -1,11 +1,10 @@
 --- a/net/minecraft/entity/projectile/DamagingProjectileEntity.java
 +++ b/net/minecraft/entity/projectile/DamagingProjectileEntity.java
-@@ -16,11 +_,15 @@
+@@ -16,11 +_,14 @@
  import net.minecraft.world.World;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.apache.commons.lang.NotImplementedException;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
  
  public abstract class DamagingProjectileEntity extends ProjectileEntity {
     public double field_70232_b;

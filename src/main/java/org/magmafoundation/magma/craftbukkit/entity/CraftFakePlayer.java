@@ -19,8 +19,8 @@
 package org.magmafoundation.magma.craftbukkit.entity;
 
 import net.minecraftforge.common.util.FakePlayer;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.permissions.Permission;
 import org.magmafoundation.magma.configuration.MagmaConfig;
 

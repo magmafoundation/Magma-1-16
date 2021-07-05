@@ -1,11 +1,8 @@
 --- a/net/minecraft/block/AbstractFireBlock.java
 +++ b/net/minecraft/block/AbstractFireBlock.java
-@@ -13,7 +_,10 @@
- import net.minecraft.util.math.BlockPos;
+@@ -14,6 +_,7 @@
  import net.minecraft.util.math.shapes.ISelectionContext;
  import net.minecraft.util.math.shapes.VoxelShape;
-+import net.minecraft.world.Dimension;
-+import net.minecraft.world.DimensionType;
  import net.minecraft.world.IBlockReader;
 +import net.minecraft.world.IWorld;
  import net.minecraft.world.World;
@@ -17,7 +14,7 @@
           if (p_196262_4_.func_223314_ad() == 0) {
 -            p_196262_4_.func_70015_d(8);
 +            // CraftBukkit start
-+            org.bukkit.event.entity.EntityCombustEvent event = new org.bukkit.event.entity.EntityCombustByBlockEvent(org.bukkit.craftbukkit.block.CraftBlock.at(p_196262_2_, p_196262_3_), p_196262_4_.getBukkitEntity(), 8);
++            org.bukkit.event.entity.EntityCombustEvent event = new org.bukkit.event.entity.EntityCombustByBlockEvent(org.bukkit.craftbukkit.v1_16_R3.block.CraftBlock.at(p_196262_2_, p_196262_3_), p_196262_4_.getBukkitEntity(), 8);
 +            p_196262_2_.getServerCB().getPluginManager().callEvent(event);
 +            if (!event.isCancelled()) {
 +               p_196262_4_.setFire(event.getDuration(), false);
@@ -51,7 +48,7 @@
 +
 +   // CraftBukkit start
 +   protected void fireExtinguished(IWorld world, BlockPos position) {
-+      if (!org.bukkit.craftbukkit.event.CraftEventFactory.callBlockFadeEvent(world, position, Blocks.field_150350_a.func_176223_P()).isCancelled()) {
++      if (!org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory.callBlockFadeEvent(world, position, Blocks.field_150350_a.func_176223_P()).isCancelled()) {
 +         world.func_217377_a(position, false);
 +      }
 +   }

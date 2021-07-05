@@ -1,10 +1,18 @@
 --- a/net/minecraft/entity/passive/AnimalEntity.java
 +++ b/net/minecraft/entity/passive/AnimalEntity.java
+@@ -18,7 +_,6 @@
+ import net.minecraft.pathfinding.PathNodeType;
+ import net.minecraft.stats.Stats;
+ import net.minecraft.util.ActionResultType;
+-import net.minecraft.util.DamageSource;
+ import net.minecraft.util.Hand;
+ import net.minecraft.util.math.BlockPos;
+ import net.minecraft.world.GameRules;
 @@ -28,10 +_,13 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
 +import org.bukkit.event.entity.EntityEnterLoveModeEvent;
  
  public abstract class AnimalEntity extends AgeableEntity {
@@ -87,7 +95,7 @@
  
 +         // CraftBukkit start - call EntityBreedEvent
 +         int experience = this.func_70681_au().nextInt(7) + 1;
-+         org.bukkit.event.entity.EntityBreedEvent entityBreedEvent = org.bukkit.craftbukkit.event.CraftEventFactory.callEntityBreedEvent(ageableentity, this, p_234177_2_, serverplayerentity, this.breedItem, experience);
++         org.bukkit.event.entity.EntityBreedEvent entityBreedEvent = org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory.callEntityBreedEvent(ageableentity, this, p_234177_2_, serverplayerentity, this.breedItem, experience);
 +         if (entityBreedEvent.isCancelled()) {
 +            return;
 +         }

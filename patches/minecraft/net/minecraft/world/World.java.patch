@@ -21,14 +21,6 @@
  import net.minecraft.entity.player.PlayerEntity;
  import net.minecraft.fluid.FluidState;
  import net.minecraft.fluid.Fluids;
-@@ -27,6 +_,7 @@
- import net.minecraft.item.crafting.RecipeManager;
- import net.minecraft.nbt.CompoundNBT;
- import net.minecraft.network.IPacket;
-+import net.minecraft.network.play.server.SWorldBorderPacket;
- import net.minecraft.particles.IParticleData;
- import net.minecraft.profiler.IProfiler;
- import net.minecraft.scoreboard.Scoreboard;
 @@ -34,7 +_,6 @@
  import net.minecraft.tags.ITagCollectionSupplier;
  import net.minecraft.tileentity.ITickableTileEntity;
@@ -37,14 +29,6 @@
  import net.minecraft.util.DamageSource;
  import net.minecraft.util.Direction;
  import net.minecraft.util.RegistryKey;
-@@ -47,6 +_,7 @@
- import net.minecraft.util.registry.Registry;
- import net.minecraft.world.biome.Biome;
- import net.minecraft.world.biome.BiomeManager;
-+import net.minecraft.world.border.IBorderListener;
- import net.minecraft.world.border.WorldBorder;
- import net.minecraft.world.chunk.AbstractChunkProvider;
- import net.minecraft.world.chunk.Chunk;
 @@ -55,15 +_,26 @@
  import net.minecraft.world.gen.Heightmap;
  import net.minecraft.world.lighting.WorldLightManager;
@@ -54,17 +38,17 @@
  import net.minecraft.world.storage.ISpawnWorldInfo;
  import net.minecraft.world.storage.IWorldInfo;
  import net.minecraft.world.storage.MapData;
-+import net.minecraft.world.storage.ServerWorldInfo;
++
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
 +import org.bukkit.Bukkit;
-+import org.bukkit.craftbukkit.CraftServer;
-+import org.bukkit.craftbukkit.CraftWorld;
-+import org.bukkit.craftbukkit.SpigotTimings;
-+import org.bukkit.craftbukkit.block.CapturedBlockState;
-+import org.bukkit.craftbukkit.block.data.CraftBlockData;
++import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
++import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
++import org.bukkit.craftbukkit.v1_16_R3.SpigotTimings;
++import org.bukkit.craftbukkit.v1_16_R3.block.CapturedBlockState;
++import org.bukkit.craftbukkit.v1_16_R3.block.data.CraftBlockData;
 +import org.bukkit.event.block.BlockPhysicsEvent;
 +import org.magmafoundation.magma.forge.ForgeInject;
  

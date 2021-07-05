@@ -16,7 +16,7 @@
  import net.minecraft.util.datafix.DefaultTypeReferences;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
-+import org.bukkit.craftbukkit.entity.CraftPlayer;
++import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
  
  public class PlayerData {
     private static final Logger field_237332_b_ = LogManager.getLogger();

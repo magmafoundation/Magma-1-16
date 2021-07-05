@@ -8,14 +8,13 @@
  import net.minecraft.inventory.IInventory;
  import net.minecraft.inventory.Inventory;
  import net.minecraft.item.ItemStack;
-@@ -13,6 +_,10 @@
+@@ -13,6 +_,9 @@
  import net.minecraft.util.IntArray;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.inventory.CraftInventory;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryBeacon;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.inventory.InventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventory;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryBeacon;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
  
  public class BeaconContainer extends Container {
     private final IInventory field_82866_e = new Inventory(1) {

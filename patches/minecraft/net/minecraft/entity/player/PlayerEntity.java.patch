@@ -1,5 +1,13 @@
 --- a/net/minecraft/entity/player/PlayerEntity.java
 +++ b/net/minecraft/entity/player/PlayerEntity.java
+@@ -30,7 +_,6 @@
+ import net.minecraft.entity.Pose;
+ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+ import net.minecraft.entity.ai.attributes.Attributes;
+-import net.minecraft.entity.boss.dragon.EnderDragonPartEntity;
+ import net.minecraft.entity.item.ArmorStandEntity;
+ import net.minecraft.entity.item.BoatEntity;
+ import net.minecraft.entity.item.ItemEntity;
 @@ -48,7 +_,6 @@
  import net.minecraft.inventory.container.INamedContainerProvider;
  import net.minecraft.inventory.container.PlayerContainer;
@@ -16,13 +24,12 @@
  import net.minecraft.stats.Stat;
  import net.minecraft.stats.Stats;
  import net.minecraft.tags.FluidTags;
-@@ -108,10 +_,26 @@
+@@ -108,10 +_,25 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.apache.commons.lang.NotImplementedException;
-+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
-+import org.bukkit.craftbukkit.util.CraftVector;
++import org.bukkit.craftbukkit.v1_16_R3.entity.CraftHumanEntity;
++import org.bukkit.craftbukkit.v1_16_R3.util.CraftVector;
 +import org.bukkit.entity.Item;
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -723,7 +730,7 @@
           this.field_70143_R = 0.0F;
 -         this.func_70052_a(7, false);
 +         // CraftBukkit start
-+         if (func_70083_f(7) && !org.bukkit.craftbukkit.event.CraftEventFactory.callToggleGlideEvent(this, false).isCancelled()) {
++         if (func_70083_f(7) && !org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory.callToggleGlideEvent(this, false).isCancelled()) {
 +            this.func_70052_a(7, false);
 +         }
 +         // CraftBukkit end
@@ -793,7 +800,7 @@
     public void func_226567_ej_() {
 -      this.func_70052_a(7, true);
 +      // CraftBukkit start
-+      if (!org.bukkit.craftbukkit.event.CraftEventFactory.callToggleGlideEvent(this, true).isCancelled()) {
++      if (!org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory.callToggleGlideEvent(this, true).isCancelled()) {
 +         this.func_70052_a(7, true);
 +      } else {
 +         // SPIGOT-5542: must toggle like below
@@ -807,7 +814,7 @@
 -      this.func_70052_a(7, true);
 -      this.func_70052_a(7, false);
 +      // CraftBukkit start
-+      if (!org.bukkit.craftbukkit.event.CraftEventFactory.callToggleGlideEvent(this, false).isCancelled()) {
++      if (!org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory.callToggleGlideEvent(this, false).isCancelled()) {
 +         this.func_70052_a(7, true);
 +         this.func_70052_a(7, false);
 +      }

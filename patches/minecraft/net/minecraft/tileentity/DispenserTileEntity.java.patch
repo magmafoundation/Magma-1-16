@@ -8,17 +8,16 @@
  import java.util.Random;
  import net.minecraft.block.BlockState;
  import net.minecraft.entity.player.PlayerEntity;
-@@ -12,6 +_,10 @@
- import net.minecraft.util.NonNullList;
+@@ -13,6 +_,9 @@
  import net.minecraft.util.text.ITextComponent;
  import net.minecraft.util.text.TranslationTextComponent;
-+import org.bukkit.Location;
-+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
-+import org.bukkit.entity.HumanEntity;
-+import org.bukkit.inventory.InventoryHolder;
  
++import org.bukkit.craftbukkit.v1_16_R3.entity.CraftHumanEntity;
++import org.bukkit.entity.HumanEntity;
++
  public class DispenserTileEntity extends LockableLootTileEntity {
     private static final Random field_174913_f = new Random();
+    private NonNullList<ItemStack> field_146022_i = NonNullList.func_191197_a(9, ItemStack.field_190927_a);
 @@ -28,6 +_,41 @@
     public int func_70302_i_() {
        return 9;

@@ -8,13 +8,12 @@
  import java.util.List;
  import java.util.function.Predicate;
  import net.minecraft.block.BlockState;
-@@ -26,6 +_,11 @@
+@@ -26,6 +_,10 @@
  import net.minecraft.world.World;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.apache.commons.lang3.NotImplementedException;
 +import org.bukkit.Location;
-+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
++import org.bukkit.craftbukkit.v1_16_R3.entity.CraftHumanEntity;
 +import org.bukkit.entity.HumanEntity;
 +import org.bukkit.inventory.InventoryHolder;
  

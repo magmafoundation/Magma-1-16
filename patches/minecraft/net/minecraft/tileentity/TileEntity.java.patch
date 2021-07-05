@@ -8,19 +8,20 @@
  import net.minecraft.network.play.server.SUpdateTileEntityPacket;
  import net.minecraft.util.Mirror;
  import net.minecraft.util.ResourceLocation;
-@@ -15,20 +_,33 @@
+@@ -15,20 +_,34 @@
  import net.minecraftforge.api.distmarker.OnlyIn;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
-+import org.bukkit.craftbukkit.persistence.CraftPersistentDataContainer;
-+import org.bukkit.craftbukkit.persistence.CraftPersistentDataTypeRegistry;
++import org.bukkit.craftbukkit.v1_16_R3.SpigotTimings;
++import org.bukkit.craftbukkit.v1_16_R3.persistence.CraftPersistentDataContainer;
++import org.bukkit.craftbukkit.v1_16_R3.persistence.CraftPersistentDataTypeRegistry;
 +import org.bukkit.inventory.InventoryHolder;
 +import org.magmafoundation.magma.util.InventoryHelper;
 +import org.spigotmc.CustomTimingsHandler;
  
 -public abstract class TileEntity {
 +public abstract class TileEntity extends net.minecraftforge.common.capabilities.CapabilityProvider<TileEntity> implements net.minecraftforge.common.extensions.IForgeTileEntity {
-+   public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getTileEntityTimings(this); // Spigot
++   public CustomTimingsHandler tickTimer = SpigotTimings.getTileEntityTimings(this); // Spigot
 +   // CraftBukkit start - data containers
 +   private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
 +   public CraftPersistentDataContainer persistentDataContainer;

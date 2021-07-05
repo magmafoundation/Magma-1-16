@@ -1,12 +1,11 @@
 --- a/net/minecraft/inventory/container/ShulkerBoxContainer.java
 +++ b/net/minecraft/inventory/container/ShulkerBoxContainer.java
-@@ -5,10 +_,27 @@
+@@ -5,10 +_,26 @@
  import net.minecraft.inventory.IInventory;
  import net.minecraft.inventory.Inventory;
  import net.minecraft.item.ItemStack;
-+import org.bukkit.craftbukkit.inventory.CraftInventory;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.inventory.InventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventory;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
  
  public class ShulkerBoxContainer extends Container {
     private final IInventory field_190899_a;

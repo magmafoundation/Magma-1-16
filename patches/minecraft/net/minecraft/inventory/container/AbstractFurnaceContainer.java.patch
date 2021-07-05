@@ -1,12 +1,11 @@
 --- a/net/minecraft/inventory/container/AbstractFurnaceContainer.java
 +++ b/net/minecraft/inventory/container/AbstractFurnaceContainer.java
-@@ -19,6 +_,9 @@
+@@ -19,6 +_,8 @@
  import net.minecraft.world.World;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryFurnace;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.inventory.InventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryFurnace;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
  
  public abstract class AbstractFurnaceContainer extends RecipeBookContainer<IInventory> {
     private final IInventory field_217063_d;

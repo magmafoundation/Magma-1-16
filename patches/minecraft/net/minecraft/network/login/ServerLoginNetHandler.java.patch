@@ -9,8 +9,8 @@
  import org.apache.commons.lang3.Validate;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
-+import org.bukkit.craftbukkit.CraftServer;
-+import org.bukkit.craftbukkit.util.Waitable;
++import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
++import org.bukkit.craftbukkit.v1_16_R3.util.Waitable;
 +import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 +import org.bukkit.event.player.PlayerPreLoginEvent;
 +import org.bukkit.event.player.PlayerPreLoginEvent.Result;

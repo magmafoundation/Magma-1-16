@@ -9,7 +9,7 @@
  import javax.annotation.Nullable;
  import net.minecraft.block.BlockState;
  import net.minecraft.block.BrewingStandBlock;
-@@ -16,22 +_,68 @@
+@@ -16,6 +_,7 @@
  import net.minecraft.item.Items;
  import net.minecraft.nbt.CompoundNBT;
  import net.minecraft.potion.PotionBrewing;
@@ -17,17 +17,17 @@
  import net.minecraft.util.Direction;
  import net.minecraft.util.IIntArray;
  import net.minecraft.util.NonNullList;
- import net.minecraft.util.math.BlockPos;
+@@ -23,15 +_,60 @@
  import net.minecraft.util.text.ITextComponent;
  import net.minecraft.util.text.TranslationTextComponent;
-+import org.bukkit.Location;
-+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
-+import org.bukkit.craftbukkit.inventory.CraftItemStack;
+ 
++import org.bukkit.craftbukkit.v1_16_R3.entity.CraftHumanEntity;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 +import org.bukkit.entity.HumanEntity;
 +import org.bukkit.event.inventory.BrewEvent;
 +import org.bukkit.event.inventory.BrewingStandFuelEvent;
 +import org.bukkit.inventory.InventoryHolder;
- 
++
  public class BrewingStandTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
     private static final int[] field_145941_a = new int[]{3};
     private static final int[] field_184277_f = new int[]{0, 1, 2, 3};

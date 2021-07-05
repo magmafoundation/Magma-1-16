@@ -8,11 +8,15 @@
  import net.minecraft.block.SilverfishBlock;
  import net.minecraft.entity.CreatureAttribute;
  import net.minecraft.entity.EntitySize;
-@@ -29,6 +_,7 @@
+@@ -25,10 +_,10 @@
+ import net.minecraft.util.SoundEvent;
+ import net.minecraft.util.SoundEvents;
+ import net.minecraft.util.math.BlockPos;
+-import net.minecraft.world.GameRules;
  import net.minecraft.world.IWorld;
  import net.minecraft.world.IWorldReader;
  import net.minecraft.world.World;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
  
  public class SilverfishEntity extends MonsterEntity {
     private SilverfishEntity.SummonSilverfishGoal field_175460_b;

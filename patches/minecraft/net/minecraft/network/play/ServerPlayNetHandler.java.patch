@@ -17,7 +17,7 @@
  import net.minecraft.block.BlockState;
  import net.minecraft.block.Blocks;
  import net.minecraft.block.CommandBlockBlock;
-@@ -31,20 +_,24 @@
+@@ -31,10 +_,12 @@
  import net.minecraft.crash.ReportedException;
  import net.minecraft.entity.Entity;
  import net.minecraft.entity.IJumpingMount;
@@ -30,11 +30,7 @@
  import net.minecraft.entity.passive.horse.AbstractHorseEntity;
  import net.minecraft.entity.player.ChatVisibility;
  import net.minecraft.entity.player.PlayerInventory;
- import net.minecraft.entity.player.ServerPlayerEntity;
- import net.minecraft.entity.projectile.AbstractArrowEntity;
-+import net.minecraft.inventory.EquipmentSlotType;
- import net.minecraft.inventory.container.BeaconContainer;
- import net.minecraft.inventory.container.Container;
+@@ -45,6 +_,7 @@
  import net.minecraft.inventory.container.MerchantContainer;
  import net.minecraft.inventory.container.RecipeBookContainer;
  import net.minecraft.inventory.container.RepairContainer;
@@ -42,14 +38,6 @@
  import net.minecraft.item.BlockItem;
  import net.minecraft.item.BucketItem;
  import net.minecraft.item.Item;
-@@ -52,6 +_,7 @@
- import net.minecraft.item.Items;
- import net.minecraft.item.WritableBookItem;
- import net.minecraft.nbt.CompoundNBT;
-+import net.minecraft.nbt.INBT;
- import net.minecraft.nbt.ListNBT;
- import net.minecraft.nbt.StringNBT;
- import net.minecraft.network.IPacket;
 @@ -106,13 +_,17 @@
  import net.minecraft.network.play.server.SChatPacket;
  import net.minecraft.network.play.server.SConfirmTransactionPacket;
@@ -81,19 +69,21 @@
  import net.minecraft.util.math.shapes.IBooleanFunction;
  import net.minecraft.util.math.shapes.VoxelShape;
  import net.minecraft.util.math.shapes.VoxelShapes;
-@@ -150,6 +_,45 @@
+@@ -150,6 +_,47 @@
  import net.minecraft.world.server.ServerWorld;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
 +import org.bukkit.Location;
-+import org.bukkit.craftbukkit.entity.CraftPlayer;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.craftbukkit.inventory.CraftItemStack;
-+import org.bukkit.craftbukkit.util.CraftChatMessage;
-+import org.bukkit.craftbukkit.util.CraftMagicNumbers;
-+import org.bukkit.craftbukkit.util.LazyPlayerSet;
-+import org.bukkit.craftbukkit.util.Waitable;
++import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
++import org.bukkit.craftbukkit.v1_16_R3.SpigotTimings;
++import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
++import org.bukkit.craftbukkit.v1_16_R3.util.CraftChatMessage;
++import org.bukkit.craftbukkit.v1_16_R3.util.CraftMagicNumbers;
++import org.bukkit.craftbukkit.v1_16_R3.util.LazyPlayerSet;
++import org.bukkit.craftbukkit.v1_16_R3.util.Waitable;
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.block.Action;
@@ -149,7 +139,7 @@
 +      this.craftServer = p_i1530_1_.server;
 +   }
 +
-+   private final org.bukkit.craftbukkit.CraftServer craftServer;
++   private final CraftServer craftServer;
 +   public boolean processedDisconnect;
 +   private int lastTick = MinecraftServer.currentTick;
 +   private int allowedPlayerTicks = 1;
@@ -174,7 +164,7 @@
 +   // CraftBukkit end
  
     public void func_73660_a() {
-+      org.bukkit.craftbukkit.SpigotTimings.playerConnectionTimer.startTiming(); // Spigot
++      SpigotTimings.playerConnectionTimer.startTiming(); // Spigot
        this.func_184342_d();
        this.field_147369_b.field_70169_q = this.field_147369_b.func_226277_ct_();
        this.field_147369_b.field_70167_r = this.field_147369_b.func_226278_cu_();
@@ -228,7 +218,7 @@
 +         this.field_147369_b.func_143004_u(); // CraftBukkit - SPIGOT-854
           this.func_194028_b(new TranslationTextComponent("multiplayer.disconnect.idling"));
        }
-+      org.bukkit.craftbukkit.SpigotTimings.playerConnectionTimer.stopTiming(); // Spigot
++      SpigotTimings.playerConnectionTimer.stopTiming(); // Spigot
  
     }
  
@@ -1182,7 +1172,7 @@
  
     private void func_147361_d(String p_147361_1_) {
 -      this.field_147367_d.func_195571_aL().func_197059_a(this.field_147369_b.func_195051_bN(), p_147361_1_);
-+      org.bukkit.craftbukkit.SpigotTimings.playerCommandTimer.startTiming(); // Spigot
++      SpigotTimings.playerCommandTimer.startTiming(); // Spigot
 +      // CraftBukkit start - whole method
 +      if ( org.spigotmc.SpigotConfig.logCommands ) // Spigot
 +      this.field_147370_c.info(this.field_147369_b.func_195047_I_() + " issued server command: " + p_147361_1_);
@@ -1191,7 +1181,7 @@
 +      PlayerCommandPreprocessEvent event = new PlayerCommandPreprocessEvent(player, p_147361_1_, new LazyPlayerSet(field_147367_d));
 +      this.craftServer.getPluginManager().callEvent(event);
 +      if (event.isCancelled()) {
-+         org.bukkit.craftbukkit.SpigotTimings.playerCommandTimer.stopTiming(); // Spigot
++         SpigotTimings.playerCommandTimer.stopTiming(); // Spigot
 +         return;
 +      }
 +      try {
@@ -1203,7 +1193,7 @@
 +         java.util.logging.Logger.getLogger(ServerPlayNetHandler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 +         return;
 +      } finally {
-+         org.bukkit.craftbukkit.SpigotTimings.playerCommandTimer.stopTiming(); // Spigot
++         SpigotTimings.playerCommandTimer.stopTiming(); // Spigot
 +      }
 +      // CraftBukkit end
     }
@@ -1787,10 +1777,10 @@
 +            lines[i] = TextFormatting.func_110646_a(new StringTextComponent(TextFormatting.func_110646_a(astring[i])).getString());
 +         }
 +
-+         SignChangeEvent event = new SignChangeEvent((org.bukkit.craftbukkit.block.CraftBlock) player.getWorld().getBlockAt(x, y, z), this.craftServer.getPlayer(this.field_147369_b), lines);
++         SignChangeEvent event = new SignChangeEvent((org.bukkit.craftbukkit.v1_16_R3.block.CraftBlock) player.getWorld().getBlockAt(x, y, z), this.craftServer.getPlayer(this.field_147369_b), lines);
 +         this.craftServer.getPluginManager().callEvent(event);
 +         if (!event.isCancelled()) {
-+            System.arraycopy(org.bukkit.craftbukkit.block.CraftSign.sanitizeLines(event.getLines()), 0, signtileentity.field_145915_a, 0, 4);
++            System.arraycopy(org.bukkit.craftbukkit.v1_16_R3.block.CraftSign.sanitizeLines(event.getLines()), 0, signtileentity.field_145915_a, 0, 4);
 +            signtileentity.field_145916_j = false;
 +         }
 +         // CraftBukkit end

@@ -1,11 +1,10 @@
 --- a/net/minecraft/inventory/container/AbstractRepairContainer.java
 +++ b/net/minecraft/inventory/container/AbstractRepairContainer.java
-@@ -9,6 +_,8 @@
+@@ -9,6 +_,7 @@
  import net.minecraft.inventory.Inventory;
  import net.minecraft.item.ItemStack;
  import net.minecraft.util.IWorldPosCallable;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.inventory.InventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
  
  public abstract class AbstractRepairContainer extends Container {
     protected final CraftResultInventory field_234642_c_ = new CraftResultInventory();

@@ -19,8 +19,8 @@
 package org.magmafoundation.magma.craftbukkit.entity;
 
 import net.minecraft.entity.Entity;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 

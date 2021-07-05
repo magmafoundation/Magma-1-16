@@ -1,13 +1,12 @@
 --- a/net/minecraft/world/chunk/Chunk.java
 +++ b/net/minecraft/world/chunk/Chunk.java
-@@ -5,22 +_,26 @@
+@@ -5,29 +_,30 @@
  import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
  import it.unimi.dsi.fastutil.longs.LongSet;
  import it.unimi.dsi.fastutil.shorts.ShortList;
 +
  import java.util.Collection;
  import java.util.Collections;
-+import java.util.Iterator;
  import java.util.List;
  import java.util.Map;
 -import java.util.Set;
@@ -29,6 +28,13 @@
  import net.minecraft.crash.CrashReport;
  import net.minecraft.crash.CrashReportCategory;
  import net.minecraft.crash.ReportedException;
+ import net.minecraft.entity.Entity;
+ import net.minecraft.entity.EntityType;
+-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+-import net.minecraft.entity.boss.dragon.EnderDragonPartEntity;
+ import net.minecraft.fluid.Fluid;
+ import net.minecraft.fluid.FluidState;
+ import net.minecraft.fluid.Fluids;
 @@ -53,746 +_,860 @@
  import net.minecraft.world.lighting.WorldLightManager;
  import net.minecraft.world.server.ChunkHolder;
@@ -776,8 +782,8 @@
 -      QUEUED,
 -      CHECK;
 -   }
-+import org.bukkit.craftbukkit.CraftChunk;
-+import org.bukkit.craftbukkit.util.UnsafeList;
++import org.bukkit.craftbukkit.v1_16_R3.CraftChunk;
++import org.bukkit.craftbukkit.v1_16_R3.util.UnsafeList;
 +
 +public class Chunk extends net.minecraftforge.common.capabilities.CapabilityProvider<Chunk> implements IChunk, net.minecraftforge.common.extensions.IForgeChunk {
 +	private static final Logger field_150817_t = LogManager.getLogger();
@@ -856,8 +862,8 @@
 +	public boolean mustNotSave;
 +	public boolean needsDecoration;
 +
-+	private static final org.bukkit.craftbukkit.persistence.CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new org.bukkit.craftbukkit.persistence.CraftPersistentDataTypeRegistry();
-+	public final org.bukkit.craftbukkit.persistence.CraftPersistentDataContainer persistentDataContainer = new org.bukkit.craftbukkit.persistence.CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
++	private static final org.bukkit.craftbukkit.v1_16_R3.persistence.CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new org.bukkit.craftbukkit.v1_16_R3.persistence.CraftPersistentDataTypeRegistry();
++	public final org.bukkit.craftbukkit.v1_16_R3.persistence.CraftPersistentDataContainer persistentDataContainer = new org.bukkit.craftbukkit.v1_16_R3.persistence.CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
 +	// CraftBukkit end
 +
 +	public Chunk(World p_i49947_1_, ChunkPrimer p_i49947_2_) {

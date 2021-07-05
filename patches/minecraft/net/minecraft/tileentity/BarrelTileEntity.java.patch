@@ -8,15 +8,13 @@
  import net.minecraft.block.BarrelBlock;
  import net.minecraft.block.BlockState;
  import net.minecraft.block.Blocks;
-@@ -17,8 +_,49 @@
- import net.minecraft.util.math.vector.Vector3i;
+@@ -18,7 +_,47 @@
  import net.minecraft.util.text.ITextComponent;
  import net.minecraft.util.text.TranslationTextComponent;
-+import org.bukkit.Location;
-+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
-+import org.bukkit.entity.HumanEntity;
-+import org.bukkit.inventory.InventoryHolder;
  
++import org.bukkit.craftbukkit.v1_16_R3.entity.CraftHumanEntity;
++import org.bukkit.entity.HumanEntity;
++
  public class BarrelTileEntity extends LockableLootTileEntity {
 +
 +   // CraftBukkit start - add fields and methods

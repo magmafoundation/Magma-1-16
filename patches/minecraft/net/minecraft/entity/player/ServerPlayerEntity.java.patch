@@ -53,11 +53,11 @@
 +import org.bukkit.GameMode;
 +import org.bukkit.Location;
 +import org.bukkit.WeatherType;
-+import org.bukkit.craftbukkit.CraftWorld;
-+import org.bukkit.craftbukkit.entity.CraftPlayer;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
-+import org.bukkit.craftbukkit.event.CraftPortalEvent;
-+import org.bukkit.craftbukkit.inventory.CraftItemStack;
++import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
++import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftPortalEvent;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 +import org.bukkit.event.inventory.InventoryType;
 +import org.bukkit.event.player.PlayerChangedMainHandEvent;
 +import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -335,7 +335,7 @@
 +         if (deathMessage.equals(deathmessage)) {
 +            itextcomponent = this.func_110142_aN().func_151521_b();
 +         } else {
-+            itextcomponent = org.bukkit.craftbukkit.util.CraftChatMessage.fromStringOrNull(deathMessage);
++            itextcomponent = org.bukkit.craftbukkit.v1_16_R3.util.CraftChatMessage.fromStringOrNull(deathMessage);
 +         }
           this.field_71135_a.func_211148_a(new SCombatPacket(this.func_110142_aN(), SCombatPacket.Event.ENTITY_DIED, itextcomponent), (p_212356_2_) -> {
              if (!p_212356_2_.isSuccess()) {
@@ -640,7 +640,7 @@
 +      if (force) {
 +         bedResult = Either.right(Unit.INSTANCE);
 +      }
-+      bedResult = org.bukkit.craftbukkit.event.CraftEventFactory.callPlayerBedEnterEvent(this, blockposition, bedResult);
++      bedResult = org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory.callPlayerBedEnterEvent(this, blockposition, bedResult);
 +      if (bedResult.left().isPresent()) {
 +         return bedResult;
 +      }

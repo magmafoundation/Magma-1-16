@@ -1,15 +1,14 @@
 --- a/net/minecraft/item/crafting/ShapedRecipe.java
 +++ b/net/minecraft/item/crafting/ShapedRecipe.java
-@@ -20,8 +_,26 @@
+@@ -20,8 +_,25 @@
  import net.minecraft.util.ResourceLocation;
  import net.minecraft.util.registry.Registry;
  import net.minecraft.world.World;
 -
 -public class ShapedRecipe implements ICraftingRecipe {
-+import org.bukkit.craftbukkit.inventory.CraftItemStack;
-+import org.bukkit.craftbukkit.inventory.CraftRecipe;
-+import org.bukkit.craftbukkit.inventory.CraftShapedRecipe;
-+import org.bukkit.inventory.Recipe;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftRecipe;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftShapedRecipe;
 +import org.bukkit.inventory.RecipeChoice;
 +
 +public class ShapedRecipe implements ICraftingRecipe, net.minecraftforge.common.crafting.IShapedRecipe<CraftingInventory> {

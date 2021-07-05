@@ -23,8 +23,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.util.CraftIconCache;
+import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R3.util.CraftIconCache;
 import org.bukkit.entity.Player;
 import org.bukkit.event.server.ServerListPingEvent;
 

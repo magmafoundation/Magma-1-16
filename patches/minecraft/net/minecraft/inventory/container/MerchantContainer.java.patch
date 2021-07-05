@@ -1,11 +1,10 @@
 --- a/net/minecraft/inventory/container/MerchantContainer.java
 +++ b/net/minecraft/inventory/container/MerchantContainer.java
-@@ -13,6 +_,8 @@
+@@ -13,6 +_,7 @@
  import net.minecraft.util.SoundCategory;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-+import org.bukkit.inventory.InventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
  
  public class MerchantContainer extends Container {
     private final IMerchant field_75178_e;
@@ -20,7 +19,7 @@
 +   @Override
 +   public CraftInventoryView getBukkitView() {
 +      if (bukkitEntity == null) {
-+         bukkitEntity = new CraftInventoryView(this.player.field_70458_d.getBukkitEntity(), new org.bukkit.craftbukkit.inventory.CraftInventoryMerchant(field_75178_e, field_75176_f), this);
++         bukkitEntity = new CraftInventoryView(this.player.field_70458_d.getBukkitEntity(), new org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryMerchant(field_75178_e, field_75176_f), this);
 +      }
 +      return bukkitEntity;
 +   }

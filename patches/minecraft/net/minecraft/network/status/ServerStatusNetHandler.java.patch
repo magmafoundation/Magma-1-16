@@ -1,14 +1,13 @@
 --- a/net/minecraft/network/status/ServerStatusNetHandler.java
 +++ b/net/minecraft/network/status/ServerStatusNetHandler.java
-@@ -1,13 +_,28 @@
+@@ -1,13 +_,25 @@
  package net.minecraft.network.status;
  
 +import com.mojang.authlib.GameProfile;
-+import java.net.InetSocketAddress;
++
 +import java.util.ArrayList;
-+import java.util.Iterator;
 +import java.util.List;
-+import java.util.NoSuchElementException;
++
 +import net.minecraft.entity.player.ServerPlayerEntity;
  import net.minecraft.network.NetworkManager;
 +import net.minecraft.network.ServerStatusResponse;
@@ -22,9 +21,7 @@
 +import net.minecraft.util.text.StringTextComponent;
  import net.minecraft.util.text.TranslationTextComponent;
 +import net.minecraftforge.fml.network.FMLStatusPing;
-+import org.bukkit.craftbukkit.CraftServer;
-+import org.bukkit.craftbukkit.util.CraftIconCache;
-+import org.bukkit.entity.Player;
++import org.bukkit.craftbukkit.v1_16_R3.util.CraftIconCache;
 +import org.magmafoundation.magma.craftbukkit.ServerListPingEventImpl;
  
  public class ServerStatusNetHandler implements IServerStatusNetHandler {

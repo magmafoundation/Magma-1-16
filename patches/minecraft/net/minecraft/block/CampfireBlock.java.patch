@@ -1,5 +1,13 @@
 --- a/net/minecraft/block/CampfireBlock.java
 +++ b/net/minecraft/block/CampfireBlock.java
+@@ -39,7 +_,6 @@
+ import net.minecraft.util.math.shapes.ISelectionContext;
+ import net.minecraft.util.math.shapes.VoxelShape;
+ import net.minecraft.util.math.shapes.VoxelShapes;
+-import net.minecraft.world.GameRules;
+ import net.minecraft.world.IBlockReader;
+ import net.minecraft.world.IWorld;
+ import net.minecraft.world.World;
 @@ -181,9 +_,14 @@
     public void func_220066_a(World p_220066_1_, BlockState p_220066_2_, BlockRayTraceResult p_220066_3_, ProjectileEntity p_220066_4_) {
        if (!p_220066_1_.field_72995_K && p_220066_4_.func_70027_ad()) {
@@ -9,7 +17,7 @@
           if (flag && !p_220066_2_.func_177229_b(field_220101_b) && !p_220066_2_.func_177229_b(field_220103_d)) {
              BlockPos blockpos = p_220066_3_.func_216350_a();
 +            // CraftBukkit start
-+            if (org.bukkit.craftbukkit.event.CraftEventFactory.callBlockIgniteEvent(p_220066_1_, blockpos, p_220066_4_).isCancelled()) {
++            if (org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory.callBlockIgniteEvent(p_220066_1_, blockpos, p_220066_4_).isCancelled()) {
 +               return;
 +            }
 +            // CraftBukkit end

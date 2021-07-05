@@ -8,14 +8,13 @@
  import net.minecraft.inventory.CraftingInventory;
  import net.minecraft.inventory.container.Container;
  import net.minecraft.inventory.container.ContainerType;
-@@ -60,8 +_,12 @@
+@@ -60,8 +_,11 @@
  import net.minecraft.world.server.ServerWorld;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.event.CraftEventFactory;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
 +import org.bukkit.event.entity.SheepRegrowWoolEvent;
-+import org.bukkit.inventory.InventoryView;
  
 -public class SheepEntity extends AnimalEntity implements IShearable {
 +public class SheepEntity extends AnimalEntity implements IShearable, net.minecraftforge.common.IForgeShearable {

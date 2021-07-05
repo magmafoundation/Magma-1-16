@@ -1,14 +1,13 @@
 --- a/net/minecraft/inventory/container/LoomContainer.java
 +++ b/net/minecraft/inventory/container/LoomContainer.java
-@@ -19,8 +_,29 @@
+@@ -19,8 +_,28 @@
  import net.minecraft.util.SoundEvents;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
 +import org.bukkit.Location;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryLoom;
-+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryLoom;
++import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryView;
 +import org.bukkit.entity.Player;
-+import org.bukkit.inventory.InventoryView;
  
  public class LoomContainer extends Container {
 +

@@ -13,8 +13,8 @@
 +import net.minecraft.world.server.ServerWorld;
  import net.minecraftforge.api.distmarker.Dist;
  import net.minecraftforge.api.distmarker.OnlyIn;
-+import org.bukkit.craftbukkit.block.CraftBlock;
-+import org.bukkit.craftbukkit.block.data.CraftBlockData;
++import org.bukkit.craftbukkit.v1_16_R3.block.CraftBlock;
++import org.bukkit.craftbukkit.v1_16_R3.block.data.CraftBlockData;
 +import org.bukkit.event.block.BlockCanBuildEvent;
  
  public class BlockItem extends Item {
@@ -26,7 +26,7 @@
 +            // CraftBukkit start - special case for handling block placement with water lilies
 +            org.bukkit.block.BlockState blockstateCB = null;
 +            if (this instanceof LilyPadItem) {
-+               blockstateCB = org.bukkit.craftbukkit.block.CraftBlockState.getBlockState(blockitemusecontext.func_195991_k(), blockitemusecontext.func_195995_a());
++               blockstateCB = org.bukkit.craftbukkit.v1_16_R3.block.CraftBlockState.getBlockState(blockitemusecontext.func_195991_k(), blockitemusecontext.func_195995_a());
 +            }
 +            // CraftBukkit end
              if (blockstate == null) {
@@ -38,7 +38,7 @@
                    block.func_180633_a(world, blockpos, blockstate1, playerentity, itemstack);
 +                  // CraftBukkit start
 +                  if (blockstateCB != null) {
-+                     org.bukkit.event.block.BlockPlaceEvent placeEvent = org.bukkit.craftbukkit.event.CraftEventFactory.callBlockPlaceEvent((ServerWorld) world, playerentity, blockitemusecontext.func_221531_n(), blockstateCB, blockpos.func_177958_n(), blockpos.func_177956_o(), blockpos.func_177952_p());
++                     org.bukkit.event.block.BlockPlaceEvent placeEvent = org.bukkit.craftbukkit.v1_16_R3.event.CraftEventFactory.callBlockPlaceEvent((ServerWorld) world, playerentity, blockitemusecontext.func_221531_n(), blockstateCB, blockpos.func_177958_n(), blockpos.func_177956_o(), blockpos.func_177952_p());
 +                     if (placeEvent != null && (placeEvent.isCancelled() || !placeEvent.canBuild())) {
 +                        blockstateCB.update(true, false);
 +                        return ActionResultType.FAIL;
