@@ -408,7 +408,7 @@ project(':forge') {
         installer 'mysql:mysql-connector-java:5.1.48'
         installer 'org.jetbrains:annotations:18.0.0'
         installer 'commons-lang:commons-lang:2.6'
-        installer 'org.yaml:snakeyaml:1.26'
+        installer 'org.yaml:snakeyaml:1.27'
         installer 'net.md-5:bungeecord-chat:1.16-R0.3'
         installer 'net.md-5:SpecialSource:1.8.5'
         installer 'org.apache.logging.log4j:log4j-iostreams:2.8.1'
@@ -879,6 +879,11 @@ project(':forge') {
         ext {
             year = new Date().format("yyyy")
         }
+
+
+        include 'org/magmafoundation/'
+
+        header = file("$rootDir/LICENSE-header.txt")
 
         matching(includes: ['**/magmafoundation/**.java']) {
             include 'org/magmafoundation/'
