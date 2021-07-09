@@ -30,7 +30,7 @@ public class Magma {
 
     private static final String NAME = "Magma";
     private static final String VERSION = (Magma.class.getPackage().getImplementationVersion() != null) ? Magma.class.getPackage().getImplementationVersion() : "dev-env";
-    private static final String BUKKIT_VERSION = "v1_16_R4";
+    private static final String BUKKIT_VERSION = "v1_16_R3";
     private static final String NMS_PREFIX = "net/minecraft/server/";
     private static Magma INSTANCE = new Magma();
     private PatcherManager patcherManager;

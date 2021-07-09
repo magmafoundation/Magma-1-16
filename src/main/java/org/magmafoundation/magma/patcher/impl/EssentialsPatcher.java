@@ -21,6 +21,7 @@ package org.magmafoundation.magma.patcher.impl;
 
 import org.magmafoundation.magma.patcher.Patcher;
 import org.magmafoundation.magma.patcher.Patcher.PatcherInfo;
+import org.magmafoundation.magma.patcher.PatcherManager;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
@@ -43,6 +44,8 @@ public class EssentialsPatcher extends Patcher {
     public byte[] transform(String className, byte[] clazz) {
         if (className.equals("com.earth2me.essentials.Settings")) {
             return itemDBPatch(clazz);
+        } else if (className.equals("com.earth2me.essentials.metrics.Metrics")) {
+            return metricsPatch(clazz);
         }
         return clazz;
     }
@@ -60,6 +63,32 @@ public class EssentialsPatcher extends Patcher {
                 methodNode.instructions = insnList;
             }
         }
+
+        ClassWriter writer = new ClassWriter(0);
+        node.accept(writer);
+        return writer.toByteArray();
+    }
+
+    private byte[] metricsPatch(byte[] clzz) {
+        ClassReader reader = new ClassReader(clzz);
+        ClassNode node = new ClassNode();
+        reader.accept(node, 0);
+
+        MethodNode targetMethod = null;
+
+        for (MethodNode methodNode : node.methods) {
+            if (methodNode.name.equals("<clinit>") && methodNode.desc.equals("()V")) {
+                targetMethod = methodNode;
+            }
+        }
+
+        if (targetMethod != null) {
+            targetMethod.instructions.clear();
+            targetMethod.instructions.insert(new InsnNode(Opcodes.RETURN));
+        } else {
+            PatcherManager.LOGGER.error("[EssentialsPatcher] [metricsPatch] Failed to find static method in class com.earth2me.essentials.metrics.Metrics");
+        }
+
 
         ClassWriter writer = new ClassWriter(0);
         node.accept(writer);
