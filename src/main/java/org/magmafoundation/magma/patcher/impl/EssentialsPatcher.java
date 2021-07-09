@@ -34,7 +34,7 @@ import org.objectweb.asm.tree.MethodNode;
 /**
  * EssentialsPatcher
  *
- * @author Hexeption admin@hexeption.co.uk
+ * @author Hexeption admin@hexeption.co.uk - Jasper jasper@magmafoundation.org
  * @since 29/07/2020 - 03:58 am
  */
 @PatcherInfo(name = "Essentials", description = "Fixes for Essentials")
@@ -69,6 +69,7 @@ public class EssentialsPatcher extends Patcher {
         return writer.toByteArray();
     }
 
+    // Removes relocation check that is unnecessary and crashed the plugins.
     private byte[] metricsPatch(byte[] clzz) {
         ClassReader reader = new ClassReader(clzz);
         ClassNode node = new ClassNode();
