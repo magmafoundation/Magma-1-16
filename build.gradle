@@ -414,6 +414,9 @@ project(':forge') {
         installer 'org.apache.logging.log4j:log4j-iostreams:2.8.1'
         installer 'org.reflections:reflections:0.9.12'
         installer 'org.javassist:javassist:3.28.0-GA'
+
+        // Paper
+        installer 'it.unimi.dsi:fastutil:8.2.2'
     }
 
     // We apply the bin patches we just created to make a jar that is JUST our changes

@@ -130,7 +130,7 @@
        thread.setDaemon(true);
        thread.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler(field_155771_h));
        thread.start();
-@@ -112,6 +_,14 @@
+@@ -112,6 +_,23 @@
           this.func_71189_e(serverproperties.field_219009_c);
        }
  
@@ -139,6 +139,15 @@
 +      org.spigotmc.SpigotConfig.init((java.io.File) options.valueOf("spigot-settings"));
 +      org.spigotmc.SpigotConfig.registerCommands();
 +      // Spigot end
++      // Paper start
++      try {
++         com.destroystokyo.paper.PaperConfig.init((java.io.File) options.valueOf("paper-settings"));
++      } catch (Exception e) {
++         DedicatedServer.field_155771_h.error("Unable to load server configuration", e);
++         return false;
++      }
++      com.destroystokyo.paper.PaperConfig.registerCommands();
++      // Paper end
 +
 +      MagmaConfig.instance.registerCommands();
 +

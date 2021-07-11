@@ -68,7 +68,7 @@
     private final boolean field_234916_c_;
     private int field_73008_k;
     protected int field_73005_l = (new Random()).nextInt();
-@@ -85,15 +_,76 @@
+@@ -85,15 +_,80 @@
     public float field_73017_q;
     public final Random field_73012_v = new Random();
     private final DimensionType field_234921_x_;
@@ -103,6 +103,9 @@
 +   public long ticksPerAmbientSpawns;
 +   public boolean populating;
 +   public final org.spigotmc.SpigotWorldConfig spigotConfig; // Spigot
++
++   public final com.destroystokyo.paper.PaperWorldConfig paperConfig; // Paper
++
 +   public static BlockPos lastPhysicsProblem; // Spigot
 +   private org.spigotmc.TickLimiter entityLimiter;
 +   private org.spigotmc.TickLimiter tileLimiter;
@@ -130,6 +133,7 @@
     protected World(ISpawnWorldInfo p_i241925_1_, RegistryKey<World> p_i241925_2_, final DimensionType p_i241925_3_, Supplier<IProfiler> p_i241925_4_, boolean p_i241925_5_, boolean p_i241925_6_, long p_i241925_7_) {
 +      super(World.class);
 +      this.spigotConfig = new org.spigotmc.SpigotWorldConfig(MinecraftServer.getServer().field_71310_m.func_237291_a_(p_i241925_2_).getName()); // Spigot
++      this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(MinecraftServer.getServer().field_71310_m.func_237291_a_(p_i241925_2_).getName(), this.spigotConfig); // Paper
 +      this.ticksPerAnimalSpawns = this.getServerCB().getTicksPerAnimalSpawns(); // CraftBukkit
 +      this.ticksPerMonsterSpawns = this.getServerCB().getTicksPerMonsterSpawns(); // CraftBukkit
 +      this.ticksPerWaterSpawns = this.getServerCB().getTicksPerWaterSpawns(); // CraftBukkit

@@ -59,7 +59,7 @@
  
  public class Main {
     private static final Logger field_240759_a_ = LogManager.getLogger();
-@@ -71,40 +_,77 @@
+@@ -71,40 +_,84 @@
        OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1);
        OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
        OptionSpec<String> optionspec13 = optionparser.nonOptions();
@@ -93,6 +93,13 @@
              optionparser.printHelpOn(System.err);
              return;
           }
+ 
++         // Paper start - load config files for access below if needed
++         org.bukkit.configuration.file.YamlConfiguration bukkitConfiguration = loadConfigFile((File) optionset.valueOf("bukkit-settings"));
++         org.bukkit.configuration.file.YamlConfiguration spigotConfiguration = loadConfigFile((File) optionset.valueOf("spigot-settings"));
++         org.bukkit.configuration.file.YamlConfiguration paperConfiguration = loadConfigFile((File) optionset.valueOf("paper-settings"));
++         // Paper end
++
 +         Path path1 = Paths.get("eula.txt");
 +         ServerEula servereula = new ServerEula(path1);
 +
@@ -109,7 +116,7 @@
 +            field_240759_a_.info("You need to agree to the EULA in order to run the server. Go to eula.txt for more info.");
 +            return;
 +         }
- 
++
           CrashReport.func_230188_h_();
           Bootstrap.func_151354_b();
           Bootstrap.func_218821_c();
@@ -197,3 +204,24 @@
              }
           };
           thread.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler(field_240759_a_));
+@@ -178,6 +_,20 @@
+       }
+ 
+    }
++
++   // Paper start - load config files
++   private static org.bukkit.configuration.file.YamlConfiguration loadConfigFile(File configFile) throws Exception {
++      org.bukkit.configuration.file.YamlConfiguration config = new org.bukkit.configuration.file.YamlConfiguration();
++      if (configFile.exists()) {
++         try {
++            config.load(configFile);
++         } catch (Exception ex) {
++            throw new Exception("Failed to load configuration file: " + configFile.getName(), ex);
++         }
++      }
++      return config;
++   }
++   // Paper end
+ 
+    private static void func_240761_a_(SaveFormat.LevelSave p_240761_0_, DataFixer p_240761_1_, boolean p_240761_2_, BooleanSupplier p_240761_3_, ImmutableSet<RegistryKey<World>> p_240761_4_) {
+       field_240759_a_.info("Forcing world upgrade!");
