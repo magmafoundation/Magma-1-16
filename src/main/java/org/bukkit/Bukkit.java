@@ -653,6 +653,17 @@ public final class Bukkit {
         CustomTimingsHandler.reload(); // Spigot
     }
 
+    // Paper start
+    /**
+     * Gets the current server TPS
+     * @return current server TPS (1m, 5m, 15m in Paper-Server)
+     */
+    @NotNull
+    public static double[] getTPS() {
+        return server.getTPS();
+    }
+    // Paper end
+
     /**
      * Reload only the Minecraft data for the server. This includes custom
      * advancements and loot tables.
