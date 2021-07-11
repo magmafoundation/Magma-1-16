@@ -954,8 +954,6 @@ public final class CraftServer implements Server {
         internal.setSpawnSettings(true, true);
         console.levels.put(internal.dimension(), internal);
 
-        pluginManager.callEvent(new WorldInitEvent(internal.getWorldCB()));
-
         getServer().loadSpawn(internal.getChunkSource().chunkMap.progressListener, internal);
 
         pluginManager.callEvent(new WorldLoadEvent(internal.getWorldCB()));
@@ -975,7 +973,7 @@ public final class CraftServer implements Server {
 
         ServerWorld handle = ((CraftWorld) world).getHandle();
 
-        if (!(console.levels.containsKey(handle.getTypeKey()))) {
+        if (!(console.levels.containsKey(handle.dimension()))) {
             return false;
         }
 
