@@ -55,7 +55,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Represents a server implementation.
  */
-public interface Server extends PluginMessageRecipient {
+public interface Server extends PluginMessageRecipient, net.kyori.adventure.audience.ForwardingAudience { // Paper
 
     /**
      * Used for all administrative messages, such as an operator using a

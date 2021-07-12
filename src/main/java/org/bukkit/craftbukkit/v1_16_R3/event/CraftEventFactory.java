@@ -1,9 +1,5 @@
 package org.bukkit.craftbukkit.v1_16_R3.event;
 
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
-import com.google.common.collect.Lists;
-import com.mojang.datafixers.util.Either;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,58 +7,13 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import javax.annotation.Nullable;
-import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.INPC;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.monster.AbstractRaiderEntity;
-import net.minecraft.entity.monster.GhastEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.SlimeEntity;
-import net.minecraft.entity.monster.SpellcastingIllagerEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.GolemEntity;
-import net.minecraft.entity.passive.StriderEntity;
-import net.minecraft.entity.passive.WaterMobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerEntity.SleepResult;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.entity.projectile.PotionEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.MerchantContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.network.play.client.CCloseWindowPacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.state.properties.NoteBlockInstrument;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IndirectEntityDamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Unit;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.raid.Raid;
-import net.minecraft.world.server.ServerWorld;
+
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
+import com.google.common.collect.Lists;
+import com.mojang.datafixers.util.Either;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -86,7 +37,6 @@ import org.bukkit.craftbukkit.v1_16_R3.entity.CraftRaider;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftSpellcaster;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryCrafting;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftMetaBook;
 import org.bukkit.craftbukkit.v1_16_R3.potion.CraftPotionUtil;
 import org.bukkit.craftbukkit.v1_16_R3.util.CraftDamageSource;
 import org.bukkit.craftbukkit.v1_16_R3.util.CraftMagicNumbers;
@@ -214,6 +164,58 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.potion.PotionEffect;
 import org.magmafoundation.magma.util.InventoryHelper;
+
+import net.minecraft.entity.AreaEffectCloudEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.INPC;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.merchant.villager.VillagerEntity;
+import net.minecraft.entity.monster.AbstractRaiderEntity;
+import net.minecraft.entity.monster.GhastEntity;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.SlimeEntity;
+import net.minecraft.entity.monster.SpellcastingIllagerEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.GolemEntity;
+import net.minecraft.entity.passive.StriderEntity;
+import net.minecraft.entity.passive.WaterMobEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntity.SleepResult;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
+import net.minecraft.entity.projectile.PotionEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.MerchantContainer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
+import net.minecraft.loot.LootTable;
+import net.minecraft.network.play.client.CCloseWindowPacket;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.state.properties.NoteBlockInstrument;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Direction;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Unit;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
+import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.raid.Raid;
+import net.minecraft.world.server.ServerWorld;
 
 public class CraftEventFactory {
 
@@ -773,9 +775,9 @@ public class CraftEventFactory {
         return event;
     }
 
-    public static PlayerDeathEvent callPlayerDeathEvent(ServerPlayerEntity victim, List<org.bukkit.inventory.ItemStack> drops, String deathMessage, boolean keepInventory) {
+    public static PlayerDeathEvent callPlayerDeathEvent(ServerPlayerEntity victim, List<org.bukkit.inventory.ItemStack> drops, net.kyori.adventure.text.Component deathMessage, String stringDeathMessage, boolean keepInventory) { // Paper - Adventure
         CraftPlayer entity = victim.getBukkitEntity();
-        PlayerDeathEvent event = new PlayerDeathEvent(entity, drops, victim.getExpReward(), 0, deathMessage);
+        PlayerDeathEvent event = new PlayerDeathEvent(entity, drops, victim.getExpReward(), 0, stringDeathMessage); // Paper - Adventure
         event.setKeepInventory(keepInventory);
         org.bukkit.World world = entity.getWorld();
         Bukkit.getServer().getPluginManager().callEvent(event);
@@ -799,7 +801,7 @@ public class CraftEventFactory {
      * Server methods
      */
     public static ServerListPingEvent callServerListPingEvent(Server craftServer, InetAddress address, String motd, int numPlayers, int maxPlayers) {
-        ServerListPingEvent event = new ServerListPingEvent(address, motd, numPlayers, maxPlayers);
+        ServerListPingEvent event = new ServerListPingEvent(address,  craftServer.motd(), numPlayers, maxPlayers); // Paper - Adventure
         craftServer.getPluginManager().callEvent(event);
         return event;
     }

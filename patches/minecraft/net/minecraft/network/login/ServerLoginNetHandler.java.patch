@@ -1,11 +1,13 @@
 --- a/net/minecraft/network/login/ServerLoginNetHandler.java
 +++ b/net/minecraft/network/login/ServerLoginNetHandler.java
-@@ -29,10 +_,16 @@
+@@ -29,10 +_,18 @@
  import net.minecraft.util.CryptManager;
  import net.minecraft.util.DefaultUncaughtExceptionHandler;
  import net.minecraft.util.text.ITextComponent;
 +import net.minecraft.util.text.StringTextComponent;
  import net.minecraft.util.text.TranslationTextComponent;
++
++import io.papermc.paper.adventure.PaperAdventure;
  import org.apache.commons.lang3.Validate;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -240,7 +242,7 @@
 +         if (PlayerPreLoginEvent.getHandlerList().getRegisteredListeners().length != 0) {
 +            final PlayerPreLoginEvent event = new PlayerPreLoginEvent(playerName, address, uniqueId);
 +            if (asyncEvent.getResult() != PlayerPreLoginEvent.Result.ALLOWED) {
-+               event.disallow(asyncEvent.getResult(), asyncEvent.getKickMessage());
++               event.disallow(asyncEvent.getResult(), asyncEvent.kickMessage()); // Paper - Adventure
 +            }
 +            Waitable<Result> waitable = new Waitable<PlayerPreLoginEvent.Result>() {
 +               @Override
@@ -250,12 +252,12 @@
 +               }};
 +            ServerLoginNetHandler.this.field_147327_f.processQueue.add(waitable);
 +            if (waitable.get() != PlayerPreLoginEvent.Result.ALLOWED) {
-+               disconnect(event.getKickMessage());
++               func_194026_b(PaperAdventure.asVanilla(event.kickMessage())); // Paper - Adventure
 +               return;
 +            }
 +         } else {
 +            if (asyncEvent.getLoginResult() != AsyncPlayerPreLoginEvent.Result.ALLOWED) {
-+               disconnect(asyncEvent.getKickMessage());
++               func_194026_b(PaperAdventure.asVanilla(asyncEvent.kickMessage())); // Paper - Adventure
 +               return;
 +            }
 +         }
