@@ -417,6 +417,12 @@ project(':forge') {
 
         // Paper
         installer 'it.unimi.dsi:fastutil:8.2.2'
+
+        // Adventure
+        installer 'net.kyori:adventure-api:4.7.0'
+        installer 'net.kyori:adventure-text-serializer-gson:4.7.0'
+        installer 'net.kyori:adventure-text-serializer-legacy:4.7.0'
+        installer 'net.kyori:adventure-text-serializer-plain:4.7.0'
     }
 
     // We apply the bin patches we just created to make a jar that is JUST our changes
