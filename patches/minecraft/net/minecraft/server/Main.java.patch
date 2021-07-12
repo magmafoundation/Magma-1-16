@@ -59,7 +59,7 @@
  
  public class Main {
     private static final Logger field_240759_a_ = LogManager.getLogger();
-@@ -71,40 +_,84 @@
+@@ -71,40 +_,89 @@
        OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1);
        OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
        OptionSpec<String> optionspec13 = optionparser.nonOptions();
@@ -80,6 +80,11 @@
 +                .withRequiredArg()
 +              .ofType(File.class)
 +              .defaultsTo(new File("spigot.yml"))
++              .describedAs("Yml file");
++      optionparser.acceptsAll(Arrays.asList("p", "paper-settings"), "File for paper settings")
++              .withRequiredArg()
++              .ofType(File.class)
++              .defaultsTo(new File("paper.yml"))
 +              .describedAs("Yml file");
 +      optionparser.acceptsAll(Arrays.asList("P", "plugins"), "Plugin directory to use")
 +              .withRequiredArg()
