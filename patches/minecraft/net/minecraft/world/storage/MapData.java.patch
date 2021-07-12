@@ -13,8 +13,12 @@
  import javax.annotation.Nullable;
  import net.minecraft.entity.item.ItemFrameEntity;
  import net.minecraft.entity.player.PlayerEntity;
-@@ -27,6 +_,10 @@
+@@ -25,8 +_,14 @@
+ import net.minecraft.world.IBlockReader;
+ import net.minecraft.world.IWorld;
  import net.minecraft.world.World;
++
++import io.papermc.paper.adventure.PaperAdventure;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
 +import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
@@ -108,7 +112,7 @@
 +         java.util.Collection<MapDecoration> icons = new java.util.ArrayList<MapDecoration>();
 +         for ( org.bukkit.map.MapCursor cursor : render.cursors) {
 +            if (cursor.isVisible()) {
-+               icons.add(new MapDecoration(MapDecoration.Type.func_191159_a(cursor.getRawType()), cursor.getX(), cursor.getY(), cursor.getDirection(), CraftChatMessage.fromStringOrNull(cursor.getCaption())));
++               icons.add(new MapDecoration(MapDecoration.Type.func_191159_a(cursor.getRawType()), cursor.getX(), cursor.getY(), cursor.getDirection(), PaperAdventure.asVanilla(cursor.caption()))); // Paper - Adventure
 +            }
 +         }
 +

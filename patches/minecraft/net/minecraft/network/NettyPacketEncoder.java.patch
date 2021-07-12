@@ -1,6 +1,21 @@
 --- a/net/minecraft/network/NettyPacketEncoder.java
 +++ b/net/minecraft/network/NettyPacketEncoder.java
-@@ -37,7 +_,7 @@
+@@ -4,6 +_,8 @@
+ import io.netty.channel.ChannelHandlerContext;
+ import io.netty.handler.codec.MessageToByteEncoder;
+ import java.io.IOException;
++
++import io.papermc.paper.adventure.PaperAdventure;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ import org.apache.logging.log4j.Marker;
+@@ -32,12 +_,13 @@
+             throw new IOException("Can't serialize unregistered packet");
+          } else {
+             PacketBuffer packetbuffer = new PacketBuffer(p_encode_3_);
++            packetbuffer.adventure$locale = p_encode_1_.channel().attr(PaperAdventure.LOCALE_ATTRIBUTE).get(); // Paper
+             packetbuffer.func_150787_b(integer);
+ 
              try {
                 p_encode_2_.func_148840_b(packetbuffer);
              } catch (Throwable throwable) {

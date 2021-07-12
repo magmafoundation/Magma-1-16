@@ -38,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Represents a world, which may contain entities, chunks and blocks
  */
-public interface World extends PluginMessageRecipient, Metadatable {
+public interface World extends PluginMessageRecipient, Metadatable, net.kyori.adventure.audience.ForwardingAudience { // Paper
 
     /**
      * Gets the {@link Block} at the given coordinates
@@ -615,6 +615,14 @@ public interface World extends PluginMessageRecipient, Metadatable {
      */
     @NotNull
     public List<Player> getPlayers();
+
+    // Paper start
+    @NotNull
+    @Override
+    default Iterable<? extends net.kyori.adventure.audience.Audience> audiences() {
+        return this.getPlayers();
+    }
+    // Paper end
 
     /**
      * Returns a list of entities within a bounding box centered around a

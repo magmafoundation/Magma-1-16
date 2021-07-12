@@ -309,6 +309,7 @@ public final class CraftChatMessage {
 
     public static String fromComponent(ITextComponent component) {
         if (component == null) return "";
+        if (component instanceof io.papermc.paper.adventure.AdventureComponent) component = ((io.papermc.paper.adventure.AdventureComponent) component).deepConverted();
         StringBuilder out = new StringBuilder();
 
         boolean hadFormat = false;

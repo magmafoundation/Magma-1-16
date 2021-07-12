@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
  * underscores, hyphens, and forward slashes.
  *
  */
-public final class NamespacedKey {
+public final class NamespacedKey implements net.kyori.adventure.key.Key { // Paper - implement Key
 
     /**
      * The namespace representing all inbuilt keys.
@@ -139,4 +139,22 @@ public final class NamespacedKey {
     public static NamespacedKey minecraft(@NotNull String key) {
         return new NamespacedKey(MINECRAFT, key);
     }
+
+    // Paper start
+    @NotNull
+    @Override
+    public String namespace() {
+        return this.getNamespace();
+    }
+    @NotNull
+    @Override
+    public String value() {
+        return this.getKey();
+    }
+    @NotNull
+    @Override
+    public String asString() {
+        return this.namespace + ':' + this.key;
+    }
+    // Paper end
 }

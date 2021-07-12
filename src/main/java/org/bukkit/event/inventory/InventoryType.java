@@ -136,6 +136,19 @@ public enum InventoryType {
     private final String title;
     private final boolean isCreatable;
 
+    // Paper start
+    private final net.kyori.adventure.text.Component defaultTitleComponent;
+
+    /**
+     * Gets the inventory's default title.
+     *
+     * @return the inventory's default title
+     */
+    public @NotNull net.kyori.adventure.text.Component defaultTitle() {
+        return defaultTitleComponent;
+    }
+    // Paper end
+
     private InventoryType(int defaultSize, /*@NotNull*/ String defaultTitle) {
         this(defaultSize, defaultTitle, true);
     }
@@ -144,6 +157,7 @@ public enum InventoryType {
         size = defaultSize;
         title = defaultTitle;
         this.isCreatable = isCreatable;
+        this.defaultTitleComponent = net.kyori.adventure.text.Component.text(defaultTitle); // Paper - Adventure
     }
 
     public int getDefaultSize() {
@@ -151,6 +165,7 @@ public enum InventoryType {
     }
 
     @NotNull
+    @Deprecated // Paper
     public String getDefaultTitle() {
         return title;
     }

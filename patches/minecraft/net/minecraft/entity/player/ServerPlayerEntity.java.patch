@@ -37,7 +37,7 @@
  import net.minecraft.util.Hand;
  import net.minecraft.util.HandSide;
  import net.minecraft.util.NonNullList;
-@@ -122,6 +_,7 @@
+@@ -122,21 +_,42 @@
  import net.minecraft.util.text.TranslationTextComponent;
  import net.minecraft.util.text.event.HoverEvent;
  import net.minecraft.util.text.filter.IChatFilter;
@@ -45,8 +45,11 @@
  import net.minecraft.world.GameRules;
  import net.minecraft.world.GameType;
  import net.minecraft.world.World;
-@@ -130,13 +_,31 @@
+ import net.minecraft.world.biome.BiomeManager;
+ import net.minecraft.world.server.ServerWorld;
  import net.minecraft.world.storage.IWorldInfo;
++
++import io.papermc.paper.adventure.PaperAdventure;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
 +import org.bukkit.Bukkit;
@@ -89,11 +92,12 @@
     private ChatVisibility field_71143_cn;
     private boolean field_71140_co = true;
     private long field_143005_bX = Util.func_211177_b();
-@@ -175,21 +_,70 @@
+@@ -175,21 +_,72 @@
     public int field_71138_i;
     public boolean field_71136_j;
  
 +   // CraftBukkit start
++   public net.kyori.adventure.text.Component adventure$displayName; // Paper
 +   public String displayName;
 +   public ITextComponent listName;
 +   public org.bukkit.Location compassTarget;
@@ -122,6 +126,7 @@
 +
 +      // CraftBukkit start
 +      this.displayName = this.func_195047_I_();
++      this.adventure$displayName = net.kyori.adventure.text.Component.text(this.func_195047_I_()); // Paper
 +      this.canPickUpLootMagma = true;
 +      this.maxHealthCache = this.func_110138_aP();
 +   }
@@ -288,7 +293,7 @@
        } catch (Throwable throwable) {
           CrashReport crashreport = CrashReport.func_85055_a(throwable, "Ticking player");
           CrashReportCategory crashreportcategory = crashreport.func_85058_a("Player being ticked");
-@@ -469,15 +_,48 @@
+@@ -469,15 +_,43 @@
     }
  
     private void func_184849_a(ScoreCriteria p_184849_1_, int p_184849_2_) {
@@ -324,19 +329,14 @@
 +
 +      ITextComponent defaultMessage = this.func_110142_aN().func_151521_b();
 +      String deathmessage = defaultMessage.getString();
-+      org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, deathmessage, keepInventory);
++      org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory); // Paper - Adventure
 +      // SPIGOT-943 - only call if they have an inventory open
 +      if (this.field_71070_bA != this.field_71069_bz) {
 +         this.func_71128_l();
 +      }
-+      String deathMessage = event.getDeathMessage();
-+      if (deathMessage != null && deathMessage.length() > 0 && flag) { // TODO: allow plugins to override?
-+         ITextComponent itextcomponent;
-+         if (deathMessage.equals(deathmessage)) {
-+            itextcomponent = this.func_110142_aN().func_151521_b();
-+         } else {
-+            itextcomponent = org.bukkit.craftbukkit.v1_16_R3.util.CraftChatMessage.fromStringOrNull(deathMessage);
-+         }
++      net.kyori.adventure.text.Component deathMessage = event.deathMessage() != null ? event.deathMessage() : net.kyori.adventure.text.Component.empty(); // Paper - Adventure
++      if (deathMessage != null && deathMessage != net.kyori.adventure.text.Component.empty() && flag) { // Paper - Adventure // TODO: allow plugins to override?
++         ITextComponent itextcomponent = PaperAdventure.asVanilla(deathMessage); // Paper - Adventure
           this.field_71135_a.func_211148_a(new SCombatPacket(this.func_110142_aN(), SCombatPacket.Event.ENTITY_DIED, itextcomponent), (p_212356_2_) -> {
              if (!p_212356_2_.isSuccess()) {
                 int i = 256;
@@ -873,7 +873,7 @@
        this.field_71134_c.func_73076_a(p_71033_1_);
        this.field_71135_a.func_147359_a(new SChangeGameStatePacket(SChangeGameStatePacket.field_241767_d_, (float)p_71033_1_.func_77148_a()));
        if (p_71033_1_ == GameType.SPECTATOR) {
-@@ -1187,10 +_,22 @@
+@@ -1187,10 +_,26 @@
     }
  
     public void func_147100_a(CClientSettingsPacket p_147100_1_) {
@@ -893,6 +893,10 @@
        this.func_184212_Q().func_187227_b(field_184827_bp, (byte)p_147100_1_.func_149521_d());
        this.func_184212_Q().func_187227_b(field_184828_bq, (byte)(p_147100_1_.func_186991_f() == HandSide.LEFT ? 0 : 1));
 +      this.language = p_147100_1_.func_149524_c();
++      // Paper start
++      this.adventure$locale = net.kyori.adventure.translation.Translator.parseLocale(this.language);
++      this.field_71135_a.field_147371_a.channel().attr(PaperAdventure.LOCALE_ATTRIBUTE).set(this.adventure$locale);
++      // Paper end
     }
  
     public ChatVisibility func_147096_v() {
@@ -967,11 +971,12 @@
           this.field_70170_p.func_217376_c(itementity);
           ItemStack itemstack = itementity.func_92059_d();
           if (p_146097_3_) {
-@@ -1405,8 +_,150 @@
+@@ -1405,8 +_,151 @@
        }
     }
  
 +   public String language = "en_us"; // private->public CraftBukkit
++   public java.util.Locale adventure$locale = java.util.Locale.US; // Paper
 +   /**
 +    * Returns the language last reported by the player as their local language.
 +    * Defaults to en_us if the value is unknown.

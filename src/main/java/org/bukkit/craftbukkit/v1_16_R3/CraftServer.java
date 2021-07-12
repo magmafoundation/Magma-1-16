@@ -560,8 +560,10 @@ public final class CraftServer implements Server {
     }
 
     @Override
+    @Deprecated // Paper start
     public int broadcastMessage(String message) {
-        return broadcast(message, BROADCAST_CHANNEL_USERS);
+        return this.broadcast(message, BROADCAST_CHANNEL_USERS);
+        // Paper end
     }
 
     public Player getPlayer(final ServerPlayerEntity entity) {
@@ -1183,7 +1185,15 @@ public final class CraftServer implements Server {
         return configuration.getInt("settings.spawn-radius", -1);
     }
 
+    // Paper start
     @Override
+    public net.kyori.adventure.text.Component shutdownMessage() {
+        String msg = getShutdownMessage();
+        return msg != null ? io.papermc.paper.adventure.PaperAdventure.LEGACY_SECTION_UXRC.deserialize(msg) : null;
+    }
+    // Paper end
+    @Override
+    @Deprecated // Paper
     public String getShutdownMessage() {
         return configuration.getString("settings.shutdown-message");
     }
@@ -1299,7 +1309,20 @@ public final class CraftServer implements Server {
     }
 
     @Override
+    @Deprecated // Paper
     public int broadcast(String message, String permission) {
+        // Paper start - Adventure
+        return this.broadcast(io.papermc.paper.adventure.PaperAdventure.LEGACY_SECTION_UXRC.deserialize(message), permission);
+    }
+
+    @Override
+    public int broadcast(net.kyori.adventure.text.Component message) {
+        return this.broadcast(message, BROADCAST_CHANNEL_USERS);
+    }
+
+    @Override
+    public int broadcast(net.kyori.adventure.text.Component message, String permission) {
+        // Paper end
         Set<CommandSender> recipients = new HashSet<>();
         for (Permissible permissible : getPluginManager().getPermissionSubscriptions(permission)) {
             if (permissible instanceof CommandSender && permissible.hasPermission(permission)) {
@@ -1307,14 +1330,14 @@ public final class CraftServer implements Server {
             }
         }
 
-        BroadcastMessageEvent broadcastMessageEvent = new BroadcastMessageEvent(!Bukkit.isPrimaryThread(), message, recipients);
+        BroadcastMessageEvent broadcastMessageEvent = new BroadcastMessageEvent(!Bukkit.isPrimaryThread(), message, recipients); // Paper - Adventure
         getPluginManager().callEvent(broadcastMessageEvent);
 
         if (broadcastMessageEvent.isCancelled()) {
             return 0;
         }
 
-        message = broadcastMessageEvent.getMessage();
+        message = broadcastMessageEvent.message(); // Paper - Adventure
 
         for (CommandSender recipient : recipients) {
             recipient.sendMessage(message);
@@ -1540,6 +1563,14 @@ public final class CraftServer implements Server {
         return CraftInventoryCreator.INSTANCE.createInventory(owner, type);
     }
 
+    // Paper start
+    @Override
+    public Inventory createInventory(InventoryHolder owner, InventoryType type, net.kyori.adventure.text.Component title) {
+        Validate.isTrue(type.isCreatable(), "Cannot open an inventory of type ", type);
+        return CraftInventoryCreator.INSTANCE.createInventory(owner, type, title);
+    }
+    // Paper end
+
     @Override
     public Inventory createInventory(InventoryHolder owner, InventoryType type, String title) {
         Validate.isTrue(type.isCreatable(), "Cannot open an inventory of type ", type);
@@ -1552,13 +1583,28 @@ public final class CraftServer implements Server {
         return CraftInventoryCreator.INSTANCE.createInventory(owner, size);
     }
 
+    // Paper start
+    @Override
+    public Inventory createInventory(InventoryHolder owner, int size, net.kyori.adventure.text.Component title) throws IllegalArgumentException {
+        Validate.isTrue(9 <= size && size <= 54 && size % 9 == 0, "Size for custom inventory must be a multiple of 9 between 9 and 54 slots (got " + size + ")");
+        return CraftInventoryCreator.INSTANCE.createInventory(owner, size, title);
+    }
+    // Paper end
+
     @Override
     public Inventory createInventory(InventoryHolder owner, int size, String title) throws IllegalArgumentException {
         Validate.isTrue(9 <= size && size <= 54 && size % 9 == 0, "Size for custom inventory must be a multiple of 9 between 9 and 54 slots (got " + size + ")");
         return CraftInventoryCreator.INSTANCE.createInventory(owner, size, title);
     }
 
+    // Paper start
     @Override
+    public Merchant createMerchant(net.kyori.adventure.text.Component title) {
+        return new org.bukkit.craftbukkit.v1_16_R3.inventory.CraftMerchantCustom(title == null ? InventoryType.MERCHANT.defaultTitle() : title);
+    }
+    // Paper end
+    @Override
+    @Deprecated // Paper
     public Merchant createMerchant(String title) {
         return new CraftMerchantCustom(title == null ? InventoryType.MERCHANT.getDefaultTitle() : title);
     }
@@ -1602,6 +1648,12 @@ public final class CraftServer implements Server {
         return Thread.currentThread().equals(console.serverThread) || console.hasStopped() || !org.spigotmc.AsyncCatcher.enabled; // All bets are off if we have shut down (e.g. due to watchdog)
     }
 
+    // Paper start
+    @Override
+    public net.kyori.adventure.text.Component motd() {
+        return io.papermc.paper.adventure.PaperAdventure.asAdventure(new net.minecraft.util.text.StringTextComponent(console.getMotd()));
+    }
+    // Paper end
     @Override
     public String getMotd() {
         return console.getMotd();
@@ -2016,5 +2068,14 @@ public final class CraftServer implements Server {
             return null;
         }
     }
-// Paper end
+
+    private Iterable<? extends net.kyori.adventure.audience.Audience> adventure$audiences;
+    @Override
+    public Iterable<? extends net.kyori.adventure.audience.Audience> audiences() {
+        if (this.adventure$audiences == null) {
+            this.adventure$audiences = com.google.common.collect.Iterables.concat(java.util.Collections.singleton(this.getConsoleSender()), this.getOnlinePlayers());
+        }
+        return this.adventure$audiences;
+    }
+    // Paper end
 }

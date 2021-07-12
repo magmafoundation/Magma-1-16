@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class AsyncPlayerPreLoginEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private Result result;
-    private String message;
+    private net.kyori.adventure.text.Component message; // Paper
     private final String name;
     private final InetAddress ipAddress;
     private final UUID uniqueId;
@@ -27,7 +27,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     public AsyncPlayerPreLoginEvent(@NotNull final String name, @NotNull final InetAddress ipAddress, @NotNull final UUID uniqueId) {
         super(true);
         this.result = Result.ALLOWED;
-        this.message = "";
+        this.message = net.kyori.adventure.text.Component.empty(); // Paper
         this.name = name;
         this.ipAddress = ipAddress;
         this.uniqueId = uniqueId;
@@ -79,6 +79,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
         this.result = result == null ? null : Result.valueOf(result.name());
     }
 
+    // Paper start
     /**
      * Gets the current kick message that will be used if getResult() !=
      * Result.ALLOWED
@@ -86,7 +87,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * @return Current kick message
      */
     @NotNull
-    public String getKickMessage() {
+    public net.kyori.adventure.text.Component kickMessage() {
         return message;
     }
 
@@ -95,16 +96,8 @@ public class AsyncPlayerPreLoginEvent extends Event {
      *
      * @param message New kick message
      */
-    public void setKickMessage(@NotNull final String message) {
+    public void kickMessage(@NotNull final net.kyori.adventure.text.Component message) {
         this.message = message;
-    }
-
-    /**
-     * Allows the player to log in
-     */
-    public void allow() {
-        result = Result.ALLOWED;
-        message = "";
     }
 
     /**
@@ -113,7 +106,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * @param result New result for disallowing the player
      * @param message Kick message to display to the user
      */
-    public void disallow(@NotNull final Result result, @NotNull final String message) {
+    public void disallow(@NotNull final Result result, @NotNull final net.kyori.adventure.text.Component message) {
         this.result = result;
         this.message = message;
     }
@@ -128,9 +121,69 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * @see #disallow(Result, String)
      */
     @Deprecated
-    public void disallow(@NotNull final PlayerPreLoginEvent.Result result, @NotNull final String message) {
+    public void disallow(@NotNull final PlayerPreLoginEvent.Result result, @NotNull final net.kyori.adventure.text.Component message) {
         this.result = result == null ? null : Result.valueOf(result.name());
         this.message = message;
+    }
+    // Paper end
+    /**
+     * Gets the current kick message that will be used if getResult() !=
+     * Result.ALLOWED
+     *
+     * @return Current kick message
+     * @deprecated in favour of {@link #kickMessage()}
+     */
+    @NotNull
+    @Deprecated // Paper
+    public String getKickMessage() {
+        return org.bukkit.Bukkit.getUnsafe().legacyComponentSerializer().serialize(this.message); // Paper
+    }
+
+    /**
+     * Sets the kick message to display if getResult() != Result.ALLOWED
+     *
+     * @param message New kick message
+     * @deprecated in favour of {@link #kickMessage(net.kyori.adventure.text.Component)}
+     */
+    @Deprecated // Paper
+    public void setKickMessage(@NotNull final String message) {
+        this.message = org.bukkit.Bukkit.getUnsafe().legacyComponentSerializer().deserialize(message); // Paper
+    }
+
+    /**
+     * Allows the player to log in
+     */
+    public void allow() {
+        result = Result.ALLOWED;
+        message = net.kyori.adventure.text.Component.empty(); // Paper
+    }
+
+    /**
+     * Disallows the player from logging in, with the given reason
+     *
+     * @param result New result for disallowing the player
+     * @param message Kick message to display to the user
+     * @deprecated in favour of {@link #disallow(org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result, net.kyori.adventure.text.Component)}
+     */
+    @Deprecated // Paper
+    public void disallow(@NotNull final Result result, @NotNull final String message) {
+        this.result = result;
+        this.message = org.bukkit.Bukkit.getUnsafe().legacyComponentSerializer().deserialize(message); // Paper
+    }
+
+    /**
+     * Disallows the player from logging in, with the given reason
+     *
+     * @param result New result for disallowing the player
+     * @param message Kick message to display to the user
+     * @deprecated This method uses a deprecated enum from {@link
+     *     PlayerPreLoginEvent}
+     * @see #disallow(Result, String)
+     */
+    @Deprecated
+    public void disallow(@NotNull final PlayerPreLoginEvent.Result result, @NotNull final String message) {
+        this.result = result == null ? null : Result.valueOf(result.name());
+        this.message = org.bukkit.Bukkit.getUnsafe().legacyComponentSerializer().deserialize(message); // Paper
     }
 
     /**
