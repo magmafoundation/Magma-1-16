@@ -71,10 +71,9 @@ public final class AdventureComponent implements ITextComponent {
         return this.deepConverted().copy();
     }
 
-    // Client shit
     @Override
     public IReorderingProcessor getVisualOrderText() {
-        return null;
+        return this.deepConverted().getVisualOrderText();
     }
 
     public static class Serializer implements JsonSerializer<AdventureComponent> {
