@@ -22,14 +22,6 @@ import static org.bukkit.Material.normalizeName;
 
 import java.util.Map;
 import java.util.stream.IntStream;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.BannerPattern;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.DimensionType;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -47,8 +39,18 @@ import org.bukkit.craftbukkit.v1_16_R3.util.CraftMagicNumbers;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffectType;
+import org.magmafoundation.magma.configuration.MagmaConfig;
 import org.magmafoundation.magma.craftbukkit.entity.CraftCustomEntity;
 import org.magmafoundation.magma.util.EnumHelper;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.BannerPattern;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.DimensionType;
 
 /**
  * ForgeInject
@@ -84,14 +86,16 @@ public class ForgeInject {
             Item item = registryKeyItemEntry.getValue();
             if(!resourceLocation.getNamespace().equals("minecraft")) {
                 String materialName = normalizeName(registryKeyItemEntry.getKey().toString()).replace("RESOURCEKEYMINECRAFT_ITEM__", "");
-                Material material = Material
-                    .addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE, Integer.TYPE}, new Object[]{Item.getId(item), item.getMaxStackSize()}));
+                Material material = Material.addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[] {Integer.TYPE, Integer.TYPE}, new Object[] {Item.getId(item), item.getMaxStackSize()}));
                 CraftMagicNumbers.ITEM_MATERIAL.put(item, material);
                 CraftMagicNumbers.MATERIAL_ITEM.put(material, item);
-                if (material != null) {
-                    LOGGER.info(String.format("Injected new Forge item material %s.", material.name()));
-                } else {
-                    LOGGER.info(String.format("Inject item failure %s with ID %d.", materialName, Item.getId(item)));
+                if (MagmaConfig.instance.debugPrintBukkitMatterials.getValues()) {
+                    if (material != null) {
+                        LOGGER.info(String.format("Injected new Forge item material %s.", material.name()));
+                    } else {
+                        LOGGER.info(String.format("Inject item failure %s with ID %d.", materialName, Item.getId(item)));
+
+                    }
                 }
             }
         });
@@ -106,10 +110,12 @@ public class ForgeInject {
                 Material material = Material.addMaterial(EnumHelper.addEnum(Material.class, materialName, new Class[]{Integer.TYPE}, new Object[]{Item.getId(block.asItem())}));
                 CraftMagicNumbers.BLOCK_MATERIAL.put(block, material);
                 CraftMagicNumbers.MATERIAL_BLOCK.put(material, block);
-                if (material != null) {
-                    LOGGER.info(String.format("Injected new Forge block material %s.", material.name()));
-                } else {
-                    LOGGER.info(String.format("Inject block failure %s with ID %d.", materialName, Item.getId(block.asItem())));
+                if (MagmaConfig.instance.debugPrintBukkitMatterials.getValues()) {
+                    if (material != null) {
+                        LOGGER.info(String.format("Injected new Forge block material %s.", material.name()));
+                    } else {
+                        LOGGER.info(String.format("Inject block failure %s with ID %d.", materialName, Item.getId(block.asItem())));
+                    }
                 }
             }
         });

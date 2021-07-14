@@ -18,22 +18,23 @@
 
 package org.magmafoundation.magma.configuration;
 
-import com.google.common.collect.Lists;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.logging.Level;
-import net.minecraft.server.MinecraftServer;
+
+import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.magmafoundation.magma.commands.MagmaCommand;
 import org.magmafoundation.magma.configuration.value.Value;
 import org.magmafoundation.magma.configuration.value.values.BooleanValue;
-import org.magmafoundation.magma.configuration.value.values.IntValue;
 import org.magmafoundation.magma.configuration.value.values.StringArrayValue;
 import org.magmafoundation.magma.configuration.value.values.StringValue;
+
+import net.minecraft.server.MinecraftServer;
 
 /**
  * MagmaConfig
@@ -47,8 +48,6 @@ public class MagmaConfig extends ConfigBase {
 
     //============================Debug======================================
     public final BooleanValue debugPrintBukkitMatterials = new BooleanValue(this, "debug.debugPrintBukkitMatterials", false, "Prints the Forge Bukkit Materials");
-    public final BooleanValue debugPrintBukkitBannerPatterns = new BooleanValue(this, "debug.debugPrintBukkitBannerPatterns", false, "Prints the Forge Bukkit Banner Patterns");
-    public final BooleanValue debugPrintCommandNode = new BooleanValue(this, "debug.debugPrintCommandNode", false, "Prints out all Command Nodes for permissions");
 
     //============================Black List Mods=============================
     public final BooleanValue blacklistedModsEnable = new BooleanValue(this, "forge.blacklistedmods.enabled", false, "Enable blacklisting of mods");
@@ -56,8 +55,6 @@ public class MagmaConfig extends ConfigBase {
     public final StringValue blacklistedModsKickMessage = new StringValue(this, "forge.blacklistedmods.kickmessage", "Please Remove Blacklisted Mods", "Mod Blacklist kick message");
 
     //=============================WORLD SETTINGS=============================
-    public final IntValue expMergeMaxValue = new IntValue(this, "experience-merge-max-value", -1,
-        "Instructs the server put a maximum value on experience orbs, preventing them all from merging down into 1 single orb.");
     public List<Integer> autoUnloadDimensions = Lists.newArrayList(13371337);
 
     //=============================FakePlayer SETTINGS========================
