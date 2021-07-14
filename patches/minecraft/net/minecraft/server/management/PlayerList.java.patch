@@ -865,16 +865,9 @@
 +   public ServerStatisticsManager getStatisticManager(UUID uuid, String displayName) {
 +      ServerPlayerEntity player = func_177451_a(uuid);
 +      ServerStatisticsManager serverstatisticsmanager = player == null ? null : player.func_147099_x();
-       if (serverstatisticsmanager == null) {
+      if (serverstatisticsmanager == null) {
           File file1 = this.field_72400_f.func_240776_a_(FolderName.field_237246_b_).toFile();
           File file2 = new File(file1, uuid + ".json");
-          if (!file2.exists()) {
--            File file3 = new File(file1, p_152602_1_.func_200200_C_().getString() + ".json");
-+            File file3 = new File(file1, displayName + ".json"); // CraftBukkit
-             if (file3.exists() && file3.isFile()) {
-                file3.renameTo(file2);
-             }
-          }
  
           serverstatisticsmanager = new ServerStatisticsManager(this.field_72400_f, file2);
 -         this.field_148547_k.put(uuid, serverstatisticsmanager);
