@@ -187,7 +187,7 @@ project(':forge') {
         VERSION_JSON = project(':mcp').file('build/mcp/downloadJson/version.json')
         BINPATCH_TOOL = 'net.minecraftforge:binarypatcher:1.0.12:fatjar'
         INSTALLER_TOOLS = 'net.minecraftforge:installertools:1.1.11'
-        FORGE_VERSION = '36.1.32'
+        FORGE_VERSION = '36.1.33'
     }
 
     if (System.getenv("STABLE_BUILD") != null) {
@@ -235,7 +235,11 @@ project(':forge') {
                 ideaModule "${rootProject.name}.${project.name}.userdev"
 
                 mods {
-                    forge { source sourceSets.main }
+             forge {
+                        source sourceSets.main 
+                        source sourceSets.userdev 
+                    }
+
                 }
             }
 
