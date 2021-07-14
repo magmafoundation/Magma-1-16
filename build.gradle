@@ -235,7 +235,10 @@ project(':forge') {
                 ideaModule "${rootProject.name}.${project.name}.userdev"
 
                 mods {
-                    forge { source sourceSets.main }
+                    forge {
+                        source sourceSets.main 
+                        source sourceSets.userdev 
+                    }
                 }
             }
 
